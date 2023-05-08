@@ -1,0 +1,151 @@
+@import url("https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap");
+body {
+  font-family: "TATSana-Chon", sans-serif;
+}
+
+
+
+.font-small {
+  font-size: 0.87rem;
+}
+
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  -ms-filter: "alpha(opacity=0)";
+  font-size: 200px !important;
+  direction: ltr;
+  cursor: pointer;
+}
+
+.uploaded_image,
+.uploaded_image > img {
+  width: 95px;
+  height: 95px;
+}
+
+.uploaded_image {
+  float: left;
+  position: relative;
+  margin-left: 14px;
+}
+
+.uploaded_image > img {
+  position: absolute;
+  z-index: 0;
+  border-radius: 20px;
+}
+
+.img_rmv {
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+  padding: 22px;
+  width: 95px;
+  height: 95px;
+}
+
+.uploaded_image > img:hover + .img_rmv {
+  visibility: visible;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.img_rmv:hover {
+  visibility: visible;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none !important;
+}
+
+.img_rmv:focus {
+  background-color: rgba(255, 255, 255, 0) !important;
+}
+
+/* Fixes for IE < 8 */
+@media screen\9 {
+  .fileinput-button input {
+    filter: alpha(opacity=0);
+    font-size: 100%;
+    height: 100%;
+  }
+}
+
+.textbox {
+  width: 100%;
+  height: 30px;
+}
+
+.combo {
+  height: 30px !important;
+  border-radius: 3px !important;
+}
+
+.custom-combobox {
+  position: relative;
+  display: inline-block;
+}
+.custom-combobox-toggle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-left: -1px;
+  padding: 0;
+}
+.custom-combobox-input {
+  margin: 0;
+  padding: 5px 10px;
+}
+
+.loadingDiv {
+    display:    none;
+    position:   fixed;
+    z-index:    100000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: #FFF url('../img/ajax_loader_blue_128.gif') 50% 50% no-repeat;
+    opacity:0.8;
+    filter:alpha(opacity=80);
+}
+
+.loadingLabel{
+    text-align: center;
+    color: #006600;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: 20px;
+    margin-left: -50px;
+    width: 100px;
+    height: 100px;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .loadingDiv {
+    display: block;
+}
+
+
+.span_remark {
+  font-size: 12px;
+}
+
+.dz-image img {
+  width: 100%;
+}

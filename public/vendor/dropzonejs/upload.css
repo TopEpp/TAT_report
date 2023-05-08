@@ -1,0 +1,35 @@
+
+.dropzone .dz-preview{
+    min-height: 50px;
+    margin:16px 0 ;
+}
+.dropzone{
+    background-color: #cccccc;
+}
+.dropzone .dz-filename{
+    text-align: left;
+}
+.dropzone .dz-preview{
+    width: 100%;
+    min-height: 20px;
+    background-color: transparent !important;
+    margin: 5px 0;
+}
+.dropzone .dz-preview .dz-details2{
+    text-align: center;
+    color: #000000 !important;
+}
+.dropzone .dz-remove, .dropzone .dz-view{
+    float: right;
+    margin-right: 10px;
+}
+
+.dz-error-mark{
+    color: red;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.dz-error-message{
+    margin-top: -100px;
+}
