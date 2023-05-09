@@ -55,7 +55,8 @@ class Report_model extends Model
 
 	function getPortDateData($date){
 		$builder = $this->db->table('MD_PORT');
-	    $builder->select("MD_PORT.PORT_ID, MD_PORT.PORT_NAME , MD_PORT.PORT_TYPE , SUM({$this->table}.SUM) AS NUM ");
+	    $builder->select("MD_PORT.PORT_ID, MD_PORT.PORT_NAME , MD_PORT.PORT_TYPE , 
+	    					CASE WHEN SUM({$this->table}.SUM ) IS NOT NULL THEN  SUM({$this->table}.SUM ) ELSE 0 END AS NUM ");
 	   
 	    $builder->join($this->table,"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID AND TO_CHAR( {$this->table}.REPORT_DATE, 'YYYY-MM-DD') = '{$date}' ",'LEFT');
 	    $builder->where('MD_PORT.PORT_CATEGORY_ID',1);
@@ -68,7 +69,8 @@ class Report_model extends Model
 
 	function getPortMonthData($day,$month,$year){
 	    $builder = $this->db->table('MD_PORT');
-	    $builder->select("MD_PORT.PORT_ID, MD_PORT.PORT_NAME , MD_PORT.PORT_TYPE ,SUM({$this->table}.SUM) AS NUM ");
+	    $builder->select("MD_PORT.PORT_ID, MD_PORT.PORT_NAME , MD_PORT.PORT_TYPE ,
+	    					CASE WHEN SUM({$this->table}.SUM ) IS NOT NULL THEN  SUM({$this->table}.SUM ) ELSE 0 END AS NUM ");
 	    $builder->join($this->table,"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  
 	    				AND TO_CHAR( {$this->table}.REPORT_DATE, 'DD') <= '{$day}'
 	    				AND TO_CHAR( {$this->table}.REPORT_DATE, 'MM') <= '{$month}'

@@ -13,8 +13,8 @@ class Main_model extends Model
   	protected $allowedFields = [];
 
   	function getMaxDate(){
-  		$builder = $this->db->table($this->table);
-  		$builder->select("TO_CHAR({$this->table}.REPORT_DATE,'YYYY-MM-DD') AS REPORT_DATE");
+  		$builder = $this->db->table('REPORT_RAW_DATA');
+  		$builder->select("TO_CHAR(REPORT_RAW_DATA.REPORT_DATE,'YYYY-MM-DD') AS REPORT_DATE");
   		$builder->orderBy('REPORT_DATE DESC');
   		$builder->limit(1);
   		
@@ -157,7 +157,7 @@ class Main_model extends Model
 	    $builder->select("MD_COUNTRY.STD_REGION_ID, SUM({$this->table}.SUM) AS NUM ");
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
-	    $builder->join('MD_TRAVEL_REGION',"MD_COUNTRY.REGIONID = MD_TRAVEL_REGION.SUB_REGION_ID");
+	    $builder->join('MD_SUB_REGION',"MD_COUNTRY.REGIONID = MD_SUB_REGION.SUB_REGION_ID");
 	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$start_date}','YYYY-MM-DD') AND TO_DATE('{$end_date}','YYYY-MM-DD') ");
 	    $builder->groupBy("MD_COUNTRY.STD_REGION_ID");
 	    $res = $builder->get()->getResultArray();
@@ -193,7 +193,7 @@ class Main_model extends Model
 	    $builder->select("MD_COUNTRY.COUNTRYID, SUM({$this->table}.SUM) AS NUM ");
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
-	    $builder->join('MD_TRAVEL_REGION',"MD_COUNTRY.REGIONID = MD_TRAVEL_REGION.SUB_REGION_ID");
+	     $builder->join('MD_SUB_REGION',"MD_COUNTRY.REGIONID = MD_SUB_REGION.SUB_REGION_ID");
 	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$start_date}','YYYY-MM-DD') AND TO_DATE('{$end_date}','YYYY-MM-DD') ");
 	    $builder->groupBy("MD_COUNTRY.COUNTRYID");
 	    $res = $builder->get()->getResultArray();
@@ -225,8 +225,6 @@ class Main_model extends Model
 	    	$builder_set->update();
 	    }
 	}
-
-	
 
 	function getSubRegion(){
 		$data = array();
