@@ -21,12 +21,23 @@ $report_date = $Mydate->date_eng2thai($to_date, 543);
 $numberDay = $numberMonth = array();
 $i = 1;
 foreach ($data_day_lastyear as $v) {
-	$numberDay[$v['COUNTRY_ID']] = $i++;
+	
+	if($v['NUM']==0){
+		$numberDay[$v['COUNTRY_ID']] = '';
+	}else{
+		$numberDay[$v['COUNTRY_ID']] = $i++;
+	}
+	
 }
 
 $i = 1;
 foreach ($data_month_lastyear as $v) {
-	$numberMonth[$v['COUNTRY_ID']] = $i++;
+	
+	if($v['NUM']==0){
+		$numberMonth[$v['COUNTRY_ID']] = '';
+	}else{
+		$numberMonth[$v['COUNTRY_ID']] = $i++;
+	}
 }
 ?>
 

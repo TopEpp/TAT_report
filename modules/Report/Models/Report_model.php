@@ -39,13 +39,16 @@ class Report_model extends Model
   	}
 
 	function getNatMonthData($day,$month,$year){
+		$date_start = '01/01/'.$year;
+		$date_end = $day.'/'.$month.'/'.$year;
 		$builder = $this->db->table($this->table);
 	    $builder->select("{$this->table}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_TH, MD_COUNTRY.COUNTRY_NAME_EN , SUM({$this->table}.SUM) AS NUM ");
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
-	    $builder->where("TO_CHAR( {$this->table}.REPORT_DATE, 'DD') <= ",$day);
-	    $builder->where("TO_CHAR( {$this->table}.REPORT_DATE, 'MM') <= ",$month);
-	    $builder->where("TO_CHAR( {$this->table}.REPORT_DATE, 'YYYY') = ",$year);
+	    // $builder->where("TO_CHAR( {$this->table}.REPORT_DATE, 'DD') <= ",$day);
+	    // $builder->where("TO_CHAR( {$this->table}.REPORT_DATE, 'MM') <= ",$month);
+	    // $builder->where("TO_CHAR( {$this->table}.REPORT_DATE, 'YYYY') = ",$year);
+	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$date_start}','dd/mm/yyyy') AND TO_DATE('{$date_end}','dd/mm/yyyy') ");
 	    $builder->groupBy("{$this->table}.COUNTRY_ID,MD_COUNTRY.COUNTRY_NAME_TH, MD_COUNTRY.COUNTRY_NAME_EN ");
 	    $builder->orderBy("NUM DESC");
 	    $data = $builder->get()->getResultArray();
@@ -68,13 +71,13 @@ class Report_model extends Model
 	}
 
 	function getPortMonthData($day,$month,$year){
+		$date_start = '01/01/'.$year;
+		$date_end = $day.'/'.$month.'/'.$year;
 	    $builder = $this->db->table('MD_PORT');
 	    $builder->select("MD_PORT.PORT_ID, MD_PORT.PORT_NAME , MD_PORT.PORT_TYPE ,
 	    					CASE WHEN SUM({$this->table}.SUM ) IS NOT NULL THEN  SUM({$this->table}.SUM ) ELSE 0 END AS NUM ");
-	    $builder->join($this->table,"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  
-	    				AND TO_CHAR( {$this->table}.REPORT_DATE, 'DD') <= '{$day}'
-	    				AND TO_CHAR( {$this->table}.REPORT_DATE, 'MM') <= '{$month}'
-	    				AND TO_CHAR( {$this->table}.REPORT_DATE, 'YYYY') = '{$year}' ",'LEFT');
+	    $builder->join($this->table,"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID");
+	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$date_start}','dd/mm/yyyy') AND TO_DATE('{$date_end}','dd/mm/yyyy') ");
 	    $builder->where('MD_PORT.PORT_CATEGORY_ID',1);
 	    $builder->groupBy("MD_PORT.PORT_ID, MD_PORT.PORT_NAME,MD_PORT.PORT_TYPE  ");
 	    $builder->orderBy("NUM DESC,PORT_NAME");
