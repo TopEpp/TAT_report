@@ -16,12 +16,23 @@ $report_date = $Mydate->date_eng2thai($to_date, 543);
 $numberDay = $numberMonth = array();
 $i = 1;
 foreach ($data_day_lastyear as $v) {
-	$numberDay[$v['PORT_ID']] = $i++;
+	
+	if($v['NUM']==0){
+		$numberDay[$v['PORT_ID']] = '';
+	}else{
+		$numberDay[$v['PORT_ID']] = $i++;
+	}
+	
 }
 
 $i = 1;
 foreach ($data_month_lastyear as $v) {
-	$numberMonth[$v['PORT_ID']] = $i++;
+	
+	if($v['NUM']==0){
+		$numberMonth[$v['PORT_ID']] = '';
+	}else{
+		$numberMonth[$v['PORT_ID']] = $i++;
+	}
 }
 ?>
 <style>
