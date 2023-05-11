@@ -48,7 +48,7 @@ class Report extends BaseController{
 
 		$data['data_day_lastyear'] = $Model->getNatDateData($date_lastyear);
 		$data['data_month_lastyear'] = $Model->getNatMonthData($day,$data['month'],($data['year']-1));
-
+		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
         	$this->export_excel('nation.xlsx','Modules\Report\Views\export\nation',$data);
         } else if (@$_GET['export_type'] == 'pdf') {
@@ -92,7 +92,7 @@ class Report extends BaseController{
 
 		$data['data_day_lastyear'] = $Model->getPortDateData($date_lastyear);
 		$data['data_month_lastyear'] = $Model->getPortMonthData($day,$data['month'],($data['year']-1));
-
+		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
         	$this->export_excel('port.xlsx','Modules\Report\Views\export\port',$data);
         } else if (@$_GET['export_type'] == 'pdf') {
@@ -375,5 +375,3 @@ class Report extends BaseController{
 	}
 	
 }
-
-?>
