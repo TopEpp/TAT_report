@@ -13,8 +13,12 @@
 		border: 1px solid black;
 	}
 </style>
-<b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b>
-<b>รายงานเปรียบเทียบจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน</b>
+<div>
+	<b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b>
+</div>
+<div style="text-align:center">
+	<b>รายงานเปรียบเทียบจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน</b>
+</div>
 <?php if (!empty($country_row) && !empty($port_colunm)) { ?>
 	<table class="table table-striped table-bordered radiusTable1" style="width:100%">
 		<thead>
