@@ -48,8 +48,23 @@
       </div>
       <div class="modal-body">
         <div class="row">
-           <div class="col-md-8">
+           <div class="col-md-12">
              ประเทศ
+           </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <select class="form-control" id="country_id" name="country_id">
+              <option value="">เลือก</option>
+              <?php foreach ($country as $key => $c): ?>
+                <option value="<?php echo $c['COUNTRYID']?>"><?php echo $c['COUNTRY_NAME_EN']?></option>
+              <?php endforeach ?>?>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+           <div class="col-md-8">
+             Visa
            </div>
            <div class="col-md-4">
              ตัวคูณ
@@ -57,10 +72,10 @@
         </div>
         <div class="row">
           <div class="col-md-8">
-            <select class="form-control" id="country_id" name="country_id">
+            <select class="form-control" id="visa_id" name="visa_id">
               <option value="">เลือก</option>
-              <?php foreach ($country as $key => $c): ?>
-                <option value="<?php echo $c['COUNTRYID']?>"><?php echo $c['COUNTRY_NAME_EN']?></option>
+              <?php foreach ($visa as $key => $c): ?>
+                <option value="<?php echo $c['VISA_ID']?>"><?php echo $c['VISA_NAME']?></option>
               <?php endforeach ?>?>
             </select>
           </div>
@@ -161,7 +176,7 @@ function editPort(id,name){
             var html = '';
             var month = [ "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
             $.each( data, function( key, value ) {
-              html = html +'<tr><td>'+value.COUNTRY_NAME_EN+'</td><td>'+( parseInt(value.YEAR) +543)+'</td><td>'+month[value.MONTH-1]+'</td><td>สัดส่วน : '+value.RATIO+'</td></tr>';
+              html = html +'<tr><td>'+value.COUNTRY_NAME_EN+'</td><td>'+value.VISA_NAME+'</td><td>'+( parseInt(value.YEAR) +543)+'</td><td>'+month[value.MONTH-1]+'</td><td>สัดส่วน : '+value.RATIO+'</td></tr>';
             });
             $('#table_ratio').html(html);
           }

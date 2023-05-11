@@ -27,6 +27,7 @@ class Setting extends BaseController{
 		$Model = new Setting_model();
 		$data['country'] = $Model->getCountry();
 		$data['data'] = $Model->getPort();
+		$data['visa'] = $Model->getVisa();
 		$data['month_label'] = $this->month_th;
 		return view("Modules\Setting\Views\port",$data);
 	}
