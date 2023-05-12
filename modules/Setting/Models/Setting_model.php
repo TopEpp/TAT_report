@@ -19,7 +19,7 @@ class Setting_model extends Model
 
 	function getPort($cate_type=''){
 		$builder = $this->db->table('MD_PORT');
-	    $builder->select('*');
+	    $builder->select('MD_PORT.* ');
 	    if($cate_type){
 	    	$builder->where('PORT_CATEGORY_ID',1);
 	    }

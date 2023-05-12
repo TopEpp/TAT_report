@@ -27,6 +27,9 @@ class Setting extends BaseController{
 		$Model = new Setting_model();
 		$data['country'] = $Model->getCountry();
 		$data['data'] = $Model->getPort();
+		foreach($data['data'] as $port){
+			$data['port_ratio'][$port['PORT_ID']] = count( $Model->getPortRatio($port['PORT_ID']) );
+		}
 		$data['visa'] = $Model->getVisa();
 		$data['month_label'] = $this->month_th;
 		return view("Modules\Setting\Views\port",$data);
