@@ -3,11 +3,31 @@
 <!-- content -->
 <?php $this->section('content') ?>
 <?php $user_menu = $session->get('user_menu'); ?>
+<style>
+	.radiusTable1 {
+		border-radius: 1em;
+		overflow: hidden;
+	}
+
+	.radiusTable1 tbody tr:nth-of-type(odd) {
+		background: #D6EFF2;
+	}
+
+	.radiusTable1 thead th {
+		background: #379FA6;
+		border-bottom: #e4e6f0;
+	}
+
+	.table-bordered thead th,
+	.table-bordered thead td {
+		/* border-bottom-width: */
+	}
+</style>
 <div class="row">
-	<div class="col-md-6" style="font-size: 1.4em;">
+	<div class="col-md-6 col-12 text-center text-md-left" style="font-size: 1.4em;">
 		<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
 	</div>
-	<div class="col-md-6 col-6" style="text-align: right;">
+	<div class="col-md-6 col-12 py-2 py-md-0" style="text-align: right;">
 		<a target="_blank" onclick="export_report('excel')" class="btn btn-success" style="width : 70px">
 			<i class="fa-solid fa-file-excel"></i> Excel
 		</a>
@@ -15,21 +35,19 @@
 			<i class="fa-solid fa-file-pdf"></i> PDF
 		</a>
 	</div>
-	<div class="col-md-12">
+	<div class="col-md-12 text-center py-2">
 		รายงานเปรียบเทียบจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน
 	</div>
 </div>
-<div class="row">
-	<div class="col-md-4 col-4">
-		วันที่เริ่มต้น <input type="text" name="start_date1" id="start_date1" class="form-control date_picker" style="width: 150px;display: inline;" value="<?php echo $Mydate->date_thai2eng($start_date1, 543, '/') ?>">
+<div class="row py-2">
+	<div class="col-md-4 col-12 mx-auto py-2 py-md-0">
+		วันที่เริ่มต้น <input type="text" name="start_date1" id="start_date1" class="form-control date_picker mx-auto" value="<?php echo $Mydate->date_thai2eng($start_date1, 543, '/') ?>">
 	</div>
-	<div class="col-md-3 col-3">
-		วันที่สิ้นสุด <input type="text" name="end_date1" id="end_date1" class="form-control date_picker" style="width: 150px;display: inline;" value="<?php echo $Mydate->date_thai2eng($end_date1, 543, '/') ?>">
+	<div class="col-md-3 col-12 py-2 py-md-0">
+		วันที่สิ้นสุด <input type="text" name="end_date1" id="end_date1" class="form-control date_picker" value="<?php echo $Mydate->date_thai2eng($end_date1, 543, '/') ?>">
 	</div>
-	<div class="col-md-2 col-2" style="text-align:right; padding-top: 5px;">
+	<div class="col-md-4 col-12 text-start py-2 py-md-0">
 		Country List
-	</div>
-	<div class="col-md-2 col-2">
 		<select class="form-control" id="country_type">
 			<option value="standard" <?php if (@$country_type == 'standard') {
 											echo "selected='selected'";
@@ -39,33 +57,49 @@
 								} ?>>All Country</option>
 		</select>
 	</div>
-	<div class="col-md-1 col-1">
+	<div class="col-md-1 py-2 py-md-0 text-center mt-auto">
 		<div class="btn btn-primary" onclick="ChangeFilter()">ตกลง</div>
 	</div>
+	<!-- <div class="col-md-2 col-4" style="text-align:right; padding-top: 5px;">
+		
+	</div>
+	<div class="col-md-2 col-4" >
+		<select class="form-control" id="country_type" >
+			<option value="standard" <?php if (@$country_type == 'standard') {
+											echo "selected='selected'";
+										} ?> >Standard</option>
+			<option value="all" <?php if (@$country_type == 'all') {
+									echo "selected='selected'";
+								} ?> >All Country</option>
+		</select>
+	</div>
+	<div class="col-md-1 col-4 text-left" >
+		
+	</div> -->
 </div>
 <div class="row">
-	<div class="col-md-12 col-12">
+	<div class="col-md-12 col-6 py-2 py-md-0">
 		<label><input type="checkbox" name="port_all" id="port_all"> <b> ด่านทั้งหมด</b></label>
 	</div>
-	<div class="col-md-12 col-12">
+	<div class="col-md-12 col-6 py-2 py-md-0">
 		<label><input type="checkbox" name="port_type_1" id="port_type_1" class="port_checkbox"> <b> ด่านบก</b></label>
 	</div>
 	<?php foreach ($port[1] as $p) { ?>
-		<div class="col-md-3 col-3">
+		<div class="col-md-3 col-6">
 			<label style="font-weight:normal;"><input type="checkbox" name="port_type[]" id="port_type" class="port_1 port_checkbox" value="<?php echo $p['PORT_ID'] ?>" <?php if (in_array($p['PORT_ID'], $port_type)) {
-																																												echo "checked='checked'";
-																																											} ?>> <?php echo $p['PORT_NAME'] ?></label>
+																																											echo "checked='checked'";
+																																										} ?>> <?php echo $p['PORT_NAME'] ?></label>
 		</div>
 	<?php } ?>
 	<br>
-	<div class="col-md-12 col-12">
+	<div class="col-md-12 col-12  py-2 py-md-0">
 		<label><input type="checkbox" name="port_type_2" id="port_type_2" class="port_checkbox"> <b> ด่านอากาศ</b></label>
 	</div>
 	<?php foreach ($port[2] as $p) { ?>
-		<div class="col-md-3 col-3">
+		<div class="col-md-3 col-6">
 			<label style="font-weight:normal;"><input type="checkbox" name="port_type[]" id="port_type" class="port_2 port_checkbox" value="<?php echo $p['PORT_ID'] ?>" <?php if (in_array($p['PORT_ID'], $port_type)) {
-																																												echo "checked='checked'";
-																																											} ?>> <?php echo $p['PORT_NAME'] ?></label>
+																																											echo "checked='checked'";
+																																										} ?>> <?php echo $p['PORT_NAME'] ?></label>
 		</div>
 	<?php } ?>
 </div>
@@ -74,7 +108,7 @@
 	<div class="col-md-12 col-12">
 		<div class="table-responsive">
 			<?php if (!empty($country_row) && !empty($port_colunm)) { ?>
-				<table class="table table-striped table-bordered">
+				<table class="table table-striped table-bordered radiusTable1 ">
 					<thead>
 						<tr>
 							<th rowspan="2">Nation</th>
@@ -134,8 +168,8 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $perio
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
-			echo '<tr style="background-color:#B6E2E9" id="TR-' . $re['MD_STD_REG_ID'] . '" >';
-			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
+			echo '<tr style="background: #ADE0E5;" id="TR-' . $re['MD_STD_REG_ID'] . '" >';
+			echo '<td style="padding-left:' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
 			if (!empty($port_colunm)) {
 				foreach ($port_colunm as $p) {
 					foreach ($period as $d) {
