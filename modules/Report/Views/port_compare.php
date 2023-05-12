@@ -87,8 +87,8 @@
 	<?php foreach ($port[1] as $p) { ?>
 		<div class="col-md-3 col-6">
 			<label style="font-weight:normal;"><input type="checkbox" name="port_type[]" id="port_type" class="port_1 port_checkbox" value="<?php echo $p['PORT_ID'] ?>" <?php if (in_array($p['PORT_ID'], $port_type)) {
-																																											echo "checked='checked'";
-																																										} ?>> <?php echo $p['PORT_NAME'] ?></label>
+																																												echo "checked='checked'";
+																																											} ?>> <?php echo $p['PORT_NAME'] ?></label>
 		</div>
 	<?php } ?>
 	<br>
@@ -98,8 +98,8 @@
 	<?php foreach ($port[2] as $p) { ?>
 		<div class="col-md-3 col-6">
 			<label style="font-weight:normal;"><input type="checkbox" name="port_type[]" id="port_type" class="port_2 port_checkbox" value="<?php echo $p['PORT_ID'] ?>" <?php if (in_array($p['PORT_ID'], $port_type)) {
-																																											echo "checked='checked'";
-																																										} ?>> <?php echo $p['PORT_NAME'] ?></label>
+																																												echo "checked='checked'";
+																																											} ?>> <?php echo $p['PORT_NAME'] ?></label>
 		</div>
 	<?php } ?>
 </div>

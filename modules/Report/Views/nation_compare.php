@@ -5,14 +5,19 @@
 <?php $user_menu = $session->get('user_menu'); ?>
 
 <style>
-	.ColorTableBody tbody tr td:nth-child(1) {
-		background-color: white;
-		border: none;
+	.table thead th {
+		background: #379FA6;
+		border-bottom: 0;
+		padding: 16px
 	}
 
-	.table thead th {
-		background-color: white;
-		border-bottom: 0;
+	.ColorTableBody {
+		border-radius: 1em;
+		overflow: hidden;
+	}
+
+	.table-responsive {
+		overflow-x: initial
 	}
 
 	.ColorTableBody thead tr {
@@ -20,6 +25,7 @@
 	}
 
 	table {
+		border-radius: 12px;
 		background-color: #F6F6F6;
 	}
 </style>
@@ -58,13 +64,14 @@
 	<div class="col-md-4 col-12 text-left py-2 py-md-0">
 		ช่วงเวลาที่ 2 วันที่เริ่มต้น <input type="text" name="start_date2" id="start_date2" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($start_date2, 543, '/') ?>">
 	</div>
-	<div class="col-md-3 col-12 text-left py-2 py-md-0">
+	<div class="col-md-4 col-12 text-left py-2 py-md-0">
 		วันที่สิ้นสุด <input type="text" name="end_date2" id="end_date2" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($end_date2, 543, '/') ?>">
 	</div>
-	<div class="col-md-2 col-12 text-md-right text-left" style=" padding-top: 5px;">
+	<!-- <div class="col-md-2 col-12 text-md-right text-left" style=" padding-top: 5px;">
+		
+	</div> -->
+	<div class="col-md-3 col-12">
 		Country List
-	</div>
-	<div class="col-md-2 col-12">
 		<select class="form-control" id="country_type">
 			<option value="standard" <?php if (@$country_type == 'standard') {
 											echo "selected='selected'";
@@ -74,14 +81,14 @@
 								} ?>>All Country</option>
 		</select>
 	</div>
-	<div class="col-md-1 col-12 text-center py-2 py-md-0">
+	<div class="col-md-1 col-12 text-center py-2 py-md-0 mt-auto">
 		<div class="btn btn-primary" onclick="ChangeFilter()">ตกลง</div>
 	</div>
 </div>
 
-<div class="row m-0">
+<div class="row m-0 py-2">
 	<div class="col-md-12 col-12">
-		<div class="table-responsive shadow-lg px-4 py-4">
+		<div class="table-responsive">
 			<?php
 			list($year, $month, $day) = explode('-', $start_date1);
 			$start_date1 = $day . '-' . $month . '-' . $year;
@@ -93,8 +100,7 @@
 			$end_date2 = $day . '-' . $month . '-' . $year;
 
 			?>
-			<table class="table table-striped ColorTableBody">
-
+			<table class="table table-striped ColorTableBody shadow-lg">
 				<thead>
 					<tr>
 						<th></th>
@@ -190,12 +196,14 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 					// print_r($idx % 2); 
 
 					echo '<tr class="TR-Parent-' . $re['MD_STD_REG_ID'] . '">';
-					echo '<td style=" padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
+
 					if ($idx % 2 == 0) {
+						echo '<td style="background: #D6EFF2; padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
 						echo '<td align="right" style="background: #D6EFF2;">' . number_format(@$num1) . '</td>';
 						echo '<td align="right" style="background: #D6EFF2;">' . number_format(@$num2) . '</td>';
 						echo '<td align="center" style="background: #D6EFF2;">' . $compare . '</td>';
 					} else {
+						echo '<td style="background:white; padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
 						echo '<td align="right" style="background: white;">' . number_format(@$num1) . '</td>';
 						echo '<td align="right" style="background: white;">' . number_format(@$num2) . '</td>';
 						echo '<td align="center" style="background: white;">' . $compare . '</td>';
