@@ -4,10 +4,69 @@
 <?php $this->section('content') ?>
 <?php $user_menu = $session->get('user_menu'); ?>
 <style>
+	@media screen and (max-width: 600px) {
+		.radiusTable1 {
+			border-radius: 0px !important;
+			overflow: hidden;
+		}
+
+		.radiusTable2 {
+			border-radius: 0px !important;
+			overflow: hidden;
+		}
+
+		table {
+			border: 0;
+		}
+
+		table caption {
+			font-size: 1.3em;
+		}
+
+		table thead {
+			border: none;
+			clip: rect(0 0 0 0);
+			height: 30px;
+			margin: -1px;
+			overflow: hidden;
+			padding: 0;
+			position: absolute;
+			width: 1px;
+		}
+
+		table tr {
+			border-bottom: 3px solid #ddd;
+			display: block;
+			padding-bottom: 2px;
+		}
+
+		table td {
+			border-bottom: 1px solid #ddd;
+			display: block;
+			font-size: .8em;
+			text-align: right;
+		}
+
+		table td::before {
+			/*
+				* aria-label has no advantage, it won't be read inside a table
+				content: attr(aria-label);
+				*/
+			content: attr(data-label);
+			float: left;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
+		table td:last-child {
+			border-bottom: 0;
+		}
+	}
+
 	.radiusTable1 {
 		border-radius: 1em;
 		overflow: hidden;
-		/* background-color: red; */
+
 	}
 
 	.radiusTable1 tbody tr:nth-of-type(odd) {
@@ -64,28 +123,31 @@
 		รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย จำแนกรายตลาด (ตลาดระยะใกล้ - ตลาดระยะไกล)
 	</div>
 </div>
-<!-- <div class="row">
-	<div class="col-md-4 col-4" >
-		 วันที่เริ่มต้น <input type="text" name="date_start" id="date_start" class="form-control date_picker" style="width: 150px;display: inline;" value="<?php echo $Mydate->date_thai2eng($date_start, 543, '/') ?>">
+<div class="row">
+	<div class="col-md-2">
+
 	</div>
-	<div class="col-md-3 col-4" >
-		วันที่สิ้นสุด <input type="text" name="date_end" id="date_end" class="form-control date_picker" style="width: 150px;display: inline;" value="<?php echo $Mydate->date_thai2eng($date_end, 543, '/') ?>">
+	<div class="col-md-4 col-12 py-2 py-md-0">
+		วันที่เริ่มต้น <input type="text" name="date_start" id="date_start" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($date_start, 543, '/') ?>">
 	</div>
-	<div class="col-md-1 col-4" >
+	<div class="col-md-4 col-12 py-2 py-md-0">
+		วันที่สิ้นสุด <input type="text" name="date_end" id="date_end" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($date_end, 543, '/') ?>">
+	</div>
+	<div class="col-md-2 col-12 text-center text-md-left mt-auto py-2 py-md-0">
 		<div class="btn btn-primary" onclick="ChangeFilter()">ตกลง</div>
 	</div>
-</div> -->
-<div class="d-flex justify-content-center py-2 pb-3 flex-column flex-md-row">
+</div>
+<!-- <div class="d-flex justify-content-center py-2 pb-3 flex-column flex-md-row">
 	<div class="d-flex align-items-center mx-md-2 mx-auto">
-		วันที่เริ่มต้น <input type="text" name="date_start" id="date_start" class="form-control date_picker ml-2" style="width: 150px;display: inline;" value="<?php echo $Mydate->date_thai2eng($date_start, 543, '/') ?>">
+	วันที่เริ่มต้น <input type="text" name="date_start" id="date_start" class="form-control date_picker ml-2" style="width: 150px;display: inline;" value="<?php echo $Mydate->date_thai2eng($date_start, 543, '/') ?>">
 	</div>
 	<div class="d-flex align-items-center mx-md-2 mx-auto my-2 my-md-none">
-		วันที่สิ้นสุด <input type="text" name="date_end" id="date_end" class="form-control date_picker ml-2" style="width: 150px;display: inline;" value="<?php echo $Mydate->date_thai2eng($date_end, 543, '/') ?>">
+	วันที่สิ้นสุด <input type="text" name="date_end" id="date_end" class="form-control date_picker ml-2" style="width: 150px;display: inline;" value="<?php echo $Mydate->date_thai2eng($date_end, 543, '/') ?>">
 	</div>
 	<div class="align-items-center mx-md-2 mx-auto my-auto ">
 		<div class="btn btn-primary" onclick="ChangeFilter()">ตกลง</div>
 	</div>
-</div>
+</div> -->
 
 <div class="row">
 	<div class="col-md-6 col-12" style="text-align:center;">
@@ -110,10 +172,10 @@
 						}
 					?>
 						<tr>
-							<td><?php echo $i ?></td>
-							<td align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-							<td align="right"><?php echo @number_format(@$data[$c['COUNTRYID']]['NUM']) ?></td>
-							<td align="center"><?php echo number_format($ratio, 2); ?></td>
+							<td data-label="ลำดับ"><?php echo $i ?></td>
+							<td data-label="สัญชาติ" align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+							<td data-label="จำนวนนักท่องเที่ยว" align="right"><?php echo @number_format(@$data[$c['COUNTRYID']]['NUM']) ?></td>
+							<td data-label="สัดส่วน" align="center"><?php echo number_format($ratio, 2); ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -142,10 +204,10 @@
 						}
 					?>
 						<tr>
-							<td><?php echo $i ?></td>
-							<td align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-							<td align="right"><?php echo @number_format(@$data[$c['COUNTRYID']]['NUM']) ?></td>
-							<td align="center"><?php echo number_format($ratio, 2); ?></td>
+							<td data-label="ลำดับ"><?php echo $i ?></td>
+							<td data-label="สัญชาติ" align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+							<td data-label="จำนวนนักท่องเที่ยว" align="right"><?php echo @number_format(@$data[$c['COUNTRYID']]['NUM']) ?></td>
+							<td data-label="สัดส่วน" align="center"><?php echo number_format($ratio, 2); ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>

@@ -10,17 +10,17 @@
 		border: none;
 	}
 
-	/* .ColorTableBody tbody tr td:nth-child(2){
-			background-color: red;
-		} */
-	/* .ColorTableBody thead th{
-    		background: white;	
-			border:none;
-		
-		} */
+	.table thead th {
+		background-color: white;
+		border-bottom: 0;
+	}
+
 	.ColorTableBody thead tr {
-		margin: 20px
-			/* font-weight:bold; */
+		margin: 20px;
+	}
+
+	table {
+		background-color: #F6F6F6;
 	}
 </style>
 <div class="row">
@@ -40,11 +40,11 @@
 	</div>
 </div>
 <div class="row py-2 m-0">
-	<div class="col-md-4 col-6 text-center text-md-left">
-		ช่วงเวลาที่ 1 วันที่เริ่มต้น <input type="text" name="start_date1" id="start_date1" class="form-control date_picker" style="width: 150px;display: inline;" value="<?php echo $Mydate->date_thai2eng($start_date1, 543, '/') ?>">
+	<div class="col-md-4 col-12 text-left py-2 py-md-0">
+		ช่วงเวลาที่ 1 วันที่เริ่มต้น <input type="text" name="start_date1" id="start_date1" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($start_date1, 543, '/') ?>">
 	</div>
-	<div class="col-md-3 col-6 ">
-		วันที่สิ้นสุด <input type="text" name="end_date1" id="end_date1" class="form-control date_picker" style="width: 150px;display: inline;" value="<?php echo $Mydate->date_thai2eng($end_date1, 543, '/') ?>">
+	<div class="col-md-3 col-12 text-left py-2 py-md-0">
+		วันที่สิ้นสุด <input type="text" name="end_date1" id="end_date1" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($end_date1, 543, '/') ?>">
 	</div>
 	<div class="col-md-2 col-2">
 
@@ -55,11 +55,11 @@
 	</div>
 </div>
 <div class="row m-0 py-2">
-	<div class="col-md-4 col-6 text-center text-md-left">
-		ช่วงเวลาที่ 2 วันที่เริ่มต้น <input type="text" name="start_date2" id="start_date2" class="form-control date_picker" style="width: 150px;display: inline;" value="<?php echo $Mydate->date_thai2eng($start_date2, 543, '/') ?>">
+	<div class="col-md-4 col-12 text-left py-2 py-md-0">
+		ช่วงเวลาที่ 2 วันที่เริ่มต้น <input type="text" name="start_date2" id="start_date2" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($start_date2, 543, '/') ?>">
 	</div>
-	<div class="col-md-3 col-6">
-		วันที่สิ้นสุด <input type="text" name="end_date2" id="end_date2" class="form-control date_picker" style="width: 150px;display: inline;" value="<?php echo $Mydate->date_thai2eng($end_date2, 543, '/') ?>">
+	<div class="col-md-3 col-12 text-left py-2 py-md-0">
+		วันที่สิ้นสุด <input type="text" name="end_date2" id="end_date2" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($end_date2, 543, '/') ?>">
 	</div>
 	<div class="col-md-2 col-12 text-md-right text-left" style=" padding-top: 5px;">
 		Country List
@@ -74,14 +74,14 @@
 								} ?>>All Country</option>
 		</select>
 	</div>
-	<div class="col-md-1 col-12 text-center">
+	<div class="col-md-1 col-12 text-center py-2 py-md-0">
 		<div class="btn btn-primary" onclick="ChangeFilter()">ตกลง</div>
 	</div>
 </div>
 
-<div class="row">
+<div class="row m-0">
 	<div class="col-md-12 col-12">
-		<div class="table-responsive py-1">
+		<div class="table-responsive shadow-lg px-4 py-4">
 			<?php
 			list($year, $month, $day) = explode('-', $start_date1);
 			$start_date1 = $day . '-' . $month . '-' . $year;
@@ -93,7 +93,8 @@
 			$end_date2 = $day . '-' . $month . '-' . $year;
 
 			?>
-			<table class="table table-striped ColorTableBody ">
+			<table class="table table-striped ColorTableBody">
+
 				<thead>
 					<tr>
 						<th></th>
@@ -164,14 +165,14 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 
 			echo '<tr style="background-color:#B6E2E9" id="TR-' . $re['MD_STD_REG_ID'] . '" >';
 			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
-			echo '<td align="right">' . number_format($sum1) . '</td>';
+			echo '<td align="right" >' . number_format($sum1) . '</td>';
 			echo '<td align="right">' . number_format($sum2) . '</td>';
 			echo '<td  align="center">' . $sum_compare . '</td>';
 			echo '</tr>';
-
-
+			$idx = 0;
 			if (!empty($country[$re['MD_STD_REG_ID']])) {
-				foreach ($country[$re['MD_STD_REG_ID']] as $co) {
+				foreach ($country[$re['MD_STD_REG_ID']] as $key => $co) {
+
 					$compare = '';
 					$num1 = @$data1[$co['COUNTRYID']]['NUM'];
 					$num2 = @$data2[$co['COUNTRYID']]['NUM'];
@@ -184,14 +185,26 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 							$compare = "<span style='color:red'>{$compare} </span>";
 						}
 					}
-
 					$padding_country = $level * 15;
+					// echo '<pre>';
+					// print_r($idx % 2); 
+
 					echo '<tr class="TR-Parent-' . $re['MD_STD_REG_ID'] . '">';
-					echo '<td style="padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
-					echo '<td align="right" style="background-color:red">' . number_format(@$num1) . '</td>';
-					echo '<td align="right">' . number_format(@$num2) . '</td>';
-					echo '<td align="center">' . $compare . '</td>';
+					echo '<td style=" padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
+					if ($idx % 2 == 0) {
+						echo '<td align="right" style="background: #D6EFF2;">' . number_format(@$num1) . '</td>';
+						echo '<td align="right" style="background: #D6EFF2;">' . number_format(@$num2) . '</td>';
+						echo '<td align="center" style="background: #D6EFF2;">' . $compare . '</td>';
+					} else {
+						echo '<td align="right" style="background: white;">' . number_format(@$num1) . '</td>';
+						echo '<td align="right" style="background: white;">' . number_format(@$num2) . '</td>';
+						echo '<td align="center" style="background: white;">' . $compare . '</td>';
+					}
+
+
+
 					echo '</tr>';
+					$idx++;
 				}
 			}
 

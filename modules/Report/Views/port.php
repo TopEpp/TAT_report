@@ -23,21 +23,20 @@ $i = 1;
 
 
 foreach ($data_day_lastyear as $v) {
-	
-	if($v['NUM']==0){
+
+	if ($v['NUM'] == 0) {
 		$numberDay[$v['PORT_ID']] = '';
-	}else{
+	} else {
 		$numberDay[$v['PORT_ID']] = $i++;
 	}
-	
 }
 
 $i = 1;
 foreach ($data_month_lastyear as $v) {
-	
-	if($v['NUM']==0){
+
+	if ($v['NUM'] == 0) {
 		$numberMonth[$v['PORT_ID']] = '';
-	}else{
+	} else {
 		$numberMonth[$v['PORT_ID']] = $i++;
 	}
 }
@@ -46,7 +45,7 @@ foreach ($data_month_lastyear as $v) {
 	.radiusTable1 {
 		border-radius: 1em;
 		overflow: hidden;
-		/* background-color: red; */
+
 	}
 
 	.radiusTable1 tbody tr:nth-of-type(odd) {
@@ -56,13 +55,13 @@ foreach ($data_month_lastyear as $v) {
 
 	.radiusTable1 thead th {
 		background: #70D3DE;
-		/* font-weight:bold; */
+
 	}
 
 	.radiusTable2 {
 		border-radius: 1em;
 		overflow: hidden;
-		/* background-color: red; */
+
 	}
 
 	.radiusTable2 tbody tr:nth-of-type(odd) {
@@ -90,6 +89,7 @@ foreach ($data_month_lastyear as $v) {
 		<input type="text" name="report_data" id="report_data" class="form-control date_picker" style="width: 200px;display: inline;" value="<?php echo $Mydate->date_thai2eng($to_date_label, 543, '/') ?> ">
 	</div>
 </div>
+
 
 <div class="row">
 	<div class="col-md-6 col-12 py-2">
@@ -201,6 +201,8 @@ foreach ($data_month_lastyear as $v) {
 		});
 
 		$('#table1').DataTable({
+			// scrollY: '300vh',
+			// scrollCollapse: true,
 			paging: false,
 			searching: false,
 			info: false,
