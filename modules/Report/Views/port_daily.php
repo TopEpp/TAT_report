@@ -5,12 +5,7 @@
 <?php $user_menu = $session->get('user_menu'); ?>
 <style>
 	@media screen and (max-width: 600px) {
-		.radiusTable1 {
-			border-radius: 0px !important;
-			overflow: hidden;
-		}
-
-		.radiusTable2 {
+		.radiusTableport_daily {
 			border-radius: 0px !important;
 			overflow: hidden;
 		}
@@ -35,7 +30,7 @@
 		}
 
 		table tr {
-			border-bottom: 3px solid #ddd;
+			/* border-bottom: 3px solid #ddd; */
 			display: block;
 			/* padding-bottom:2px; */
 		}
@@ -62,16 +57,17 @@
 	.radiusTableport_daily thead th {
 
 		background: rgba(55, 159, 166, 1);
-
+		padding: 16px;
 	}
 
 	.table thead th {
 		border-bottom: none;
-
 	}
 
 	.radiusTableport_daily {
 		border-radius: 1em;
+		overflow: hidden;
+
 	}
 
 	.radiusTableport_daily tbody tr:nth-of-type(odd) {
@@ -157,9 +153,9 @@
 					</tr>
 					<?php foreach ($port[2] as $p) { ?>
 						<tr>
-							<td><?php echo $p['PORT_NAME'] ?></td>
+							<td data-label="ด่าน"><?php echo $p['PORT_NAME'] ?></td>
 							<?php foreach ($period as $d) {
-								echo "<td align='right'>" . number_format(@$data[$p['PORT_ID']][$d]) . "</td>";
+								echo "<td data-label='" . $Mydate->date_eng2thai($d, 543, 'S', 'S') . "'  align='right'>" . number_format(@$data[$p['PORT_ID']][$d]) . "</td>";
 								@$sum[$d] += @$data[$p['PORT_ID']][$d];
 								@$sum_type2[$d] += @$data[$p['PORT_ID']][$d];
 							} ?>
@@ -168,7 +164,7 @@
 					<tr>
 						<td style="background-color: #B6E2E9;">รวมด่านอากาศ</td>
 						<?php foreach ($period as $d) {
-							echo "<td style='background-color: #B6E2E9;' align='right'>" . number_format(@$sum_type2[$d]) . "</td>";
+							echo "<td  style='background-color: #B6E2E9;' align='right'>" . number_format(@$sum_type2[$d]) . "</td>";
 						} ?>
 					</tr>
 				</tbody>
@@ -176,7 +172,7 @@
 					<tr>
 						<td style='background-color: #007C84;'>รวมทั้งหมด</td>
 						<?php foreach ($period as $d) {
-							echo "<td style='background-color: #007C84;' align='right'>" . number_format(@$sum[$d]) . "</td>";
+							echo "<td   style='background-color: #007C84;' align='right'>" . number_format(@$sum[$d]) . "</td>";
 						} ?>
 					</tr>
 				</tfoot>
