@@ -1,32 +1,34 @@
 <style>
-	.radiusTable1 {
+	.tblport_compare {
 		border-collapse: collapse;
 	}
 
-	.radiusTable1 thead th {
-		background: #379FA6;
+	.tblport_compare thead th {
+		background: #70d3de;
 	}
 
-	table,
-	td,
-	th {
-		border: 1px solid black;
+	.headderTable {
+		text-align: center;
 	}
 </style>
-<div>
-	<b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b>
-</div>
-<div style="text-align:center">
-	<b>รายงานเปรียบเทียบจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน</b>
-</div>
+<table style="width:100%">
+	<tr>
+		<td><b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b></td>
+	</tr>
+	<tr>
+		<td class="headderTable">
+			<b>รายงานเปรียบเทียบจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน</b>
+		</td>
+	</tr>
+</table>
 <?php if (!empty($country_row) && !empty($port_colunm)) { ?>
-	<table class="table table-striped table-bordered radiusTable1" style="width:100%">
+	<table border="1" style="width:100%" class="table table-striped table-bordered tblport_compare">
 		<thead>
 			<tr>
-				<th rowspan="2">Nation</th>
+				<th rowspan="2" style="background:#379FA6;border: 1px solid black ;">Nation</th>
 				<?php if (!empty($port_colunm)) {
 					foreach ($port_colunm as $p) { ?>
-						<th colspan="<?php echo count($period) ?>"><?php echo $p['PORT_NAME'] ?></th>
+						<th style="background:#379FA6;border: 1px solid black ;" colspan="<?php echo count($period) ?>"><?php echo $p['PORT_NAME'] ?></th>
 				<?php }
 				} ?>
 			</tr>
@@ -34,7 +36,7 @@
 				<?php if (!empty($port_colunm)) {
 					foreach ($port_colunm as $p) { ?>
 						<?php foreach ($period as $d) {
-							echo "<th>{$Mydate->date_eng2thai($d, 543, 'S', 'S')}</th>";
+							echo "<th style='background:#379FA6;border: 1px solid black ;'>{$Mydate->date_eng2thai($d, 543, 'S', 'S')}</th>";
 						} ?>
 				<?php }
 				} ?>
@@ -45,7 +47,6 @@
 		</tbody>
 	</table>
 <?php } ?>
-
 <?php
 
 function genTableData($data, $region, $region_id, $country, $port_colunm, $period, $level = 1)

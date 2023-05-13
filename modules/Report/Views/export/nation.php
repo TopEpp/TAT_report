@@ -16,23 +16,12 @@ $report_date = $Mydate->date_eng2thai($to_date, 543);
 $numberDay = $numberMonth = array();
 $i = 1;
 foreach ($data_day_lastyear as $v) {
-	
-	if($v['NUM']==0){
-		$numberDay[$v['COUNTRY_ID']] = '';
-	}else{
-		$numberDay[$v['COUNTRY_ID']] = $i++;
-	}
-	
+	$numberDay[$v['COUNTRY_ID']] = $i++;
 }
 
 $i = 1;
 foreach ($data_month_lastyear as $v) {
-	
-	if($v['NUM']==0){
-		$numberMonth[$v['COUNTRY_ID']] = '';
-	}else{
-		$numberMonth[$v['COUNTRY_ID']] = $i++;
-	}
+	$numberMonth[$v['COUNTRY_ID']] = $i++;
 }
 ?>
 <style>
@@ -44,12 +33,6 @@ foreach ($data_month_lastyear as $v) {
 		background: #70D3DE;
 	}
 
-	table,
-	td,
-	th {
-		border: 1px solid black;
-	}
-
 	.radiusTable2 thead th {
 		background: #FACE74;
 	}
@@ -59,35 +42,30 @@ foreach ($data_month_lastyear as $v) {
 	}
 </style>
 
-<!-- <table>
+<table style="width:100%">
 	<tr>
 		<td><b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b></td>
 	</tr>
 	<tr>
-		<td>
-			<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายสัญชาติ วันที่ : 
-		<?php echo $Mydate->date_eng2thai($to_date, 543); ?></b>
+		<td class="headderTable">
+			<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายสัญชาติ วันที่ :
+				<?php echo $Mydate->date_eng2thai($to_date, 543); ?></b>
 		</td>
 	</tr>
-</table> -->
-<div>
-	<b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b>
-</div>
-<div style="text-align:center">
-	<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายสัญชาติ วันที่ :
-		<?php echo $Mydate->date_eng2thai($to_date, 543); ?></b>
-</div>
-<div style="text-align:center;" class="py-2 pt-4">
-	<b>ประจำวันที่ <?php echo $Mydate->date_eng2thai($to_date, 543); ?></b>
-</div>
-<table class="table table-striped table-bordered radiusTable1" id="table1" style="width:100%;">
+</table>
+<table border="1" class="table table-striped table-bordered radiusTable1" id="table1" style="width:100%;">
 	<thead>
 		<tr>
-			<th>ลำดับ<br><?php echo $year + 543; ?></th>
-			<th>ลำดับ<br><?php echo $year + 542; ?></th>
-			<th>สัญชาติ</th>
-			<th>จำนวนนักท่องเที่ยว</th>
-			<th>สัดส่วน</th>
+			<th colspan="5">
+				<b>ประจำวันที่ <?php echo $Mydate->date_eng2thai($to_date, 543); ?></b>
+			</th>
+		</tr>
+		<tr>
+			<th style="background:#70D3DE;border: 1px solid black ;">ลำดับ<br><?php echo $year + 543; ?></th>
+			<th style="background:#70D3DE;border: 1px solid black ;">ลำดับ<br><?php echo $year + 542; ?></th>
+			<th style="background:#70D3DE;border: 1px solid black ;">สัญชาติ</th>
+			<th style="background:#70D3DE;border: 1px solid black ;">จำนวนนักท่องเที่ยว</th>
+			<th style="background:#70D3DE;border: 1px solid black ;">สัดส่วน</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -129,25 +107,25 @@ foreach ($data_month_lastyear as $v) {
 			<td style="text-align:right;"> <?php echo number_format($sum_other); ?> </td>
 			<td style="text-align:center;"> <?php echo number_format($sum_other / $sumMonth * 100, 2); ?> %</td>
 		</tr>
+		<tr style="border:0px">
+			<td colspan="5">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td>
+		</tr>
 
 	</tfoot>
 <?php } ?>
 </table>
-<span>
-	* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)
-</span>
 <?php if ($export_type == 'pdf') { ?><pagebreak> <?php } ?>
-	<div style="text-align:center;" class="py-2 pt-4">
-		<b>สะสม วันที่ 1 ม.ค. - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></b>
-	</div>
-	<table class="table table-striped table-bordered radiusTable2" id="table2" style="width:100%;">
+	<table border="1" class="table table-striped table-bordered radiusTable2" id="table2" style="width:100%;">
 		<thead>
 			<tr>
-				<th>ลำดับ<br><?php echo $year + 543; ?></th>
-				<th>ลำดับ<br><?php echo $year + 542; ?></th>
-				<th>สัญชาติ</th>
-				<th>จำนวนนักท่องเที่ยว</th>
-				<th>สัดส่วน</th>
+				<th colspan="5"><b>สะสม วันที่ 1 ม.ค. - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></b></th>
+			</tr>
+			<tr>
+				<th style="background:#FACE74;border: 1px solid black ;">ลำดับ<br><?php echo $year + 543; ?></th>
+				<th style="background:#FACE74;border: 1px solid black ;">ลำดับ<br><?php echo $year + 542; ?></th>
+				<th style="background:#FACE74;border: 1px solid black ;">สัญชาติ</th>
+				<th style="background:#FACE74;border: 1px solid black ;">จำนวนนักท่องเที่ยว</th>
+				<th style="background:#FACE74;border: 1px solid black ;">สัดส่วน</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -187,10 +165,9 @@ foreach ($data_month_lastyear as $v) {
 				<td style="text-align:right;"> <?php echo number_format($sum_other); ?> </td>
 				<td style="text-align:center;"> <?php echo number_format($sum_other / $sumMonth * 100, 2); ?> %</td>
 			</tr>
-
+			<tr style="border:0px">
+				<td colspan="5">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td>
+			</tr>
 		</tfoot>
 	<?php } ?>
 	</table>
-	<span>
-		* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)
-	</span>

@@ -7,26 +7,26 @@
 		background: #70D3DE;
 	}
 
-	table,
-	td,
-	th {
-		border: 1px solid black;
+	.headderTable {
+		text-align: center;
 	}
 </style>
-<div style="text-align:left">
-	<b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b><br>
-
-</div>
-<div style="text-align:center">
-	<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทยรายวัน รายด่าน </b>
-</div>
-
-<table class="table table-striped table-bordered radiusTable1" style="width:100%">
+<table style="width:100%">
+	<tr>
+		<td><b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b></td>
+	</tr>
+	<tr>
+		<td class="headderTable">
+			<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทยรายวัน รายด่าน </b>
+		</td>
+	</tr>
+</table>
+<table border="1" class="table table-striped table-bordered radiusTable1" style="width:100%">
 	<thead>
 		<tr>
-			<th>ด่าน</th>
+			<th style="background:#70D3DE;border: 1px solid black ;">ด่าน</th>
 			<?php foreach ($period as $d) {
-				echo "<th>{$Mydate->date_eng2thai($d, 543, 'S', 'S')}</th>";
+				echo "<th style='background:#70D3DE;border: 1px solid black ;'>{$Mydate->date_eng2thai($d, 543, 'S', 'S')}</th>";
 			} ?>
 		</tr>
 	</thead>
