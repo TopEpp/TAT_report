@@ -16,78 +16,59 @@ $report_date = $Mydate->date_eng2thai($to_date, 543);
 $numberDay = $numberMonth = array();
 $i = 1;
 foreach ($data_day_lastyear as $v) {
-	
-	if($v['NUM']==0){
-		$numberDay[$v['PORT_ID']] = '';
-	}else{
-		$numberDay[$v['PORT_ID']] = $i++;
-	}
-	
+	$numberDay[$v['PORT_ID']] = $i++;
 }
 
 $i = 1;
 foreach ($data_month_lastyear as $v) {
-	
-	if($v['NUM']==0){
-		$numberMonth[$v['PORT_ID']] = '';
-	}else{
-		$numberMonth[$v['PORT_ID']] = $i++;
-	}
+	$numberMonth[$v['PORT_ID']] = $i++;
 }
 ?>
 <style>
 	.radiusTable1 {
 		border-collapse: collapse;
+		/* border: 1px solid black; */
 	}
 
 	.radiusTable1 thead th {
-		background: #70D3DE;
+		background: #70d3de;
 	}
 
-	table,
-	td,
-	th {
-		border: 1px solid black;
+	.headderTable {
+		text-align: center;
 	}
 
-	.radiusTable2 thead th {
-		background: #FACE74;
+	.tbl2 thead th {
+		background: #face74;
 	}
 
-	.radiusTable2 {
+	.tbl2 {
 		border-collapse: collapse;
 	}
 </style>
 
-<div>
-	<b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b>
-</div>
-<div style="text-align:center">
-	<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน วันที่ :
-		<?php echo $Mydate->date_eng2thai($to_date, 543); ?></b>
-</div>
-<!-- <table style="width:100%">
+<table style="width:100%">
 	<tr>
 		<td><b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b></td>
 	</tr>
-	<tr >
-		<td style="text-align:center">
-			<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน วันที่ : 
-		<?php echo $Mydate->date_eng2thai($to_date, 543); ?></b>
+	<tr>
+		<td class="headderTable">
+			<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน วันที่ :
+				<?php echo $Mydate->date_eng2thai($to_date, 543); ?></b>
 		</td>
 	</tr>
-</table> -->
-<div style="text-align:center;" class="py-2 pt-4">
-	ประจำวันที่ <?php echo $Mydate->date_eng2thai($to_date, 543); ?>
-</div>
-<table class="table table-striped table-bordered radiusTable1" id="table1" style="width:100%">
-	<thead>
+</table>
+<table border="1" class="table table-striped table-bordered radiusTable1" id="table1" style="width:100%;border-collapse:collapse">
+	<thead bgcolor='#70d3de'>
 		<tr>
-			<th>ลำดับ<br><?php echo $year + 543; ?></th>
-			<th>ลำดับ<br><?php echo $year + 542; ?></th>
-			<th>ด่าน</th>
-			<th>จำนวนนักท่องเที่ยว</th>
-			<th>สัดส่วน</th>
+			<th colspan="5">ประจำวันที่ <?php echo $Mydate->date_eng2thai($to_date, 543); ?></th>
+		</tr>
+		<tr>
+			<th style="background:#70D3DE;border: 1px solid black ;">ลำดับ<br><?php echo $year + 543; ?></th>
+			<th style="background:#70D3DE;border: 1px solid black ;">ลำดับ<br><?php echo $year + 542; ?></th>
+			<th style="background:#70D3DE;border: 1px solid black ;">ด่าน</th>
+			<th style="background:#70D3DE;border: 1px solid black ;">จำนวนนักท่องเที่ยว</th>
+			<th style="background:#70D3DE;border: 1px solid black ;">สัดส่วน</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -116,25 +97,25 @@ foreach ($data_month_lastyear as $v) {
 			</tr>
 
 		<?php } ?>
+		<tr style="border:0px">
+			<td colspan="5">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td>
+		</tr>
 	</tbody>
 </table>
-<span>
-	* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td>
-</span>
 
 <?php if ($export_type == 'pdf') { ?><pagebreak> <?php } ?>
 
-	<div style="text-align:center;">
-		สะสม วันที่ 1 ม.ค. - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?>
-	</div>
-	<table class="table table-striped radiusTable2" id="table2" style="width:100%;">
+	<table border="1" class="table table-striped table-bordered tbl2" id="table2" style="width:100%">
 		<thead>
+			<tr class="headderTable">
+				<th colspan="5">สะสม วันที่ 1 ม.ค. - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></th>
+			</tr>
 			<tr>
-				<th>ลำดับ<br><?php echo $year + 543; ?></th>
-				<th>ลำดับ<br><?php echo $year + 542; ?></th>
-				<th>ด่าน</th>
-				<th>จำนวนนักท่องเที่ยว</th>
-				<th>สัดส่วน</th>
+				<th style="background:#face74;border: 1px solid black ;">ลำดับ<br><?php echo $year + 543; ?></th>
+				<th style="background:#face74;border: 1px solid black ;">ลำดับ<br><?php echo $year + 542; ?></th>
+				<th style="background:#face74;border: 1px solid black ;">ด่าน</th>
+				<th style="background:#face74;border: 1px solid black ;">จำนวนนักท่องเที่ยว</th>
+				<th style="background:#face74;border: 1px solid black ;">สัดส่วน</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -162,8 +143,8 @@ foreach ($data_month_lastyear as $v) {
 										} ?> %</td>
 				</tr>
 			<?php } ?>
+			<tr style="border:0px">
+				<td colspan="5">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td>
+			</tr>
 		</tbody>
 	</table>
-	<span>
-		* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)
-	</span>

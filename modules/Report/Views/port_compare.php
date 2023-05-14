@@ -8,7 +8,6 @@
 		border-radius: 1em;
 		overflow: hidden;
 	}
-
 	.radiusTable1 tbody tr:nth-of-type(odd) {
 		background: #D6EFF2;
 	}

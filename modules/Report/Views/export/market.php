@@ -7,10 +7,8 @@
 		background: rgba(253, 163, 169, 1);
 	}
 
-	table,
-	td,
-	th {
-		border: 1px solid black;
+	.headderTable {
+		text-align: center;
 	}
 
 	.radiusTable2 thead th {
@@ -21,24 +19,30 @@
 		border-collapse: collapse;
 	}
 </style>
-<div>
-	<b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b>
-</div>
-<div style="text-align:center">
-	<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย จำแนกรายตลาด (ตลาดระยะใกล้ - ตลาดระยะไกล)</b>
-</div>
-<div style="text-align:center">
-	<b>
-		ตลาดระยะใกล้ (Short Haul)
-	</b>
-</div>
-<table class="table table-bordered table-striped radiusTable1" style="width:100%">
+<table style="width:100%">
+	<tr>
+		<td>
+			<b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b>
+		</td>
+	</tr>
+	<tr>
+		<td class="headderTable">
+			<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย จำแนกรายตลาด (ตลาดระยะใกล้ - ตลาดระยะไกล)
+			</b>
+		</td>
+	</tr>
+</table>
+
+<table border="1" class="table table-bordered table-striped radiusTable1" style="width:100%">
 	<thead>
 		<tr>
-			<th>ลำดับ</th>
-			<th>สัญชาติ</th>
-			<th>จำนวนนักท่องเที่ยว</th>
-			<th>สัดส่วน</th>
+			<th colspan="4">ตลาดระยะใกล้ (Short Haul)</th>
+		</tr>
+		<tr>
+			<th style="background:#fda3a9;border: 1px solid black ;">ลำดับ</th>
+			<th style="background:#fda3a9;border: 1px solid black ;">สัญชาติ</th>
+			<th style="background:#fda3a9;border: 1px solid black ;">จำนวนนักท่องเที่ยว</th>
+			<th style="background:#fda3a9;border: 1px solid black ;">สัดส่วน</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -60,19 +64,16 @@
 	</tbody>
 </table>
 <?php if ($export_type == 'pdf') { ?><pagebreak> <?php } ?>
-	<div style="text-align:center">
-		<b>
-			ตลาดระยะไกล (Long Haul)
-		</b>
-	</div>
-	<table class="table table-bordered table-striped radiusTable2" style="width:100%">
+	<table border="1" class="table table-bordered table-striped radiusTable2" style="width:100%">
 		<thead>
-
 			<tr>
-				<th>ลำดับ</th>
-				<th>สัญชาติ</th>
-				<th>จำนวนนักท่องเที่ยว</th>
-				<th>สัดส่วน</th>
+				<th colspan="4">ตลาดระยะไกล (Long Haul)</th>
+			</tr>
+			<tr>
+				<th style="background:#937DFF;border: 1px solid black ;">ลำดับ</th>
+				<th style="background:#937DFF;border: 1px solid black ;">สัญชาติ</th>
+				<th style="background:#937DFF;border: 1px solid black ;">จำนวนนักท่องเที่ยว</th>
+				<th style="background:#937DFF;border: 1px solid black ;">สัดส่วน</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -92,5 +93,10 @@
 					<td align="right"><?php echo number_format($ratio, 2); ?></td>
 				</tr>
 			<?php } ?>
+			<tr style="border:0px">
+				<td colspan="5">
+					<b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b>
+				</td>
+			</tr>
 		</tbody>
 	</table>
