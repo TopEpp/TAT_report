@@ -2,14 +2,14 @@
 
 <!-- content -->
 <?php $this->section('content') ?>
-<div class="row" style="padding-top: 50px;">
+<div class="row">
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header">Import Raw Data</div>
   			<div class="card-body">
   				<form action="<?= base_url('import/import_file'); ?>" method="post" id="form_import" class="needs-validation" enctype="multipart/form-data">
 				
-				<div class="row">
+				        <div class="row">
                 	<div class="col-md-2">
                 		Report Date
                 	</div>
@@ -45,13 +45,14 @@
 			<div class="card-header">
         <div class="row">
             <div class="col-md-4 col-4">Raw Data</div>
+            <div class="col-md-4 col-4"></div>
             <div class="col-md-2 col-2" style="text-align:right; padding-top: 5px;">
               ข้อมูลวันที่ : 
             </div>
             <div class="col-md-2 col-2">
               <input type="text" id="data_date" name="data_date" class="form-control date_picker" value="<?php echo $to_date_label;?>" >
             </div>
-            <div class="col-md-4 col-4"></div>
+            
           </div>
       </div>
   			<div class="card-body">
