@@ -278,7 +278,7 @@
 								<div style="padding:10px;">
 									<div style="text-align: center;">
 										<span style="font-weight:bold;">จำแนกรายด่าน</span><br>
-										<span style="font-size:0.8em">สะสม วันที่ <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
+										<span style="font-size:18em">สะสม วันที่ <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
 									</div>
 									<hr>
 									<table style="width: 100%;">
