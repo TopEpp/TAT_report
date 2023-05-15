@@ -358,7 +358,7 @@ class Report extends BaseController
 		$this->response->setHeader('Content-Type', 'application/pdf');
 		$mpdf = new \Mpdf\Mpdf([
 			'default_font' => 'tatsana',
-			'default_font_size' => 12,
+			'default_font_size' => 10,
 			'mode' => 'utf-8',
 			'format' => 'A4',
 			'margin_top' => 10,

@@ -90,7 +90,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 
 			$padding_region = $level * 10;
 			$alink = '';
-			if (!empty($country[$re['MD_STD_REG_ID']])) {
+			if (!empty($country[$re['MD_STD_REG_ID']])  && $re['IS_OTHERS'] != 'Y' ) {
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
@@ -102,7 +102,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 			echo '</tr>';
 
 
-			if (!empty($country[$re['MD_STD_REG_ID']])) {
+			if (!empty($country[$re['MD_STD_REG_ID']])  && $re['IS_OTHERS'] != 'Y' ) {
 				foreach ($country[$re['MD_STD_REG_ID']] as $co) {
 					$compare = '';
 					$num1 = @$data1[$co['COUNTRYID']]['NUM'];
