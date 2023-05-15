@@ -1,16 +1,4 @@
-<style>
-	.radiusTable1 {
-		border-collapse: collapse;
-	}
-
-	.radiusTable1 thead th {
-		background: rgba(55, 159, 166, 1);
-	}
-
-	.headderTable {
-		text-align: center;
-	}
-</style>
+<?php include_once("export_css.php"); ?>
 
 <table style="width:100%">
 	<tr>
@@ -24,7 +12,7 @@
 		</td>
 	</tr>
 </table>
-<table border="1" class="table table-striped table-bordered radiusTable1" style="width:100%">
+<table border="1" class="table table-striped table-bordered tbl_nation_compare" style="width:100%">
 	<thead>
 		<tr>
 			<th style="background:#369fa7;border: 1px solid black ;">Nation</th>

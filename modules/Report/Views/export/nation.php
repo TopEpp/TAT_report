@@ -1,3 +1,4 @@
+<?php include_once("export_css.php"); ?>
 <?php
 $sumDay = 0;
 foreach ($data_day as $k => $subArray) {
@@ -24,24 +25,6 @@ foreach ($data_month_lastyear as $v) {
 	$numberMonth[$v['COUNTRY_ID']] = $i++;
 }
 ?>
-<style>
-	.radiusTable1 {
-		border-collapse: collapse;
-	}
-
-	.radiusTable1 thead th {
-		background: #70D3DE;
-	}
-
-	.radiusTable2 thead th {
-		background: #FACE74;
-	}
-
-	.radiusTable2 {
-		border-collapse: collapse;
-	}
-</style>
-
 <table style="width:100%">
 	<tr>
 		<td><b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b></td>
@@ -53,10 +36,10 @@ foreach ($data_month_lastyear as $v) {
 		</td>
 	</tr>
 </table>
-<table border="1" class="table table-striped table-bordered radiusTable1" id="table1" style="width:100%;">
+<table border="1" class="table table-striped table-bordered tbl_nation" id="table1" style="width:100%;">
 	<thead>
 		<tr>
-			<th colspan="5">
+			<th colspan="5" style="background:#FFFFFF;border: 0px;">
 				<b>ประจำวันที่ <?php echo $Mydate->date_eng2thai($to_date, 543); ?></b>
 			</th>
 		</tr>
@@ -87,7 +70,7 @@ foreach ($data_month_lastyear as $v) {
 					}
 
 		?>
-					<tr style="background-color: <?= ($k % 2 == 0) ? 'white' : '#D6EFF2' ?>;">
+					<tr>
 						<td align="center"> <b><?php echo $i++ ?></b> </td>
 						<td align="center"> <?php echo @$numberDay[$v['COUNTRY_ID']] ?> </td>
 						<td> <?php echo $v['COUNTRY_NAME_EN'] ?> </td>
@@ -115,10 +98,13 @@ foreach ($data_month_lastyear as $v) {
 <?php } ?>
 </table>
 <?php if ($export_type == 'pdf') { ?><pagebreak> <?php } ?>
-	<table border="1" class="table table-striped table-bordered radiusTable2" id="table2" style="width:100%;">
+	<table border="1" class="table table-striped table-bordered tbl2_nation" id="table2" style="width:100%;">
 		<thead>
 			<tr>
-				<th colspan="5"><b>สะสม วันที่ 1 ม.ค. - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></b></th>
+				<th colspan="5" style="background:#FFFFFF;border: 0px;">
+					<b>สะสม วันที่ 1 ม.ค. - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?>
+					</b>
+				</th>
 			</tr>
 			<tr>
 				<th style="background:#FACE74;border: 1px solid black ;">ลำดับ<br><?php echo $year + 543; ?></th>
@@ -145,7 +131,7 @@ foreach ($data_month_lastyear as $v) {
 							}
 						}
 			?>
-						<tr style="background-color: <?= ($k % 2 == 0) ? 'white' : '#FFE4C8' ?>;">
+						<tr>
 							<td align="center"> <b><?php echo $i++ ?></b> </td>
 							<td align="center"> <?php echo @$numberMonth[$v['COUNTRY_ID']] ?> </td>
 							<td> <?php echo $v['COUNTRY_NAME_EN'] ?> </td>

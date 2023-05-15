@@ -1,16 +1,4 @@
-<style>
-	.radiusTable1 {
-		border-collapse: collapse;
-	}
-
-	.radiusTable1 thead th {
-		background: #70D3DE;
-	}
-
-	.headderTable {
-		text-align: center;
-	}
-</style>
+<?php include_once("export_css.php"); ?>
 <table style="width:100%">
 	<tr>
 		<td><b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b></td>
@@ -21,7 +9,7 @@
 		</td>
 	</tr>
 </table>
-<table border="1" class="table table-striped table-bordered radiusTable1" style="width:100%">
+<table border="1" class="table table-striped table-bordered tbl_nation_compare" style="width:100%">
 	<thead>
 		<tr>
 			<th style="background:#70D3DE;border: 1px solid black ;">ด่าน</th>

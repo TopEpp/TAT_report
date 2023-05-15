@@ -1,24 +1,4 @@
-<style>
-	.radiusTable1 {
-		border-collapse: collapse;
-	}
-
-	.radiusTable1 thead th {
-		background: rgba(253, 163, 169, 1);
-	}
-
-	.headderTable {
-		text-align: center;
-	}
-
-	.radiusTable2 thead th {
-		background: #937DFF;
-	}
-
-	.radiusTable2 {
-		border-collapse: collapse;
-	}
-</style>
+<?php include_once("export_css.php"); ?>
 <table style="width:100%">
 	<tr>
 		<td>
@@ -33,7 +13,7 @@
 	</tr>
 </table>
 
-<table border="1" class="table table-bordered table-striped radiusTable1" style="width:100%">
+<table border="1" class="table table-bordered table-striped tbl_market1" style="width:100%">
 	<thead>
 		<tr>
 			<th colspan="4">ตลาดระยะใกล้ (Short Haul)</th>
@@ -64,7 +44,7 @@
 	</tbody>
 </table>
 <?php if ($export_type == 'pdf') { ?><pagebreak> <?php } ?>
-	<table border="1" class="table table-bordered table-striped radiusTable2" style="width:100%">
+	<table border="1" class="table table-bordered table-striped tbl_market2" style="width:100%">
 		<thead>
 			<tr>
 				<th colspan="4">ตลาดระยะไกล (Long Haul)</th>
