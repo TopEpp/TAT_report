@@ -139,9 +139,9 @@ class Main extends BaseController{
 		$data['SumChartData'] = $Model->getSumChart($end_date);
 		$data['api_code'] = $this->Api_Code;
 
-		return view('Modules\Main\Views\export\dashboard',$data);
+		// return view('Modules\Main\Views\export\dashboard',$data);
 
-		// $this->export_pdf('Modules\Main\Views\export\dashboard',$data);
+		$this->export_pdf('Modules\Main\Views\export\dashboard',$data);
 	}
 
 	################## EXPORT ##################
