@@ -1,16 +1,4 @@
-<style>
-	.tblport_compare {
-		border-collapse: collapse;
-	}
-
-	.tblport_compare thead th {
-		background: #70d3de;
-	}
-
-	.headderTable {
-		text-align: center;
-	}
-</style>
+<?php include_once("export_css.php"); ?>
 <table style="width:100%">
 	<tr>
 		<td><b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b></td>
@@ -22,7 +10,7 @@
 	</tr>
 </table>
 <?php if (!empty($country_row) && !empty($port_colunm)) { ?>
-	<table border="1" style="width:100%" class="table table-striped table-bordered tblport_compare">
+	<table border="1" style="width:100%" class="table table-striped table-bordered tbl_nation">
 		<thead>
 			<tr>
 				<th rowspan="2" style="background:#379FA6;border: 1px solid black ;">Nation</th>

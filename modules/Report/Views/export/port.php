@@ -1,3 +1,4 @@
+<?php include_once("export_css.php"); ?>
 <?php
 $sumDay = 0;
 foreach ($data_day as $k => $subArray) {
@@ -25,26 +26,7 @@ foreach ($data_month_lastyear as $v) {
 }
 ?>
 <style>
-	.radiusTable1 {
-		border-collapse: collapse;
-		/* border: 1px solid black; */
-	}
 
-	.radiusTable1 thead th {
-		background: #70d3de;
-	}
-
-	.headderTable {
-		text-align: center;
-	}
-
-	.tbl2 thead th {
-		background: #face74;
-	}
-
-	.tbl2 {
-		border-collapse: collapse;
-	}
 </style>
 
 <table style="width:100%">
@@ -58,10 +40,10 @@ foreach ($data_month_lastyear as $v) {
 		</td>
 	</tr>
 </table>
-<table border="1" class="table table-striped table-bordered radiusTable1" id="table1" style="width:100%;border-collapse:collapse">
+<table border="1" class="table table-striped table-bordered tbl_nation" id="table1" style="width:100%;border-collapse:collapse">
 	<thead bgcolor='#70d3de'>
-		<tr>
-			<th colspan="5">ประจำวันที่ <?php echo $Mydate->date_eng2thai($to_date, 543); ?></th>
+		<tr class="headderTable">
+			<th colspan="5" style="background:#FFFFFF;border: 0px;">ประจำวันที่ <?php echo $Mydate->date_eng2thai($to_date, 543); ?></th>
 		</tr>
 		<tr>
 			<th style="background:#70D3DE;border: 1px solid black ;">ลำดับ<br><?php echo $year + 543; ?></th>
@@ -105,10 +87,11 @@ foreach ($data_month_lastyear as $v) {
 
 <?php if ($export_type == 'pdf') { ?><pagebreak> <?php } ?>
 
-	<table border="1" class="table table-striped table-bordered tbl2" id="table2" style="width:100%">
+	<table border="1" class="table table-striped table-bordered tbl2_nation" id="table2" style="width:100%">
 		<thead>
 			<tr class="headderTable">
-				<th colspan="5">สะสม วันที่ 1 ม.ค. - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></th>
+				<th colspan="5" style="background:#FFFFFF;border: 0px;">สะสม วันที่ 1 ม.ค. - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?>
+				</th>
 			</tr>
 			<tr>
 				<th style="background:#face74;border: 1px solid black ;">ลำดับ<br><?php echo $year + 543; ?></th>
