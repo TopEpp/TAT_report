@@ -21,7 +21,7 @@
 
 <div class="row">
 	<div class="col-6">
-		<div class="card" style="background-image: url('<?php echo base_url('public/img/bg_info.png') ?>'); background-repeat: no-repeat; background-position: bottom;background-position-x:0 ">
+		<div class="card" style="background-image: url('<?php echo base_url('public/img/bg_info.png') ?>'); background-repeat: no-repeat; background-position: bottom;background-position-x:0;">
 			<div class="card-body">
 				<div class="row">
 					<div class="col-md-4 col-4" style="text-align:center;"><img src="<?php echo base_url('public/img/icon_info1.png') ?>"></div>
@@ -59,7 +59,7 @@
 			<div class="card-header">จำนวนนักท่องเที่ยวรายวัน (คน)</div>
 			<div class="card-body">
 				<div class="text-center" id="htmltoimage_chart_daily" style="height:220px; padding:15px;">
-					<img src="<?php echo base_url('public/uploads/main/'.$to_date.'chart_daily.png')?>" style="width: 100%;">
+					<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_daily.png') ?>" style="width: 100%;">
 				</div>
 				<div style="overflow: auto;">
 					<table class="table table-striped table-bordered">
@@ -269,193 +269,201 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-12">
-						
-					<div id="resultsTable">
 
-            		<div class="table-responsive" style="height:440px; overflow:auto; margin-bottom: 10px;">
-						<table class="table table-striped " >
-							<thead>
-								<tr>
-									<th>Region</th>
-									<th><?php echo $Mydate->date_eng2thai($to_date, 543,'S','S')?></th>
-									<th><?php echo $Mydate->date_eng2thai($start_date_label, 543,'S','S')?>  -  <?php echo $Mydate->date_eng2thai($to_date, 543,'S','S')?></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td style="padding-left: 5px;">ASIA</td>
-									<td align="right"><?php echo number_format(@$SumRegionDateData[13]+@$SumRegionDateData[15]+@$SumRegionDateData[38]+@$SumRegionDateData[23])?></td>
-									<td align="right"><?php echo number_format(@$SumRegionMonthData[13]+@$SumRegionMonthData[15]+@$SumRegionMonthData[38]+@$SumRegionDateData[23])?></td>
-								</tr>
-								<tr style="background: rgb(244, 119, 128 , 0.7);">
-									<td style="padding-left: 5px;">ASEAN</td>
-									<td align="right"><?php echo number_format(@$SumRegionDateData[13])?></td>
-									<td align="right"><?php echo number_format(@$SumRegionMonthData[13])?></td>
-								</tr>
-								<?php foreach($country_region[13] as $c){ ?>
-									<tr class="region_13 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<tr style="background: rgb(36, 28, 136, 0.7);">
-									<td style="padding-left: 5px;">NORTH-EAST ASIA</td>
-									<td align="right"><?php echo number_format(@$SumRegionDateData[15]+@$SumRegionDateData[38])?></td>
-									<td align="right"><?php echo number_format(@$SumRegionMonthData[15]+@$SumRegionDateData[38])?></td>
-								</tr>
-								<?php foreach($country_region[15] as $c){ ?>
-									<tr class="region_15 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<?php foreach($country_region[38] as $c){ ?>
-									<tr class="region_15 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<tr style="background: rgb(200, 11, 11, 0.7);">
-									<td style="padding-left: 5px;">SOUTH ASIA</td>
-									<td align="right"><?php echo number_format(@$SumRegionDateData[23])?></td>
-									<td align="right"><?php echo number_format(@$SumRegionMonthData[23])?></td>
-								</tr>
-								<?php foreach($country_region[23] as $c){ ?>
-									<tr class="region_23 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<tr style="background: rgb(112, 214, 103, 0.7);">
-									<td style="padding-left: 5px;">EUROPE</td>
-									<td align="right"><?php echo number_format(@$SumRegionDateData[2]+@$SumRegionDateData[44])?></td>
-									<td align="right"><?php echo number_format(@$SumRegionMonthData[2]+@$SumRegionDateData[44])?></td>
-								</tr>
-								<?php foreach($country_region[2] as $c){ ?>
-									<tr class="region_2 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<?php foreach($country_region[44] as $c){ ?>
-									<tr class="region_2 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<tr style="background: rgb(255, 230, 0, 0.7);">
-									<td style="padding-left: 5px;">EAST EUROPE</td>
-									<td align="right"><?php echo number_format(@$SumRegionDateData[37]+@$SumRegionDateData[36])?></td>
-									<td align="right"><?php echo number_format(@$SumRegionMonthData[37]+@$SumRegionMonthData[36])?></td>
-								</tr>
-								<?php foreach($country_region[37] as $c){ ?>
-									<tr class="region_37 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<?php foreach($country_region[36] as $c){ ?>
-									<tr class="region_37 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<tr style="background: rgb(57, 165, 237, 0.7);">
-									<td style="padding-left: 5px;">THE AMERICAS</td>
-									<td align="right"><?php echo number_format(@$SumRegionDateData[7]+@$SumRegionDateData[45])?></td>
-									<td align="right"><?php echo number_format(@$SumRegionMonthData[7]+@$SumRegionDateData[45])?></td>
-								</tr>
-								<?php foreach($country_region[7] as $c){ ?>
-									<tr class="region_7 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<?php foreach($country_region[45] as $c){ ?>
-									<tr class="region_7 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<tr style="background: rgb(235, 125, 64, 0.7);">
-									<td style="padding-left: 5px;">OCEANIA</td>
-									<td align="right"><?php echo number_format(@$SumRegionDateData[5]+@$SumRegionDateData[46])?></td>
-									<td align="right"><?php echo number_format(@$SumRegionMonthData[5]+@$SumRegionDateData[46])?></td>
-								</tr>
-								<?php foreach($country_region[5] as $c){ ?>
-									<tr class="region_5 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<?php foreach($country_region[46] as $c){ ?>
-									<tr class="region_5 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<tr style="background: rgb(151, 14, 173, 0.7);">
-									<td style="padding-left: 5px;">MIDDLE EAST</td>
-									<td align="right"><?php echo number_format(@$SumRegionDateData[20])?></td>
-									<td align="right"><?php echo number_format(@$SumRegionMonthData[20])?></td>
-								</tr>
-								<?php foreach($country_region[20] as $c){ ?>
-									<tr class="region_20 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<tr style="background: rgb(191, 156, 86, 0.7);">
-									<td style="padding-left: 5px;">AFRICA</td>
-									<td align="right"><?php echo number_format(@$SumRegionDateData[6]+@$SumRegionDateData[40])?></td>
-									<td align="right"><?php echo number_format(@$SumRegionMonthData[6]+@$SumRegionDateData[40])?></td>
-								</tr>
-								<?php foreach($country_region[6] as $c){ ?>
-									<tr class="region_6 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<?php foreach($country_region[40] as $c){ ?>
-									<tr class="region_6 tr_country" style="display:none">
-										<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN']?></td>
-										<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']])?></td>
-										<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']])?></td>
-									</tr>
-								<?php } ?>
-								<tr>
-									<td style="padding-left: 5px;">STATELESS</td>
-									<td align="right"><?php echo number_format(@$SumRegionDateData[29])?></td>
-									<td align="right"><?php echo number_format(@$SumRegionMonthData[29])?></td>
-								</tr>
-							</tbody>
-							<tfoot>
-								<tr style="background: #70D3DE;font-weight: bolder;">
-									<td style="padding-left: 5px;">Total</td>
-									<td align="right">
-										<?php $sumDate = 0; foreach($SumRegionDateData as $v){ $sumDate += $v;}  echo number_format($sumDate)?> 
-									</td>
-									<td align="right">
-										<?php $sumMonth = 0; foreach($SumRegionMonthData as $v){ $sumMonth += $v;}  echo number_format($sumMonth)?> 
-									</td>
-								</tr>
-							</tfoot>
-						</table>
-						</div>
+						<div id="resultsTable">
+
+							<div class="table-responsive" style="height:440px; overflow:auto; margin-bottom: 10px;">
+								<table class="table table-striped ">
+									<thead>
+										<tr>
+											<th>Region</th>
+											<th><?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></th>
+											<th><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td style="padding-left: 5px;">ASIA</td>
+											<td align="right"><?php echo number_format(@$SumRegionDateData[13] + @$SumRegionDateData[15] + @$SumRegionDateData[38] + @$SumRegionDateData[23]) ?></td>
+											<td align="right"><?php echo number_format(@$SumRegionMonthData[13] + @$SumRegionMonthData[15] + @$SumRegionMonthData[38] + @$SumRegionDateData[23]) ?></td>
+										</tr>
+										<tr style="background: rgb(244, 119, 128 , 0.7);">
+											<td style="padding-left: 5px;">ASEAN</td>
+											<td align="right"><?php echo number_format(@$SumRegionDateData[13]) ?></td>
+											<td align="right"><?php echo number_format(@$SumRegionMonthData[13]) ?></td>
+										</tr>
+										<?php foreach ($country_region[13] as $c) { ?>
+											<tr class="region_13 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<tr style="background: rgb(36, 28, 136, 0.7);">
+											<td style="padding-left: 5px;">NORTH-EAST ASIA</td>
+											<td align="right"><?php echo number_format(@$SumRegionDateData[15] + @$SumRegionDateData[38]) ?></td>
+											<td align="right"><?php echo number_format(@$SumRegionMonthData[15] + @$SumRegionDateData[38]) ?></td>
+										</tr>
+										<?php foreach ($country_region[15] as $c) { ?>
+											<tr class="region_15 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<?php foreach ($country_region[38] as $c) { ?>
+											<tr class="region_15 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<tr style="background: rgb(200, 11, 11, 0.7);">
+											<td style="padding-left: 5px;">SOUTH ASIA</td>
+											<td align="right"><?php echo number_format(@$SumRegionDateData[23]) ?></td>
+											<td align="right"><?php echo number_format(@$SumRegionMonthData[23]) ?></td>
+										</tr>
+										<?php foreach ($country_region[23] as $c) { ?>
+											<tr class="region_23 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<tr style="background: rgb(112, 214, 103, 0.7);">
+											<td style="padding-left: 5px;">EUROPE</td>
+											<td align="right"><?php echo number_format(@$SumRegionDateData[2] + @$SumRegionDateData[44]) ?></td>
+											<td align="right"><?php echo number_format(@$SumRegionMonthData[2] + @$SumRegionDateData[44]) ?></td>
+										</tr>
+										<?php foreach ($country_region[2] as $c) { ?>
+											<tr class="region_2 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<?php foreach ($country_region[44] as $c) { ?>
+											<tr class="region_2 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<tr style="background: rgb(255, 230, 0, 0.7);">
+											<td style="padding-left: 5px;">EAST EUROPE</td>
+											<td align="right"><?php echo number_format(@$SumRegionDateData[37] + @$SumRegionDateData[36]) ?></td>
+											<td align="right"><?php echo number_format(@$SumRegionMonthData[37] + @$SumRegionMonthData[36]) ?></td>
+										</tr>
+										<?php foreach ($country_region[37] as $c) { ?>
+											<tr class="region_37 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<?php foreach ($country_region[36] as $c) { ?>
+											<tr class="region_37 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<tr style="background: rgb(57, 165, 237, 0.7);">
+											<td style="padding-left: 5px;">THE AMERICAS</td>
+											<td align="right"><?php echo number_format(@$SumRegionDateData[7] + @$SumRegionDateData[45]) ?></td>
+											<td align="right"><?php echo number_format(@$SumRegionMonthData[7] + @$SumRegionDateData[45]) ?></td>
+										</tr>
+										<?php foreach ($country_region[7] as $c) { ?>
+											<tr class="region_7 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<?php foreach ($country_region[45] as $c) { ?>
+											<tr class="region_7 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<tr style="background: rgb(235, 125, 64, 0.7);">
+											<td style="padding-left: 5px;">OCEANIA</td>
+											<td align="right"><?php echo number_format(@$SumRegionDateData[5] + @$SumRegionDateData[46]) ?></td>
+											<td align="right"><?php echo number_format(@$SumRegionMonthData[5] + @$SumRegionDateData[46]) ?></td>
+										</tr>
+										<?php foreach ($country_region[5] as $c) { ?>
+											<tr class="region_5 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<?php foreach ($country_region[46] as $c) { ?>
+											<tr class="region_5 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<tr style="background: rgb(151, 14, 173, 0.7);">
+											<td style="padding-left: 5px;">MIDDLE EAST</td>
+											<td align="right"><?php echo number_format(@$SumRegionDateData[20]) ?></td>
+											<td align="right"><?php echo number_format(@$SumRegionMonthData[20]) ?></td>
+										</tr>
+										<?php foreach ($country_region[20] as $c) { ?>
+											<tr class="region_20 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<tr style="background: rgb(191, 156, 86, 0.7);">
+											<td style="padding-left: 5px;">AFRICA</td>
+											<td align="right"><?php echo number_format(@$SumRegionDateData[6] + @$SumRegionDateData[40]) ?></td>
+											<td align="right"><?php echo number_format(@$SumRegionMonthData[6] + @$SumRegionDateData[40]) ?></td>
+										</tr>
+										<?php foreach ($country_region[6] as $c) { ?>
+											<tr class="region_6 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<?php foreach ($country_region[40] as $c) { ?>
+											<tr class="region_6 tr_country" style="display:none">
+												<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+												<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+											</tr>
+										<?php } ?>
+										<tr>
+											<td style="padding-left: 5px;">STATELESS</td>
+											<td align="right"><?php echo number_format(@$SumRegionDateData[29]) ?></td>
+											<td align="right"><?php echo number_format(@$SumRegionMonthData[29]) ?></td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr style="background: #70D3DE;font-weight: bolder;">
+											<td style="padding-left: 5px;">Total</td>
+											<td align="right">
+												<?php $sumDate = 0;
+												foreach ($SumRegionDateData as $v) {
+													$sumDate += $v;
+												}
+												echo number_format($sumDate) ?>
+											</td>
+											<td align="right">
+												<?php $sumMonth = 0;
+												foreach ($SumRegionMonthData as $v) {
+													$sumMonth += $v;
+												}
+												echo number_format($sumMonth) ?>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
 
 						</div>
 					</div>
@@ -464,5 +472,3 @@
 		</div>
 	</div>
 </div>
-
-
