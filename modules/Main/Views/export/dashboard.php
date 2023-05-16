@@ -1,23 +1,82 @@
 <?php include_once("export_css.php"); ?>
+
 <style type="text/css">
-	#beforeImage {
-		padding: 50px;
-		display: block;
+	#CartItem {
+		display: flex !important;
+		flex-direction: row !important;
+	}
+
+	.col3 {
+		width: 30%;
+	}
+
+	.vl {
+		border-left: 3px solid white;
+		border-left-style: dashed;
+		top: 425px;
+		height: 270px;
+		position: absolute;
+		left: 557px;
+	}
+
+	.col4 {
+		width: 20%;
+		float: left;
+		padding-top: 1%;
+	}
+
+	.col8 {
+		width: 80%;
+		float: left;
+		padding-top: 1%;
+	}
+
+	.col6 {
+		width: 25%;
+		float: left;
+		padding-top: 1%;
+	}
+
+	.col12 {
+		width: 100%;
+	}
+
+	#resultsTableForCard2 {
+		width: 200px;
+		height: 105px;
+		background: #fff1cc;
+		border-radius: 12px !important;
+		margin: auto auto;
+	}
+
+	#resultsTableForCard {
+		width: 200px;
+		height: 105px;
+		background: #a7ffff;
+		overflow: hidden !important;
+		border-radius: 12px !important;
+		margin: auto auto;
 	}
 
 	#resultsTable {
-		background: #B6E2E9;
+		height: 300px;
+		width: 210px;
+		background: #a7ffff;
+		overflow: hidden;
 		border-radius: 25px !important;
-		border-width: 5px !important;
-		border-style: solid !important;
-		border-color: #B6E2E9 !important;
-		/*  width: 90%;  */
-		padding-top: 3%;
-		margin: 0px auto;
-		float: none;
+		margin: auto auto;
+	}
+
+	#resultsTable2 {
+		width: 210px;
+		height: 300px;
+		background: #fff1cc;
+		overflow: hidden;
+		border-radius: 25px !important;
+		margin: auto auto;
 	}
 </style>
-<div class="row">
+<!-- <div class="row">
 	<div class="col-md-6" style="font-size: 1.4em;">
 		<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
 	</div>
@@ -59,7 +118,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> 
 
 <div class="row">
 	<div class="col-md-12">
@@ -102,231 +161,180 @@
 			</div>
 		</div>
 	</div>
-</div>
-<pagebreak>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="card">
-				<div class="card-header">จำนวนนักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย</div>
-				<div class="card-body">
-					<div class="row">
-						<div class="col-md-3" style="padding: 0px 15px 20px 15px;">
-							<div class="card">
-								<div class="card-body" style="background: #eaf3f4; padding: 15px 0px; border-radius: 0.35rem;">
-									<div style="padding:10px;">
-										<div style="text-align: center;">
-											<span style="font-weight:bold;">จำแนกรายสัญชาติ</span><br>
-											<span style="font-size:18px">ประจำวันที่ <?php echo $Mydate->date_eng2thai($to_date, 543) ?></span>
-										</div>
-										<hr>
-										<table style="width: 100%;">
-											<tbody>
-												<?php $c = 0;
-												foreach ($SumNatDateData as $v) {
-													$c++;
-													$flag = base_url('public/img/logotat.png');
-
-													if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
-														$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
-													}
-												?>
-													<!-- style="margin-bottom:10px; display: flex; flex-direction: row;justify-content:space-between;" -->
-													<tr>
-														<td style="padding: 6px 50px">
-															<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 52px; ">
-														</td>
-														<td style="padding: 6px 50px">
-															<span id="" style="font-weight:bold; font-size: 0.9em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
-														</td>
-														<td style="padding: 6px 50px">
-															<?php echo number_format($v['NUM']); ?>
-														</td>
-													</tr>
-													<!-- <div class="gridItem">
-
-
-													<b id="beforeImage" class="col-md-4 col-4" style="border:1px solid red;padding-top: 15px;font-weight:bold;">
-
-													</b>
-												</div> -->
-												<?php if ($c == 5) break;
-												} ?>
-											</tbody>
-										</table>
+</div> -->
+<!-- <pagebreak> -->
+<!-- <div class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header">จำนวนนักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-3" style="padding: 0px 15px 20px 15px;">
+						<div class="card">
+							<div class="card-body" style="background: #eaf3f4; padding: 15px 0px; border-radius: 0.35rem;">
+								<div style="padding:10px;">
+									<div style="text-align: center;">
+										<span style="font-weight:bold;">จำแนกรายสัญชาติ</span><br>
+										<span style="font-size:18px">ประจำวันที่ <?php echo $Mydate->date_eng2thai($to_date, 543) ?></span>
 									</div>
-									<!-- <div style="background:#70d3de; text-align:center; border-radius: 0 0 0.35rem 0.35rem; cursor: pointer; " onclick="openModalInfo(1)">
-									<i class="fa-solid fa-caret-down"></i>
-								</div> -->
+									<hr>
+									<table style="width: 100%;">
+										<tbody>
+											<?php $c = 0;
+											foreach ($SumNatDateData as $v) {
+												$c++;
+												$flag = base_url('public/img/logotat.png');
+
+												if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
+													$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
+												}
+											?>
+												<tr>
+													<td style="padding: 6px 50px">
+														<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 52px; ">
+													</td>
+													<td style="padding: 6px 50px">
+														<span id="" style="font-weight:bold; font-size: 0.9em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
+													</td>
+													<td style="padding: 6px 50px">
+														<?php echo number_format($v['NUM']); ?>
+													</td>
+												</tr>
+											<?php if ($c == 5) break;
+											} ?>
+										</tbody>
+									</table>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3" style="padding: 0px 15px 25px 15px;">
+						<div class="card">
+							<div class="card-body" style="background: #eaf3f4; padding: 15px 0px; border-radius: 0.35rem;">
+								<div style="padding:10px;">
+									<div style="text-align: center;">
+										<span style="font-weight:bold;">จำแนกรายสัญชาติ</span><br>
+										<span style="font-size:18px">สะสม วันที่ <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
+									</div>
+									<hr>
+									<table style="width: 100%;">
+										<tbody>
+											<?php $c = 0;
+											foreach ($SumNatMonthData as $v) {
+												$c++;
+												$flag = base_url('public/img/logotat.png');
+
+												if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
+													$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
+												}
+											?>
+												<tr>
+													<td style="padding: 6px 50px">
+														<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 52px;">
+													</td>
+													<td style="padding: 6px 50px">
+														<span style="font-weight:bold; font-size: 0.9em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
+													</td>
+													<td style="padding: 6px 50px">
+														<?php echo number_format($v['NUM']); ?>
+													</td>
+												</tr>
+											<?php if ($c == 5) break;
+											} ?>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-3" style="padding: 0px 15px 25px 15px;">
-							<div class="card">
-								<div class="card-body" style="background: #eaf3f4; padding: 15px 0px; border-radius: 0.35rem;">
-									<div style="padding:10px;">
-										<div style="text-align: center;">
-											<span style="font-weight:bold;">จำแนกรายสัญชาติ</span><br>
-											<span style="font-size:18px">สะสม วันที่ <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
-										</div>
-										<hr>
-										<table style="width: 100%;">
-											<tbody>
-
-
-												<?php $c = 0;
-												foreach ($SumNatMonthData as $v) {
-													$c++;
-													$flag = base_url('public/img/logotat.png');
-
-													if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
-														$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
-													}
-												?>
-													<tr>
-														<td style="padding: 6px 50px">
-															<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 52px;">
-														</td>
-														<td style="padding: 6px 50px">
-															<span style="font-weight:bold; font-size: 0.9em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
-														</td>
-														<td style="padding: 6px 50px">
-															<?php echo number_format($v['NUM']); ?>
-														</td>
-													</tr>
-													<!-- 
-												<div class="row" style="margin-bottom:10px;">
-													<div class="col-md-3 col-3">
-
-													</div>
-													<div class="col-md-5 col-5" style="padding-top: 15px;font-weight:bold;">
-
-													</div>
-													<div class="col-md-4 col-4" style="padding-top: 15px;font-weight:bold;padding-left: 0;">
-
-													</div>
-												</div> -->
-												<?php if ($c == 5) break;
-												} ?>
-											</tbody>
-										</table>
+					</div>
+					<div class="col-md-3" style="padding: 0px 15px 25px 15px;">
+						<div class="card">
+							<div class="card-body" style="background: #a2e4d8; padding: 0; border-radius: 0.35rem;">
+								<div style="padding:10px;">
+									<div style="text-align: center;">
+										<span style="font-weight:bold;">จำแนกรายด่าน</span><br>
+										<span style="font-size:18px">ประจำวันที่ <?php echo $Mydate->date_eng2thai($to_date, 543) ?></span>
 									</div>
-									<!-- <div style="background:#70d3de; text-align:center; border-radius: 0 0 0.35rem 0.35rem; cursor: pointer; " onclick="openModalInfo(2)">
-									<i class="fa-solid fa-caret-down"></i>
-								</div> -->
-
+									<hr>
+									<table style="width: 100%;">
+										<tbody>
+											<?php $c = 0;
+											foreach ($SumPortDateData as $v) {
+												$c++;  ?>
+												<tr>
+													<td style="text-align: center;padding: 10px 70px">
+														<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
+														?>
+															<img src='<?php echo base_url('public/img/airplan.png') ?>' alt='' style="height: 35px;">
+														<?php
+														} else {
+														?>
+															<img src=<?php echo base_url('public/img/building.png') ?> alt="" style="height: 35px;">
+														<?php
+														} ?>
+													</td>
+													<td style="text-align: start;padding: 10px 50px">
+														<span style="font-weight:bold; font-size: 0.85em;"><?php echo $v['PORT_NAME'] ?></span>
+													</td>
+													<td style="text-align: start;padding: 10px 50px">
+														<?php echo number_format($v['NUM']); ?>
+													</td>
+												</tr>
+											<?php if ($c == 5) break;
+											} ?>
+										</tbody>
+									</table>
 								</div>
+								<div style="background:#4598a1; text-align:center; border-radius: 0 0 0.35rem 0.35rem; cursor: pointer; " onclick="openModalInfo(3)">
+									<i class="fa-solid fa-caret-down" style="color:#fff"></i>
+								</div>
+
 							</div>
 						</div>
-						<div class="col-md-3" style="padding: 0px 15px 25px 15px;">
-							<div class="card">
-								<div class="card-body" style="background: #a2e4d8; padding: 0; border-radius: 0.35rem;">
-									<div style="padding:10px;">
-										<div style="text-align: center;">
-											<span style="font-weight:bold;">จำแนกรายด่าน</span><br>
-											<span style="font-size:18px">ประจำวันที่ <?php echo $Mydate->date_eng2thai($to_date, 543) ?></span>
-										</div>
-										<hr>
-										<table style="width: 100%;">
-											<tbody>
-												<?php $c = 0;
-												foreach ($SumPortDateData as $v) {
-													$c++;  ?>
-													<tr>
-														<td style="text-align: center;padding: 10px 70px">
-															<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
-															?>
-																<img src='<?php echo base_url('public/img/airplan.png') ?>' alt='' style="height: 35px;">
-															<?php
-															} else {
-															?>
-																<img src=<?php echo base_url('public/img/building.png') ?> alt="" style="height: 35px;">
-															<?php
-															} ?>
-														</td>
-														<td style="text-align: start;padding: 10px 50px">
-															<span style="font-weight:bold; font-size: 0.85em;"><?php echo $v['PORT_NAME'] ?></span>
-														</td>
-														<td style="text-align: start;padding: 10px 50px">
-															<?php echo number_format($v['NUM']); ?>
-														</td>
-													</tr>
-													<!-- <div class="row" style="margin-bottom:10px;">
-													<div class="col-md-3 col-3" style="text-align:center; font-size: 2.4em;">
-
-													</div>
-													<div class="col-md-5 col-5" style="padding-left:0;padding-top: 15px;font-weight:bold;">
-
-													</div>
-													<div class="col-md-4 col-4" style="padding-left:0;padding-top: 15px;font-weight:bold;">
-														
-													</div>
-												</div> -->
-												<?php if ($c == 5) break;
-												} ?>
-											</tbody>
-										</table>
+					</div>
+					<div class="col-md-3">
+						<div class="card">
+							<div class="card-body" style="background: #a2e4d8; padding: 0; border-radius: 0.35rem;">
+								<div style="padding:10px;">
+									<div style="text-align: center;">
+										<span style="font-weight:bold;">จำแนกรายด่าน</span><br>
+										<span style="font-size:18px">สะสม วันที่ <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
 									</div>
-									<div style="background:#4598a1; text-align:center; border-radius: 0 0 0.35rem 0.35rem; cursor: pointer; " onclick="openModalInfo(3)">
-										<i class="fa-solid fa-caret-down" style="color:#fff"></i>
-									</div>
-
+									<hr>
+									<table style="width: 100%;">
+										<tbody>
+											<?php $c = 0;
+											foreach ($SumPortMonthData as $v) {
+												$c++;  ?>
+												<tr>
+													<td style="text-align: center;padding: 10px 70px">
+														<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
+														?>
+															<img src='<?php echo base_url('public/img/airplan.png') ?>' alt='' style="height: 35px;">
+														<?php
+														} else {
+														?>
+															<img src=<?php echo base_url('public/img/building.png') ?> alt="" style="height: 35px;">
+														<?php
+														} ?>
+													</td>
+													<td style="text-align: start;padding: 10px 50px">
+														<span style="font-weight:bold; font-size: 0.85em;"><?php echo $v['PORT_NAME'] ?></span>
+													</td>
+													<td style="text-align: start;padding: 10px 50px">
+														<?php echo number_format($v['NUM']); ?>
+													</td>
+												</tr>
+											<?php if ($c == 5) break;
+											} ?>
+										</tbody>
+									</table>
 								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="card">
-								<div class="card-body" style="background: #a2e4d8; padding: 0; border-radius: 0.35rem;">
-									<div style="padding:10px;">
-										<div style="text-align: center;">
-											<span style="font-weight:bold;">จำแนกรายด่าน</span><br>
-											<span style="font-size:18px">สะสม วันที่ <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
-										</div>
-										<hr>
-										<table style="width: 100%;">
-											<tbody>
-												<?php $c = 0;
-												foreach ($SumPortMonthData as $v) {
-													$c++;  ?>
-													<tr>
-														<td style="text-align: center;padding: 10px 70px">
-															<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
-															?>
-																<img src='<?php echo base_url('public/img/airplan.png') ?>' alt='' style="height: 35px;">
-															<?php
-															} else {
-															?>
-																<img src=<?php echo base_url('public/img/building.png') ?> alt="" style="height: 35px;">
-															<?php
-															} ?>
-														</td>
-														<td style="text-align: start;padding: 10px 50px">
-															<span style="font-weight:bold; font-size: 0.85em;"><?php echo $v['PORT_NAME'] ?></span>
-														</td>
-														<td style="text-align: start;padding: 10px 50px">
-															<?php echo number_format($v['NUM']); ?>
-														</td>
-													</tr>
-													<!-- <div class="row" style="margin-bottom:10px;">
-													<div class="col-md-3 col-3" style="text-align:center; font-size: 2.4em;">
-
-													</div>
-													<div class="col-md-5 col-5" style="padding-left:0;padding-top: 15px;font-weight:bold;">
-
-													</div>
-													<div class="col-md-4 col-4" style="padding-left:0;padding-top: 15px;font-weight:bold;">
-
-													</div>
-												</div> -->
-												<?php if ($c == 5) break;
-												} ?>
-											</tbody>
-										</table>
-									</div>
-									<div style="background:#4598a1; text-align:center; border-radius: 0 0 0.35rem 0.35rem; cursor: pointer; " onclick="openModalInfo(4)">
-										<i class="fa-solid fa-caret-down" style="color:#fff"></i>
-									</div>
-
+								<div style="background:#4598a1; text-align:center; border-radius: 0 0 0.35rem 0.35rem; cursor: pointer; " onclick="openModalInfo(4)">
+									<i class="fa-solid fa-caret-down" style="color:#fff"></i>
 								</div>
+
 							</div>
 						</div>
 					</div>
@@ -334,119 +342,297 @@
 			</div>
 		</div>
 	</div>
-	<pagebreak>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-header">
-						<span style="font-weight:bold;">จำนวนนักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย<br>จำแนกรายภูมิภาค</span>
-					</div>
-					<div class="card-body">
-						<div class="row">
-							<div class="col-12">
+</div> -->
 
-								<div id="resultsTable">
-									<div class="table-responsive" style="height:440px; overflow:auto; margin-bottom: 10px;">
-										<table class="table table-striped ">
-											<thead>
-												<tr style="border: 0px;">
-													<th>Region</th>
-													<th><?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></th>
-													<th><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td style="padding-left: 5px;">ASIA</td>
-													<td align="right"><?php echo number_format(@$SumRegionDateData[13] + @$SumRegionDateData[15] + @$SumRegionDateData[38] + @$SumRegionDateData[23]) ?></td>
-													<td align="right"><?php echo number_format(@$SumRegionMonthData[13] + @$SumRegionMonthData[15] + @$SumRegionMonthData[38] + @$SumRegionDateData[23]) ?></td>
-												</tr>
-												<tr style="background-color: #e1979f;">
-													<td style="padding-left: 5px;">ASEAN</td>
-													<td align="right"><?php echo number_format(@$SumRegionDateData[13]) ?></td>
-													<td align="right"><?php echo number_format(@$SumRegionMonthData[13]) ?></td>
-												</tr>
+<body>
+	<table style="width: 100%;padding-bottom: 25px;">
+		<thead>
+			<tr>
+				<td style="width: 5%; text-align: center;margin: auto 0px;">
+					<img src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="" style="width: 200px;">
+				</td>
+				<td style="text-align: center; color: white;width: 90%;">
+					<p style="margin: 0px; line-height: normal; font-size: 45px;">
+						สถิตินักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย
+					</p>
+					<h3 style="margin: 0px; line-height: normal; font-size: 40;">
+						วันที่ <?php echo $Mydate->date_eng2thai($to_date, 543) ?>
+					</h3>
+					<span style="font-size: 20px;">
+						ที่มา สำนักงานตรวจคนเข้าเมือง | จัดทำโดย ด้านดิจิทัล วิจัย เเละพัฒนา
+					</span>
+				</td>
+				<td style="width: 5%;text-align: center;">
+					<img src="<?php echo base_url('public/img/amazing-th.png') ?>" alt="" style="width: 150px; padding-left: 35px;">
+				</td>
+			</tr>
+		</thead>
+	</table>
+	<!-- <table style="width: 100%;">
+		<tbody>
+			<tr>
+				<td style="width: 30%;padding: 10px 10px; ">
+					<table style="width: 100%; ">
+						<tbody style="padding: 12px;">
+							<tr style="">
+								<td style="">
 
-												<tr style="background-color: #4f57a4;">
-													<td style="padding-left: 5px;">NORTH-EAST ASIA</td>
-													<td align="right"><?php echo number_format(@$SumRegionDateData[15] + @$SumRegionDateData[38]) ?></td>
-													<td align="right"><?php echo number_format(@$SumRegionMonthData[15] + @$SumRegionDateData[38]) ?></td>
+									<div id="resultsTableForCard">
+										<table class="table">
+											<tbody style="line-height: 1.5em;">
+												<tr style="text-align: center;">
+													<td style="font-size: 25px;">
+														จำนวนนักท่องเที่ยว
+													</td>
 												</tr>
-
-												<tr style="background-color: #c24b4d;">
-													<td style="padding-left: 5px;">SOUTH ASIA</td>
-													<td align="right"><?php echo number_format(@$SumRegionDateData[23]) ?></td>
-													<td align="right"><?php echo number_format(@$SumRegionMonthData[23]) ?></td>
-												</tr>
-
-												<tr style="background-color: #85d98d;">
-													<td style="padding-left: 5px;">EUROPE</td>
-													<td align="right"><?php echo number_format(@$SumRegionDateData[2] + @$SumRegionDateData[44]) ?></td>
-													<td align="right"><?php echo number_format(@$SumRegionMonthData[2] + @$SumRegionDateData[44]) ?></td>
-												</tr>
-
-												<tr style="background-color: #85d98d;">
-													<td style="padding-left: 5px;">EAST EUROPE</td>
-													<td align="right"><?php echo number_format(@$SumRegionDateData[37] + @$SumRegionDateData[36]) ?></td>
-													<td align="right"><?php echo number_format(@$SumRegionMonthData[37] + @$SumRegionMonthData[36]) ?></td>
-												</tr>
-
-												<tr style="background-color: #e9e445;">
-													<td style="padding-left: 5px;">THE AMERICAS</td>
-													<td align="right"><?php echo number_format(@$SumRegionDateData[7] + @$SumRegionDateData[45]) ?></td>
-													<td align="right"><?php echo number_format(@$SumRegionMonthData[7] + @$SumRegionDateData[45]) ?></td>
-												</tr>
-
-												<tr style="background-color: #5eb7eb;">
-													<td style="padding-left: 5px;">OCEANIA</td>
-													<td align="right"><?php echo number_format(@$SumRegionDateData[5] + @$SumRegionDateData[46]) ?></td>
-													<td align="right"><?php echo number_format(@$SumRegionMonthData[5] + @$SumRegionDateData[46]) ?></td>
-												</tr>
-
-												<tr style="background-color: #db9b72;">
-													<td style="padding-left: 5px;">MIDDLE EAST</td>
-													<td align="right"><?php echo number_format(@$SumRegionDateData[20]) ?></td>
-													<td align="right"><?php echo number_format(@$SumRegionMonthData[20]) ?></td>
-												</tr>
-
-												<tr style="background-color: #a04dbe;">
-													<td style="padding-left: 5px;">AFRICA</td>
-													<td align="right"><?php echo number_format(@$SumRegionDateData[6] + @$SumRegionDateData[40]) ?></td>
-													<td align="right"><?php echo number_format(@$SumRegionMonthData[6] + @$SumRegionDateData[40]) ?></td>
-												</tr>
-
-												<tr style="background-color: #b2dee4;">
-													<td style="padding-left: 5px;">STATELESS</td>
-													<td align="right"><?php echo number_format(@$SumRegionDateData[29]) ?></td>
-													<td align="right"><?php echo number_format(@$SumRegionMonthData[29]) ?></td>
+												<tr style="border-radius: 12px !important;">
+													<td style="border-radius: 12px; padding: 10px; background-color: white; text-align: right; font-size: 25px;">
+														<?php echo number_format($SumDateData); ?>
+													</td>
 												</tr>
 											</tbody>
-											<tfoot>
-												<tr style="background: #70D3DE;font-weight: bolder;">
-													<td style="padding-left: 5px;">Total</td>
-													<td align="right">
-														<?php $sumDate = 0;
-														foreach ($SumRegionDateData as $v) {
-															$sumDate += $v;
-														}
-														echo number_format($sumDate) ?>
-													</td>
-													<td align="right">
-														<?php $sumMonth = 0;
-														foreach ($SumRegionMonthData as $v) {
-															$sumMonth += $v;
-														}
-														echo number_format($sumMonth) ?>
-													</td>
-												</tr>
-											</tfoot>
 										</table>
 									</div>
 
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding: 12px;"></td>
+							</tr>
+							<tr style="height: 160px; ">
+								<td style="text-align: center;font-size: 25px; background-color: #a7ffff; padding: 10px; padding-bottom: 10px; line-height: 1.5em; margin: 20px;">
+									<table style="width: 100%; border-radius: 12px !important;">
+										<tbody style="line-height: 1.5em;">
+											<tr>
+												<td style="font-size: 25px;">
+													จำนวนนักท่องเที่ยว
+												</td>
+
+											</tr>
+											<tr style="border-radius: 12px !important;">
+												<td style="border-radius: 12px; padding: 10px; background-color: white; text-align: right; font-size: 25px;">
+													<?php echo number_format($SumMonthData); ?>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+				<td style="width: 70%; padding: 5px 0px; text-align: center; font-weight: bold;font-size: 22px; color: white;">
+					จำนวนนักท่องเที่ยวรายวัน
+					<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_daily.png') ?>" style="width:100%; height:250px">
+
+				</td>
+			</tr>
+		</tbody>
+	</table> -->
+	<div class="col12">
+		<div class="col4">
+			<div id="resultsTableForCard" style="margin-bottom: 10px;">
+				<table class="table">
+					<tbody style="line-height: 1.5em;">
+						<tr style="text-align:center; border: 0;">
+							<td style="padding: 10px 0px; font-size: 15px; text-align: center; font-weight: bold;">
+								จำนวนนักท่องเที่ยว
+							</td>
+						</tr>
+						<tr style="border: 0;">
+							<td style="text-align: center; border-radius: 12px; padding: 10px; background-color: white;  font-size: 25px;">
+								<?php echo number_format($SumDateData); ?> คน
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div id="resultsTableForCard2">
+				<table class="table">
+					<tbody style="line-height: 1.5em;">
+						<tr style="text-align: center; border: 0;">
+							<td style="padding: 10px 0px; font-size: 15px; text-align: center; font-weight: bold;">
+								สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
+							</td>
+						</tr>
+						<tr style="border: 0;padding: 5px 0px;">
+							<td style="text-align: center; border-radius: 12px; padding: 10px ; background-color: white;  font-size: 25px;">
+								<?php echo number_format($SumMonthData); ?> คน
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
+		<div class="col8">
+			<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_daily.png') ?>" style="width:100%; height:210px">
+		</div>
+	</div>
+
+
+	<div style="position: absolute; top: 308px; left: 20px;">
+		<img src="<?php echo base_url('public/img/tourist.png') ?>" alt="" style="width: 90px;">
+	</div>
+	<div style="position: absolute; top: 355px; left: 100px;">
+		<img src="<?php echo base_url('public/img/destination.png') ?>" alt="" style="width: 45px;">
+	</div>
+	<div style="position: absolute; top: 375px; right: 470px;">
+		<img src="<?php echo base_url('public/img/airplaneICON.png') ?>" alt="" style="width: 100px;">
+	</div>
+	<div class="vl"></div>
+	<table style="width: 100%; margin-top: 10px;">
+		<tbody>
+			<tr style="padding: 0px 50px;">
+				<td style="text-align: center;font-size: 20px; color: white; padding-left: 50px; width: 50%;">
+					จำนวนนักท่องเที่ยว
+					<br>
+					จำเเนกรายสัญชาติ 5 อันดับเเรก
+				</td>
+				<td style="width: 50%; text-align: center; font-size: 20px; padding-left:50px; color: white;">
+					จำนวนนักท่องเที่ยว <br>จำเเนกรายด่าน 5 อันดับเเรก
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="col12">
+		<div class="col6">
+			<div id="resultsTable" style="display: flex; flex-direction: row; padding: 0px 15px;">
+				<?php $c = 0;
+				foreach ($SumNatDateData as $v) {
+					$c++;
+					$flag = base_url('public/img/logotat.png');
+
+					if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
+						$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
+					}
+				?>
+					<div style="border: 0;">
+						<table style="width: 100%;">
+							<tbody>
+								<tr style="border: 0;">
+									<td colspan="3" style="text-align: right;">
+										<span id="" style="font-weight:bold; font-size: 14px;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
+									</td>
+								</tr>
+								<tr style="border: 0; background-color: white;border-radius: 12px !important;" class="rounded">
+									<td style="border: 0;">
+										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 35px; ">
+									</td>
+									<td style="border: 0;">
+										<?php echo number_format($v['NUM']); ?>
+									</td>
+									<td style="border: 0;">
+										คน
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				<?php if ($c == 5) break;
+				} ?>
+			</div>
+		</div>
+		<div class="col6">
+			<div id="resultsTable2" style="display: flex; flex-direction: row; padding: 0px 15px;">
+				<?php $c = 0;
+				foreach ($SumNatMonthData as $v) {
+					$c++;
+					$flag = base_url('public/img/logotat.png');
+
+					if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
+						$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
+					}
+				?>
+					<div style="border: 0;">
+						<table style="width: 100%;">
+							<tbody>
+								<tr style="border: 0;">
+									<td colspan="3" style="text-align: right;">
+										<span id="" style="font-weight:bold; font-size: 14px;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
+									</td>
+								</tr>
+								<tr style="border: 0; background-color: white;border-radius: 12px !important;" class="rounded">
+									<td style="border: 0;">
+										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 35px; ">
+									</td>
+									<td style="border: 0;">
+										<?php echo number_format($v['NUM']); ?>
+									</td>
+									<td style="border: 0;">
+										คน
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				<?php if ($c == 5) break;
+				} ?>
+			</div>
+		</div>
+
+		<div class="col6">
+			<div id="resultsTable" style="display: flex; flex-direction: row; padding: 0px 15px;">
+				<!-- <table class="table">
+					<tbody> -->
+				<?php $c = 0;
+				foreach ($SumPortDateData as $v) {
+					$c++;  ?>
+					<div>
+						<table style="width: 100%;">
+							<tbody>
+								<tr style="border: 0;">
+									<td colspan="2" style="color: #193666; text-align: right; padding: 1px 0px; margin: auto 0px;">
+										<span style="font-weight:bold; font-size: 14px;"><?php echo $v['PORT_NAME'] ?></span>
+									</td>
+								</tr>
+								<tr style=" border: 0;background-color: white;">
+									<td style="text-align: right; padding: 10.5px 15px;color: #193666; font-size: 14px;">
+										<?php echo number_format($v['NUM']); ?>
+									</td>
+									<td style="text-align: right; padding: 10.5px 15px;color: #193666;font-size: 14px;">
+										คน
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				<?php if ($c == 5) break;
+				} ?>
+				<!-- </tbody>
+				</table> -->
+			</div>
+		</div>
+		<div class="col6">
+			<div id="resultsTable2" style="display: flex; flex-direction: row; padding: 0px 15px;">
+				<!-- <table class="table">
+					<tbody> -->
+				<?php $c = 0;
+				foreach ($SumPortMonthData as $v) {
+					$c++;  ?>
+					<div>
+						<table style="width: 100%;">
+							<tbody>
+								<tr style="border: 0;">
+									<td colspan="2" style="color: #193666; text-align: right; padding: 1px 0px; margin: auto 0px;">
+										<span style="font-weight:bold; font-size: 14px;"><?php echo $v['PORT_NAME'] ?></span>
+									</td>
+								</tr>
+								<tr style=" border: 0;background-color: white;">
+									<td style="text-align: right; padding: 10.5px 15px;color: #193666; font-size: 14px;">
+										<?php echo number_format($v['NUM']); ?>
+									</td>
+									<td style="text-align: right;padding: 10.5px 15px;color: #193666;font-size: 14px;">
+										คน
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				<?php if ($c == 5) break;
+				} ?>
+				<!-- </tbody>
+				</table> -->
+			</div>
+		</div>
+	</div>
+</body>
