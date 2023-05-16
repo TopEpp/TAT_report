@@ -49,7 +49,7 @@
 	<div class="col-md-4 col-12 text-left py-2 py-md-0">
 		ช่วงเวลาที่ 1 วันที่เริ่มต้น <input type="text" name="start_date1" id="start_date1" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($start_date1, 543, '/') ?>">
 	</div>
-	<div class="col-md-3 col-12 text-left py-2 py-md-0">
+	<div class="col-md-4 col-12 text-left py-2 py-md-0">
 		วันที่สิ้นสุด <input type="text" name="end_date1" id="end_date1" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($end_date1, 543, '/') ?>">
 	</div>
 	<div class="col-md-2 col-2">
