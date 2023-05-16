@@ -1,6 +1,7 @@
-<?php $session = session();?>
+<?php $session = session(); ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="utf-8">
@@ -26,16 +27,16 @@
     <link rel="stylesheet" href="<?php echo base_url('public/vendor/datatables/jquery.dataTables.min.css') ?>">
 
 
-    <?php $this->renderSection('stylesheet');?>
+    <?php $this->renderSection('stylesheet'); ?>
 
     <style type="text/css">
-        .drop_menu{
+        .drop_menu {
             background: none;
             border: none;
             padding: 0;
         }
 
-        .drop_menu .btn-primary{
+        .drop_menu .btn-primary {
             background-color: white;
             border-color: #29B5A4;
             color: #29B5A4;
@@ -45,13 +46,13 @@
 </head>
 <input type="hidden" id="base_url" value="<?php echo base_url(); ?>">
 
-<body id="page-top" >
+<body id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php echo view('templates/menu');?>
+        <?php echo view('templates/menu'); ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -79,15 +80,12 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin TAT</span>
-                                <img class="img-profile rounded-circle"
-                                    src="<?php echo base_url('public/img/logotat.png')?>">
+                                <img class="img-profile rounded-circle" src="<?php echo base_url('public/img/logotat.png') ?>">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
@@ -108,7 +106,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid" style="padding-bottom: 10px;">
 
-                    <?php $this->renderSection('content');?>
+                    <?php $this->renderSection('content'); ?>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -124,67 +122,67 @@
 
 
     <!-- Bootstrap core JavaScript-->
-    <script src="<?=base_url('public/vendor/jquery/jquery.min.js');?>"></script>
-    <script src="<?=base_url('public/js/common.js');?>"></script>
+    <script src="<?= base_url('public/vendor/jquery/jquery.min.js'); ?>"></script>
+    <script src="<?= base_url('public/js/common.js'); ?>"></script>
 
-    <script src="<?=base_url('public/vendor/bootstrap/js/bootstrap.bundle.min.js');?>"></script>
-    <script src="<?=base_url('public/vendor/bootstrap/datepicker/bootstrap-datepicker.js')?>"></script>
-    <script src="<?=base_url('public/vendor/bootstrap/datepicker/locales/bootstrap-datepicker.th.js')?>"></script>
-    <script src="<?=base_url('public/vendor/bootstrap/datepicker/bootstrap-datepicker-thai.js')?>"></script>
+    <script src="<?= base_url('public/vendor/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+    <script src="<?= base_url('public/vendor/bootstrap/datepicker/bootstrap-datepicker.js') ?>"></script>
+    <script src="<?= base_url('public/vendor/bootstrap/datepicker/locales/bootstrap-datepicker.th.js') ?>"></script>
+    <script src="<?= base_url('public/vendor/bootstrap/datepicker/bootstrap-datepicker-thai.js') ?>"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="<?=base_url('public/vendor/datatables/jquery.dataTables.js')?>"></script>
+    <script src="<?= base_url('public/vendor/datatables/jquery.dataTables.js') ?>"></script>
 
     <!-- Page level custom scripts -->
-    <script src="<?=base_url('public/js/sb-admin-2.min.js');?>"></script>
-    <script src="<?=base_url('public/js/jquery.toast.js');?>"></script>
+    <script src="<?= base_url('public/js/sb-admin-2.min.js'); ?>"></script>
+    <script src="<?= base_url('public/js/jquery.toast.js'); ?>"></script>
 
 
-    <script src="<?=base_url('public/vendor/Sweetalert/js/sweetalert2.min.js');?>"></script>
-    <script src="<?=base_url('public/js/main.js');?>"></script>
-    <script src="<?=base_url('public/js/scripts.js');?>"></script>
+    <script src="<?= base_url('public/vendor/Sweetalert/js/sweetalert2.min.js'); ?>"></script>
+    <script src="<?= base_url('public/js/main.js'); ?>"></script>
+    <script src="<?= base_url('public/js/scripts.js'); ?>"></script>
 
     <script type="text/javascript">
-        var base_url = '<?php echo base_url();?>';
+        var base_url = '<?php echo base_url(); ?>';
     </script>
 
 
-    <?php $this->renderSection('scripts');?>
+    <?php $this->renderSection('scripts'); ?>
     <script>
         $(document).ready(function() {
-          $('#userDropdown').click(function(){
-            $('#dropdown-menu-top').toggle('show');
-          });
+            $('#userDropdown').click(function() {
+                $('#dropdown-menu-top').toggle('show');
+            });
 
 
-          $('form').on('keyup keypress', function(e) {
-              var keyCode = e.keyCode || e.which;
-              if (keyCode === 13) {
-                e.preventDefault();
-                return false;
-              }
+            $('form').on('keyup keypress', function(e) {
+                var keyCode = e.keyCode || e.which;
+                if (keyCode === 13) {
+                    e.preventDefault();
+                    return false;
+                }
             });
 
 
 
         });
 
-      $( document ).ajaxStart(function() {
-        $('body').addClass("loading");
-      });
+        $(document).ajaxStart(function() {
+            $('body').addClass("loading");
+        });
 
-      $( document ).ajaxStop(function() {
-        $('body').removeClass("loading");
-      });
+        $(document).ajaxStop(function() {
+            $('body').removeClass("loading");
+        });
     </script>
 </body>
 <footer style="background:#007C84; padding: 10px; color: #FFF;">
     <div class="row">
         <div class="col-md-12" style="text-align:center;">
-            <img src="<?php echo base_url('public/img/logotat_w.png')?>" width="50px"> การท่องเที่ยวแห่งประเทศไทย
+            <img src="<?php echo base_url('public/img/logotat_w.png') ?>" width="50px"> การท่องเที่ยวแห่งประเทศไทย
         </div>
     </div>
-    
+
 </footer>
 
 </html>
