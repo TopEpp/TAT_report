@@ -43,7 +43,7 @@
 
 	#resultsTableForCard2 {
 		width: 200px;
-		height: 105px;
+		height: 100px;
 		background: #fff1cc;
 		border-radius: 12px !important;
 		margin: auto auto;
@@ -51,7 +51,7 @@
 
 	#resultsTableForCard {
 		width: 200px;
-		height: 105px;
+		height: 100px;
 		background: #a7ffff;
 		overflow: hidden !important;
 		border-radius: 12px !important;
@@ -59,7 +59,7 @@
 	}
 
 	#resultsTable {
-		height: 300px;
+		height: 315px;
 		width: 210px;
 		background: #a7ffff;
 		overflow: hidden;
@@ -67,12 +67,30 @@
 		margin: auto auto;
 	}
 
+	#resultsTable3 {
+		height: 37px;
+		width: 210px;
+		background: white;
+		overflow: hidden;
+		border-radius: 25px !important;
+		margin: auto auto;
+	}
+
 	#resultsTable2 {
 		width: 210px;
-		height: 300px;
+		height: 315px;
 		background: #fff1cc;
 		overflow: hidden;
 		border-radius: 25px !important;
+		margin: auto auto;
+	}
+
+	#resultsTable4 {
+		height: 40px;
+		width: 180px;
+		background: white;
+		overflow: hidden;
+		border-radius: 30px !important;
 		margin: auto auto;
 	}
 </style>
@@ -435,33 +453,50 @@
 				<table class="table">
 					<tbody style="line-height: 1.5em;">
 						<tr style="text-align:center; border: 0;">
-							<td style="padding: 10px 0px; font-size: 15px; text-align: center; font-weight: bold;">
+							<td style="padding: 20px 0px 0px 0px; font-size: 15px; text-align: center; font-weight: bold;">
 								จำนวนนักท่องเที่ยว
 							</td>
 						</tr>
-						<tr style="border: 0;">
+						<!-- <tr style="border: 0;">
 							<td style="text-align: center; border-radius: 12px; padding: 10px; background-color: white;  font-size: 25px;">
 								<?php echo number_format($SumDateData); ?> คน
 							</td>
-						</tr>
+						</tr> -->
 					</tbody>
 				</table>
+				<div id="resultsTable4">
+					<table style="width: 100%;">
+						<tbody>
+							<tr style="border: 0;padding: 0px 0px;">
+								<td style="text-align: center;padding: 5px ; font-size: 25px;">
+									<?php echo number_format($SumDateData); ?> คน
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<div id="resultsTableForCard2">
 				<table class="table">
-					<tbody style="line-height: 1.5em;">
+					<tbody style="line-height: 1em;">
 						<tr style="text-align: center; border: 0;">
-							<td style="padding: 10px 0px; font-size: 15px; text-align: center; font-weight: bold;">
+							<td style="padding: 20px 0px 0px 0px; font-size: 15px; text-align: center; font-weight: bold;">
 								สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
-							</td>
-						</tr>
-						<tr style="border: 0;padding: 5px 0px;">
-							<td style="text-align: center; border-radius: 12px; padding: 10px ; background-color: white;  font-size: 25px;">
-								<?php echo number_format($SumMonthData); ?> คน
 							</td>
 						</tr>
 					</tbody>
 				</table>
+				<div id="resultsTable4">
+					<table style="width: 100%;">
+						<tbody>
+							<tr style="border: 0;padding: 0px 0px;">
+								<td style="text-align: center;padding: 5px; font-size: 25px;">
+									<?php echo number_format($SumMonthData); ?> คน
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 		<div class="col8">
@@ -510,11 +545,11 @@
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="3" style="text-align: right;">
+									<td colspan="3" style="text-align: right;padding: 3px 13px;">
 										<span id="" style="font-weight:bold; font-size: 14px;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 									</td>
 								</tr>
-								<tr style="border: 0; background-color: white;border-radius: 12px !important;" class="rounded">
+								<!-- <tr style="border: 0; background-color: white;border-radius: 12px !important;" class="rounded">
 									<td style="border: 0;">
 										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 35px; ">
 									</td>
@@ -524,9 +559,25 @@
 									<td style="border: 0;">
 										คน
 									</td>
-								</tr>
+								</tr> -->
 							</tbody>
 						</table>
+						<div id="resultsTable3">
+							<table style="width: 100%;">
+								<tr>
+									<!-- text-align: center; padding: 10.5px 15px;color: #193666; font-size: 14px; -->
+									<td style="">
+										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 35px; ">
+									</td>
+									<td>
+										<?php echo number_format($v['NUM']); ?>
+									</td>
+									<td>
+										คน
+									</td>
+								</tr>
+							</table>
+						</div>
 					</div>
 				<?php if ($c == 5) break;
 				} ?>
@@ -547,23 +598,39 @@
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="3" style="text-align: right;">
+									<td colspan="3" style="text-align: right;padding: 3px 13px;">
 										<span id="" style="font-weight:bold; font-size: 14px;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 									</td>
 								</tr>
-								<tr style="border: 0; background-color: white;border-radius: 12px !important;" class="rounded">
+								<!-- <tr style="border: 0; background-color: white;border-radius: 12px !important;" class="rounded">
 									<td style="border: 0;">
-										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 35px; ">
+
 									</td>
 									<td style="border: 0;">
-										<?php echo number_format($v['NUM']); ?>
+
 									</td>
 									<td style="border: 0;">
 										คน
 									</td>
-								</tr>
+								</tr> -->
 							</tbody>
 						</table>
+						<div id="resultsTable3">
+							<table style="width: 100%;">
+								<tr>
+									<!-- text-align: center; padding: 10.5px 15px;color: #193666; font-size: 14px; -->
+									<td style="">
+										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 35px; ">
+									</td>
+									<td>
+										<?php echo number_format($v['NUM']); ?>
+									</td>
+									<td>
+										คน
+									</td>
+								</tr>
+							</table>
+						</div>
 					</div>
 				<?php if ($c == 5) break;
 				} ?>
@@ -581,20 +648,32 @@
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="2" style="color: #193666; text-align: right; padding: 1px 0px; margin: auto 0px;">
+									<td colspan="2" style="color: #193666; text-align: right; padding: 3px 13px; margin: auto 0px;">
 										<span style="font-weight:bold; font-size: 14px;"><?php echo $v['PORT_NAME'] ?></span>
 									</td>
 								</tr>
-								<tr style=" border: 0;background-color: white;">
+								<!-- <tr style=" border: 0;background-color: white;">
 									<td style="text-align: right; padding: 10.5px 15px;color: #193666; font-size: 14px;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
 									<td style="text-align: right; padding: 10.5px 15px;color: #193666;font-size: 14px;">
 										คน
 									</td>
-								</tr>
+								</tr> -->
 							</tbody>
 						</table>
+						<div id="resultsTable3">
+							<table style="width: 100%;">
+								<tr>
+									<td style="text-align: center; padding: 10.5px 15px;color: #193666; font-size: 14px;">
+										<?php echo number_format($v['NUM']); ?>
+									</td>
+									<td>
+										คน
+									</td>
+								</tr>
+							</table>
+						</div>
 					</div>
 				<?php if ($c == 5) break;
 				} ?>
@@ -613,25 +692,36 @@
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="2" style="color: #193666; text-align: right; padding: 1px 0px; margin: auto 0px;">
+									<td colspan="2" style="color: #193666; text-align: right; padding: 3px 13px; margin: auto 0px;">
 										<span style="font-weight:bold; font-size: 14px;"><?php echo $v['PORT_NAME'] ?></span>
 									</td>
 								</tr>
-								<tr style=" border: 0;background-color: white;">
+
+								<!-- <tr style=" border: 0;background-color: white;">
 									<td style="text-align: right; padding: 10.5px 15px;color: #193666; font-size: 14px;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
 									<td style="text-align: right;padding: 10.5px 15px;color: #193666;font-size: 14px;">
 										คน
 									</td>
-								</tr>
+								</tr> -->
 							</tbody>
 						</table>
+						<div id="resultsTable3">
+							<table style="width: 100%;">
+								<tr>
+									<td style="text-align: center; padding: 10.5px 15px;color: #193666; font-size: 14px;">
+										<?php echo number_format($v['NUM']); ?>
+									</td>
+									<td>
+										คน
+									</td>
+								</tr>
+							</table>
+						</div>
 					</div>
 				<?php if ($c == 5) break;
 				} ?>
-				<!-- </tbody>
-				</table> -->
 			</div>
 		</div>
 	</div>
