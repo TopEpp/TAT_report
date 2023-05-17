@@ -154,22 +154,24 @@ class Main extends BaseController
 		$html = view($view, $data);
 		$this->response->setHeader('Content-Type', 'application/pdf');
 		$mpdf = new \Mpdf\Mpdf([
-			'default_font' => 'thsarabun',
-			'default_font_size' => 14,
+			'default_font' => 'tatsana',
+			'default_font_size' => 10,
 			'mode' => 'utf-8',
 			'format' => 'A4',
-			'margin_top' => 10,
+			'margin_top' => 3,
+			'margin_left' => 2,
+			'margin_right' => 2,
 			'margin_header' => 2, // 30mm not pixel
 			'margin_footer' => 2, // 10mm
-			'orientation' => $orientation, // L แนวนอน P แนวตั้งง
+			'orientation' => 'L', // L แนวนอน P แนวตั้งง
 		]);
 
-		$footer = '<table width="100%" border=0 style="border:0px ">
+		$footer = '<table width="100%" border=0 style="border:0px">
                 <tr border=0 style="border:0px ">
                   <td align="left" border=0 style="border:0px ">
                     <img src="' . base_url('public/img/logotat.png') . '">
                   </td>
-                  <td align="right" border=0 style="border:0px ">
+                  <td align="right" border=0 style="border:0px;color:white ">
                     Source of Data : Tourism Authority of Thailand <br>
                     As of : ' . date('d M Y H:i:s') . '
                   </td>

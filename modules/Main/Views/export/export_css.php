@@ -15,7 +15,7 @@
 
 
   table>thead>tr>th {
-    text-align: center !important;
+    /* text-align: center !important; */
     color: #1cc88a !important;
   }
 
@@ -301,7 +301,7 @@
 
   .table {
     width: 100%;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     color: #151726;
   }
 
@@ -383,10 +383,10 @@
 
 
   .table-responsive {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    /* display: block; */
+    /* width: 100%; */
+    /* overflow-x: auto; */
+    /* -webkit-overflow-scrolling: touch; */
   }
 
   .table-responsive>.table-bordered {
@@ -410,7 +410,7 @@
   }
 
   .card {
-    position: relative;
+    /* position: relative; */
     display: flex;
     flex-direction: column;
     min-width: 0;
@@ -601,5 +601,9 @@
 
   .bg-transparent {
     background-color: transparent !important;
+  }
+
+  body {
+    background-color: #003466;
   }
 </style>
