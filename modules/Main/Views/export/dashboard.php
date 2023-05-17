@@ -389,67 +389,6 @@
 			</tr>
 		</thead>
 	</table>
-	<!-- <table style="width: 100%;">
-		<tbody>
-			<tr>
-				<td style="width: 30%;padding: 10px 10px; ">
-					<table style="width: 100%; ">
-						<tbody style="padding: 12px;">
-							<tr style="">
-								<td style="">
-
-									<div id="resultsTableForCard">
-										<table class="table">
-											<tbody style="line-height: 1.5em;">
-												<tr style="text-align: center;">
-													<td style="font-size: 25px;">
-														จำนวนนักท่องเที่ยว
-													</td>
-												</tr>
-												<tr style="border-radius: 12px !important;">
-													<td style="border-radius: 12px; padding: 10px; background-color: white; text-align: right; font-size: 25px;">
-														<?php echo number_format($SumDateData); ?>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-
-								</td>
-							</tr>
-							<tr>
-								<td style="padding: 12px;"></td>
-							</tr>
-							<tr style="height: 160px; ">
-								<td style="text-align: center;font-size: 25px; background-color: #a7ffff; padding: 10px; padding-bottom: 10px; line-height: 1.5em; margin: 20px;">
-									<table style="width: 100%; border-radius: 12px !important;">
-										<tbody style="line-height: 1.5em;">
-											<tr>
-												<td style="font-size: 25px;">
-													จำนวนนักท่องเที่ยว
-												</td>
-
-											</tr>
-											<tr style="border-radius: 12px !important;">
-												<td style="border-radius: 12px; padding: 10px; background-color: white; text-align: right; font-size: 25px;">
-													<?php echo number_format($SumMonthData); ?>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-				<td style="width: 70%; padding: 5px 0px; text-align: center; font-weight: bold;font-size: 22px; color: white;">
-					จำนวนนักท่องเที่ยวรายวัน
-					<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_daily.png') ?>" style="width:100%; height:250px">
-
-				</td>
-			</tr>
-		</tbody>
-	</table> -->
 	<div class="col12">
 		<div class="col4">
 			<div id="resultsTableForCard" style="margin-bottom: 10px;">
@@ -460,11 +399,6 @@
 								จำนวนนักท่องเที่ยว
 							</td>
 						</tr>
-						<!-- <tr style="border: 0;">
-							<td style="text-align: center; border-radius: 12px; padding: 10px; background-color: white;  font-size: 25px;">
-								<?php echo number_format($SumDateData); ?> คน
-							</td>
-						</tr> -->
 					</tbody>
 				</table>
 				<div id="resultsTable4">
@@ -552,23 +486,11 @@
 										<span id="" style="font-weight:bold; font-size: 14px;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 									</td>
 								</tr>
-								<!-- <tr style="border: 0; background-color: white;border-radius: 12px !important;" class="rounded">
-									<td style="border: 0;">
-										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 35px; ">
-									</td>
-									<td style="border: 0;">
-										<?php echo number_format($v['NUM']); ?>
-									</td>
-									<td style="border: 0;">
-										คน
-									</td>
-								</tr> -->
 							</tbody>
 						</table>
 						<div id="resultsTable3">
 							<table style="width: 100%;">
 								<tr>
-									<!-- text-align: center; padding: 10.5px 15px;color: #193666; font-size: 14px; -->
 									<td style="">
 										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 35px; ">
 									</td>
@@ -605,23 +527,11 @@
 										<span id="" style="font-weight:bold; font-size: 14px;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 									</td>
 								</tr>
-								<!-- <tr style="border: 0; background-color: white;border-radius: 12px !important;" class="rounded">
-									<td style="border: 0;">
-
-									</td>
-									<td style="border: 0;">
-
-									</td>
-									<td style="border: 0;">
-										คน
-									</td>
-								</tr> -->
 							</tbody>
 						</table>
 						<div id="resultsTable3">
 							<table style="width: 100%;">
 								<tr>
-									<!-- text-align: center; padding: 10.5px 15px;color: #193666; font-size: 14px; -->
 									<td style="">
 										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 35px; ">
 									</td>
@@ -642,8 +552,6 @@
 
 		<div class="col6">
 			<div id="resultsTable" style="display: flex; flex-direction: row; padding: 0px 15px;">
-				<!-- <table class="table">
-					<tbody> -->
 				<?php $c = 0;
 				foreach ($SumPortDateData as $v) {
 					$c++;  ?>
@@ -655,14 +563,6 @@
 										<span style="font-weight:bold; font-size: 14px;"><?php echo $v['PORT_NAME'] ?></span>
 									</td>
 								</tr>
-								<!-- <tr style=" border: 0;background-color: white;">
-									<td style="text-align: right; padding: 10.5px 15px;color: #193666; font-size: 14px;">
-										<?php echo number_format($v['NUM']); ?>
-									</td>
-									<td style="text-align: right; padding: 10.5px 15px;color: #193666;font-size: 14px;">
-										คน
-									</td>
-								</tr> -->
 							</tbody>
 						</table>
 						<div id="resultsTable3">
@@ -680,14 +580,10 @@
 					</div>
 				<?php if ($c == 5) break;
 				} ?>
-				<!-- </tbody>
-				</table> -->
 			</div>
 		</div>
 		<div class="col6">
 			<div id="resultsTable2" style="display: flex; flex-direction: row; padding: 0px 15px;">
-				<!-- <table class="table">
-					<tbody> -->
 				<?php $c = 0;
 				foreach ($SumPortMonthData as $v) {
 					$c++;  ?>
@@ -699,15 +595,6 @@
 										<span style="font-weight:bold; font-size: 14px;"><?php echo $v['PORT_NAME'] ?></span>
 									</td>
 								</tr>
-
-								<!-- <tr style=" border: 0;background-color: white;">
-									<td style="text-align: right; padding: 10.5px 15px;color: #193666; font-size: 14px;">
-										<?php echo number_format($v['NUM']); ?>
-									</td>
-									<td style="text-align: right;padding: 10.5px 15px;color: #193666;font-size: 14px;">
-										คน
-									</td>
-								</tr> -->
 							</tbody>
 						</table>
 						<div id="resultsTable3">
