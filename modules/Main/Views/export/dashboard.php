@@ -74,6 +74,7 @@
 		overflow: hidden;
 		border-radius: 25px !important;
 		margin: auto auto;
+		box-shadow: 0px 3px 10px 0px hsl(0, 7%, 50%)
 	}
 
 	#resultsTable2 {
@@ -92,6 +93,8 @@
 		overflow: hidden;
 		border-radius: 30px !important;
 		margin: auto auto;
+		box-shadow: 0px 5px 5px 0px hsl(0, 7%, 50%)
+			/* box-shadow:  1px 0px 3px 0px; */
 	}
 </style>
 <!-- <div class="row">
