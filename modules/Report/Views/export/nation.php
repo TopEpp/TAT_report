@@ -27,12 +27,8 @@ foreach ($data_month_lastyear as $v) {
 ?>
 <table style="width:100%">
 	<tr>
-		<td><b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b></td>
-	</tr>
-	<tr>
-		<td class="headderTable">
-			<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายสัญชาติ วันที่ :
-				<?php echo $Mydate->date_eng2thai($to_date, 543); ?></b>
+		<td colspan="5" class="headderTable" style="text-align: center;">
+			<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายสัญชาติ </b>
 		</td>
 	</tr>
 </table>
@@ -98,6 +94,13 @@ foreach ($data_month_lastyear as $v) {
 <?php } ?>
 </table>
 <?php if ($export_type == 'pdf') { ?><pagebreak> <?php } ?>
+	<table style="width:100%">
+		<tr>
+			<td class="headderTable">
+				<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายสัญชาติ </b>
+			</td>
+		</tr>
+	</table>
 	<table border="1" class="table table-striped table-bordered tbl2_nation" id="table2" style="width:100%;">
 		<thead>
 			<tr>

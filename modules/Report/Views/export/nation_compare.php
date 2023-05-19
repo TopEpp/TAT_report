@@ -1,12 +1,6 @@
 <?php include_once("export_css.php"); ?>
 
-<table>
-	<tr>
-		<td>
-			<b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b>
-		</td>
-	</tr>
-</table>
+
 
 <?php
 list($year, $month, $day) = explode('-', $start_date1);
@@ -30,7 +24,7 @@ $end_date2 = $day . '-' . $month . '-' . $year;
 			<th style="background:#379FA6;border: 1px solid black ;"></th>
 			<th style="background:#379FA6;border: 1px solid black ;">สะสมวันที่ <?php echo $Mydate->date_eng2thai($start_date1, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($end_date1, 543, 'S', 'S') ?></th>
 			<th style="background:#379FA6;border: 1px solid black ;">สะสมวันที่ <?php echo $Mydate->date_eng2thai($start_date2, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($end_date2, 543, 'S', 'S') ?></th>
-			<th style="background:#379FA6;border: 1px solid black ;">อัตราการเปลี่ยนแปลง (%)</th>
+			<th style="background:#379FA6;border: 1px solid black ;">อัตราการเปลี่ยนแปลง</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -90,7 +84,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 
 			$padding_region = $level * 10;
 			$alink = '';
-			if (!empty($country[$re['MD_STD_REG_ID']])  && $re['IS_OTHERS'] != 'Y' ) {
+			if (!empty($country[$re['MD_STD_REG_ID']])  && $re['IS_OTHERS'] != 'Y') {
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
@@ -102,7 +96,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 			echo '</tr>';
 
 
-			if (!empty($country[$re['MD_STD_REG_ID']])  && $re['IS_OTHERS'] != 'Y' ) {
+			if (!empty($country[$re['MD_STD_REG_ID']])  && $re['IS_OTHERS'] != 'Y') {
 				foreach ($country[$re['MD_STD_REG_ID']] as $co) {
 					$compare = '';
 					$num1 = @$data1[$co['COUNTRYID']]['NUM'];

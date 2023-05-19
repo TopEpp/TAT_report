@@ -1,9 +1,6 @@
 <?php include_once("export_css.php"); ?>
 <table style="width:100%">
 	<tr>
-		<td><b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b></td>
-	</tr>
-	<tr>
 		<td class="headderTable">
 			<b>รายงานเปรียบเทียบจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน</b>
 		</td>
