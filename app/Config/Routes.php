@@ -79,8 +79,13 @@ $routes->group('setting', ['namespace' => '\Modules\Setting\Controllers' ], func
     $routes->get('country','Setting::country');
     $routes->get('port','Setting::port');
     $routes->get('visa','Setting::visa');
+
+    $routes->post('savePort','Setting::savePort');
     $routes->post('savePortRatio','Setting::savePortRatio');
     $routes->get('getPortRatio/(:num)','Setting::getPortRatio/$1');
+
+    $routes->post('saveVisaRatio','Setting::saveVisaRatio');
+    $routes->get('getVisaRatio/(:num)','Setting::getVisaRatio/$1');
 });
 
 

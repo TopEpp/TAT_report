@@ -40,22 +40,43 @@ class Setting extends BaseController{
 		$Model = new Setting_model();
 		$data['country'] = $Model->getCountry();
 		$data['data'] = $Model->getVisa();
+		foreach($data['data'] as $visa){
+			$data['visa_ratio'][$visa['VISA_ID']] = count( $Model->getVisaRatio($visa['VISA_ID']) );
+		}
 		$data['month_label'] = $this->month_th;
 		return view('Modules\Setting\Views\visa',$data);
 	}
- 
+ 	
+ 	public function savePort(){
+ 		$Model = new Setting_model();
+ 		$input = $this->request->getPost();
+ 		$Model->savePort($input);
+ 		return true;
+	}
+
  	public function savePortRatio(){
  		$Model = new Setting_model();
  		$input = $this->request->getPost();
  		$Model->savePortRatio($input);
  		return true;
- 		// return redirect()->to('/setting/port');
 	}
 
 	public function getPortRatio($port_id){
 		$Model = new Setting_model();
  		$data = $Model->getPortRatio($port_id);
+ 		return $this->setResponseFormat('json')->respond($data);
+	}
 
+	function saveVisaRatio(){
+		$Model = new Setting_model();
+ 		$input = $this->request->getPost();
+ 		$Model->saveVisaRatio($input);
+ 		return true;
+	}
+
+	public function getVisaRatio($visa_id){
+		$Model = new Setting_model();
+ 		$data = $Model->getVisaRatio($visa_id);
  		return $this->setResponseFormat('json')->respond($data);
 	}
 }

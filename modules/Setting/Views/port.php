@@ -23,8 +23,12 @@
   							<td><?php echo $d['PORT_TYPE']?></td>
   							<td><?php echo $d['PORT_CATEGORY']?></td>
   							<td align="center">
-                    <a href="#" class="btn btn-primary" onclick="editPort('<?php echo $d['PORT_ID']?>','<?php echo $d['PORT_NAME']?>')"><i class="fa fa-cog"></i></a>
+                    <a href="#" class="btn btn-primary" onclick="editPort('<?php echo $d['PORT_ID']?>')"><i class="fa fa-pencil"></i></a>
+                    <a href="#" class="btn btn-primary" onclick="editPortRatio('<?php echo $d['PORT_ID']?>','<?php echo $d['PORT_NAME']?>')"><i class="fa fa-cog"></i></a>
                 </td>
+                <input type="hidden" id="port_name_<?php echo $d['PORT_ID']?>" value="<?php echo $d['PORT_NAME']?>">
+                <input type="hidden" id="port_cate_<?php echo $d['PORT_ID']?>" value="<?php echo $d['PORT_CATEGORY_ID']?>">
+                <input type="hidden" id="port_type_<?php echo $d['PORT_ID']?>" value="<?php echo $d['PORT_TYPE_ID']?>">
   						</tr>
   					<?php } ?>
   					</tbody>
@@ -130,6 +134,48 @@
 </form>
 
 <!-- Modal -->
+<form method="post" action="" id="form_manage">
+<div class="modal fade" id="modalPortManage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">จัดการข้อมูลด่าน</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <label>ชื่อด่าน</label>
+            <input type="text" class="form-control" name="port_name" id="port_name_manage" value="">
+          </div>
+          <div class="col-md-12">
+            <label>ประเภทด่าน</label>
+            <select class="form-control" name="port_type" id="port_type_manage">
+              <option value="1">ด่านบก</option>
+              <option value="2">ด่านอากาศ</option>
+            </select>
+          </div>
+          <div class="col-md-12">
+            <label>ประเภท</label>
+            <select class="form-control" name="port_cate" id="port_cate_manage">
+              <option value="1">ด่านที่รวมในการศึกษานี้</option>
+              <option value="2">ด่านไม่รวมในการศึกษา</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" name="port_id" id="port_id_manage" value="">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+        <button type="button" class="btn btn-primary" onclick="savePort();">บันทึก</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
 <div class="modal fade" id="modalPortDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -159,8 +205,9 @@
 
 <?=$this->section("scripts")?>
 <script type="text/javascript">
+var tableData;
 $(document).ready( function () {
-  $('#myTable').DataTable({
+  tableData = $('#myTable').DataTable({
       language: {
         "lengthMenu": "แสดง _MENU_ รายการ",
         "search": "ค้นหา:",
@@ -177,6 +224,25 @@ $(document).ready( function () {
     });
 });
 
+function editPort(id){
+  $('#port_id_manage').val(id);
+  $('#port_name_manage').val( $('#port_name_'+id).val() );
+  $('#port_type_manage').val( $('#port_type_'+id).val() );
+  $('#port_cate_manage').val( $('#port_cate_'+id).val() );
+  $('#modalPortManage').modal('show');
+}
+
+function savePort(){
+  $.ajax({
+        type: 'POST',
+        url: base_url+'/setting/savePort',
+        data : $('#form_manage').serialize(),
+        success: function(data) {
+          $('#modalPortManage').modal('hide');
+        },
+    });
+}
+
 function savePortRatio(){
   $.ajax({
         type: 'POST',
@@ -188,7 +254,7 @@ function savePortRatio(){
     });
 }
 
-function editPort(id,name){
+function editPortRatio(id,name){
   $('#port_id').val(id);
   $('#ratio').val('');
   

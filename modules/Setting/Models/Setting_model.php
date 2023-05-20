@@ -54,12 +54,55 @@ class Setting_model extends Model
 		$builder->insert();
 	}
 
+
+	function saveVisaRatio($input){
+		$builder_delete = $this->db->table('MD_VISA_RATIO');
+		$builder_delete->where('YEAR',$input['year']);
+		$builder_delete->where('MONTH',$input['month']);
+		$builder_delete->where('RATIO',$input['ratio']);
+		$builder_delete->where('VISA_ID',$input['visa_id']);
+		$builder_delete->where('COUNTRY_ID',$input['country_id']);
+		$builder_delete->delete();
+
+		$builder = $this->db->table('MD_VISA_RATIO');
+		$builder->set('YEAR',$input['year']);
+		$builder->set('MONTH',$input['month']);
+		$builder->set('RATIO',$input['ratio']);
+		$builder->set('VISA_ID',$input['visa_id']);
+		$builder->set('COUNTRY_ID',$input['country_id']);
+		$builder->insert();
+	}
+
+	function savePort($input){
+		$builder = $this->db->table('MD_PORT');
+		$builder->set('PORT_NAME',$input['port_name']);
+		$builder->set('PORT_TYPE_ID',$input['port_type']);
+		$builder->set('PORT_CATEGORY_ID',$input['port_cate']);
+		if(!empty($input['port_id'])){
+			$builder->where('PORT_ID',$input['port_id']);
+			$builder->update();
+		}else{
+			$builder->insert();
+		}
+	}
+
 	function getPortRatio($port_id){
 		$builder = $this->db->table('MD_PORT_RATIO');
 		$builder->select('MD_PORT_RATIO.* , MD_COUNTRY.COUNTRY_NAME_EN, MD_VISA.VISA_NAME ');
 		$builder->join('MD_COUNTRY','MD_COUNTRY.COUNTRYID = MD_PORT_RATIO.COUNTRY_ID');
 		$builder->join('MD_VISA','MD_VISA.VISA_ID = MD_PORT_RATIO.VISA_ID');
 		$builder->where('PORT_ID',$port_id);
+		$builder->orderBy('YEAR,MONTH');
+		$data = $builder->get()->getResultArray();
+	    return $data;
+	}
+
+	function getVisaRatio($visa_id){
+		$builder = $this->db->table('MD_VISA_RATIO');
+		$builder->select('MD_VISA_RATIO.* , MD_COUNTRY.COUNTRY_NAME_EN, MD_VISA.VISA_NAME ');
+		$builder->join('MD_COUNTRY','MD_COUNTRY.COUNTRYID = MD_VISA_RATIO.COUNTRY_ID');
+		$builder->join('MD_VISA','MD_VISA.VISA_ID = MD_VISA_RATIO.VISA_ID');
+		$builder->where('MD_VISA_RATIO.VISA_ID',$visa_id);
 		$builder->orderBy('YEAR,MONTH');
 		$data = $builder->get()->getResultArray();
 	    return $data;
