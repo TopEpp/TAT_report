@@ -2,11 +2,6 @@
 
 <table style="width:100%">
 	<tr>
-		<td>
-			<b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b>
-		</td>
-	</tr>
-	<tr>
 		<td class="headderTable">
 			<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทยรายวัน จำแนกรายสัญชาติ</b>
 		</td>
@@ -15,18 +10,18 @@
 <table border="1" class="table table-striped table-bordered tbl_nation_compare" style="width:100%">
 	<thead>
 		<tr>
-			<th style="background:#369fa7;border: 1px solid black ;">Nation</th>
+			<th style="background-color:#369fa7;border: 1px solid black ;">Nation</th>
 			<?php foreach ($period as $d) {
-				echo "<th style='background:#369fa7;border: 1px solid black ;'>{$Mydate->date_eng2thai($d, 543, 'S', 'S')}</th>";
+				echo "<th style='background-color:#369fa7;border: 1px solid black ;'>{$Mydate->date_eng2thai($d, 543, 'S', 'S')}</th>";
 			} ?>
 		</tr>
 	</thead>
 	<tbody>
-		<tr style="background: rgba(97, 190, 201, 1)">
-			<td style="font-weight: bolder;">GRAND TOTAL</td>
+		<tr style="background-color: #61bec9">
+			<td style="font-weight: bolder;background-color: #61bec9">GRAND TOTAL</td>
 			<?php $dataSum = getSumData($data, $region, 0, $country, $period);
 			foreach ($period as $d) {
-				echo "<td align='right'>" . number_format(@$dataSum[$d]) . "</td>";
+				echo "<td align='right' style='background-color: #61bec9'>" . number_format(@$dataSum[$d]) . "</td>";
 			}
 			?>
 
@@ -50,10 +45,10 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1)
 				// $alink = '<a onclick="ShowHide('.$re['MD_STD_REG_ID'].')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
-			echo '<tr style="background: rgba(97, 190, 201, 1)" id="TR-' . $re['MD_STD_REG_ID'] . '" >';
-			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
+			echo '<tr style="background-color: #61bec9" id="TR-' . $re['MD_STD_REG_ID'] . '" >';
+			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;background-color: #61bec9"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
 			foreach ($period as $d) {
-				echo "<td align='right'>" . number_format(@$dataSum[$d]) . "</td>";
+				echo "<td align='right' style='background-color: #61bec9'>" . number_format(@$dataSum[$d]) . "</td>";
 			}
 			echo '</tr>';
 

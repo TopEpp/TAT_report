@@ -1,11 +1,6 @@
 <?php include_once("export_css.php"); ?>
 <table style="width:100%">
 	<tr>
-		<td>
-			<b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b>
-		</td>
-	</tr>
-	<tr>
 		<td class="headderTable">
 			<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย จำแนกรายตลาด (ตลาดระยะใกล้ - ตลาดระยะไกล)
 			</b>
@@ -16,7 +11,7 @@
 <table border="1" class="table table-bordered table-striped tbl_market1" style="width:100%">
 	<thead>
 		<tr>
-			<th colspan="4">ตลาดระยะใกล้ (Short Haul)</th>
+			<th colspan="4" style="background-color: white; border: 0px;">ตลาดระยะใกล้ (Short Haul)</th>
 		</tr>
 		<tr>
 			<th style="background:#fda3a9;border: 1px solid black ;">ลำดับ</th>
@@ -47,7 +42,7 @@
 	<table border="1" class="table table-bordered table-striped tbl_market2" style="width:100%">
 		<thead>
 			<tr>
-				<th colspan="4">ตลาดระยะไกล (Long Haul)</th>
+				<th colspan="4" style="background-color: white; border: 0px;">ตลาดระยะไกล (Long Haul)</th>
 			</tr>
 			<tr>
 				<th style="background:#937DFF;border: 1px solid black ;">ลำดับ</th>
