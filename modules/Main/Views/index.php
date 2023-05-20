@@ -275,7 +275,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="card">
-			<div class="card-header">จำนวนนักท่องเที่ยวรายวัน (คน)</div>
+			<!-- <div class="card-header">จำนวนนักท่องเที่ยวรายวัน (คน)</div> -->
 			<div class="card-body">
 				<div class="text-center" id="htmltoimage_chart_daily" style="height:220px; padding:15px;">
 					<canvas id="chart_main" height="220" style="height:220px !important"></canvas>
