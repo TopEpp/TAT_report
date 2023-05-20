@@ -580,12 +580,12 @@
 				?>
 				<!-- <div id="resultsTable"> -->
 				<div class="table-responsive" style="height:auto; overflow:auto; margin-bottom: 10px;">
-					<table class="table table-striped " style="width: 100%;">
-						<thead style="background-color: #488a9a !important;">
+					<table class="table table-striped " style="width: 100%; border-collapse: collapse !important; border: white;" border="1">
+						<thead style=" background-color: #488a9a !important;">
 							<tr>
-								<th class="py-4" style="background-color: #488a9a;color:white">Region</th>
-								<th class="py-4" style="background-color: #488a9a;color:white"><?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></th>
-								<th class="py-4" style="background-color: #488a9a;color:white"><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></th>
+								<th class="py-4" style="background-color: #488a9a;color:white;border-bottom: 0px;">Region</th>
+								<th class="py-4" style="background-color: #488a9a;color:white;border-bottom: 0px;"><?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></th>
+								<th class="py-4" style="background-color: #488a9a;color:white;border-bottom: 0px;"><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></th>
 							</tr>
 						</thead>
 						<tbody>
