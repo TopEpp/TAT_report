@@ -49,38 +49,35 @@ $routes->group('main', ['namespace' => '\Modules\Main\Controllers', 'filter' => 
     $routes->get('menu2', 'Main::menu2');
     $routes->get('update_country', 'Main::update_country');
     $routes->get('export_dashboard', 'Main::export_dashboard');
-    $routes->post('saveImg2Report','Main::saveImg2Report');
+    $routes->post('saveImg2Report', 'Main::saveImg2Report');
 });
 
-$routes->group('report', ['namespace' => '\Modules\Report\Controllers' ], function ($routes) {
+$routes->group('report', ['namespace' => '\Modules\Report\Controllers'], function ($routes) {
     $routes->get('/', 'Report::index');
-    $routes->get('nation','Report::nation');
-    $routes->get('port','Report::port');
-    $routes->get('nation_compare','Report::nation_compare');
-    $routes->get('port_compare','Report::port_compare');
-    $routes->get('nation_daily','Report::nation_daily');
-    $routes->get('port_daily','Report::port_daily');
-    $routes->get('market','Report::market');
+    $routes->get('nation', 'Report::nation');
+    $routes->get('port', 'Report::port');
+    $routes->get('nation_compare', 'Report::nation_compare');
+    $routes->get('port_compare', 'Report::port_compare');
+    $routes->get('nation_daily', 'Report::nation_daily');
+    $routes->get('port_daily', 'Report::port_daily');
+    $routes->get('market', 'Report::market');
 
-    $routes->get('export_nation','Report::export_nation');
-    $routes->get('export_port','Report::export_port');
-    
-
-    
+    $routes->get('export_nation', 'Report::export_nation');
+    $routes->get('export_port', 'Report::export_port');
 });
 
-$routes->group('import', ['namespace' => '\Modules\Import\Controllers' ], function ($routes) {
+$routes->group('import', ['namespace' => '\Modules\Import\Controllers'], function ($routes) {
     $routes->get('/', 'Import::index');
-    $routes->post('import_file','Import::import_file');
+    $routes->post('import_file', 'Import::import_file');
 });
 
-$routes->group('setting', ['namespace' => '\Modules\Setting\Controllers' ], function ($routes) {
+$routes->group('setting', ['namespace' => '\Modules\Setting\Controllers'], function ($routes) {
     $routes->get('/', 'Setting::index');
-    $routes->get('country','Setting::country');
-    $routes->get('port','Setting::port');
-    $routes->get('visa','Setting::visa');
-    $routes->post('savePortRatio','Setting::savePortRatio');
-    $routes->get('getPortRatio/(:num)','Setting::getPortRatio/$1');
+    $routes->get('country', 'Setting::country');
+    $routes->get('port', 'Setting::port');
+    $routes->get('visa', 'Setting::visa');
+    $routes->post('savePortRatio', 'Setting::savePortRatio');
+    $routes->get('getPortRatio/(:num)', 'Setting::getPortRatio/$1');
 });
 
 
@@ -101,4 +98,3 @@ $routes->group('setting', ['namespace' => '\Modules\Setting\Controllers' ], func
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
-
