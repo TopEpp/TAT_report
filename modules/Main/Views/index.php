@@ -201,7 +201,7 @@
 							</div>
 							<div class="col-md-12">
 								<div class="d-flex justify-content-center">
-									<img src="<?php echo base_url('public/img/arrow.png') ?>" alt="" style="width: 15px;">
+									<img src="<?php echo base_url('public/img/arrowDown.png') ?>" alt="" style="width: 15px;">
 									<p class="mx-1 my-auto" style="margin: 0; color: white;">
 										เพิ่มขึ้น 5 % จากปีที่ผ่านมา
 									</p>
@@ -881,17 +881,22 @@
 					foreach ($SumPortDateData as $v) {
 						$c++;  ?>
 						<div class="row" style="margin-bottom:10px;">
-							<div class="col-md-3 col-3" style="text-align:center; font-size: 2.4em;">
+							<div class="col-md-2 col-2" style="text-align:center; font-size: 2.4em;">
 								<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
-									echo '<i class="fa fa-plane-up"></i>';
+								?>
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan.png') ?>" style="width: 100%;">
+								<?php
 								} else {
-									echo '<i class="fa fa-building"></i>';
-								} ?>
+								?>
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint.png') ?>" style="width: 100%;">
+								<?php
+								}
+								?>
 							</div>
-							<div class="col-md-5 col-5" style="padding-left:0;padding-top: 15px;font-weight:bold;">
+							<div class="col-md-5 col-5 my-auto" style="font-weight:bold;">
 								<span style="font-weight:bold; font-size: 0.9em;"><?php echo $v['PORT_NAME'] ?></span>
 							</div>
-							<div class="col-md-4 col-4" style="padding-left:0;padding-top: 15px;font-weight:bold;">
+							<div class="col-md-5 col-5 my-auto" style="font-weight:bold;">
 								<?php echo number_format($v['NUM']); ?>
 							</div>
 						</div>
@@ -920,17 +925,22 @@
 					foreach ($SumPortMonthData as $v) {
 						$c++;  ?>
 						<div class="row" style="margin-bottom:10px;">
-							<div class="col-md-3 col-3" style="text-align:center; font-size: 2.4em;">
+							<div class="col-md-2 col-2" style="text-align:center; font-size: 2.4em;">
 								<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
-									echo '<i class="fa fa-plane-up"></i>';
+								?>
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan.png') ?>" style="width: 100%;">
+								<?php
 								} else {
-									echo '<i class="fa fa-building"></i>';
-								} ?>
+								?>
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint.png') ?>" style="width: 100%;">
+								<?php
+								}
+								?>
 							</div>
-							<div class="col-md-5 col-5" style="padding-left:0;padding-top: 15px;font-weight:bold;">
+							<div class="col-md-5 col-5 my-auto" style="font-weight:bold;">
 								<span style="font-weight:bold; font-size: 0.9em;"><?php echo $v['PORT_NAME'] ?></span>
 							</div>
-							<div class="col-md-4 col-4" style="padding-left:0;padding-top: 15px;font-weight:bold;">
+							<div class="col-md-5 col-5 my-auto" style="font-weight:bold;">
 								<?php echo number_format($v['NUM']); ?>
 							</div>
 						</div>
