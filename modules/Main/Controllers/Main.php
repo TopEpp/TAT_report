@@ -81,6 +81,23 @@ class Main extends BaseController
 		$Model->update_country();
 	}
 
+	function monthly(){
+		$Model = new Main_model();
+		$data['session'] = session();
+		$data['Mydate'] = $this->Mydate;
+		$data['month'] = date('m');
+		$data['year'] = date('Y');
+		$data['limit'] = 5;
+
+		// $data['SumRegion'] = $Model->getSumMonthlyRegion($data['month'],$data['year']);
+		$data['SumCountry'] = $Model->getSumMonthlyCountry($data['month'],$data['year'],$data['limit']);
+
+		return view("Modules\Main\Views\monthly", $data);
+	}
+
+
+	################## EXPORT ##################
+
 	public function export_dashboard()
 	{
 		$Model = new Main_model();
@@ -147,7 +164,7 @@ class Main extends BaseController
 		$this->export_pdf('Modules\Main\Views\export\dashboard', $data);
 	}
 
-	################## EXPORT ##################
+	
 
 	function export_pdf($view, $data, $orientation = 'P')
 	{
