@@ -9,6 +9,7 @@ use App\Libraries\Hash;
 class Main_model extends Model
 {
 	protected $table = 'CAL_SUM_DATA_REPORT';
+	protected $table_month = 'CAL_MONTHLY_REPORT';
   	protected $primaryKey = 'REC_ID';
   	protected $allowedFields = [];
 
@@ -193,7 +194,7 @@ class Main_model extends Model
 	    $builder->select("MD_COUNTRY.COUNTRYID, SUM({$this->table}.SUM) AS NUM ");
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
-	     $builder->join('MD_SUB_REGION',"MD_COUNTRY.REGIONID = MD_SUB_REGION.SUB_REGION_ID");
+	    $builder->join('MD_SUB_REGION',"MD_COUNTRY.REGIONID = MD_SUB_REGION.SUB_REGION_ID");
 	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$start_date}','YYYY-MM-DD') AND TO_DATE('{$end_date}','YYYY-MM-DD') ");
 	    $builder->groupBy("MD_COUNTRY.COUNTRYID");
 	    $res = $builder->get()->getResultArray();
@@ -238,4 +239,29 @@ class Main_model extends Model
 		}
 	    return $data;
 	}
+
+	function getSumMonthlyRegion($month,$year){
+		$builder = $this->db->table($this->table_month);
+	    $builder->select(" SUM({$this->table_month}.NUM) AS NUM ");
+	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID ");
+	    $builder->where("{$this->table_month}.MONTH",$month);
+	    $builder->where("{$this->table_month}.YEAR",$year);
+	    $data = $builder->get()->getRowArray();
+	}
+
+	function getSumMonthlyCountry($month,$year,$limit){
+		$builder = $this->db->table($this->table_month);
+	    $builder->select("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN, {$this->table_month}.NUM ");
+	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table_month}.COUNTRY_ID");
+	    $builder->where("{$this->table_month}.MONTH",$month);
+	    $builder->where("{$this->table_month}.YEAR",$year);
+	    // $builder->groupBy("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN");
+	    $builder->limit($limit);
+	    $data = $builder->get()->getResultArray();
+
+	    return $data;;
+	}
+
+
+	 
 }

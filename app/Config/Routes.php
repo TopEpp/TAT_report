@@ -50,6 +50,8 @@ $routes->group('main', ['namespace' => '\Modules\Main\Controllers', 'filter' => 
     $routes->get('update_country', 'Main::update_country');
     $routes->get('export_dashboard', 'Main::export_dashboard');
     $routes->post('saveImg2Report', 'Main::saveImg2Report');
+
+    $routes->get('monthly', 'Main::monthly');
 });
 
 $routes->group('report', ['namespace' => '\Modules\Report\Controllers'], function ($routes) {
