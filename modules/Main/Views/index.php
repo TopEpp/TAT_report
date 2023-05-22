@@ -108,7 +108,7 @@
 		}
 
 		.SetWidthbtnExport {
-			width: 255px !important;
+			width: 260px !important;
 		}
 	}
 </style>
@@ -416,14 +416,14 @@
 					foreach ($SumPortDateData as $v) {
 						$c++;  ?>
 						<div class="row" style="margin-bottom:4px;">
-							<div class="col-md-3 col-3 my-auto">
+							<div class="col-md-3 col-3 my-auto" style="padding:0px">
 								<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
 								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan.png') ?>" style="width: 100%;">
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan-02.png') ?>" style="width: 100%;">
 								<?php
 								} else {
 								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint.png') ?>" style="width: 100%;">
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="width: 100%;">
 								<?php
 								}
 								?>
@@ -462,14 +462,14 @@
 					foreach ($SumPortMonthData as $v) {
 						$c++;  ?>
 						<div class="row" style="margin-bottom:4px;">
-							<div class="col-md-3 col-3 my-auto">
+							<div class="col-md-3 col-3 my-auto" style="padding:0px">
 								<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
 								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan.png') ?>" style="width: 100%;">
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan-02.png') ?>" style="width: 100%;">
 								<?php
 								} else {
 								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint.png') ?>" style="width: 100%;">
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="width: 100%;">
 								<?php
 								}
 								?>
@@ -675,7 +675,7 @@
 									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
 								</tr>
 							<?php } ?>
-							<tr style="background: #f7c008">
+							<tr style="background: #00a1e9">
 								<td style="padding-left: 15px;">THE AMERICAS</td>
 								<td align="right"><?php echo number_format(@$SumRegionDateData[7] + @$SumRegionDateData[45]) ?></td>
 								<td align="right"><?php echo number_format(@$SumRegionMonthData[7] + @$SumRegionDateData[45]) ?></td>
@@ -744,7 +744,7 @@
 									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
 								</tr>
 							<?php } ?>
-							<tr>
+							<tr style="background:#d4e9ec">
 								<td style="padding-left: 15px;">STATELESS</td>
 								<td align="right"><?php echo number_format(@$SumRegionDateData[29]) ?></td>
 								<td align="right"><?php echo number_format(@$SumRegionMonthData[29]) ?></td>
@@ -804,13 +804,13 @@
 						}
 					?>
 						<div class="row" style="margin-bottom:10px;">
-							<div class="col-md-3 col-3">
-								<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 52px;">
+							<div class="col-md-2 col-2 text-center" style="padding:0px;font-size: 2.4em;">
+								<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 54px;">
 							</div>
-							<div class="col-md-5 col-5" style="padding-left:0;padding-top: 15px;font-weight:bold;">
+							<div class="col-md-5 col-5 my-auto" style="padding-left:0;font-weight:bold;">
 								<span style="font-weight:bold; font-size: 0.85em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 							</div>
-							<div class="col-md-4 col-4" style="padding-left:0;padding-top: 15px;font-weight:bold;">
+							<div class="col-md-5 col-5 my-auto" style="padding-left:0;font-weight:bold;">
 								<?php echo number_format($v['NUM']); ?>
 							</div>
 						</div>
@@ -846,13 +846,13 @@
 						}
 					?>
 						<div class="row" style="margin-bottom:10px;">
-							<div class="col-md-3 col-3">
-								<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 52px;">
+							<div class="col-md-2 col-2 text-center" style="padding:0px;font-size: 2.4em;">
+								<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 54px;">
 							</div>
-							<div class="col-md-5 col-5" style="padding-left:0;padding-top: 15px;font-weight:bold;">
+							<div class="col-md-5 col-5 my-auto" style="padding-left:0;font-weight:bold;">
 								<span style="font-weight:bold; font-size: 0.85em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 							</div>
-							<div class="col-md-4 col-4" style="padding-left:0;padding-top: 15px;font-weight:bold;">
+							<div class="col-md-5 col-5 my-auto" style="padding-left:0;font-weight:bold;">
 								<?php echo number_format($v['NUM']); ?>
 							</div>
 						</div>
@@ -881,14 +881,14 @@
 					foreach ($SumPortDateData as $v) {
 						$c++;  ?>
 						<div class="row" style="margin-bottom:10px;">
-							<div class="col-md-2 col-2" style="text-align:center; font-size: 2.4em;">
+							<div class="col-md-2 col-2 text-center" style="font-size: 2.4em; padding:0px">
 								<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
 								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan.png') ?>" style="width: 100%;">
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan-02.png') ?>" style="height: 54px;">
 								<?php
 								} else {
 								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint.png') ?>" style="width: 100%;">
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="height: 54px;">
 								<?php
 								}
 								?>
@@ -925,14 +925,14 @@
 					foreach ($SumPortMonthData as $v) {
 						$c++;  ?>
 						<div class="row" style="margin-bottom:10px;">
-							<div class="col-md-2 col-2" style="text-align:center; font-size: 2.4em;">
+							<div class="col-md-2 col-2" style="text-align:center; font-size: 2.4em; padding:0px">
 								<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
 								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan.png') ?>" style="width: 100%;">
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan-02.png') ?>" style="height: 54px;">
 								<?php
 								} else {
 								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint.png') ?>" style="width: 100%;">
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="height: 54px;">
 								<?php
 								}
 								?>
