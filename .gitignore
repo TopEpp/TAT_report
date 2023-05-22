@@ -1,5 +1,5 @@
 
-app/Config/App.php
+app/Config/Boot/App.php
 *.json
 writable
 writable/*
