@@ -108,7 +108,7 @@
 		}
 
 		.SetWidthbtnExport {
-			width: 255px;
+			width: 255px !important;
 		}
 	}
 </style>
@@ -119,10 +119,10 @@
 				ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
 			</div>
 		</div>
-		<div class="col-md-1 col-12 my-auto text-center py-2">
+		<div class="col-md-2 col-12 my-auto text-center py-2">
 			เลือกช่วงเวลา
 		</div>
-		<div class="col-md-4 col-12 my-auto ">
+		<div class="col-md-3 col-12 my-auto ">
 			<div class="row" style="margin-top: 0px;">
 				<div class="col-md-6 col-6 SetAlignInputleft1">
 					<input type="text" name="start_date" id="start_date" class="SetwidthInput1 form-control date_picker" style="display: inline;" value="" placeholder="form">
@@ -315,10 +315,10 @@
 	</div>
 </div>
 
-<div class="row py-2">
+<div class="row py-1">
 	<div class="col-md-3 py-2 col-12">
 		<div class="card" style="border-radius: 20px; overflow: hidden;">
-			<div class="card-header pt-4 px-4" style="background-color: #3cacae; ">
+			<div class="card-header pt-3 px-4" style="background-color: #3cacae; ">
 				<span style="font-weight:bold; font-size: 16px; color: white;">จำแนกรายสัญชาติ</span><br>
 				<span style="font-size:13px;  color: white;"><?php echo $Mydate->date_eng2thai($to_date, 543) ?></span>
 			</div>
@@ -334,7 +334,7 @@
 						}
 					?>
 						<div class="row" style="margin-bottom:4px;">
-							<div class="col-md-3 col-3 my-auto">
+							<div class="col-md-3 col-3 my-auto" style="padding:0px">
 								<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 100%;">
 							</div>
 							<div class="col-md-9 col-9" style="padding-top: 15px;font-weight:bold;">
@@ -352,7 +352,7 @@
 				</div>
 			</div>
 			<div class="card-footer" style="background-color: #3cacae;">
-				<div class="text-center py-3" style="cursor: pointer; color: white;" onclick="openModalInfo(1)">
+				<div class="text-center py-2" style="cursor: pointer; color: white;" onclick="openModalInfo(1)">
 					Show All<i class="fa-solid fa-caret-down mx-2"></i>
 				</div>
 			</div>
@@ -360,7 +360,7 @@
 	</div>
 	<div class="col-md-3 py-2 col-12">
 		<div class="card" style="border-radius: 20px; overflow: hidden;">
-			<div class="card-header pt-4 px-4" style="background-color: #3cacae; ">
+			<div class="card-header pt-3 px-4" style="background-color: #3cacae; ">
 				<span style="font-weight:bold; font-size: 16px; color: white;">จำแนกรายสัญชาติสะสม</span><br>
 				<span style="font-size:13px;  color: white;"><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
 			</div>
@@ -376,7 +376,7 @@
 						}
 					?>
 						<div class="row" style="margin-bottom:4px;">
-							<div class="col-md-3 col-3 my-auto">
+							<div class="col-md-3 col-3 my-auto" style="padding:0px">
 								<!-- <img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 100%;"> -->
 								<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 100%;">
 							</div>
@@ -398,7 +398,7 @@
 				<!-- <div class="text-center py-3" style="cursor: pointer; color: white;" onclick="openModalInfo(1)">
 					Show All<i class="fa-solid fa-caret-down mx-2"></i>
 				</div> -->
-				<div class="py-3 text-center" style="cursor: pointer; color: white;" onclick="openModalInfo(2)">
+				<div class="py-2 text-center" style="cursor: pointer; color: white;" onclick="openModalInfo(2)">
 					Show All<i class="fa-solid fa-caret-down mx-2"></i>
 				</div>
 			</div>
@@ -406,7 +406,7 @@
 	</div>
 	<div class="col-md-3 py-2 col-12">
 		<div class="card" style="border-radius: 20px; overflow: hidden;">
-			<div class="card-header pt-4 px-4" style="background-color: #d4e9ec; ">
+			<div class="card-header pt-3 px-4" style="background-color: #d4e9ec; ">
 				<span style="font-weight:bold; font-size: 16px; color: #3a4a4a;">จำแนกรายด่าน</span><br>
 				<span style="font-size:13px;  color: #3a4a4a;"><?php echo $Mydate->date_eng2thai($to_date, 543) ?></span>
 			</div>
@@ -444,7 +444,7 @@
 				</div>
 			</div>
 			<div class="card-footer" style="background-color: #3cacae;">
-				<div class="py-3 text-center" style="cursor: pointer; color: white;" onclick="openModalInfo(3)">
+				<div class="py-2 text-center" style="cursor: pointer; color: white;" onclick="openModalInfo(3)">
 					Show All<i class="fa-solid fa-caret-down mx-2"></i>
 				</div>
 			</div>
@@ -452,7 +452,7 @@
 	</div>
 	<div class="col-md-3 py-2 col-12">
 		<div class="card" style="border-radius: 20px; overflow: hidden;">
-			<div class="card-header pt-4 px-4" style="background-color: #d4e9ec; ">
+			<div class="card-header pt-3 px-4" style="background-color: #d4e9ec; ">
 				<span style="font-weight:bold; font-size: 16px; color: #3a4a4a;">จำแนกรายด่าน</span><br>
 				<span style="font-size:13px;  color: #3a4a4a;"><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
 			</div>
@@ -490,20 +490,20 @@
 				</div>
 			</div>
 			<div class="card-footer" style="background-color: #3cacae;">
-				<div class="py-3 text-center" style="cursor: pointer; color: white;" onclick="openModalInfo(4)">
+				<div class="py-2 text-center" style="cursor: pointer; color: white;" onclick="openModalInfo(4)">
 					Show All<i class="fa-solid fa-caret-down mx-2"></i>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="row py-2">
+<div class="row">
 	<div class="col-md-12">
 		<div class="row">
-			<div class="col-md-8 col-12">
+			<div class="col-md-8 col-12 py-2">
 				<div id="canvas_map" style="height: 470px; width:100%"></div>
 			</div>
-			<div class="col-md-4 col-12 py-2">
+			<div class="col-md-4 col-12 py-2 ">
 				<?php
 				$dataRegionMap[1]['id'] = 13;
 				$dataRegionMap[1]['name'] = 'ASEAN';
@@ -589,12 +589,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr style="background-color: #f3888e;">
+							<tr style="background-color: #d4e9ec;">
 								<td style="padding-left: 15px;">ASIA</td>
 								<td align="right"><?php echo number_format(@$SumRegionDateData[13] + @$SumRegionDateData[15] + @$SumRegionDateData[38] + @$SumRegionDateData[23]) ?></td>
 								<td align="right"><?php echo number_format(@$SumRegionMonthData[13] + @$SumRegionMonthData[15] + @$SumRegionMonthData[38] + @$SumRegionDateData[23]) ?></td>
 							</tr>
-							<tr style="background:#3a4a4a;">
+							<tr style="background:#fc8392;">
 								<td style="padding-left: 40px;">ASEAN</td>
 								<td align="right"><?php echo number_format(@$SumRegionDateData[13]) ?></td>
 								<td align="right"><?php echo number_format(@$SumRegionMonthData[13]) ?></td>
@@ -637,7 +637,7 @@
 									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
 								</tr>
 							<?php } ?>
-							<tr style="background: rgb(112, 214, 103, 0.7);">
+							<tr style="background: #86be41">
 								<td style="padding-left: 15px;">EUROPE</td>
 								<td align="right"><?php echo number_format(@$SumRegionDateData[2] + @$SumRegionDateData[44]) ?></td>
 								<td align="right"><?php echo number_format(@$SumRegionMonthData[2] + @$SumRegionDateData[44]) ?></td>
@@ -675,7 +675,7 @@
 									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
 								</tr>
 							<?php } ?>
-							<tr style="background: rgb(57, 165, 237, 0.7);">
+							<tr style="background: #f7c008">
 								<td style="padding-left: 15px;">THE AMERICAS</td>
 								<td align="right"><?php echo number_format(@$SumRegionDateData[7] + @$SumRegionDateData[45]) ?></td>
 								<td align="right"><?php echo number_format(@$SumRegionMonthData[7] + @$SumRegionDateData[45]) ?></td>
@@ -694,7 +694,7 @@
 									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
 								</tr>
 							<?php } ?>
-							<tr style="background: rgb(235, 125, 64, 0.7);">
+							<tr style="background: #fd693a">
 								<td style="padding-left: 15px;">OCEANIA</td>
 								<td align="right"><?php echo number_format(@$SumRegionDateData[5] + @$SumRegionDateData[46]) ?></td>
 								<td align="right"><?php echo number_format(@$SumRegionMonthData[5] + @$SumRegionDateData[46]) ?></td>
@@ -713,7 +713,7 @@
 									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
 								</tr>
 							<?php } ?>
-							<tr style="background: rgb(151, 14, 173, 0.7);">
+							<tr style="background: #994f9c">
 								<td style="padding-left: 15px;">MIDDLE EAST</td>
 								<td align="right"><?php echo number_format(@$SumRegionDateData[20]) ?></td>
 								<td align="right"><?php echo number_format(@$SumRegionMonthData[20]) ?></td>
@@ -751,7 +751,7 @@
 							</tr>
 						</tbody>
 						<tfoot>
-							<tr style="background: #70D3DE;font-weight: bolder;">
+							<tr style="background: #488a9a;font-weight: bolder;">
 								<td style="padding-left: 15px;">Total</td>
 								<td align="right">
 									<?php $sumDate = 0;
