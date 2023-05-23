@@ -41,10 +41,12 @@ class Main extends BaseController
 
 		list($day, $month, $year) = explode('-', $data['start_date']);
 		$start_date = $year . '-' . $month . '-' . $day;
+		$start_date_past = ($year-1) . '-' . $month . '-' . $day;
 		$data['start_date_label'] = $start_date;
 
 		list($day, $month, $year) = explode('-', $data['end_date']);
 		$end_date = $year . '-' . $month . '-' . $day;
+		$end_date_past = ($year-1) . '-' . $month . '-' . $day;
 		$data['end_date_label'] = $end_date;
 
 
@@ -55,6 +57,8 @@ class Main extends BaseController
 
 		$data['SumDateData'] = $Model->getSumDate($end_date);
 		$data['SumMonthData'] = $Model->getSumMonth($start_date, $end_date);
+		$data['SumDateData_past'] = $Model->getSumDate($end_date_past);
+		$data['SumMonthData_past'] = $Model->getSumMonth($start_date_past, $end_date_past);
 
 		$data['SumNatDateData'] = $Model->getSumNatDate($end_date);
 		$data['SumNatMonthData'] = $Model->getSumNatMonth($start_date, $end_date);
@@ -179,10 +183,12 @@ class Main extends BaseController
 
 		list($day, $month, $year) = explode('-', $data['start_date']);
 		$start_date = $year . '-' . $month . '-' . $day;
+		$start_date_past = ($year-1) . '-' . $month . '-' . $day;
 		$data['start_date_label'] = $start_date;
 
 		list($day, $month, $year) = explode('-', $data['end_date']);
 		$end_date = $year . '-' . $month . '-' . $day;
+		$end_date_past = ($year-1) . '-' . $month . '-' . $day;
 		$data['end_date_label'] = $end_date;
 
 
@@ -193,6 +199,8 @@ class Main extends BaseController
 
 		$data['SumDateData'] = $Model->getSumDate($end_date);
 		$data['SumMonthData'] = $Model->getSumMonth($start_date, $end_date);
+		$data['SumDateData_past'] = $Model->getSumDate($end_date_past);
+		$data['SumMonthData_past'] = $Model->getSumMonth($start_date_past, $end_date_past);
 
 		$data['SumNatDateData'] = $Model->getSumNatDate($end_date);
 		$data['SumNatMonthData'] = $Model->getSumNatMonth($start_date, $end_date);

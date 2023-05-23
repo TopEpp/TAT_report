@@ -147,29 +147,6 @@
 				<i class="fa-solid fa-file-pdf"></i> PDF
 			</button>
 		</div>
-		<!-- <div class="col-md-3 my-auto text-center" style="font-size: 17px;">
-		ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
-	</div>
-	<div class="d-flex" style="flex-wrap: wrap;">
-		<div class="text-center">
-			เลือกช่วงเวลา
-		</div>
-		<div class="mx-1 my-auto">
-			วันที่เริ่มต้น <input type="text" name="start_date" id="start_date" class="form-control date_picker" style="width: 100px;display: inline;" value="<?php echo $Mydate->date_thai2eng($start_date, 543, '/') ?>">
-		</div>
-		<div class="mx-1 my-auto">
-			วันที่สิ้นสุด <input type="text" name="end_date" id="end_date" class="form-control date_picker" style="width: 100px;display: inline;" value="<?php echo $Mydate->date_thai2eng($end_date, 543, '/') ?>">
-		</div>
-		<div class="mx-1 my-auto">
-			<div class="btn btn_Color mx-1" onclick="ClearFilter()">ล้างค่า</div>
-			<div class="btn btn_Color mx-1" onclick="ChangeFilter()">ตกลง</div>
-		</div>
-		<div class="my-auto">
-			<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard'); ?>')" class="btn btn-danger" style="width : 70px; border-radius: 1em;">
-				<i class="fa-solid fa-file-pdf"></i> PDF
-			</button>
-		</div>
-	</div> -->
 	</div>
 </div>
 
@@ -201,9 +178,16 @@
 							</div>
 							<div class="col-md-12">
 								<div class="d-flex justify-content-center">
-									<img src="<?php echo base_url('public/img/arrowDown.png') ?>" alt="" style="width: 15px;">
 									<p class="mx-1 my-auto" style="margin: 0; color: white;">
-										เพิ่มขึ้น 5 % จากปีที่ผ่านมา
+										<?php 
+										if($SumDateData_past>0){
+											$percent = number_format($SumDateData/$SumDateData_past*100,2);
+											if($SumDateData > $SumDateData_past ){
+												echo '<img src="'.base_url('public/img/arrow.png').'" alt="" style="width: 15px;"> เพิ่มขึ้น '.$percent.' % จากปีที่ผ่านมา'; 
+											}else{
+												echo '<img src="'.base_url('public/img/arrowDown.png').'" alt="" style="width: 15px;"> ลดลง '.$percent.' % จากปีที่ผ่านมา'; 
+											}
+										}?>
 									</p>
 								</div>
 							</div>
@@ -215,24 +199,6 @@
 	</div>
 
 
-
-
-	<!-- <div class="col-12 col-md-6">
-		<div class="card" style="background-image: url('<?php echo base_url('public/img/bg_info.png') ?>'); background-repeat: no-repeat; background-position: bottom;background-position-x:0 ">
-			<div class="card-body">
-				<div class="row">
-					<div class="col-md-4 col-4" style="text-align:center;"><img src="<?php echo base_url('public/img/icon_info1.png') ?>"></div>
-					<div class="col-md-8 col-8" style="text-align:right; font-weight: bold; line-height: 2.4em; font-size: 1.1em; ">
-						จำนวนนักท่องเที่ยว<br>
-						วันที่ <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?><br>
-						<div style="padding:5px; background:#ededed; border-radius: 5px; width: 100%; font-size: 1.8em; font-weight: bold;">
-							<?php echo number_format($SumDateData); ?>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> -->
 	<div class="col-12 col-md-6 my-1">
 		<div class="card" style="background-color: #3cacae; border-radius: 12px;">
 			<div class="card-body">
@@ -259,10 +225,15 @@
 							</div>
 							<div class="col-md-12">
 								<div class="d-flex justify-content-center">
-									<img src="<?php echo base_url('public/img/arrow.png') ?>" alt="" style="width: 15px;">
-									<p class="mx-1 my-auto" style="margin: 0; color: white;">
-										เพิ่มขึ้น 5 % จากปีที่ผ่านมา
-									</p>
+									<?php 
+										if($SumMonthData_past>0){
+											$percent = number_format($SumMonthData/$SumMonthData_past*100,2);
+											if($SumMonthData > $SumMonthData_past ){
+												echo '<img src="'.base_url('public/img/arrow.png').'" alt="" style="width: 15px;"> เพิ่มขึ้น '.$percent.' % จากปีที่ผ่านมา'; 
+											}else{
+												echo '<img src="'.base_url('public/img/arrowDown.png').'" alt="" style="width: 15px;"> ลดลง '.$percent.' % จากปีที่ผ่านมา'; 
+											}
+										}?>
 								</div>
 							</div>
 						</div>
