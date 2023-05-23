@@ -218,7 +218,7 @@
 				<tr>
 					<td><?php echo ($i++).'.'.$value['COUNTRY_NAME_EN']?></td>
 					<td align="right"><?php echo is_numeric(@$value['NUM'])? number_format(@$value['NUM']) : @$value['NUM'] ; ?> </td>
-					<td align="right"><?php echo is_numeric(@$value['GROWTH_RATE'])? number_format(@$value['GROWTH_RATE'],2).'%' : @$value['GROWTH_RATE'] ; ?> </td>
+					<td align="right"><?php echo $value['CHANGE']; ?> </td>
 				</tr>
 			<?php }?>
 			</tbody>

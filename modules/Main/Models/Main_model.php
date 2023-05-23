@@ -278,7 +278,30 @@ class Main_model extends Model
 	    $builder->orderBy('NUM DESC');
 	    // $builder->groupBy("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN");
 	    $builder->limit($limit);
-	    $data = $builder->get()->getResultArray();
+	    $res = $builder->get()->getResultArray();
+		foreach($res as $row){
+			$data[$row['COUNTRYID']] = $row;
+
+			$builder_past = $this->db->table($this->table_month);
+			$builder_past->select("MD_COUNTRY.COUNTRYID, SUM({$this->table_month}.NUM) AS NUM ");
+		    $builder_past->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table_month}.COUNTRY_ID");
+		    $builder_past->where("{$this->table_month}.MONTH",$month);
+		    $builder_past->where("{$this->table_month}.YEAR",($year-1));
+		    $builder_past->where("{$this->table_month}.COUNTRY_ID",$row['COUNTRYID']);
+		    $builder_past->groupBy("MD_COUNTRY.COUNTRYID");
+		    $res_past = $builder_past->get()->getRowArray();
+
+		    
+		    if(@$res_past['NUM']>0){
+		    	$data[$row['COUNTRYID']]['NUM_PAST'] = $res_past['NUM'];
+		    	$data[$row['COUNTRYID']]['CHANGE'] = number_format($row['NUM']/$res_past['NUM']*100,2).' %';
+		    }else{
+		    	$data[$row['COUNTRYID']]['NUM_PAST'] = 0;
+		    	$data[$row['COUNTRYID']]['CHANGE'] = '-';
+		    }
+		    
+
+		}
 
 	    return $data;
 	}
@@ -308,7 +331,30 @@ class Main_model extends Model
 	    $builder->orderBy('NUM DESC');
 	    $builder->groupBy("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN");
 	    $builder->limit($limit);
-	    $data = $builder->get()->getResultArray();
+		$res = $builder->get()->getResultArray();
+		foreach($res as $row){
+			$data[$row['COUNTRYID']] = $row;
+
+			$builder_past = $this->db->table($this->table_month);
+			$builder_past->select("MD_COUNTRY.COUNTRYID, SUM({$this->table_month}.NUM) AS NUM ");
+		    $builder_past->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table_month}.COUNTRY_ID");
+		    $builder_past->where("{$this->table_month}.MONTH >=",$month);
+		    $builder_past->where("{$this->table_month}.MONTH <=",$month2);
+		    $builder_past->where("{$this->table_month}.YEAR",($year-1));
+		    $builder_past->where("{$this->table_month}.COUNTRY_ID",$row['COUNTRYID']);
+		    $builder_past->groupBy("MD_COUNTRY.COUNTRYID");
+		    $res_past = $builder_past->get()->getRowArray();
+
+		    
+		    if(@$res_past['NUM']>0){
+		    	$data[$row['COUNTRYID']]['NUM_PAST'] = $res_past['NUM'];
+		    	$data[$row['COUNTRYID']]['CHANGE'] = number_format($row['NUM']/$res_past['NUM']*100,2).' %';
+		    }else{
+		    	$data[$row['COUNTRYID']]['CHANGE'] = '-';
+		    }
+		    
+
+		}
 
 	    return $data;
 	}
