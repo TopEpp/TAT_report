@@ -52,6 +52,8 @@ $routes->group('main', ['namespace' => '\Modules\Main\Controllers', 'filter' => 
     $routes->post('saveImg2Report', 'Main::saveImg2Report');
 
     $routes->get('monthly', 'Main::monthly');
+    $routes->get('monthly_period', 'Main::monthly_period');
+    
 });
 
 $routes->group('report', ['namespace' => '\Modules\Report\Controllers'], function ($routes) {

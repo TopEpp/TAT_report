@@ -117,7 +117,8 @@ class Main extends BaseController
 		$Model = new Main_model();
 		$data['session'] = session();
 		$data['Mydate'] = $this->Mydate;
-		$data['month'] = date('m');
+		$data['month'] = 1;
+		$data['month2'] = date('m');
 		$data['year'] = date('Y');
 		$data['limit'] = 5;
 		$data['month_label'] = $this->month_en;
@@ -135,10 +136,8 @@ class Main extends BaseController
 			$data['limit'] = $_GET['limit'];
 		}
 
-		$data['SumMonth'] = $Model->getSumMonthly($data['year']);
-		$data['SumMonth_past'] = $Model->getSumMonthly(($data['year']-1));
-		$data['SumRegion'] = $Model->getSumMonthlyRegion($data['month'],$data['year']);
-		$data['SumCountry'] = $Model->getSumMonthlyCountry($data['month'],$data['year'],$data['limit']);
+		$data['SumRegion'] = $Model->getSumMonthlyRegionPeriod($data['month'],$data['month2'],$data['year']);
+		$data['SumCountry'] = $Model->getSumMonthlyCountryPeriod($data['month'],$data['month2'],$data['year'],$data['limit']);
 		$data['export_type'] = @$_GET['export_type'];
 		
 		if (@$_GET['export_type'] == 'pdf') {
