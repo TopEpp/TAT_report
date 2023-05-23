@@ -240,27 +240,50 @@ class Main_model extends Model
 	    return $data;
 	}
 
+	################################ MONTHLY REPORT #################################
+
+	function getSumMonthly($year){
+		$builder = $this->db->table($this->table_month);
+	    $builder->select("{$this->table_month}.MONTH, SUM({$this->table_month}.NUM) AS NUM ");
+		$builder->where("{$this->table_month}.YEAR",$year);
+		$builder->groupBy("{$this->table_month}.MONTH");
+		$builder->orderBy("{$this->table_month}.MONTH");
+		$res = $builder->get()->getResultArray();
+		foreach($res as $row){
+			$data[$row['MONTH']] = $row['NUM'];
+		}
+	    return $data;
+	}
+
 	function getSumMonthlyRegion($month,$year){
 		$builder = $this->db->table($this->table_month);
-	    $builder->select(" SUM({$this->table_month}.NUM) AS NUM ");
-	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID ");
+	    $builder->select("MD_STD_REGION.MD_STD_REG_ID, MD_STD_REGION.MD_STD_REG_NAMEEN, SUM({$this->table_month}.NUM) AS NUM ");
+	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table_month}.COUNTRY_ID");
+	    $builder->join('MD_STD_REGION',"MD_STD_REGION.MD_STD_REG_ID = MD_COUNTRY.STD_REGION_ID ");
 	    $builder->where("{$this->table_month}.MONTH",$month);
 	    $builder->where("{$this->table_month}.YEAR",$year);
-	    $data = $builder->get()->getRowArray();
+	    $builder->groupBy("MD_STD_REGION.MD_STD_REG_ID, MD_STD_REGION.MD_STD_REG_NAMEEN");
+	    $builder->orderBy('MD_STD_REG_NAMEEN');
+	    $data = $builder->get()->getResultArray();
+
+	    return $data;
 	}
 
 	function getSumMonthlyCountry($month,$year,$limit){
 		$builder = $this->db->table($this->table_month);
-	    $builder->select("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN, {$this->table_month}.NUM ");
+	    $builder->select("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN, {$this->table_month}.NUM, {$this->table_month}.GROWTH_RATE ");
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table_month}.COUNTRY_ID");
 	    $builder->where("{$this->table_month}.MONTH",$month);
 	    $builder->where("{$this->table_month}.YEAR",$year);
+	    $builder->orderBy('NUM DESC');
 	    // $builder->groupBy("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN");
 	    $builder->limit($limit);
 	    $data = $builder->get()->getResultArray();
 
-	    return $data;;
+	    return $data;
 	}
+
+
 
 
 	 

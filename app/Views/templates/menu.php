@@ -28,23 +28,28 @@ $method =  $request->uri->getSegment(2);
     <!-- Nav Item - Dashboard -->
 
 
-
-
     <li class="nav-item <?php if ($controller == 'main') {
                             echo 'active';
                         } ?>">
-        <a class="nav-link" href="<?php echo base_url() ?>">
-            <i class="fas fa-fw fa-dashboard"></i>
-            <span>Dashboard</span></a>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMain" aria-expanded="true" aria-controls="collapseMain">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Dashboard</span>
+        </a>
+        <div id="collapseMain" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item <?php if ($controller == 'import' && ($method == 'index' || $method == '')) {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('') ?>">Daily</a>
+                <a class="collapse-item <?php if ($controller == 'import' && $method == 'monthly') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('main/monthly') ?>">Monthly</a>
+                <a class="collapse-item <?php if ($controller == 'import' && $method == 'monthly_period') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('main/monthly_period') ?>">Monthly Period</a>
+            </div>
+        </div>
     </li>
 
-    <!-- Divider -->
-    <!-- <hr class="sidebar-divider"> -->
-
-    <!-- Heading -->
-    <!-- <div class="sidebar-heading">
-        Interface
-    </div> -->
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item <?php if ($controller == 'report') {
@@ -84,10 +89,22 @@ $method =  $request->uri->getSegment(2);
     <li class="nav-item <?php if ($controller == 'import') {
                             echo 'active';
                         } ?>">
-        <a class="nav-link" href="<?php echo base_url('import') ?>">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Import</span></a>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseImport" aria-expanded="true" aria-controls="collapseImport">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Import</span>
+        </a>
+        <div id="collapseImport" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item <?php if ( $controller == 'import' && ($method == 'index' || $method == '')) {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('import') ?>">Daily</a>
+                <a class="collapse-item <?php if ( $controller == 'import' && $method == 'monthly') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('import/monthly') ?>">Monthly</a>
+            </div>
+        </div>
     </li>
+
 
     <li class="nav-item <?php if ($controller == 'setting') {
                             echo 'active';

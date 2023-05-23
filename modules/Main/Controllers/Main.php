@@ -88,11 +88,64 @@ class Main extends BaseController
 		$data['month'] = date('m');
 		$data['year'] = date('Y');
 		$data['limit'] = 5;
+		$data['month_label'] = $this->month_en;
 
-		// $data['SumRegion'] = $Model->getSumMonthlyRegion($data['month'],$data['year']);
+		if(!empty($_GET['month'])){
+			$data['month'] = $_GET['month'];
+		}
+		if(!empty($_GET['year'])){
+			$data['year'] = $_GET['year'];
+		}
+		if(!empty($_GET['limit'])){
+			$data['limit'] = $_GET['limit'];
+		}
+
+		$data['SumMonth'] = $Model->getSumMonthly($data['year']);
+		$data['SumMonth_past'] = $Model->getSumMonthly(($data['year']-1));
+		$data['SumRegion'] = $Model->getSumMonthlyRegion($data['month'],$data['year']);
 		$data['SumCountry'] = $Model->getSumMonthlyCountry($data['month'],$data['year'],$data['limit']);
+		$data['export_type'] = @$_GET['export_type'];
+		
+		if (@$_GET['export_type'] == 'pdf') {
+			$this->export_pdf('Modules\Main\Views\export\monthly', $data);
+		}else{
+			return view("Modules\Main\Views\monthly", $data);
+		}
+	}
 
-		return view("Modules\Main\Views\monthly", $data);
+	function monthly_period(){
+		$Model = new Main_model();
+		$data['session'] = session();
+		$data['Mydate'] = $this->Mydate;
+		$data['month'] = date('m');
+		$data['year'] = date('Y');
+		$data['limit'] = 5;
+		$data['month_label'] = $this->month_en;
+
+		if(!empty($_GET['month'])){
+			$data['month'] = $_GET['month'];
+		}
+		if(!empty($_GET['month2'])){
+			$data['month2'] = $_GET['month2'];
+		}
+		if(!empty($_GET['year'])){
+			$data['year'] = $_GET['year'];
+		}
+		if(!empty($_GET['limit'])){
+			$data['limit'] = $_GET['limit'];
+		}
+
+		$data['SumMonth'] = $Model->getSumMonthly($data['year']);
+		$data['SumMonth_past'] = $Model->getSumMonthly(($data['year']-1));
+		$data['SumRegion'] = $Model->getSumMonthlyRegion($data['month'],$data['year']);
+		$data['SumCountry'] = $Model->getSumMonthlyCountry($data['month'],$data['year'],$data['limit']);
+		$data['export_type'] = @$_GET['export_type'];
+		
+		if (@$_GET['export_type'] == 'pdf') {
+			$this->export_pdf('Modules\Main\Views\export\monthly_period', $data);
+		}else{
+			return view("Modules\Main\Views\monthly_period", $data);
+		}
 	}
 
 
