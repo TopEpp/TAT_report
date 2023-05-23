@@ -4,9 +4,18 @@ $controller =  $request->uri->getSegment(1);
 $method =  $request->uri->getSegment(2);
 ?>
 <style>
-    .sidebar {
+    .sidebar-dark .nav-item .nav-link {
         width: 100%;
-        min-height: 100vh;
+    }
+
+    #wrapper #content-wrapper {
+        overflow-x: hidden;
+    }
+
+    @media (min-width: 768px) {
+        .sidebar.toggled .nav-item .nav-link {
+            padding: 0.75rem 0px !important;
+        }
     }
 </style>
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
