@@ -54,6 +54,13 @@ class Setting extends BaseController{
  		return true;
 	}
 
+	public function deletePort(){
+		$id = $this->request->getPost('id');
+		$Model = new Setting_model();
+		$Model->deletePort($id);
+		return $id;
+	}
+
  	public function savePortRatio(){
  		$Model = new Setting_model();
  		$input = $this->request->getPost();

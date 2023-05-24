@@ -23,6 +23,7 @@ class Setting_model extends Model
 	    if($cate_type){
 	    	$builder->where('PORT_CATEGORY_ID',1);
 	    }
+		$builder->where('IS_DELETED', 1);
 	    $data = $builder->get()->getResultArray();
 	    return $data;
 	}
@@ -78,12 +79,24 @@ class Setting_model extends Model
 		$builder->set('PORT_NAME',$input['port_name']);
 		$builder->set('PORT_TYPE_ID',$input['port_type']);
 		$builder->set('PORT_CATEGORY_ID',$input['port_cate']);
+
+		// set port typename , catename
+		$builder->set('PORT_TYPE', $input['port_type_name']);
+		$builder->set('PORT_CATEGORY', $input['port_category']);
+
 		if(!empty($input['port_id'])){
 			$builder->where('PORT_ID',$input['port_id']);
 			$builder->update();
 		}else{
 			$builder->insert();
 		}
+	}
+
+	function deletePort($id){
+		$builder = $this->db->table('MD_PORT');
+		$builder->set('IS_DELETED', 0);
+		$builder->where('PORT_ID', $id);
+		$builder->update();
 	}
 
 	function getPortRatio($port_id){
