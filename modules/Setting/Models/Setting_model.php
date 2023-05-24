@@ -31,6 +31,7 @@ class Setting_model extends Model
 	function getVisa(){
 		$builder = $this->db->table('MD_VISA');
 	    $builder->select('*');
+		$builder->where('IS_DELETED', 1);
 	    $data = $builder->get()->getResultArray();
 	    return $data;
 	}
@@ -72,6 +73,27 @@ class Setting_model extends Model
 		$builder->set('VISA_ID',$input['visa_id']);
 		$builder->set('COUNTRY_ID',$input['country_id']);
 		$builder->insert();
+	}
+
+	function saveVisa($input){
+		$builder = $this->db->table('MD_VISA');
+		$builder->set('VISA_NAME', $input['visa_name']);
+		$builder->set('VISA_TYPE', $input['visa_type_name']);
+		$builder->set('VISA_TYPE_ID', $input['visa_type_id']);
+
+		if(!empty($input['visa_id'])){
+			$builder->where('VISA_ID', $input['visa_id']);
+			$builder->update();
+		}else{
+			$builder->insert();
+		}
+	}
+
+	function deleteVisa($id){
+		$builder = $this->db->table('MD_VISA');
+		$builder->set('IS_DELETED', 0);
+		$builder->where('VISA_ID', $id);
+		$builder->update();
 	}
 
 	function savePort($input){
