@@ -58,6 +58,8 @@ class Import extends BaseController
 		$Model = new Import_model();
 		$Main_model = new Main_model();
 		$data['month_label'] = $this->month_en;
+		$data['year'] = date('Y');
+		$data['data'] = $Model->getRawDataMonthly($data['year']);
 
 		return view('Modules\Import\Views\monthly', $data);
 	}

@@ -9,6 +9,7 @@ use App\Libraries\Hash;
 class Import_model extends Model
 {
 	protected $table = 'REPORT_RAW_DATA';
+	protected $table_month = 'CAL_MONTHLY_REPORT';
   	protected $primaryKey = 'REC_ID';
   	protected $allowedFields = [];
 
@@ -295,5 +296,16 @@ class Import_model extends Model
 	    $text .= 'Insert Data Complete : '.$count.' Row';
 
 	    return $text;
+	}
+
+	function getRawDataMonthly($year){
+		$builder = $this->db->table($this->table_month);
+	    $builder->select("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN, {$this->table_month}.* ");
+	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table_month}.COUNTRY_ID");
+	    $builder->where("{$this->table_month}.YEAR",$year);
+	    $builder->orderBy("{$this->table_month}.MONTH, {$this->table_month}.COUNTRY_ID ");
+		$res = $builder->get()->getResultArray();
+
+		return $res;
 	}
 }

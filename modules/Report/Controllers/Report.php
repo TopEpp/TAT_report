@@ -365,7 +365,11 @@ class Report extends BaseController
 			'margin_header' => 2, // 30mm not pixel
 			'margin_footer' => 2, // 10mm
 			'orientation' => $orientation, // L แนวนอน P แนวตั้งง
+
 		]);
+
+		$mpdf->SetWatermarkText('Internal Use Only ห้ามเผยแพร่', 0.1);
+		$mpdf->showWatermarkText = true;
 
 		$footer = '<table width="100%" border=0 style="border:0px ">
                 <tr border=0 style="border:0px ">

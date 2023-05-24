@@ -70,19 +70,21 @@
 				<table class="table table-striped table-bordered" id="myTable">
 					<thead>
 						<tr>
-							<th>REPORT_DATE</th>
-							<th>DIRECTION</th>
+							<th>YEAR</th>
+							<th>MONTH</th>
 							<th>NATION</th>
-							<th>VISA</th>
-							<th>OFFICE</th>
-							<th>HEAD_OFFICE</th>
 							<th>NUM</th>
 						</tr>
 					</thead>
 					<tbody>
-						
-							
-						
+					<?php foreach( $data as $d){ ?>
+						<tr>
+							<td><?php echo $d['YEAR']?></td>
+							<td><?php echo $month_label[$d['MONTH']]?></td>
+							<td><?php echo $d['COUNTRY_NAME_EN']?></td>
+							<td><?php echo $d['NUM']?></td>
+						</tr>
+					<?php } ?>	
 					</tbody>
 				</table>
 
