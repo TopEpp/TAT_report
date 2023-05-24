@@ -137,8 +137,14 @@
 			</div>
 			<div class="col-md-6 col-6 SetAlignInputleft1">
 				<select class="form-control" id="year">
-				 	<option value="2022" <?php if($year==2022){ echo 'selected="selected"'; }?>>2022</option>
-				 	<option value="2023" <?php if($year==2023){ echo 'selected="selected"'; }?>>2023</option>
+				 	<?php for($i=date('Y');$i >= date('Y')-5;$i--){ 
+				 		$sel = '';
+						if($year==$i){
+							$sel = 'selected="selected"';
+						}
+					?>
+						<option value="<?php echo $i?>" <?php echo $sel;?> ><?php echo $i?></option>
+					<?php }?>
 				</select>
 			</div>
 		</div>

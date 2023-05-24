@@ -73,6 +73,9 @@ $routes->group('report', ['namespace' => '\Modules\Report\Controllers'], functio
 $routes->group('import', ['namespace' => '\Modules\Import\Controllers'], function ($routes) {
     $routes->get('/', 'Import::index');
     $routes->post('import_file', 'Import::import_file');
+
+    $routes->get('monthly', 'Import::monthly');
+    $routes->post('import_file_monthly', 'Import::import_file_monthly');
 });
 
 $routes->group('setting', ['namespace' => '\Modules\Setting\Controllers'], function ($routes) {

@@ -180,4 +180,120 @@ class Import_model extends Model
 	    $data = $builder->get()->getResultArray();
 	    return $data;
 	}
+
+	function import_file_monthly($input,$xlsx){
+		$count = 1; $text = '';
+	    foreach($xlsx->rows() as $row){
+	      // echo '<pre>'; print_r($row); echo '</pre>';
+	      $country_name = strtoupper($row['0']);
+
+	      $builder = $this->db->table('MD_COUNTRY');
+	      $builder->select('COUNTRYID');
+	      $builder->like('COUNTRYSHORTNAMEEN', trim($country_name).'%');
+	      $co = $builder->get()->getRowArray();
+
+	      if(trim($country_name) == 'South Africa'){
+	        $co['COUNTRYID'] = '225';
+	      }else if(trim($country_name) == 'USA'){
+	        $co['COUNTRYID'] = '131';
+	      }else if( trim($country_name) == 'UNITED  KINGDOM' || trim($country_name) == 'UNITEDKINGDOM'){
+	        $co['COUNTRYID'] = '274';
+	      }else if( trim($country_name) == 'SRI  LANKA' || trim($country_name) == 'SRILANKA'){
+	        $co['COUNTRYID'] = '170';
+	      }else if( trim($country_name) == 'NEW  ZEALAND' || trim($country_name) == 'NEWZEALAND'){
+	        $co['COUNTRYID'] = '240';
+	      }else if( trim($country_name) == 'SAUDI  ARABIA' || trim($country_name) == 'SAUDIARABIA'){
+	        $co['COUNTRYID'] = '37';
+	      }else if( trim($country_name) == 'FRANCE' ){
+	        $co['COUNTRYID'] = '69';
+	      }else if( trim($country_name) == 'NETHERLANDS' ){
+	        $co['COUNTRYID'] = '72';
+	      }else if( trim($country_name) == 'HONG KONG (CHINA)' ){
+	        $co['COUNTRYID'] = '156';
+	      }else if( trim($country_name) == "DEMOCRATIC PEOPLE'S REPUBLIC OF KOREA" ){
+	        $co['COUNTRYID'] = '159';
+	      }else if( trim($country_name) == 'KOREA (REPUBLIC OF)' ){
+	        $co['COUNTRYID'] = '158';
+	      }else if( trim($country_name) == 'MACAO (CHINA)' ){
+	        $co['COUNTRYID'] = '160';
+	      }else if( trim($country_name) == 'BELGIUN' ){
+	        $co['COUNTRYID'] = '68';
+	      }else if( trim($country_name) == 'RUSSIAN FEDERATION' ){
+	        $co['COUNTRYID'] = '62';
+	      }else if( trim($country_name) == 'UNITED STATES OF AMERICA' ){
+	        $co['COUNTRYID'] = '131';
+	      }else if( trim($country_name) == 'SOUTH AFRICA' ){
+	        $co['COUNTRYID'] = '225';
+	      }
+
+
+	      if(!empty($co['COUNTRYID'])){
+	        
+	        // echo $co['COUNTRYID'].' '.$country_name.'<br>';
+	        $OUTBOUND_MOTS = str_replace(',','',$row['1']);
+	        $OUTBOUND_GROWTH_RATE_MOTS = $row['3'];
+	        $RECEIPTS = '';
+	        $RECEIPTS_CHANGE = '';
+	        if($row['4']!='-'){
+	          $RECEIPTS = str_replace(',','',$row['4']);
+	        }
+
+	        if($row['6']!='-'){
+	          $RECEIPTS_CHANGE = $row['6'];
+	        }
+
+	        $builder_dep = $this->db->table('MD_DEP_MARKET');
+	        $builder_dep->select('*');
+	        $builder_dep->where('MARKET_COUNTRY_ID',$co['COUNTRYID']);
+	        $dep = $builder_dep->get()->getResultArray();
+	        foreach($dep as $d){
+	          $count++;
+	          if(!empty($d['MARKET_COUNTRY_ID'])){
+	            
+	            $builder_import = $this->db->table('INTER_GENERAL_INFO');
+	            $builder_import->set('OUTBOUND_MOTS',$OUTBOUND_MOTS);
+	            $builder_import->set('OUTBOUND_GROWTH_RATE_MOTS',$OUTBOUND_GROWTH_RATE_MOTS);
+	            $builder_import->set('INCOME_MOTS',$RECEIPTS);
+	            $builder_import->set('INCOME_MOTS_CHANGE',$RECEIPTS_CHANGE);
+
+
+	            $builder = $this->db->table('INTER_GENERAL_INFO');
+	            $builder->select('INTER_ID');
+	            $builder->where('REGION_ID',$d['REGION_ID']);
+	            $builder->where('DEP_ID',$d['DEP_ID']);
+	            $builder->where('YEAR',($input['year']));
+	            $builder->where('MONTH',$input['month']);
+	            $builder->where('MARKET_ID',$d['MARKET_ID']);
+	            $inter = $builder->get()->getRowArray();
+	            if(empty($inter['INTER_ID'])){
+
+	              $builder_import->set('REGION_ID',$d['REGION_ID']);
+	              $builder_import->set('DEP_ID',$d['DEP_ID']);
+	              $builder_import->set('YEAR',($input['year']));
+	              $builder_import->set('MONTH',$input['month']);
+	              $builder_import->set('MARKET_ID',$d['MARKET_ID']);
+	              $builder_import->insert();
+
+	              // echo ' - INSERT '.$country_name.' ID : '.$d['MARKET_ID'].' - '.$d['MARKET_NAME'].' == '.$OUTBOUND_MOTS.'/'.$OUTBOUND_GROWTH_RATE_MOTS.'<br>';
+	            }else{
+	              $builder_import->where('INTER_ID',$inter['INTER_ID']);
+	              $builder_import->update();
+
+	              // echo ' - UPDATE '.$country_name.' ID : '.$d['MARKET_ID'].' - '.$d['MARKET_NAME'].' == '.$OUTBOUND_MOTS.'/'.$OUTBOUND_GROWTH_RATE_MOTS.'<br>';
+
+	            }
+
+	          } 
+	        }
+	      }else{
+	      	if($row['1']!=''){
+	      		// $text .= 'Fail!!! - '.trim($country_name).'<br>';
+	      	}
+	      }      
+	    }
+
+	    $text .= 'Insert Data Complete : '.$count.' Row';
+
+	    return $text;
+	}
 }

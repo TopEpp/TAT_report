@@ -187,7 +187,7 @@
 											}else{
 												echo '<img src="'.base_url('public/img/arrowDown.png').'" alt="" style="width: 15px;"> ลดลง '.$percent.' % จากปีที่ผ่านมา'; 
 											}
-										}?>
+										}else{ echo '-';}?>
 									</p>
 								</div>
 							</div>
@@ -233,7 +233,7 @@
 											}else{
 												echo '<img src="'.base_url('public/img/arrowDown.png').'" alt="" style="width: 15px;"> ลดลง '.$percent.' % จากปีที่ผ่านมา'; 
 											}
-										}?>
+										}else{ echo '-';}?>
 								</div>
 							</div>
 						</div>

@@ -51,4 +51,30 @@ class Import extends BaseController
 
 		return view('Modules\Import\Views\detail', $data);
 	}
+
+	public function monthly()
+	{
+		$data = array();
+		$Model = new Import_model();
+		$Main_model = new Main_model();
+		$data['month_label'] = $this->month_en;
+
+		return view('Modules\Import\Views\monthly', $data);
+	}
+
+	function import_file_monthly()
+	{
+		ini_set('memory_limit', '-1');
+		ini_set('max_execution_time', '3000');
+		$Model = new Import_model();
+		$data['session'] = session();
+		$input = $this->request->getPost();
+		$file = $this->request->getFiles();
+
+		if ($xlsx = SimpleXLSX::parse($file['import_file'])) {
+			$data['text'] = $Model->import_file_monthly($input, $xlsx);
+		}
+
+		return view('Modules\Import\Views\detail', $data);
+	}
 }
