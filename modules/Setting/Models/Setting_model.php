@@ -23,6 +23,7 @@ class Setting_model extends Model
 	    if($cate_type){
 	    	$builder->where('PORT_CATEGORY_ID',1);
 	    }
+		$builder->where('IS_DELETED', 1);
 	    $data = $builder->get()->getResultArray();
 	    return $data;
 	}
@@ -30,6 +31,7 @@ class Setting_model extends Model
 	function getVisa(){
 		$builder = $this->db->table('MD_VISA');
 	    $builder->select('*');
+		$builder->where('IS_DELETED', 1);
 	    $data = $builder->get()->getResultArray();
 	    return $data;
 	}
@@ -73,17 +75,50 @@ class Setting_model extends Model
 		$builder->insert();
 	}
 
+	function saveVisa($input){
+		$builder = $this->db->table('MD_VISA');
+		$builder->set('VISA_NAME', $input['visa_name']);
+		$builder->set('VISA_TYPE', $input['visa_type_name']);
+		$builder->set('VISA_TYPE_ID', $input['visa_type_id']);
+
+		if(!empty($input['visa_id'])){
+			$builder->where('VISA_ID', $input['visa_id']);
+			$builder->update();
+		}else{
+			$builder->insert();
+		}
+	}
+
+	function deleteVisa($id){
+		$builder = $this->db->table('MD_VISA');
+		$builder->set('IS_DELETED', 0);
+		$builder->where('VISA_ID', $id);
+		$builder->update();
+	}
+
 	function savePort($input){
 		$builder = $this->db->table('MD_PORT');
 		$builder->set('PORT_NAME',$input['port_name']);
 		$builder->set('PORT_TYPE_ID',$input['port_type']);
 		$builder->set('PORT_CATEGORY_ID',$input['port_cate']);
+
+		// set port typename , catename
+		$builder->set('PORT_TYPE', $input['port_type_name']);
+		$builder->set('PORT_CATEGORY', $input['port_category']);
+
 		if(!empty($input['port_id'])){
 			$builder->where('PORT_ID',$input['port_id']);
 			$builder->update();
 		}else{
 			$builder->insert();
 		}
+	}
+
+	function deletePort($id){
+		$builder = $this->db->table('MD_PORT');
+		$builder->set('IS_DELETED', 0);
+		$builder->where('PORT_ID', $id);
+		$builder->update();
 	}
 
 	function getPortRatio($port_id){

@@ -46,12 +46,33 @@ class Setting extends BaseController{
 		$data['month_label'] = $this->month_th;
 		return view('Modules\Setting\Views\visa',$data);
 	}
+
+	public function saveVisa(){
+		$Model = new Setting_model();
+		$input = $this->request->getPost();
+		$Model->saveVisa($input);
+		return true;
+	}
  	
  	public function savePort(){
  		$Model = new Setting_model();
  		$input = $this->request->getPost();
  		$Model->savePort($input);
  		return true;
+	}
+
+	public function deleteVisa(){
+		$id = $this->request->getPost('id');
+		$Model = new Setting_model();
+		$Model->deleteVisa($id);
+		return $id;
+	}
+
+	public function deletePort(){
+		$id = $this->request->getPost('id');
+		$Model = new Setting_model();
+		$Model->deletePort($id);
+		return $id;
 	}
 
  	public function savePortRatio(){

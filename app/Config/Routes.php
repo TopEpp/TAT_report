@@ -88,9 +88,12 @@ $routes->group('setting', ['namespace' => '\Modules\Setting\Controllers'], funct
     $routes->post('savePort','Setting::savePort');
     $routes->post('savePortRatio','Setting::savePortRatio');
     $routes->get('getPortRatio/(:num)','Setting::getPortRatio/$1');
+    $routes->post('deletePort', 'Setting::deletePort');
 
+    $routes->post('saveVisa', 'Setting::saveVisa');
     $routes->post('saveVisaRatio','Setting::saveVisaRatio');
     $routes->get('getVisaRatio/(:num)','Setting::getVisaRatio/$1');
+    $routes->post('deleteVisa', 'Setting::deleteVisa');
 
 
 });

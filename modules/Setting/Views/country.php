@@ -12,8 +12,8 @@
   						<tr>
   							<th>ชื่อภาษาอังกฤษ</th>
   							<th>ชื่อภาษาไทย</th>
-  							<th>ภูมิภาค</th>
-  							<th></th>
+  							<th class="d-none">ภูมิภาค</th>
+  							<th class="d-none"></th>
   						</tr>
   					</thead>
   					<tbody>
@@ -21,8 +21,8 @@
   						<tr>
   							<td><?php echo $d['COUNTRY_NAME_EN']?></td>
   							<td><?php echo $d['COUNTRY_NAME_TH']?></td>
-  							<td><?php echo $d['REGIONID']?></td>
-  							<td align="center">
+  							<td class="d-none"><?php echo $d['REGIONID']?></td>
+  							<td class="d-none" align="center">
 	                            <a href="#" class="btn btn-primary" onclick="editData()"><i class="fa fa-pen"></i></a>
 	                            <a href="#" class="btn btn-primary" onclick="deleteData()"><i class="fa fa-trash"></i></a>
 	                        </td>
