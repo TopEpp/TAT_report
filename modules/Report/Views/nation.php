@@ -21,7 +21,6 @@ $report_date = $Mydate->date_eng2thai($to_date, 543);
 $numberDay = $numberMonth = array();
 $i = 1;
 foreach ($data_day_lastyear as $v) {
-
 	if ($v['NUM'] == 0) {
 		$numberDay[$v['COUNTRY_ID']] = '';
 	} else {
@@ -216,7 +215,7 @@ foreach ($data_month_lastyear as $v) {
 		$('.date_picker').datepicker({
 			format: "dd/mm/yyyy",
 			autoclose: true,
-			language: 'th-th',
+			language: 'en-en',
 			endDate: new Date('<?php echo $to_date; ?>')
 		});
 

@@ -197,7 +197,7 @@
 		$('.date_picker').datepicker({
 			format: "dd/mm/yyyy",
 			autoclose: true,
-			language: 'th-th',
+			language: 'en-en',
 		});
 	});
 

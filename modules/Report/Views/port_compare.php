@@ -244,7 +244,7 @@ function getSumData($data, $region, $region_id, $country, $port_id, $day, &$sum 
 		$('.date_picker').datepicker({
 			format: "dd/mm/yyyy",
 			autoclose: true,
-			language: 'th-th',
+			language: 'en-en',
 			endDate: new Date('<?php echo $to_date; ?>')
 		});
 

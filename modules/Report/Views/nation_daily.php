@@ -103,7 +103,7 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1)
 
 			$padding_region = $level * 10;
 			$alink = '';
-			if (!empty($country[$re['MD_STD_REG_ID']]) && $re['IS_OTHERS'] != 'Y' ) {
+			if (!empty($country[$re['MD_STD_REG_ID']]) && $re['IS_OTHERS'] != 'Y') {
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
@@ -165,7 +165,7 @@ function getSumData($data, $region, $region_id, $country, $period, &$sum = array
 		$('.date_picker').datepicker({
 			format: "dd/mm/yyyy",
 			autoclose: true,
-			language: 'th-th',
+			language: 'en-en',
 		});
 	});
 

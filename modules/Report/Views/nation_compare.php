@@ -255,7 +255,7 @@ function getSumData($data1, $data2, $region, $region_id, $country, &$sum1 = 0, &
 		$('.date_picker').datepicker({
 			format: "dd/mm/yyyy",
 			autoclose: true,
-			language: 'th-th',
+			language: 'en-en',
 			endDate: new Date('<?php echo $to_date; ?>')
 		});
 	});

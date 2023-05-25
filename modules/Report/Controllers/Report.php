@@ -22,7 +22,6 @@ class Report extends BaseController
 		$Main_model = new Main_model();
 		$data['session'] = session();
 		$data['Mydate'] = $this->Mydate;
-
 		$date = $Main_model->getMaxDate();
 		// $date = date('Y-m-d');
 		$day = date('d');

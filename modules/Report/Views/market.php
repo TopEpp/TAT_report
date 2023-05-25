@@ -48,10 +48,6 @@
 		}
 
 		table td::before {
-			/*
-				* aria-label has no advantage, it won't be read inside a table
-				content: attr(aria-label);
-				*/
 			content: attr(data-label);
 			float: left;
 			font-weight: bold;
@@ -267,7 +263,7 @@
 		$('.date_picker').datepicker({
 			format: "dd/mm/yyyy",
 			autoclose: true,
-			language: 'th-th',
+			language: 'en-en',
 		});
 	});
 	$('#table2').DataTable({
