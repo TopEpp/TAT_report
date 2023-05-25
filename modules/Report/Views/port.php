@@ -103,7 +103,7 @@ foreach ($data_month_lastyear as $v) {
 					<th>ลำดับ<br><?php echo $year + 542; ?></th>
 					<th>ด่าน</th>
 					<th>จำนวนนักท่องเที่ยว</th>
-					<th>สัดส่วน</th>
+					<th>สัดส่วน(%)</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -128,7 +128,7 @@ foreach ($data_month_lastyear as $v) {
 						<td align="right"> <?php echo number_format($v['NUM']); ?> </td>
 						<td align="center"> <?php if ($sumDay > 0) {
 												echo number_format($v['NUM'] / $sumDay * 100, 2);
-											} ?> %</td>
+											} ?></td>
 					</tr>
 				<?php } ?>
 			</tbody>
@@ -146,7 +146,7 @@ foreach ($data_month_lastyear as $v) {
 					<th>ลำดับ<br><?php echo $year + 542; ?></th>
 					<th>ด่าน</th>
 					<th>จำนวนนักท่องเที่ยว</th>
-					<th>สัดส่วน</th>
+					<th>สัดส่วน(%)</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -171,7 +171,7 @@ foreach ($data_month_lastyear as $v) {
 						<td align="right"> <?php echo number_format($v['NUM']); ?> </td>
 						<td align="center"> <?php if ($sumMonth > 0) {
 												echo number_format($v['NUM'] / $sumMonth * 100, 2);
-											} ?> %</td>
+											} ?></td>
 					</tr>
 				<?php } ?>
 			</tbody>

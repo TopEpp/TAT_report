@@ -144,7 +144,7 @@ class Report extends BaseController
 		$data['country'] = $Model->getCountryByRegion($data['country_type']);
 		$data['data1'] = $Model->getNatBetweenDateData($data['start_date1'], $data['end_date1'], $data['country_type']);
 		$data['data2'] = $Model->getNatBetweenDateData($data['start_date2'], $data['end_date2'], $data['country_type']);
-
+		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
 			$this->export_excel('nation_compare.xlsx', 'Modules\Report\Views\export\nation_compare', $data);
 		} else if (@$_GET['export_type'] == 'pdf') {
@@ -201,6 +201,7 @@ class Report extends BaseController
 		$data['region'] = $Model->getSTDRegion($data['country_type']);
 		$data['country'] = $Model->getCountryByRegion($data['country_type']);
 
+		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
 			$this->export_excel('port_compare.xlsx', 'Modules\Report\Views\export\port_compare', $data);
 		} else if (@$_GET['export_type'] == 'pdf') {
@@ -279,6 +280,7 @@ class Report extends BaseController
 		$data['region'] = $Model->getSTDRegion('standard');
 		$data['country'] = $Model->getCountryByRegion('standard');
 
+		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
 			$this->export_excel('nation_daily.xlsx', 'Modules\Report\Views\export\nation_daily', $data);
 		} else if (@$_GET['export_type'] == 'pdf') {
@@ -319,7 +321,7 @@ class Report extends BaseController
 		$data['period'] = $data['Mydate']->date_range(date('Y-m-d', strtotime($start_period)), date('Y-m-d', strtotime($end_period)));
 		$data['data'] = $Model->getPortDaily($date_start, $date_end);
 		$data['port'] = $Model->getPortGroupType();
-
+		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
 			$this->export_excel('port_daily.xlsx', 'Modules\Report\Views\export\port_daily', $data);
 		} else if (@$_GET['export_type'] == 'pdf') {

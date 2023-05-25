@@ -27,6 +27,15 @@
 
 		</tr>
 		<?php genTableData($data, $region, 0, $country, $period) ?>
+		<?php if ($export_type == 'excel') { ?>
+			<tr style="border:0px">
+				<td colspan="5">
+					ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+				</td>
+			</tr>
+		<?php
+		}
+		?>
 	</tbody>
 </table>
 <?php

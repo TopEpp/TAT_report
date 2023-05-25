@@ -41,12 +41,12 @@ class Main extends BaseController
 
 		list($day, $month, $year) = explode('-', $data['start_date']);
 		$start_date = $year . '-' . $month . '-' . $day;
-		$start_date_past = ($year-1) . '-' . $month . '-' . $day;
+		$start_date_past = ($year - 1) . '-' . $month . '-' . $day;
 		$data['start_date_label'] = $start_date;
 
 		list($day, $month, $year) = explode('-', $data['end_date']);
 		$end_date = $year . '-' . $month . '-' . $day;
-		$end_date_past = ($year-1) . '-' . $month . '-' . $day;
+		$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
 		$data['end_date_label'] = $end_date;
 
 
@@ -85,7 +85,8 @@ class Main extends BaseController
 		$Model->update_country();
 	}
 
-	function monthly(){
+	function monthly()
+	{
 		$Model = new Main_model();
 		$data['session'] = session();
 		$data['Mydate'] = $this->Mydate;
@@ -94,30 +95,31 @@ class Main extends BaseController
 		$data['limit'] = 5;
 		$data['month_label'] = $this->month_en;
 
-		if(!empty($_GET['month'])){
+		if (!empty($_GET['month'])) {
 			$data['month'] = $_GET['month'];
 		}
-		if(!empty($_GET['year'])){
+		if (!empty($_GET['year'])) {
 			$data['year'] = $_GET['year'];
 		}
-		if(!empty($_GET['limit'])){
+		if (!empty($_GET['limit'])) {
 			$data['limit'] = $_GET['limit'];
 		}
 
 		$data['SumMonth'] = $Model->getSumMonthly($data['year']);
-		$data['SumMonth_past'] = $Model->getSumMonthly(($data['year']-1));
-		$data['SumRegion'] = $Model->getSumMonthlyRegion($data['month'],$data['year']);
-		$data['SumCountry'] = $Model->getSumMonthlyCountry($data['month'],$data['year'],$data['limit']);
+		$data['SumMonth_past'] = $Model->getSumMonthly(($data['year'] - 1));
+		$data['SumRegion'] = $Model->getSumMonthlyRegion($data['month'], $data['year']);
+		$data['SumCountry'] = $Model->getSumMonthlyCountry($data['month'], $data['year'], $data['limit']);
 		$data['export_type'] = @$_GET['export_type'];
-		
+
 		if (@$_GET['export_type'] == 'pdf') {
 			$this->export_pdf('Modules\Main\Views\export\monthly', $data);
-		}else{
+		} else {
 			return view("Modules\Main\Views\monthly", $data);
 		}
 	}
 
-	function monthly_period(){
+	function monthly_period()
+	{
 		$Model = new Main_model();
 		$data['session'] = session();
 		$data['Mydate'] = $this->Mydate;
@@ -127,26 +129,26 @@ class Main extends BaseController
 		$data['limit'] = 5;
 		$data['month_label'] = $this->month_en;
 
-		if(!empty($_GET['month'])){
+		if (!empty($_GET['month'])) {
 			$data['month'] = $_GET['month'];
 		}
-		if(!empty($_GET['month2'])){
+		if (!empty($_GET['month2'])) {
 			$data['month2'] = $_GET['month2'];
 		}
-		if(!empty($_GET['year'])){
+		if (!empty($_GET['year'])) {
 			$data['year'] = $_GET['year'];
 		}
-		if(!empty($_GET['limit'])){
+		if (!empty($_GET['limit'])) {
 			$data['limit'] = $_GET['limit'];
 		}
 
-		$data['SumRegion'] = $Model->getSumMonthlyRegionPeriod($data['month'],$data['month2'],$data['year']);
-		$data['SumCountry'] = $Model->getSumMonthlyCountryPeriod($data['month'],$data['month2'],$data['year'],$data['limit']);
+		$data['SumRegion'] = $Model->getSumMonthlyRegionPeriod($data['month'], $data['month2'], $data['year']);
+		$data['SumCountry'] = $Model->getSumMonthlyCountryPeriod($data['month'], $data['month2'], $data['year'], $data['limit']);
 		$data['export_type'] = @$_GET['export_type'];
-		
+
 		if (@$_GET['export_type'] == 'pdf') {
 			$this->export_pdf('Modules\Main\Views\export\monthly_period', $data);
-		}else{
+		} else {
 			return view("Modules\Main\Views\monthly_period", $data);
 		}
 	}
@@ -183,12 +185,12 @@ class Main extends BaseController
 
 		list($day, $month, $year) = explode('-', $data['start_date']);
 		$start_date = $year . '-' . $month . '-' . $day;
-		$start_date_past = ($year-1) . '-' . $month . '-' . $day;
+		$start_date_past = ($year - 1) . '-' . $month . '-' . $day;
 		$data['start_date_label'] = $start_date;
 
 		list($day, $month, $year) = explode('-', $data['end_date']);
 		$end_date = $year . '-' . $month . '-' . $day;
-		$end_date_past = ($year-1) . '-' . $month . '-' . $day;
+		$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
 		$data['end_date_label'] = $end_date;
 
 
@@ -224,7 +226,7 @@ class Main extends BaseController
 		$this->export_pdf('Modules\Main\Views\export\dashboard', $data);
 	}
 
-	
+
 
 	function export_pdf($view, $data, $orientation = 'P')
 	{

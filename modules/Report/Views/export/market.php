@@ -16,8 +16,8 @@
 		<tr>
 			<th style="background:#fda3a9;border: 1px solid black ;">ลำดับ</th>
 			<th style="background:#fda3a9;border: 1px solid black ;">สัญชาติ</th>
-			<th style="background:#fda3a9;border: 1px solid black ;">จำนวนนักท่องเที่ยว</th>
-			<th style="background:#fda3a9;border: 1px solid black ;">สัดส่วน</th>
+			<th style="background:#fda3a9;border: 1px solid black ;">จำนวนนักท่องเที่ยว(คน)</th>
+			<th style="background:#fda3a9;border: 1px solid black ;">สัดส่วน(%)</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -36,9 +36,26 @@
 				<td align="right"><?php echo number_format($ratio, 2); ?></td>
 			</tr>
 		<?php } ?>
+		<?php if ($export_type == 'excel') { ?>
+			<tr style="border:0px">
+				<td colspan="5">
+					ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+				</td>
+			</tr>
+		<?php
+		}
+		?>
 	</tbody>
 </table>
 <?php if ($export_type == 'pdf') { ?><pagebreak> <?php } ?>
+	<table style="width:100%">
+		<tr>
+			<td class="headderTable">
+				<b>รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย จำแนกรายตลาด (ตลาดระยะใกล้ - ตลาดระยะไกล)
+				</b>
+			</td>
+		</tr>
+	</table>
 	<table border="1" class="table table-bordered table-striped tbl_market2" style="width:100%">
 		<thead>
 			<tr>
@@ -47,8 +64,8 @@
 			<tr>
 				<th style="background:#937DFF;border: 1px solid black ;">ลำดับ</th>
 				<th style="background:#937DFF;border: 1px solid black ;">สัญชาติ</th>
-				<th style="background:#937DFF;border: 1px solid black ;">จำนวนนักท่องเที่ยว</th>
-				<th style="background:#937DFF;border: 1px solid black ;">สัดส่วน</th>
+				<th style="background:#937DFF;border: 1px solid black ;">จำนวนนักท่องเที่ยว(คน)</th>
+				<th style="background:#937DFF;border: 1px solid black ;">สัดส่วน(%)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -68,10 +85,14 @@
 					<td align="right"><?php echo number_format($ratio, 2); ?></td>
 				</tr>
 			<?php } ?>
-			<tr style="border:0px">
-				<td colspan="5">
-					<b>ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?></b>
-				</td>
-			</tr>
+			<?php if ($export_type == 'excel') { ?>
+				<tr style="border:0px">
+					<td colspan="5">
+						ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+					</td>
+				</tr>
+			<?php
+			}
+			?>
 		</tbody>
 	</table>
