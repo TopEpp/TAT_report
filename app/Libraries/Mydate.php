@@ -53,8 +53,8 @@ class Mydate
             if ($disyear == "S") {
                 $xyear = substr(($year ), 2, 2);
             } else {
-                    $xyear = ($year );
-                }
+                $xyear = ($year );
+                
             }
 
             return ($day * 1) . "{$flag}" . $month . "{$flag}" . ($xyear);
