@@ -153,7 +153,7 @@
 <div class="row">
 
 	<div class="col-12 col-md-6 my-1">
-		<div class="card" style="background-color: #3cacae; border-radius: 12px;">
+		<div class="card" style="background-color: #3cacae; border-radius: 12px; height: 166.7px;">
 			<div class="card-body">
 				<div class="row">
 					<div class="col-md-12">
@@ -179,15 +179,15 @@
 							<div class="col-md-12">
 								<div class="d-flex justify-content-center">
 									<p class="mx-1 my-auto" style="margin: 0; color: white;">
-										<?php 
-										if($SumDateData_past>0){
-											$percent = number_format($SumDateData/$SumDateData_past*100,2);
-											if($SumDateData > $SumDateData_past ){
-												echo '<img src="'.base_url('public/img/arrow.png').'" alt="" style="width: 15px;"> เพิ่มขึ้น '.$percent.' % จากปีที่ผ่านมา'; 
-											}else{
-												echo '<img src="'.base_url('public/img/arrowDown.png').'" alt="" style="width: 15px;"> ลดลง '.$percent.' % จากปีที่ผ่านมา'; 
+										<?php
+										if ($SumDateData_past > 0) {
+											$percent = number_format($SumDateData / $SumDateData_past * 100, 2);
+											if ($SumDateData > $SumDateData_past) {
+												echo '<img src="' . base_url('public/img/arrow.png') . '" alt="" style="width: 15px;"> เพิ่มขึ้น ' . $percent . ' % จากปีที่ผ่านมา';
+											} else {
+												echo '<img src="' . base_url('public/img/arrowDown.png') . '" alt="" style="width: 15px;"> ลดลง ' . $percent . ' % จากปีที่ผ่านมา';
 											}
-										}?>
+										} ?>
 									</p>
 								</div>
 							</div>
@@ -224,16 +224,16 @@
 								</h1>
 							</div>
 							<div class="col-md-12">
-								<div class="d-flex justify-content-center">
-									<?php 
-										if($SumMonthData_past>0){
-											$percent = number_format($SumMonthData/$SumMonthData_past*100,2);
-											if($SumMonthData > $SumMonthData_past ){
-												echo '<img src="'.base_url('public/img/arrow.png').'" alt="" style="width: 15px;"> เพิ่มขึ้น '.$percent.' % จากปีที่ผ่านมา'; 
-											}else{
-												echo '<img src="'.base_url('public/img/arrowDown.png').'" alt="" style="width: 15px;"> ลดลง '.$percent.' % จากปีที่ผ่านมา'; 
-											}
-										}?>
+								<div class="d-flex justify-content-center" style="color: white;">
+									<?php
+									if ($SumMonthData_past > 0) {
+										$percent = number_format($SumMonthData / $SumMonthData_past * 100, 2);
+										if ($SumMonthData > $SumMonthData_past) {
+											echo '<img class="mx-1" src="' . base_url('public/img/arrow.png') . '" alt="" style="width: 15px;"> เพิ่มขึ้น ' . $percent . ' % จากปีที่ผ่านมา';
+										} else {
+											echo '<img class="mx-1" src="' . base_url('public/img/arrowDown.png') . '" alt="" style="width: 15px;"> ลดลง ' . $percent . ' % จากปีที่ผ่านมา';
+										}
+									} ?>
 								</div>
 							</div>
 						</div>

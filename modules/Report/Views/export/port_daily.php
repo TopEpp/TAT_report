@@ -27,9 +27,9 @@
 			</tr>
 		<?php } ?>
 		<tr>
-			<td style='background-color: #B6E2E9;'>รวมด่านบก</td>
+			<td style='background-color: #B6E2E9; border: 1px solid black ;'>รวมด่านบก</td>
 			<?php foreach ($period as $d) {
-				echo "<td style='background-color: #B6E2E9;'  align='right'>" . number_format(@$sum_type1[$d]) . "</td>";
+				echo "<td style='background-color: #B6E2E9;border: 1px solid black ;'  align='right'>" . number_format(@$sum_type1[$d]) . "</td>";
 			} ?>
 		</tr>
 		<?php foreach ($port[2] as $p) { ?>
@@ -43,18 +43,27 @@
 			</tr>
 		<?php } ?>
 		<tr>
-			<td style="background-color: #B6E2E9;">รวมด่านอากาศ</td>
+			<td style="background-color: #B6E2E9;border: 1px solid black ;">รวมด่านอากาศ</td>
 			<?php foreach ($period as $d) {
-				echo "<td style='background-color: #B6E2E9;' align='right'>" . number_format(@$sum_type2[$d]) . "</td>";
+				echo "<td style='background-color: #B6E2E9;border: 1px solid black ;' align='right'>" . number_format(@$sum_type2[$d]) . "</td>";
 			} ?>
 		</tr>
 	</tbody>
 	<tfoot>
 		<tr>
-			<td style='background-color: #007C84;'>รวมทั้งหมด</td>
+			<td style='background-color: #007C84;border: 1px solid black ;'>รวมทั้งหมด</td>
 			<?php foreach ($period as $d) {
-				echo "<td style='background-color: #007C84;' align='right'>" . number_format(@$sum[$d]) . "</td>";
+				echo "<td style='background-color: #007C84;border: 1px solid black ;' align='right'>" . number_format(@$sum[$d]) . "</td>";
 			} ?>
 		</tr>
+		<?php if ($export_type == 'excel') { ?>
+			<tr style="border:0px">
+				<td colspan="5">
+					ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+				</td>
+			</tr>
+		<?php
+		}
+		?>
 	</tfoot>
 </table>

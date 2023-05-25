@@ -24,12 +24,12 @@ $end_date2 = $day . '-' . $month . '-' . $year;
 			<th style="background:#379FA6;border: 1px solid black ;"></th>
 			<th style="background:#379FA6;border: 1px solid black ;">สะสมวันที่ <?php echo $Mydate->date_eng2thai($start_date1, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($end_date1, 543, 'S', 'S') ?></th>
 			<th style="background:#379FA6;border: 1px solid black ;">สะสมวันที่ <?php echo $Mydate->date_eng2thai($start_date2, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($end_date2, 543, 'S', 'S') ?></th>
-			<th style="background:#379FA6;border: 1px solid black ;">อัตราการเปลี่ยนแปลง</th>
+			<th style="background:#379FA6;border: 1px solid black ;">อัตราการเปลี่ยนแปลง(%)</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr style="background-color:#B6E2E9">
-			<td style="font-weight: bolder;">GRAND TOTAL</td>
+			<td style="font-weight: bolder; background-color:#B6E2E9;border: 1px solid black ;">GRAND TOTAL</td>
 			<?php
 			$sum1 = $sum2 = $sum_diff = 0;
 			$sum_compare = '';
@@ -39,7 +39,7 @@ $end_date2 = $day . '-' . $month . '-' . $year;
 			if ($sum2 > 0) {
 				$sum_diff = $sum2 - $sum1;
 				if ($sum1 > 0) {
-					$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . ' %';
+					$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
 				}
 				if ($sum_diff < 0) {
 					$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
@@ -47,11 +47,21 @@ $end_date2 = $day . '-' . $month . '-' . $year;
 			}
 
 			?>
-			<td align="right"><?php echo number_format($sum1); ?></td>
-			<td align="right"><?php echo number_format($sum2); ?></td>
-			<td align="center"><?php echo $sum_compare; ?></td>
+			<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo number_format($sum1); ?></td>
+			<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo number_format($sum2); ?></td>
+			<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo $sum_compare; ?></td>
 		</tr>
 		<?php genTableData($data1, $data2, $region, 0, $country) ?>
+
+		<?php if ($export_type == 'excel') { ?>
+			<tr style="border:0px">
+				<td colspan="5">
+					ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+				</td>
+			</tr>
+		<?php
+		}
+		?>
 	</tbody>
 </table>
 
@@ -75,7 +85,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 			if ($sum2 > 0) {
 				$sum_diff = $sum2 - $sum1;
 				if ($sum1 > 0) {
-					$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . ' %';
+					$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
 				}
 				if ($sum_diff < 0) {
 					$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
@@ -88,11 +98,11 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
-			echo '<tr style="background-color:#B6E2E9" id="TR-' . $re['MD_STD_REG_ID'] . '" >';
-			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
-			echo '<td align="right">' . number_format($sum1) . '</td>';
-			echo '<td align="right">' . number_format($sum2) . '</td>';
-			echo '<td  align="center">' . $sum_compare . '</td>';
+			echo '<tr style="background-color:#B6E2E9;border: 1px solid black " id="TR-' . $re['MD_STD_REG_ID'] . '" >';
+			echo '<td style="background-color:#B6E2E9;border: 1px solid black ;padding-left: ' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
+			echo '<td align="right" style="background-color:#B6E2E9;border: 1px solid black ">' . number_format($sum1) . '</td>';
+			echo '<td align="right" style="background-color:#B6E2E9;border: 1px solid black ">' . number_format($sum2) . '</td>';
+			echo '<td  align="right" style="background-color:#B6E2E9;border: 1px solid black ">' . $sum_compare . '</td>';
 			echo '</tr>';
 
 
@@ -104,7 +114,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 					if ($num2 > 0) {
 						$diff = $num2 - $num1;
 						if ($num1 > 0) {
-							$compare = number_format($diff / $num1 * 100, 2) . ' %';
+							$compare = number_format($diff / $num1 * 100, 2) . '';
 						}
 						if ($diff < 0) {
 							$compare = "<span style='color:red'>{$compare} </span>";
@@ -112,11 +122,11 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 					}
 
 					$padding_country = $level * 15;
-					echo '<tr class="TR-Parent-' . $re['MD_STD_REG_ID'] . '">';
-					echo '<td style="padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
-					echo '<td align="right">' . number_format(@$num1) . '</td>';
-					echo '<td align="right">' . number_format(@$num2) . '</td>';
-					echo '<td align="center">' . $compare . '</td>';
+					echo '<tr style="background-color:#eaf3f4;border: 1px solid black " class="TR-Parent-' . $re['MD_STD_REG_ID'] . '">';
+					echo '<td style="background-color:#eaf3f4;border: 1px solid black ;padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
+					echo '<td style="background-color:#eaf3f4;border: 1px solid black ;" align="right">' . number_format(@$num1) . '</td>';
+					echo '<td style="background-color:#eaf3f4;border: 1px solid black ;" align="right">' . number_format(@$num2) . '</td>';
+					echo '<td style="background-color:#eaf3f4;border: 1px solid black ;" align="right">' . $compare . '</td>';
 					echo '</tr>';
 				}
 			}

@@ -64,13 +64,17 @@
 	}
 
 	.radiusTable1 {
-		border-radius: 1em;
+		/* border-radius: 1em; */
 		overflow: hidden;
 
 	}
 
 	.radiusTable1 tbody tr:nth-of-type(odd) {
 		background: rgba(255, 224, 226, 1);
+	}
+
+	.radiusTable1 tbody tr:nth-of-type(even) {
+		background: white;
 	}
 
 	.table thead th {
@@ -88,13 +92,17 @@
 	}
 
 	.radiusTable2 {
-		border-radius: 1em;
+		/* border-radius: 1em; */
 		overflow: hidden;
 		/* background-color: red; */
 	}
 
 	.radiusTable2 tbody tr:nth-of-type(odd) {
 		background: rgba(209, 200, 255, 1);
+	}
+
+	.radiusTable2 tbody tr:nth-of-type(even) {
+		background: white
 	}
 
 	.table thead th {
@@ -105,6 +113,41 @@
 		background: rgba(147, 125, 255, 1);
 		padding: 16px
 			/* font-weight:bold; */
+	}
+
+	.table.dataTable tbody th,
+	table.dataTable tbody td {
+		padding: 0.26rem;
+	}
+
+	::-webkit-scrollbar {
+		display: none;
+	}
+
+	table.dataTable thead>tr>th.sorting,
+	table.dataTable thead>tr>th.sorting_asc,
+	table.dataTable thead>tr>th.sorting_desc,
+	table.dataTable thead>tr>th.sorting_asc_disabled,
+	table.dataTable thead>tr>th.sorting_desc_disabled,
+	table.dataTable thead>tr>td.sorting,
+	table.dataTable thead>tr>td.sorting_asc,
+	table.dataTable thead>tr>td.sorting_desc,
+	table.dataTable thead>tr>td.sorting_asc_disabled,
+	table.dataTable thead>tr>td.sorting_desc_disabled {
+		padding: 15.8px 26px;
+	}
+
+	table.dataTable thead th,
+	table.dataTable thead td {
+		border-bottom: 0px;
+	}
+
+	table.dataTable {
+		margin-top: 0px !important;
+	}
+
+	.dataTables_wrapper.no-footer .dataTables_scrollBody {
+		border-bottom: 0px
 	}
 </style>
 <div class="row m-0">
@@ -153,13 +196,13 @@
 	<div class="col-md-6 col-12" style="text-align:center;">
 		<label class="py-2 font-weight-bold">ตลาดระยะใกล้ (Short Haul)</label>
 		<div class="table-responsive">
-			<table class="table table-striped radiusTable1 shadow-lg">
+			<table class="table table-striped radiusTable1 shadow-lg" id="table1">
 				<thead>
 					<tr>
-						<th>ลำดับ</th>
-						<th>สัญชาติ</th>
-						<th>จำนวนนักท่องเที่ยว</th>
-						<th>สัดส่วน</th>
+						<th style="width: 10%; border-top-left-radius: 6px;">ลำดับ</th>
+						<th style="width: 40%;">สัญชาติ</th>
+						<th style="width: 30%;">จำนวนนักท่องเที่ยว</th>
+						<th style="width: 20%; border-top-right-radius: 6px ;">สัดส่วน (%)</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -185,13 +228,13 @@
 	<div class="col-md-6 col-12" style="text-align:center;">
 		<label class="py-2 font-weight-bold">ตลาดระยะไกล (Long Haul)</label>
 		<div class="table-responsive">
-			<table class="table radiusTable2 table-striped shadow-lg">
+			<table class="table radiusTable2 table-striped shadow-lg" id="table2">
 				<thead>
 					<tr>
-						<th>ลำดับ</th>
-						<th>สัญชาติ</th>
-						<th>จำนวนนักท่องเที่ยว</th>
-						<th>สัดส่วน</th>
+						<th style="width: 10%; border-top-left-radius: 6px;">ลำดับ</th>
+						<th style="width: 40%;">สัญชาติ</th>
+						<th style="width: 30%;">จำนวนนักท่องเที่ยว</th>
+						<th style="width: 20%; border-top-right-radius: 6px ;">สัดส่วน (%)</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -226,6 +269,54 @@
 			autoclose: true,
 			language: 'th-th',
 		});
+	});
+	$('#table2').DataTable({
+		paging: false,
+		searching: false,
+		info: false,
+		scrollY: '970px',
+		scrollCollapse: true,
+		paging: false,
+		order: [
+			[3, 'desc']
+		],
+		language: {
+			"lengthMenu": "แสดง _MENU_ รายการ",
+			"search": "ค้นหา:",
+			"zeroRecords": "ไม่มีข้อมูล",
+			"info": "รายการที่ _START_ ถึง _END_ จาก _TOTAL_ รายการ",
+			"infoEmpty": "ไม่มีข้อมูล",
+			"paginate": {
+				"first": "First",
+				"last": "Last",
+				"next": "ถัดไป",
+				"previous": "ก่อนหน้า"
+			},
+		}
+	});
+	$('#table1').DataTable({
+		paging: false,
+		searching: false,
+		info: false,
+		scrollY: '970px',
+		scrollCollapse: true,
+		paging: false,
+		order: [
+			[3, 'desc']
+		],
+		language: {
+			"lengthMenu": "แสดง _MENU_ รายการ",
+			"search": "ค้นหา:",
+			"zeroRecords": "ไม่มีข้อมูล",
+			"info": "รายการที่ _START_ ถึง _END_ จาก _TOTAL_ รายการ",
+			"infoEmpty": "ไม่มีข้อมูล",
+			"paginate": {
+				"first": "First",
+				"last": "Last",
+				"next": "ถัดไป",
+				"previous": "ก่อนหน้า"
+			},
+		}
 	});
 
 	function ChangeFilter() {

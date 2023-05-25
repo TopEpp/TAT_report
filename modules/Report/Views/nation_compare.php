@@ -121,7 +121,7 @@
 						if ($sum2 > 0) {
 							$sum_diff = $sum2 - $sum1;
 							if ($sum1 > 0) {
-								$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . ' %';
+								$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
 							}
 							if ($sum_diff < 0) {
 								$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
@@ -156,7 +156,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 			if ($sum2 > 0) {
 				$sum_diff = $sum2 - $sum1;
 				if ($sum1 > 0) {
-					$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . ' %';
+					$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
 				}
 				if ($sum_diff < 0) {
 					$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
@@ -185,7 +185,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 					if ($num2 > 0) {
 						$diff = $num2 - $num1;
 						if ($num1 > 0) {
-							$compare = number_format($diff / $num1 * 100, 2) . ' %';
+							$compare = number_format($diff / $num1 * 100, 2) . '';
 						}
 						if ($diff < 0) {
 							$compare = "<span style='color:red'>{$compare} </span>";

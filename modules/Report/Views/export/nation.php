@@ -44,7 +44,7 @@ foreach ($data_month_lastyear as $v) {
 			<th style="background:#70D3DE;border: 1px solid black ;">ลำดับ<br><?php echo $year + 542; ?></th>
 			<th style="background:#70D3DE;border: 1px solid black ;">สัญชาติ</th>
 			<th style="background:#70D3DE;border: 1px solid black ;">จำนวนนักท่องเที่ยว</th>
-			<th style="background:#70D3DE;border: 1px solid black ;">สัดส่วน</th>
+			<th style="background:#70D3DE;border: 1px solid black ;">สัดส่วน%</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -71,7 +71,7 @@ foreach ($data_month_lastyear as $v) {
 						<td align="center"> <?php echo @$numberDay[$v['COUNTRY_ID']] ?> </td>
 						<td> <?php echo $v['COUNTRY_NAME_EN'] ?> </td>
 						<td align="right"> <?php echo number_format($v['NUM']); ?> </td>
-						<td align="center"> <?php echo number_format($v['NUM'] / $sumDay * 100, 2); ?> %</td>
+						<td align="right"> <?php echo number_format($v['NUM'] / $sumDay * 100, 2); ?></td>
 					</tr>
 			<?php } else {
 					$sum_other += $v['NUM'];
@@ -84,12 +84,20 @@ foreach ($data_month_lastyear as $v) {
 			<td align="center"></td>
 			<td> Other </td>
 			<td style="text-align:right;"> <?php echo number_format($sum_other); ?> </td>
-			<td style="text-align:center;"> <?php echo number_format($sum_other / $sumMonth * 100, 2); ?> %</td>
+			<td style="text-align:right;"> <?php echo number_format($sum_other / $sumMonth * 100, 2); ?></td>
 		</tr>
 		<tr style="border:0px">
 			<td colspan="5">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td>
 		</tr>
-
+		<?php if ($export_type == 'excel') { ?>
+			<tr style="border:0px">
+				<td colspan="5">
+					ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+				</td>
+			</tr>
+		<?php
+			}
+		?>
 	</tfoot>
 <?php } ?>
 </table>
@@ -114,7 +122,7 @@ foreach ($data_month_lastyear as $v) {
 				<th style="background:#FACE74;border: 1px solid black ;">ลำดับ<br><?php echo $year + 542; ?></th>
 				<th style="background:#FACE74;border: 1px solid black ;">สัญชาติ</th>
 				<th style="background:#FACE74;border: 1px solid black ;">จำนวนนักท่องเที่ยว</th>
-				<th style="background:#FACE74;border: 1px solid black ;">สัดส่วน</th>
+				<th style="background:#FACE74;border: 1px solid black ;">สัดส่วน%</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -139,7 +147,7 @@ foreach ($data_month_lastyear as $v) {
 							<td align="center"> <?php echo @$numberMonth[$v['COUNTRY_ID']] ?> </td>
 							<td> <?php echo $v['COUNTRY_NAME_EN'] ?> </td>
 							<td align="right"> <?php echo number_format($v['NUM']); ?> </td>
-							<td align="center"> <?php echo number_format($v['NUM'] / $sumMonth * 100, 2); ?> %</td>
+							<td align="right"> <?php echo number_format($v['NUM'] / $sumMonth * 100, 2); ?></td>
 						</tr>
 				<?php  } else {
 						$sum_other += $v['NUM'];
@@ -152,11 +160,20 @@ foreach ($data_month_lastyear as $v) {
 				<td align="center"></td>
 				<td> Other </td>
 				<td style="text-align:right;"> <?php echo number_format($sum_other); ?> </td>
-				<td style="text-align:center;"> <?php echo number_format($sum_other / $sumMonth * 100, 2); ?> %</td>
+				<td align="right"><?php echo number_format($sum_other / $sumMonth * 100, 2); ?></td>
 			</tr>
 			<tr style="border:0px">
 				<td colspan="5">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td>
 			</tr>
+			<?php if ($export_type == 'excel') { ?>
+				<tr style="border:0px">
+					<td colspan="5">
+						ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+					</td>
+				</tr>
+			<?php
+				}
+			?>
 		</tfoot>
 	<?php } ?>
 	</table>

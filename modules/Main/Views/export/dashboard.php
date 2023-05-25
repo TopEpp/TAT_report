@@ -59,7 +59,7 @@
 	}
 
 	#resultsTable {
-		height: 315px;
+		height: 327px;
 		width: 210px;
 		background: #a7ffff;
 		overflow: hidden;
@@ -68,18 +68,18 @@
 	}
 
 	#resultsTable3 {
-		height: 37px;
+		height: 20px;
 		width: 210px;
 		background: white;
 		overflow: hidden;
-		border-radius: 25px !important;
+		border-radius: 6px !important;
 		margin: auto auto;
-		box-shadow: 0px 3px 10px 0px hsl(0, 7%, 50%)
+		box-shadow: 0px 5px 8px 0px hsl(0, 7%, 50%);
 	}
 
 	#resultsTable2 {
 		width: 210px;
-		height: 315px;
+		height: 327px;
 		background: #fff1cc;
 		overflow: hidden;
 		border-radius: 25px !important;
@@ -91,7 +91,7 @@
 		width: 180px;
 		background: white;
 		overflow: hidden;
-		border-radius: 30px !important;
+		border-radius: 6px !important;
 		margin: auto auto;
 		box-shadow: 0px 5px 5px 0px hsl(0, 7%, 50%)
 			/* box-shadow:  1px 0px 3px 0px; */
@@ -187,7 +187,7 @@
 		<img src="<?php echo base_url('public/img/airplaneICON.png') ?>" alt="" style="width: 100px;">
 	</div>
 	<div class="vl"></div>
-	<table style="width: 100%; margin-top: 10px;">
+	<table style="width: 100%; margin-top: 8px; padding: 0px;">
 		<tbody>
 			<tr style="padding: 0px 50px;">
 				<td style="text-align: center;font-size: 20px; color: white; padding-left: 50px; width: 50%;">
@@ -217,22 +217,22 @@
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="3" style="text-align: right;padding: 3px 13px;">
-										<span id="" style="font-weight:bold; font-size: 14px;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
+									<td colspan="3" style="text-align: right;padding: 4.5px 13px; margin: auto 0px;">
+										<span id="" style="font-weight:bold; font-size: 16px;color: #193666;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 									</td>
 								</tr>
 							</tbody>
 						</table>
 						<div id="resultsTable3">
 							<table style="width: 100%;">
-								<tr>
-									<td style="">
-										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 35px; ">
+								<tr style="border: 0;">
+									<td style="width: 15%;">
+										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 36px; ">
 									</td>
-									<td>
+									<td style="text-align: right; padding: 8px 15px;color: #193666; font-size: 16px;font-weight: bold; width: 55%;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
-									<td>
+									<td style="font-size: 17px; color: #193666; font-weight: bold; width: 30%; text-align: left;">
 										คน
 									</td>
 								</tr>
@@ -258,8 +258,8 @@
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="3" style="text-align: right;padding: 3px 13px;">
-										<span id="" style="font-weight:bold; font-size: 14px;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
+									<td colspan="3" style="text-align: right;padding: 4.5px 13px; margin: auto 0px;">
+										<span id="" style="font-weight:bold; font-size: 16px;color: #193666;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 									</td>
 								</tr>
 							</tbody>
@@ -267,13 +267,13 @@
 						<div id="resultsTable3">
 							<table style="width: 100%;">
 								<tr>
-									<td style="">
-										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 35px; ">
+									<td style="width: 15%;">
+										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 36px; ">
 									</td>
-									<td>
+									<td style="text-align: right; padding: 8px 15px;color: #193666; font-size: 16px;font-weight: bold; width: 55%;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
-									<td>
+									<td style="font-size: 17px; color: #193666; font-weight: bold; width: 30%; text-align: left;">
 										คน
 									</td>
 								</tr>
@@ -294,8 +294,8 @@
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="2" style="color: #193666; text-align: right; padding: 3px 13px; margin: auto 0px;">
-										<span style="font-weight:bold; font-size: 14px;"><?php echo $v['PORT_NAME'] ?></span>
+									<td colspan="2" style="color: #193666; text-align: right; padding: 4.5px 13px; margin: auto 0px;">
+										<span style="font-weight:bold; font-size: 16px;"><?php echo $v['PORT_NAME'] ?></span>
 									</td>
 								</tr>
 							</tbody>
@@ -303,10 +303,10 @@
 						<div id="resultsTable3">
 							<table style="width: 100%;">
 								<tr>
-									<td style="text-align: center; padding: 10.5px 15px;color: #193666; font-size: 14px;">
+									<td style="text-align: right; padding: 8px 15px;color: #193666; font-size: 16px;font-weight: bold;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
-									<td>
+									<td style="font-size: 17px; color: #193666; font-weight: bold;">
 										คน
 									</td>
 								</tr>
@@ -326,8 +326,8 @@
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="2" style="color: #193666; text-align: right; padding: 3px 13px; margin: auto 0px;">
-										<span style="font-weight:bold; font-size: 14px;"><?php echo $v['PORT_NAME'] ?></span>
+									<td colspan="2" style="color: #193666; text-align: right; padding: 4.5px 13px; margin: auto 0px;">
+										<span style="font-weight:bold; font-size: 16px;"><?php echo $v['PORT_NAME'] ?></span>
 									</td>
 								</tr>
 							</tbody>
@@ -335,10 +335,10 @@
 						<div id="resultsTable3">
 							<table style="width: 100%;">
 								<tr>
-									<td style="text-align: center; padding: 10.5px 15px;color: #193666; font-size: 14px;">
+									<td style="text-align: right; padding: 8px 12px;color: #193666; font-size: 16px;font-weight: bold;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
-									<td>
+									<td style="font-size: 17px; color: #193666;font-weight: bold;">
 										คน
 									</td>
 								</tr>

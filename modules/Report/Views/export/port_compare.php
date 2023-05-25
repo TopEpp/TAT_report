@@ -30,6 +30,15 @@
 		<tbody>
 			<?php genTableData($data, $region, 0, $country, $port_colunm, $period); ?>
 		</tbody>
+		<?php if ($export_type == 'excel') { ?>
+			<tr style="border:0px">
+				<td colspan="5">
+					ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+				</td>
+			</tr>
+		<?php
+		}
+		?>
 	</table>
 <?php } ?>
 <?php
@@ -49,13 +58,13 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $perio
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
-			echo '<tr style="background-color:#B6E2E9" id="TR-' . $re['MD_STD_REG_ID'] . '" >';
-			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
+			echo '<tr style="background-color:#4EB8CA;border: 1px solid #3a4a4a ;" id="TR-' . $re['MD_STD_REG_ID'] . '" >';
+			echo '<td style="background-color:#4EB8CA; border: 1px solid #3a4a4a ; padding-left: ' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
 			if (!empty($port_colunm)) {
 				foreach ($port_colunm as $p) {
 					foreach ($period as $d) {
 						$sum = getSumData($data, $region, $re['MD_STD_REG_ID'], $country, $p['PORT_ID'], $d);
-						echo '<td align="right">' . number_format($sum) . '</td>';
+						echo '<td align="right" style="background-color:#4EB8CA;border: 1px solid #3a4a4a ;">' . number_format($sum) . '</td>';
 					}
 				}
 			}
@@ -66,12 +75,12 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $perio
 				foreach ($country[$re['MD_STD_REG_ID']] as $co) {
 
 					$padding_country = $level * 15;
-					echo '<tr class="TR-Parent-' . $re['MD_STD_REG_ID'] . '">';
-					echo '<td style="padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
+					echo '<tr style="background-color:#eaf3f4;border: 1px solid #3a4a4a ;" class="TR-Parent-' . $re['MD_STD_REG_ID'] . '">';
+					echo '<td style="background-color:#eaf3f4;border: 1px solid #3a4a4a ;padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
 					if (!empty($port_colunm)) {
 						foreach ($port_colunm as $p) {
 							foreach ($period as $d) {
-								echo "<td align='right'>" . @number_format(@$data[$co['COUNTRYID']][$p['PORT_ID']][$d]['NUM']) . "</td>";
+								echo "<td align='right' style='background-color:#eaf3f4;border: 1px solid #3a4a4a ;'>" . @number_format(@$data[$co['COUNTRYID']][$p['PORT_ID']][$d]['NUM']) . "</td>";
 							}
 						}
 					}
