@@ -24,6 +24,7 @@ class Report extends BaseController
 		$data['Mydate'] = $this->Mydate;
 		$date = $Main_model->getMaxDate();
 		// $date = date('Y-m-d');
+
 		$day = date('d');
 		$data['year'] = date('Y');
 		$data['month'] = date('m');
@@ -66,6 +67,7 @@ class Report extends BaseController
 		$Main_model = new Main_model();
 		$data['session'] = session();
 		$data['Mydate'] = $this->Mydate;
+
 
 		$date = $Main_model->getMaxDate();
 		// $date = date('Y-m-d');
@@ -368,9 +370,13 @@ class Report extends BaseController
 			'orientation' => $orientation, // L แนวนอน P แนวตั้งง
 
 		]);
+		if ($orientation == 'P') {
+			$mpdf->SetWatermarkImage(base_url('public/img/watermark_P.png'), 1, array(3000, 3000));
+		} else {
+			$mpdf->SetWatermarkImage(base_url('public/img/watermark_L.png'), 1, array(3000, 3000));
+		}
+		$mpdf->showWatermarkImage = true;
 
-		$mpdf->SetWatermarkText('Internal Use Only ห้ามเผยแพร่', 0.1);
-		$mpdf->showWatermarkText = true;
 
 		$footer = '<table width="100%" border=0 style="border:0px ">
                 <tr border=0 style="border:0px ">

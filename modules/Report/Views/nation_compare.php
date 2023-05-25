@@ -28,6 +28,11 @@
 		border-radius: 12px;
 		background-color: #F6F6F6;
 	}
+
+	table.dataTable thead th,
+	table.dataTable thead td {
+		border-bottom: 0px
+	}
 </style>
 <div class="row">
 	<div class="col-md-6 col-12" style="font-size: 1.4em;">

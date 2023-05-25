@@ -13,57 +13,63 @@ list($year, $month, $day) = explode('-', $end_date2);
 $end_date2 = $day . '-' . $month . '-' . $year;
 
 ?>
-<table border="1" class="table table-striped table-bordered tbl_nation_compare" style="width:100%">
-	<thead>
+
+<body>
+
+	<table style="width:100%">
 		<tr>
-			<th colspan="4" style="background:#FFFFFF;border: 0px;">
+			<th colspan="4">
 				<b>รายงานเปรียบเทียบจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายสัญชาติ</b>
 			</th>
 		</tr>
-		<tr>
-			<th style="background:#379FA6;border: 1px solid black ;"></th>
-			<th style="background:#379FA6;border: 1px solid black ;">สะสมวันที่ <?php echo $Mydate->date_eng2thai($start_date1, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($end_date1, 543, 'S', 'S') ?></th>
-			<th style="background:#379FA6;border: 1px solid black ;">สะสมวันที่ <?php echo $Mydate->date_eng2thai($start_date2, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($end_date2, 543, 'S', 'S') ?></th>
-			<th style="background:#379FA6;border: 1px solid black ;">อัตราการเปลี่ยนแปลง(%)</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr style="background-color:#B6E2E9">
-			<td style="font-weight: bolder; background-color:#B6E2E9;border: 1px solid black ;">GRAND TOTAL</td>
-			<?php
-			$sum1 = $sum2 = $sum_diff = 0;
-			$sum_compare = '';
-			$dataSum = getSumData($data1, $data2, $region, 0, $country);
-			$sum1 = $dataSum['sum1'];
-			$sum2 = $dataSum['sum2'];
-			if ($sum2 > 0) {
-				$sum_diff = $sum2 - $sum1;
-				if ($sum1 > 0) {
-					$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
-				}
-				if ($sum_diff < 0) {
-					$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
-				}
-			}
-
-			?>
-			<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo number_format($sum1); ?></td>
-			<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo number_format($sum2); ?></td>
-			<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo $sum_compare; ?></td>
-		</tr>
-		<?php genTableData($data1, $data2, $region, 0, $country) ?>
-
-		<?php if ($export_type == 'excel') { ?>
-			<tr style="border:0px">
-				<td colspan="5">
-					ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
-				</td>
+	</table>
+	<table border="1" class="table table-striped table-bordered tbl_nation_compare" style="width:100%">
+		<thead>
+			<tr>
+				<th style="background:#379FA6;border: 1px solid black ;"></th>
+				<th style="background:#379FA6;border: 1px solid black ;">สะสมวันที่ <?php echo $Mydate->date_eng2thai($start_date1, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($end_date1, 543, 'S', 'S') ?></th>
+				<th style="background:#379FA6;border: 1px solid black ;">สะสมวันที่ <?php echo $Mydate->date_eng2thai($start_date2, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($end_date2, 543, 'S', 'S') ?></th>
+				<th style="background:#379FA6;border: 1px solid black ;">อัตราการเปลี่ยนแปลง(%)</th>
 			</tr>
-		<?php
-		}
-		?>
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			<tr style="background-color:#B6E2E9">
+				<td style="font-weight: bolder; background-color:#B6E2E9;border: 1px solid black ;">GRAND TOTAL</td>
+				<?php
+				$sum1 = $sum2 = $sum_diff = 0;
+				$sum_compare = '';
+				$dataSum = getSumData($data1, $data2, $region, 0, $country);
+				$sum1 = $dataSum['sum1'];
+				$sum2 = $dataSum['sum2'];
+				if ($sum2 > 0) {
+					$sum_diff = $sum2 - $sum1;
+					if ($sum1 > 0) {
+						$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
+					}
+					if ($sum_diff < 0) {
+						$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
+					}
+				}
+
+				?>
+				<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo number_format($sum1); ?></td>
+				<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo number_format($sum2); ?></td>
+				<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo $sum_compare; ?></td>
+			</tr>
+			<?php genTableData($data1, $data2, $region, 0, $country) ?>
+
+			<?php if ($export_type == 'excel') { ?>
+				<tr style="border:0px">
+					<td colspan="5">
+						ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+					</td>
+				</tr>
+			<?php
+			}
+			?>
+		</tbody>
+	</table>
+</body>
 
 <?php
 

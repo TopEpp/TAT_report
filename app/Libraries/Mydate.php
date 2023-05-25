@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Libraries;
 
 class Mydate
@@ -7,7 +8,7 @@ class Mydate
     private $shortmonth = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
     private $arabic_digit = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
     private $th_digit = array('๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙');
-    
+
     public function date_eng2thai($date, $add = 0, $dismonth = "L" /*รูปแบบเดือน */, $disyear = "L", $flag = ' ')
     {
         if ($date != "" && $date != '0000-00-00') {
@@ -20,18 +21,14 @@ class Mydate
                 $month = $this->monthname[$month * 1];
             }
             $xyear = '';
-            if($add=='X'){
-
-            }else{
+            if ($add == 'X') {
+            } else {
                 if ($disyear == "S") {
-                $xyear = substr(($year + $add), 2, 2);
+                    $xyear = substr(($year + $add), 2, 2);
                 } else {
                     $xyear = ($year + $add);
                 }
             }
-            
-
-
             return ($day * 1) . "{$flag}" . $month . "{$flag}" . ($xyear);
         } else {
             return "";
@@ -61,17 +58,16 @@ class Mydate
         }
     }
 
-    public function date_thai2eng($date, $add = 0,$fomat = '')
+    public function date_thai2eng($date, $add = 0, $fomat = '')
     {
         global $monthname, $shortmonth;
         if ($date != "") {
             $date = substr($date, 0, 10);
             $date = str_replace(array('-', '.'), '/', $date);
-            
-            if($fomat == '/'){
+            if ($fomat == '/') {
                 list($day, $month, $year) = explode('/', $date);
                 return ($day) . "/" . $month . "/" . ($year + $add);
-            }else{
+            } else {
                 list($day, $month, $year) = explode('/', $date);
                 return ($year + $add) . "-" . $month . "-" . ($day);
             }
@@ -106,7 +102,6 @@ class Mydate
                 $today = new DateTime();
             }
             return $diff = $today->diff(new DateTime($birthday));
-
         }
     }
     public function expiredate($strdate, $days)
@@ -180,7 +175,6 @@ class Mydate
             if ($the_first_day_of_week <= 7 && 7 <= $the_last_day_of_week) {
                 $no_remaining_days--;
             }
-
         } else {
             // (edit by Tokes to fix an edge case where the start day was a Sunday
             // and the end day was NOT a Saturday)
@@ -215,19 +209,19 @@ class Mydate
             if ($startDate <= $time_stamp && $time_stamp <= $endDate && date("N", $time_stamp) != 6 && date("N", $time_stamp) != 7) {
                 $workingDays--;
             }
-
         }
 
         return $workingDays;
     }
 
-    function date_range($first, $last, $step = '+1 day', $output_format = 'Y-m-d' ) {
+    function date_range($first, $last, $step = '+1 day', $output_format = 'Y-m-d')
+    {
 
         $dates = array();
         $current = strtotime($first);
         $last = strtotime($last);
 
-        while( $current <= $last ) {
+        while ($current <= $last) {
 
             $dates[] = date($output_format, $current);
             $current = strtotime($step, $current);
@@ -235,5 +229,4 @@ class Mydate
 
         return $dates;
     }
-
 }

@@ -71,6 +71,11 @@ foreach ($data_month_lastyear as $v) {
 	.radiusTable2 thead th {
 		background: #FACE74;
 	}
+
+	table.dataTable thead th,
+	table.dataTable thead td {
+		border-bottom: 0px
+	}
 </style>
 <div class="row">
 	<div class="col-md-6 col-12 text-center text-md-left" style="font-size: 1.4em;">

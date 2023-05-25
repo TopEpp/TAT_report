@@ -42,4 +42,6 @@
     .tbl_market2 {
         border-collapse: collapse;
     }
+
+  
 </style>
