@@ -197,7 +197,7 @@
 					<tr>
 						<th style="width: 10%; border-top-left-radius: 6px;">ลำดับ</th>
 						<th style="width: 40%;">สัญชาติ</th>
-						<th style="width: 30%;">จำนวนนักท่องเที่ยว</th>
+						<th style="width: 30%;">จำนวนนักท่องเที่ยว (คน)</th>
 						<th style="width: 20%; border-top-right-radius: 6px ;">สัดส่วน (%)</th>
 					</tr>
 				</thead>
@@ -229,7 +229,7 @@
 					<tr>
 						<th style="width: 10%; border-top-left-radius: 6px;">ลำดับ</th>
 						<th style="width: 40%;">สัญชาติ</th>
-						<th style="width: 30%;">จำนวนนักท่องเที่ยว</th>
+						<th style="width: 30%;">จำนวนนักท่องเที่ยว (คน)</th>
 						<th style="width: 20%; border-top-right-radius: 6px ;">สัดส่วน (%)</th>
 					</tr>
 				</thead>

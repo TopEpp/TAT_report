@@ -3,13 +3,8 @@ app/Config/App.php
 *.json
 writable
 writable/*
-app/Config/App.php
 vendor/.DS_Store
 app/.DS_Store
 public/.DS_Store
 *.DS_Store
 TAT_Report/
-app/Config/App.php
-app/Config/App.php
-app/Config/App.php
-app/Config/App.php

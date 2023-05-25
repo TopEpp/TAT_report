@@ -107,8 +107,8 @@ foreach ($data_month_lastyear as $v) {
 					<th>ลำดับ<br><?php echo $year + 543; ?></th>
 					<th>ลำดับ<br><?php echo $year + 542; ?></th>
 					<th>ด่าน</th>
-					<th>จำนวนนักท่องเที่ยว</th>
-					<th>สัดส่วน(%)</th>
+					<th>จำนวนนักท่องเที่ยว (คน)</th>
+					<th>สัดส่วน (%)</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -150,8 +150,8 @@ foreach ($data_month_lastyear as $v) {
 					<th>ลำดับ<br><?php echo $year + 543; ?></th>
 					<th>ลำดับ<br><?php echo $year + 542; ?></th>
 					<th>ด่าน</th>
-					<th>จำนวนนักท่องเที่ยว</th>
-					<th>สัดส่วน(%)</th>
+					<th>จำนวนนักท่องเที่ยว (คน)</th>
+					<th>สัดส่วน (%)</th>
 				</tr>
 			</thead>
 			<tbody>

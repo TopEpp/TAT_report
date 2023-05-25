@@ -97,7 +97,7 @@ foreach ($data_month_lastyear as $v) {
 </div>
 
 <div class="row">
-	<div class="col-md-6 pb-3">
+	<div class="col-md-6 pb-3 col-12">
 		<div class="pt-4 py-2" style="text-align:center; font-size:15px">
 			ประจำวันที่ <?php echo $Mydate->date_eng2thai($to_date, 543); ?>
 		</div>
@@ -107,8 +107,8 @@ foreach ($data_month_lastyear as $v) {
 					<th class="">ลำดับ<br><?php echo $year + 543; ?></th>
 					<th>ลำดับ<br><?php echo $year + 542; ?></th>
 					<th>สัญชาติ</th>
-					<th>จำนวนนักท่องเที่ยว</th>
-					<th class="">สัดส่วน(%)</th>
+					<th>จำนวนนักท่องเที่ยว (คน)</th>
+					<th class="">สัดส่วน (%)</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -155,7 +155,7 @@ foreach ($data_month_lastyear as $v) {
 		</table>
 		<span style="font-size:0.8em">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</span>
 	</div>
-	<div class="col-md-6 pb-3">
+	<div class="col-md-6 pb-3 col-12">
 		<div class="pt-4 py-2" style="text-align:center; font-size:15px">
 			สะสม วันที่ 1 ม.ค. - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?>
 		</div>
@@ -165,8 +165,8 @@ foreach ($data_month_lastyear as $v) {
 					<th>ลำดับ<br><?php echo $year + 543; ?></th>
 					<th>ลำดับ<br><?php echo $year + 542; ?></th>
 					<th>สัญชาติ</th>
-					<th>จำนวนนักท่องเที่ยว</th>
-					<th>สัดส่วน(%)</th>
+					<th>จำนวนนักท่องเที่ยว (คน)</th>
+					<th>สัดส่วน (%)</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -234,6 +234,7 @@ foreach ($data_month_lastyear as $v) {
 		});
 
 		$('#table1').DataTable({
+			responsive: true,
 			paging: false,
 			searching: false,
 			info: false,

@@ -16,8 +16,8 @@
 		<tr>
 			<th style="background:#fda3a9;border: 1px solid black ;">ลำดับ</th>
 			<th style="background:#fda3a9;border: 1px solid black ;">สัญชาติ</th>
-			<th style="background:#fda3a9;border: 1px solid black ;">จำนวนนักท่องเที่ยว(คน)</th>
-			<th style="background:#fda3a9;border: 1px solid black ;">สัดส่วน(%)</th>
+			<th style="background:#fda3a9;border: 1px solid black ;">จำนวนนักท่องเที่ยว (คน)</th>
+			<th style="background:#fda3a9;border: 1px solid black ;">สัดส่วน (%)</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -64,8 +64,8 @@
 			<tr>
 				<th style="background:#937DFF;border: 1px solid black ;">ลำดับ</th>
 				<th style="background:#937DFF;border: 1px solid black ;">สัญชาติ</th>
-				<th style="background:#937DFF;border: 1px solid black ;">จำนวนนักท่องเที่ยว(คน)</th>
-				<th style="background:#937DFF;border: 1px solid black ;">สัดส่วน(%)</th>
+				<th style="background:#937DFF;border: 1px solid black ;">จำนวนนักท่องเที่ยว (คน)</th>
+				<th style="background:#937DFF;border: 1px solid black ;">สัดส่วน (%)</th>
 			</tr>
 		</thead>
 		<tbody>
