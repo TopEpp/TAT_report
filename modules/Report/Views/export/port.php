@@ -48,8 +48,8 @@ foreach ($data_month_lastyear as $v) {
 				<th style="background:#70D3DE;border: 1px solid black ;">ลำดับ<br><?php echo $year + 543; ?></th>
 				<th style="background:#70D3DE;border: 1px solid black ;">ลำดับ<br><?php echo $year + 542; ?></th>
 				<th style="background:#70D3DE;border: 1px solid black ;">ด่าน</th>
-				<th style="background:#70D3DE;border: 1px solid black ;">จำนวนนักท่องเที่ยว</th>
-				<th style="background:#70D3DE;border: 1px solid black ;">สัดส่วน(%)</th>
+				<th style="background:#70D3DE;border: 1px solid black ;">จำนวนนักท่องเที่ยว (คน)</th>
+				<th style="background:#70D3DE;border: 1px solid black ;">สัดส่วน (%)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -113,8 +113,8 @@ foreach ($data_month_lastyear as $v) {
 					<th style="background:#face74;border: 1px solid black ;">ลำดับ<br><?php echo $year + 543; ?></th>
 					<th style="background:#face74;border: 1px solid black ;">ลำดับ<br><?php echo $year + 542; ?></th>
 					<th style="background:#face74;border: 1px solid black ;">ด่าน</th>
-					<th style="background:#face74;border: 1px solid black ;">จำนวนนักท่องเที่ยว</th>
-					<th style="background:#face74;border: 1px solid black ;">สัดส่วน(%)</th>
+					<th style="background:#face74;border: 1px solid black ;">จำนวนนักท่องเที่ยว (คน)</th>
+					<th style="background:#face74;border: 1px solid black ;">สัดส่วน (%)</th>
 				</tr>
 			</thead>
 			<tbody>
