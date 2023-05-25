@@ -16,7 +16,7 @@ foreach ($data_month as $k => $subArray) {
 }
 $sumMonth = ceil($sumMonth);
 
-$report_date = $Mydate->date_eng2thai($to_date, 543);
+$report_date = $Mydate->date_eng2thai($to_date);
 
 $numberDay = $numberMonth = array();
 $i = 1;
@@ -80,7 +80,7 @@ foreach ($data_month_lastyear as $v) {
 
 <div class="row m-0">
 	<div class="col-md-6 col-12" style="font-size: 1.4em;">
-		<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+		<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_englabel(date('Y-m-d')) ?>
 	</div>
 	<div class="col-md-6 col-12 py-2 py-md-0" style="text-align: right;">
 		<a target="_blank" href="<?php echo base_url('report/nation/?export_type=excel&d=' . $to_date); ?>" class="btn btn-success" style="width : 70px">
@@ -92,20 +92,20 @@ foreach ($data_month_lastyear as $v) {
 	</div>
 	<div class="col-md-12 col-12 text-center py-2">
 		รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายสัญชาติ วันที่ :
-		<input type="text" name="report_data" id="report_data" class="form-control date_picker" style="width: 200px;display: inline;" value="<?php echo $Mydate->date_thai2eng($to_date_label, 543, '/') ?> ">
+		<input type="text" name="report_data" id="report_data" class="form-control date_picker" style="width: 200px;display: inline;" value="<?php echo $Mydate->date_thai2eng($to_date_label, 0, '/') ?> ">
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-md-6 pb-3">
 		<div class="pt-4 py-2" style="text-align:center; font-size:15px">
-			ประจำวันที่ <?php echo $Mydate->date_eng2thai($to_date, 543); ?>
+			ประจำวันที่ <?php echo $Mydate->date_englabel($to_date ); ?>
 		</div>
 		<table class="table table-striped shadow-lg radiusTable1 " id="table1" style="">
 			<thead style="font-weight:bold;">
 				<tr>
-					<th class="">ลำดับ<br><?php echo $year + 543; ?></th>
-					<th>ลำดับ<br><?php echo $year + 542; ?></th>
+					<th class="">ลำดับ<br><?php echo $year; ?></th>
+					<th>ลำดับ<br><?php echo $year - 1; ?></th>
 					<th>สัญชาติ</th>
 					<th>จำนวนนักท่องเที่ยว</th>
 					<th class="">สัดส่วน(%)</th>
@@ -157,13 +157,13 @@ foreach ($data_month_lastyear as $v) {
 	</div>
 	<div class="col-md-6 pb-3">
 		<div class="pt-4 py-2" style="text-align:center; font-size:15px">
-			สะสม วันที่ 1 ม.ค. - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?>
+			สะสม วันที่ 1 Jan - <?php echo $Mydate->date_englabel($to_date, 'S') ?>
 		</div>
 		<table class="table table-striped shadow-lg  radiusTable2" id="table2">
 			<thead>
 				<tr>
-					<th>ลำดับ<br><?php echo $year + 543; ?></th>
-					<th>ลำดับ<br><?php echo $year + 542; ?></th>
+					<th>ลำดับ<br><?php echo $year ; ?></th>
+					<th>ลำดับ<br><?php echo $year - 1 ; ?></th>
 					<th>สัญชาติ</th>
 					<th>จำนวนนักท่องเที่ยว</th>
 					<th>สัดส่วน(%)</th>
@@ -228,7 +228,7 @@ foreach ($data_month_lastyear as $v) {
 		$('.date_picker').change(function() {
 			var date = this.value;
 			date = date.split('/');
-			report_date = (date[2] - 543) + '-' + date[1] + '-' + date[0];
+			report_date = (date[2]) + '-' + date[1] + '-' + date[0];
 
 			window.location.href = base_url + '/report/nation?d=' + report_date;
 		});
