@@ -6,6 +6,7 @@
 <style>
 	@media screen and (max-width: 600px) {
 		.radiusTable1 {
+			width: 100%;
 			border-radius: 0px !important;
 			overflow: hidden;
 		}
@@ -289,7 +290,7 @@
 				"previous": "ก่อนหน้า"
 			},
 		}
-	});
+	}).columns.adjust();
 	$('#table1').DataTable({
 		paging: false,
 		searching: false,
@@ -313,7 +314,7 @@
 				"previous": "ก่อนหน้า"
 			},
 		}
-	});
+	}).columns.adjust();
 
 	function ChangeFilter() {
 		var date = $('#date_start').val();
