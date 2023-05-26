@@ -16,7 +16,7 @@ foreach ($data_month as $k => $subArray) {
 }
 $sumMonth = ceil($sumMonth);
 
-$report_date = $Mydate->date_eng2thai($to_date);
+$report_date = $Mydate->date_eng2thai($to_date, 543);
 
 $numberDay = $numberMonth = array();
 $i = 1;
@@ -110,7 +110,7 @@ foreach ($data_month_lastyear as $v) {
 
 <div class="row m-0">
 	<div class="col-md-6 col-12" style="font-size: 1.4em;">
-		<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_englabel(date('Y-m-d')) ?>
+		<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
 	</div>
 	<div class="col-md-6 col-12 py-2 py-md-0" style="text-align: right;">
 		<a target="_blank" href="<?php echo base_url('report/nation/?export_type=excel&d=' . $to_date); ?>" class="btn btn-success" style="width : 70px">
@@ -122,40 +122,42 @@ foreach ($data_month_lastyear as $v) {
 	</div>
 	<div class="col-md-12 col-12 text-center py-2">
 		รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายสัญชาติ วันที่ :
-		<input type="text" name="report_data" id="report_data" class="form-control date_picker" style="width: 200px;display: inline;" value="<?php echo $Mydate->date_thai2eng($to_date_label, 0, '/') ?> ">
+		<input type="text" name="report_data" id="report_data" class="form-control date_picker" style="width: 200px;display: inline;" value="<?php echo $Mydate->date_thai2eng($to_date_label, 543, '/') ?> ">
 	</div>
 </div>
 
 <div class="row m-0">
 	<div class="col-md-6 pb-3 col-12">
 		<div class="pt-4 py-2" style="text-align:center; font-size:15px">
-			ประจำวันที่ <?php echo $Mydate->date_englabel($to_date ); ?>
+			ประจำวันที่ <?php echo $Mydate->date_eng2thai($to_date, 543); ?>
 		</div>
-		<table class="table table-striped shadow-lg radiusTable1 " id="table1" style="">
-			<thead style="font-weight:bold;">
-				<tr>
-					<th class="">ลำดับ<br><?php echo $year; ?></th>
-					<th>ลำดับ<br><?php echo $year - 1; ?></th>
-					<th>สัญชาติ</th>
-					<th>จำนวนนักท่องเที่ยว (คน)</th>
-					<th class="">สัดส่วน (%)</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php
-				if (!empty($data_day)) {
-					$sum_other = 0;
-					$i = 1;
-					foreach ($data_day as $k => $v) {
-						$icon = '';
-						if ($i <= 50) {
-							if (!empty($numberDay[$v['COUNTRY_ID']])) {
-								if ($i == $numberDay[$v['COUNTRY_ID']]) {
-									$icon = '<i class="fa fa-equals fa-fw"></i> <span style="font-size:0.6em">(' . $numberDay[$v['COUNTRY_ID']] . ')</span>';
-								} else if ($i < $numberDay[$v['COUNTRY_ID']]) {
-									$icon = '<i class="fa fa-caret-up fa-fw" style="color:green"></i> <span style="font-size:0.6em">(' . $numberDay[$v['COUNTRY_ID']] . ')</span>';
-								} else if ($i > $numberDay[$v['COUNTRY_ID']]) {
-									$icon = '<i class="fa fa-caret-down fa-fw"  style="color:red"></i> <span style="font-size:0.6em">(' . $numberDay[$v['COUNTRY_ID']] . ')</span>';
+		<div class="table-responsive shadow-lg">
+			<table class="table table-striped  radiusTable1 " id="table1" style="">
+				<thead style="font-weight:bold;">
+					<tr>
+						<th class="">ลำดับ<br><?php echo $year + 543; ?></th>
+						<th>ลำดับ<br><?php echo $year + 542; ?></th>
+						<th>สัญชาติ</th>
+						<th>จำนวนนักท่องเที่ยว (คน)</th>
+						<th class="">สัดส่วน (%)</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					if (!empty($data_day)) {
+						$sum_other = 0;
+						$i = 1;
+						foreach ($data_day as $k => $v) {
+							$icon = '';
+							if ($i <= 50) {
+								if (!empty($numberDay[$v['COUNTRY_ID']])) {
+									if ($i == $numberDay[$v['COUNTRY_ID']]) {
+										$icon = '<i class="fa fa-equals fa-fw"></i> <span style="font-size:0.6em">(' . $numberDay[$v['COUNTRY_ID']] . ')</span>';
+									} else if ($i < $numberDay[$v['COUNTRY_ID']]) {
+										$icon = '<i class="fa fa-caret-up fa-fw" style="color:green"></i> <span style="font-size:0.6em">(' . $numberDay[$v['COUNTRY_ID']] . ')</span>';
+									} else if ($i > $numberDay[$v['COUNTRY_ID']]) {
+										$icon = '<i class="fa fa-caret-down fa-fw"  style="color:red"></i> <span style="font-size:0.6em">(' . $numberDay[$v['COUNTRY_ID']] . ')</span>';
+									}
 								}
 
 					?>
@@ -187,59 +189,60 @@ foreach ($data_month_lastyear as $v) {
 	</div>
 	<div class="col-md-6 pb-3 col-12">
 		<div class="pt-4 py-2" style="text-align:center; font-size:15px">
-			สะสม วันที่ 1 Jan - <?php echo $Mydate->date_englabel($to_date, 'S') ?>
+			สะสม วันที่ 1 ม.ค. - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?>
 		</div>
-
-		<table class="table table-striped shadow-lg  radiusTable2" id="table2">
-			<thead>
-				<tr>
-					<th>ลำดับ<br><?php echo $year ; ?></th>
-					<th>ลำดับ<br><?php echo $year - 1 ; ?></th>
-					<th>สัญชาติ</th>
-					<th>จำนวนนักท่องเที่ยว (คน)</th>
-					<th>สัดส่วน (%)</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php if (!empty($data_month)) {
-					$sum_other = 0;
-					$i = 1;
-					foreach ($data_month as $k => $v) {
-						$icon = '';
-						if ($i <= 50) {
-							if (!empty($numberMonth[$v['COUNTRY_ID']])) {
-								if ($i == $numberMonth[$v['COUNTRY_ID']]) {
-									$icon = '<i class="fa fa-equals fa-fw"></i> <span style="font-size:0.6em">(' . $numberMonth[$v['COUNTRY_ID']] . ')</span>';
-								} else if ($i < $numberMonth[$v['COUNTRY_ID']]) {
-									$icon = '<i class="fa fa-caret-up fa-fw" style="color:green"></i> <span style="font-size:0.6em">(' . $numberMonth[$v['COUNTRY_ID']] . ')</span>';
-								} else if ($i > $numberMonth[$v['COUNTRY_ID']]) {
-									$icon = '<i class="fa fa-caret-down fa-fw"  style="color:red"></i> <span style="font-size:0.6em">(' . $numberMonth[$v['COUNTRY_ID']] . ')</span>';
+		<div class="table-responsive shadow-lg">
+			<table class="table table-striped shadow-lg  radiusTable2" id="table2">
+				<thead>
+					<tr>
+						<th>ลำดับ<br><?php echo $year + 543; ?></th>
+						<th>ลำดับ<br><?php echo $year + 542; ?></th>
+						<th>สัญชาติ</th>
+						<th>จำนวนนักท่องเที่ยว (คน)</th>
+						<th>สัดส่วน (%)</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php if (!empty($data_month)) {
+						$sum_other = 0;
+						$i = 1;
+						foreach ($data_month as $k => $v) {
+							$icon = '';
+							if ($i <= 50) {
+								if (!empty($numberMonth[$v['COUNTRY_ID']])) {
+									if ($i == $numberMonth[$v['COUNTRY_ID']]) {
+										$icon = '<i class="fa fa-equals fa-fw"></i> <span style="font-size:0.6em">(' . $numberMonth[$v['COUNTRY_ID']] . ')</span>';
+									} else if ($i < $numberMonth[$v['COUNTRY_ID']]) {
+										$icon = '<i class="fa fa-caret-up fa-fw" style="color:green"></i> <span style="font-size:0.6em">(' . $numberMonth[$v['COUNTRY_ID']] . ')</span>';
+									} else if ($i > $numberMonth[$v['COUNTRY_ID']]) {
+										$icon = '<i class="fa fa-caret-down fa-fw"  style="color:red"></i> <span style="font-size:0.6em">(' . $numberMonth[$v['COUNTRY_ID']] . ')</span>';
+									}
 								}
+					?>
+								<tr>
+									<td align="center"> <b><?php echo $i++ ?></b> </td>
+									<td align="center"> <?php echo @$numberMonth[$v['COUNTRY_ID']] ?> </td>
+									<td> <?php echo $v['COUNTRY_NAME_EN'] ?> </td>
+									<td align="right"> <?php echo number_format($v['NUM']); ?> </td>
+									<td align="center"> <?php echo number_format($v['NUM'] / $sumMonth * 100, 2); ?></td>
+								</tr>
+						<?php  } else {
+								$sum_other += $v['NUM'];
 							}
-				?>
-							<tr>
-								<td align="center"> <b><?php echo $i++ ?></b> </td>
-								<td align="center"> <?php echo @$numberMonth[$v['COUNTRY_ID']] ?> </td>
-								<td> <?php echo $v['COUNTRY_NAME_EN'] ?> </td>
-								<td align="right"> <?php echo number_format($v['NUM']); ?> </td>
-								<td align="center"> <?php echo number_format($v['NUM'] / $sumMonth * 100, 2); ?></td>
-							</tr>
-					<?php  } else {
-							$sum_other += $v['NUM'];
-						}
-					} ?>
-			</tbody>
-			<tfoot>
-				<tr>
-					<td align="center"></td>
-					<td align="center"></td>
-					<td> Other </td>
-					<td style="text-align:right;"> <?php echo number_format($sum_other); ?> </td>
-					<td style="text-align:center;"> <?php echo number_format($sum_other / $sumMonth * 100, 2); ?></td>
-				</tr>
-			</tfoot>
-		<?php } ?>
-		</table>
+						} ?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td align="center"></td>
+						<td align="center"></td>
+						<td> Other </td>
+						<td style="text-align:right;"> <?php echo number_format($sum_other); ?> </td>
+						<td style="text-align:center;"> <?php echo number_format($sum_other / $sumMonth * 100, 2); ?></td>
+					</tr>
+				</tfoot>
+			<?php } ?>
+			</table>
+		</div>
 	</div>
 	<span style="font-size:0.8em">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</span>
 </div>
@@ -260,7 +263,7 @@ foreach ($data_month_lastyear as $v) {
 		$('.date_picker').change(function() {
 			var date = this.value;
 			date = date.split('/');
-			report_date = (date[2]) + '-' + date[1] + '-' + date[0];
+			report_date = (date[2] - 543) + '-' + date[1] + '-' + date[0];
 
 			window.location.href = base_url + '/report/nation?d=' + report_date;
 		});

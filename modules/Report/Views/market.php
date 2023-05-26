@@ -16,48 +16,7 @@
 			overflow: hidden;
 		}
 
-		table {
-			border: 0;
-		}
 
-		table caption {
-			font-size: 1.3em;
-		}
-
-		table thead {
-			border: none;
-			clip: rect(0 0 0 0);
-			height: 30px;
-			margin: -1px;
-			overflow: hidden;
-			padding: 0;
-			position: absolute;
-			width: 1px;
-		}
-
-		table tr {
-			border-bottom: 3px solid #ddd;
-			display: block;
-			padding-bottom: 2px;
-		}
-
-		table td {
-			border-bottom: 1px solid #ddd;
-			display: block;
-			font-size: .8em;
-			text-align: right;
-		}
-
-		table td::before {
-			content: attr(data-label);
-			float: left;
-			font-weight: bold;
-			text-transform: uppercase;
-		}
-
-		table td:last-child {
-			border-bottom: 0;
-		}
 	}
 
 	.radiusTable1 {
@@ -84,9 +43,7 @@
 			/* font-weight:bold; */
 	}
 
-	.table-responsive {
-		overflow-x: visible
-	}
+
 
 	.radiusTable2 {
 		/* border-radius: 1em; */
@@ -145,6 +102,10 @@
 
 	.dataTables_wrapper.no-footer .dataTables_scrollBody {
 		border-bottom: 0px
+	}
+
+	.dataTables_scrollHead {
+		overflow-x: auto !important;
 	}
 </style>
 <div class="row m-0">

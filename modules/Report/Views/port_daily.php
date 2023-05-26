@@ -4,56 +4,6 @@
 <?php $this->section('content') ?>
 <?php $user_menu = $session->get('user_menu'); ?>
 <style>
-	@media screen and (max-width: 600px) {
-		.radiusTableport_daily {
-			border-radius: 0px !important;
-			overflow: hidden;
-		}
-
-		table {
-			border: 0;
-		}
-
-		table caption {
-			font-size: 1.3em;
-		}
-
-		table thead {
-			border: none;
-			clip: rect(0 0 0 0);
-			height: 30px;
-			margin: -1px;
-			overflow: hidden;
-			padding: 0;
-			position: absolute;
-			width: 1px;
-		}
-
-		table tr {
-			/* border-bottom: 3px solid #ddd; */
-			display: block;
-			/* padding-bottom:2px; */
-		}
-
-		table td {
-			border-bottom: 1px solid #ddd;
-			display: block;
-			font-size: .8em;
-			text-align: right;
-		}
-
-		table td::before {
-			content: attr(data-label);
-			float: left;
-			font-weight: bold;
-			text-transform: uppercase;
-		}
-
-		table td:last-child {
-			border-bottom: 0;
-		}
-	}
-
 	.radiusTableport_daily thead th {
 
 		background: rgba(55, 159, 166, 1);
