@@ -16,6 +16,9 @@
 			overflow: hidden;
 		}
 
+		.table-responsive {
+			overflow-x: auto !important;
+		}
 
 	}
 
@@ -107,6 +110,14 @@
 	.dataTables_scrollHead {
 		overflow-x: auto !important;
 	}
+
+	.table {
+		margin-bottom: 0px;
+	}
+
+	.table-responsive {
+		overflow-x: inherit
+	}
 </style>
 <div class="row m-0">
 	<div class="col-md-6 text-center text-md-left" style="font-size: 1.4em;">
@@ -176,7 +187,7 @@
 							<td data-label="ลำดับ"><?php echo $i ?></td>
 							<td data-label="สัญชาติ" align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
 							<td data-label="จำนวนนักท่องเที่ยว" align="right"><?php echo @number_format(@$data[$c['COUNTRYID']]['NUM']) ?></td>
-							<td data-label="สัดส่วน" align="center"><?php echo number_format($ratio, 2); ?></td>
+							<td data-label="สัดส่วน" align="right"><?php echo number_format($ratio, 2); ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -232,7 +243,7 @@
 		paging: false,
 		searching: false,
 		info: false,
-		scrollY: '970px',
+		scrollY: '972px',
 		scrollCollapse: true,
 		paging: false,
 		order: [
@@ -256,9 +267,6 @@
 		paging: false,
 		searching: false,
 		info: false,
-		scrollY: '970px',
-		scrollCollapse: true,
-		paging: false,
 		order: [
 			[3, 'desc']
 		],

@@ -166,7 +166,7 @@ foreach ($data_month_lastyear as $v) {
 									<td align="center"> <?php echo @$numberDay[$v['COUNTRY_ID']] ?> </td>
 									<td> <?php echo $v['COUNTRY_NAME_EN'] ?> </td>
 									<td align="right"> <?php echo number_format($v['NUM']); ?> </td>
-									<td align="center"> <?php echo number_format($v['NUM'] / $sumDay * 100, 2); ?></td>
+									<td align="right"> <?php echo number_format($v['NUM'] / $sumDay * 100, 2); ?></td>
 								</tr>
 						<?php } else {
 								$sum_other += $v['NUM'];
@@ -179,7 +179,7 @@ foreach ($data_month_lastyear as $v) {
 						<td align="center"></td>
 						<td> Other </td>
 						<td style="text-align:right;"> <?php echo number_format($sum_other); ?> </td>
-						<td style="text-align:center;"> <?php echo number_format($sum_other / $sumMonth * 100, 2); ?></td>
+						<td style="text-align:right;"> <?php echo number_format($sum_other / $sumMonth * 100, 2); ?></td>
 					</tr>
 				</tfoot>
 			<?php } ?>
@@ -224,7 +224,7 @@ foreach ($data_month_lastyear as $v) {
 									<td align="center"> <?php echo @$numberMonth[$v['COUNTRY_ID']] ?> </td>
 									<td> <?php echo $v['COUNTRY_NAME_EN'] ?> </td>
 									<td align="right"> <?php echo number_format($v['NUM']); ?> </td>
-									<td align="center"> <?php echo number_format($v['NUM'] / $sumMonth * 100, 2); ?></td>
+									<td align="right"> <?php echo number_format($v['NUM'] / $sumMonth * 100, 2); ?></td>
 								</tr>
 						<?php  } else {
 								$sum_other += $v['NUM'];
@@ -237,7 +237,7 @@ foreach ($data_month_lastyear as $v) {
 						<td align="center"></td>
 						<td> Other </td>
 						<td style="text-align:right;"> <?php echo number_format($sum_other); ?> </td>
-						<td style="text-align:center;"> <?php echo number_format($sum_other / $sumMonth * 100, 2); ?></td>
+						<td style="text-align:right;"> <?php echo number_format($sum_other / $sumMonth * 100, 2); ?></td>
 					</tr>
 				</tfoot>
 			<?php } ?>
@@ -267,7 +267,6 @@ foreach ($data_month_lastyear as $v) {
 
 			window.location.href = base_url + '/report/nation?d=' + report_date;
 		});
-
 		$('#table1').DataTable({
 			responsive: true,
 			paging: false,

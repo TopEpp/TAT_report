@@ -140,7 +140,7 @@ foreach ($data_month_lastyear as $v) {
 							<td align="center"> <?php echo @$numberDay[$v['PORT_ID']] ?> </td>
 							<td> <?php echo $v['PORT_NAME'] ?> </td>
 							<td align="right"> <?php echo number_format($v['NUM']); ?> </td>
-							<td align="center"> <?php if ($sumDay > 0) {
+							<td align="right"> <?php if ($sumDay > 0) {
 													echo number_format($v['NUM'] / $sumDay * 100, 2);
 												} ?></td>
 						</tr>
@@ -185,7 +185,7 @@ foreach ($data_month_lastyear as $v) {
 							<td align="center"> <?php echo @$numberMonth[$v['PORT_ID']] ?> </td>
 							<td> <?php echo $v['PORT_NAME'] ?> </td>
 							<td align="right"> <?php echo number_format($v['NUM']); ?> </td>
-							<td align="center"> <?php if ($sumMonth > 0) {
+							<td align="right"> <?php if ($sumMonth > 0) {
 													echo number_format($v['NUM'] / $sumMonth * 100, 2);
 												} ?></td>
 						</tr>

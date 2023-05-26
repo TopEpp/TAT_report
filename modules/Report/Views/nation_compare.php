@@ -155,7 +155,7 @@
 							?>
 							<td align="right"><?php echo number_format($sum1); ?></td>
 							<td align="right"><?php echo number_format($sum2); ?></td>
-							<td align="center"><?php echo $sum_compare; ?></td>
+							<td align="right"><?php echo $sum_compare; ?></td>
 						</tr>
 						<?php genTableData($data1, $data2, $region, 0, $country) ?>
 					</tbody>
@@ -198,7 +198,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
 			echo '<td align="right" >' . number_format($sum1) . '</td>';
 			echo '<td align="right">' . number_format($sum2) . '</td>';
-			echo '<td  align="center">' . $sum_compare . '</td>';
+			echo '<td  align="right">' . $sum_compare . '</td>';
 			echo '</tr>';
 			$idx = 0;
 			if (!empty($country[$re['MD_STD_REG_ID']]) && $re['IS_OTHERS'] != 'Y') {
@@ -226,12 +226,12 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 						echo '<td style="background: #D6EFF2; padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
 						echo '<td align="right" style="background: #D6EFF2;">' . number_format(@$num1) . '</td>';
 						echo '<td align="right" style="background: #D6EFF2;">' . number_format(@$num2) . '</td>';
-						echo '<td align="center" style="background: #D6EFF2;">' . $compare . '</td>';
+						echo '<td align="right" style="background: #D6EFF2;">' . $compare . '</td>';
 					} else {
 						echo '<td style="background:white; padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
 						echo '<td align="right" style="background: white;">' . number_format(@$num1) . '</td>';
 						echo '<td align="right" style="background: white;">' . number_format(@$num2) . '</td>';
-						echo '<td align="center" style="background: white;">' . $compare . '</td>';
+						echo '<td align="right" style="background: white;">' . $compare . '</td>';
 					}
 
 

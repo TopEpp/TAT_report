@@ -16,6 +16,16 @@
 		</tr>
 	</thead>
 	<tbody>
+		<tr>
+			<td style='background-color: #61bec9;'><b>รวมด่านบก</b></td>
+			<?php foreach ($port[1] as $p) {
+				@$sum[$d] += @$data[$p['PORT_ID']][$d];
+				@$sum_type1[$d] += @$data[$p['PORT_ID']][$d];
+			} ?>
+			<?php foreach ($period as $d) {
+				echo "<td style='background-color: #61bec9;'  align='right'> <b> " . number_format(@$sum_type1[$d]) . "</b> </td>";
+			} ?>
+		</tr>
 		<?php foreach ($port[1] as $p) { ?>
 			<tr>
 				<td><?php echo $p['PORT_NAME'] ?></td>
@@ -26,10 +36,20 @@
 				} ?>
 			</tr>
 		<?php } ?>
-		<tr>
+		<!-- <tr>
 			<td style='background-color: #B6E2E9; border: 1px solid black ;'>รวมด่านบก</td>
 			<?php foreach ($period as $d) {
 				echo "<td style='background-color: #B6E2E9;border: 1px solid black ;'  align='right'>" . number_format(@$sum_type1[$d]) . "</td>";
+			} ?>
+		</tr> -->
+		<tr>
+			<td style="background-color: #61bec9;"><b>รวมด่านอากาศ</b></td>
+			<?php foreach ($port[2] as $p) {
+				@$sum[$d] += @$data[$p['PORT_ID']][$d];
+				@$sum_type2[$d] += @$data[$p['PORT_ID']][$d];
+			} ?>
+			<?php foreach ($period as $d) {
+				echo "<td  style='background-color: #61bec9;' align='right'> <b>" . number_format(@$sum_type2[$d]) . "</b> </td>";
 			} ?>
 		</tr>
 		<?php foreach ($port[2] as $p) { ?>
@@ -42,18 +62,18 @@
 				} ?>
 			</tr>
 		<?php } ?>
-		<tr>
+		<!-- <tr>
 			<td style="background-color: #B6E2E9;border: 1px solid black ;">รวมด่านอากาศ</td>
 			<?php foreach ($period as $d) {
 				echo "<td style='background-color: #B6E2E9;border: 1px solid black ;' align='right'>" . number_format(@$sum_type2[$d]) . "</td>";
 			} ?>
-		</tr>
+		</tr> -->
 	</tbody>
 	<tfoot>
 		<tr>
-			<td style='background-color: #007C84;border: 1px solid black ;'>รวมทั้งหมด</td>
+			<td style='background-color:#61bec9;border: 1px solid black ;'>รวมทั้งหมด</td>
 			<?php foreach ($period as $d) {
-				echo "<td style='background-color: #007C84;border: 1px solid black ;' align='right'>" . number_format(@$sum[$d]) . "</td>";
+				echo "<td style='background-color: #61bec9;border: 1px solid black ;' align='right'>" . number_format(@$sum[$d]) . "</td>";
 			} ?>
 		</tr>
 		<?php if ($export_type == 'excel') { ?>
