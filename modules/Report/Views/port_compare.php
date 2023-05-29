@@ -79,9 +79,12 @@
 </div>
 <div class="row">
 	<div class="col-md-12 col-12 py-2 py-md-0">
-		<label><input type="checkbox" name="port_all" id="port_all"> <b> ด่านทั้งหมด</b></label>
+		<label>
+			<input type="checkbox" name="port_all" id="port_all">
+			<b> ด่านทั้งหมด</b>
+		</label>
 	</div>
-	<div class="col-md-6 col-12 py-2 py-md-0 ">
+	<div class="col-md-6 col-12 py-2 py-md-0 border-right  border-secondary">
 		<div class="row">
 			<div class="col-md-12">
 				<label>
@@ -89,17 +92,14 @@
 					<b> ด่านบก</b>
 				</label>
 			</div>
-			<div class="col-md-12">
-				<div class="row">
-					<?php foreach ($port[1] as $p) { ?>
-						<div class="col-md-6 col-12">
-							<label style="font-weight:normal;"><input type="checkbox" name="port_type[]" id="port_type" class="port_1 port_checkbox" value="<?php echo $p['PORT_ID'] ?>" <?php if (in_array($p['PORT_ID'], $port_type)) {
-																																																echo "checked='checked'";
-																																															} ?>> <?php echo $p['PORT_NAME'] ?></label>
-						</div>
-					<?php } ?>
+			<?php foreach ($port[1] as $p) { ?>
+				<div class="col-md-6 col-12">
+					<label style="font-weight:normal;"><input type="checkbox" name="port_type[]" id="port_type" class="port_1 port_checkbox" value="<?php echo $p['PORT_ID'] ?>" <?php if (in_array($p['PORT_ID'], $port_type)) {
+																																														echo "checked='checked'";
+																																													} ?>> <?php echo $p['PORT_NAME'] ?></label>
 				</div>
-			</div>
+			<?php } ?>
+
 		</div>
 	</div>
 	<div class="col-md-6 col-12  py-2 py-md-0">
@@ -107,17 +107,15 @@
 			<div class="col-md-12">
 				<label><input type="checkbox" name="port_type_2" id="port_type_2" class="port_checkbox"> <b> ด่านอากาศ</b></label>
 			</div>
-			<div class="col-md-12">
-				<div class="row">
-					<?php foreach ($port[2] as $p) { ?>
-						<div class="col-md-6 col-12">
-							<label style="font-weight:normal;"><input type="checkbox" name="port_type[]" id="port_type" class="port_2 port_checkbox" value="<?php echo $p['PORT_ID'] ?>" <?php if (in_array($p['PORT_ID'], $port_type)) {
-																																																echo "checked='checked'";
-																																															} ?>> <?php echo $p['PORT_NAME'] ?></label>
-						</div>
-					<?php } ?>
+
+			<?php foreach ($port[2] as $p) { ?>
+				<div class="col-md-6 col-12">
+					<label style="font-weight:normal;"><input type="checkbox" name="port_type[]" id="port_type" class="port_2 port_checkbox" value="<?php echo $p['PORT_ID'] ?>" <?php if (in_array($p['PORT_ID'], $port_type)) {
+																																														echo "checked='checked'";
+																																													} ?>> <?php echo $p['PORT_NAME'] ?></label>
 				</div>
-			</div>
+			<?php } ?>
+
 		</div>
 	</div>
 	<!-- <div class="col-md-6 col-6">

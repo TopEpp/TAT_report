@@ -264,7 +264,6 @@ foreach ($data_month_lastyear as $v) {
 			var date = this.value;
 			date = date.split('/');
 			report_date = (date[2] - 543) + '-' + date[1] + '-' + date[0];
-
 			window.location.href = base_url + '/report/nation?d=' + report_date;
 		});
 		$('#table1').DataTable({
