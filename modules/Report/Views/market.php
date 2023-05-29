@@ -219,7 +219,7 @@
 							<td data-label="ลำดับ"><?php echo $i ?></td>
 							<td data-label="สัญชาติ" align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
 							<td data-label="จำนวนนักท่องเที่ยว" align="right"><?php echo @number_format(@$data[$c['COUNTRYID']]['NUM']) ?></td>
-							<td data-label="สัดส่วน" align="center"><?php echo number_format($ratio, 2); ?></td>
+							<td data-label="สัดส่วน" align="right"><?php echo number_format($ratio, 2); ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -243,9 +243,9 @@
 		paging: false,
 		searching: false,
 		info: false,
-		scrollY: '972px',
-		scrollCollapse: true,
-		paging: false,
+		scrollY: '981px',
+		scrollX: 'auto',
+		// scrollCollapse: true,
 		order: [
 			[3, 'desc']
 		],
