@@ -275,7 +275,7 @@ class Report_model extends Model
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
 	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$start_date}','dd-mm-yyyy') AND TO_DATE('{$end_date}','dd-mm-yyyy') ");	
 	    $builder->groupBy("{$this->table}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_EN ");
-	    $builder->orderBy("COUNTRY_NAME_EN");
+	    $builder->orderBy("NUM DESC");
 	    $res = $builder->get()->getResultArray();
 	    foreach($res as $row){
 	    	$data[$row['COUNTRY_ID']] = $row;
