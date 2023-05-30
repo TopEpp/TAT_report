@@ -6,6 +6,7 @@
 <style>
 	@media screen and (max-width: 600px) {
 		.radiusTable1 {
+			width: 100%;
 			border-radius: 0px !important;
 			overflow: hidden;
 		}
@@ -15,48 +16,10 @@
 			overflow: hidden;
 		}
 
-		table {
-			border: 0;
+		.table-responsive {
+			overflow-x: auto !important;
 		}
 
-		table caption {
-			font-size: 1.3em;
-		}
-
-		table thead {
-			border: none;
-			clip: rect(0 0 0 0);
-			height: 30px;
-			margin: -1px;
-			overflow: hidden;
-			padding: 0;
-			position: absolute;
-			width: 1px;
-		}
-
-		table tr {
-			border-bottom: 3px solid #ddd;
-			display: block;
-			padding-bottom: 2px;
-		}
-
-		table td {
-			border-bottom: 1px solid #ddd;
-			display: block;
-			font-size: .8em;
-			text-align: right;
-		}
-
-		table td::before {
-			content: attr(data-label);
-			float: left;
-			font-weight: bold;
-			text-transform: uppercase;
-		}
-
-		table td:last-child {
-			border-bottom: 0;
-		}
 	}
 
 	.radiusTable1 {
@@ -83,9 +46,7 @@
 			/* font-weight:bold; */
 	}
 
-	.table-responsive {
-		overflow-x: visible
-	}
+
 
 	.radiusTable2 {
 		/* border-radius: 1em; */
@@ -144,6 +105,18 @@
 
 	.dataTables_wrapper.no-footer .dataTables_scrollBody {
 		border-bottom: 0px
+	}
+
+	.dataTables_scrollHead {
+		overflow-x: auto !important;
+	}
+
+	.table {
+		margin-bottom: 0px;
+	}
+
+	.table-responsive {
+		overflow-x: inherit
 	}
 </style>
 <div class="row m-0">
@@ -214,7 +187,7 @@
 							<td data-label="ลำดับ"><?php echo $i ?></td>
 							<td data-label="สัญชาติ" align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
 							<td data-label="จำนวนนักท่องเที่ยว" align="right"><?php echo @number_format(@$data[$c['COUNTRYID']]['NUM']) ?></td>
-							<td data-label="สัดส่วน" align="center"><?php echo number_format($ratio, 2); ?></td>
+							<td data-label="สัดส่วน" align="right"><?php echo number_format($ratio, 2); ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -246,7 +219,7 @@
 							<td data-label="ลำดับ"><?php echo $i ?></td>
 							<td data-label="สัญชาติ" align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
 							<td data-label="จำนวนนักท่องเที่ยว" align="right"><?php echo @number_format(@$data[$c['COUNTRYID']]['NUM']) ?></td>
-							<td data-label="สัดส่วน" align="center"><?php echo number_format($ratio, 2); ?></td>
+							<td data-label="สัดส่วน" align="right"><?php echo number_format($ratio, 2); ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -270,9 +243,9 @@
 		paging: false,
 		searching: false,
 		info: false,
-		scrollY: '970px',
-		scrollCollapse: true,
-		paging: false,
+		scrollY: '981px',
+		scrollX: 'auto',
+		// scrollCollapse: true,
 		order: [
 			[3, 'desc']
 		],
@@ -289,14 +262,11 @@
 				"previous": "ก่อนหน้า"
 			},
 		}
-	});
+	}).columns.adjust();
 	$('#table1').DataTable({
 		paging: false,
 		searching: false,
 		info: false,
-		scrollY: '970px',
-		scrollCollapse: true,
-		paging: false,
 		order: [
 			[3, 'desc']
 		],
@@ -313,7 +283,7 @@
 				"previous": "ก่อนหน้า"
 			},
 		}
-	});
+	}).columns.adjust();
 
 	function ChangeFilter() {
 		var date = $('#date_start').val();

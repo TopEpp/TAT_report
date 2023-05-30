@@ -4,56 +4,6 @@
 <?php $this->section('content') ?>
 <?php $user_menu = $session->get('user_menu'); ?>
 <style>
-	@media screen and (max-width: 600px) {
-		.radiusTableport_daily {
-			border-radius: 0px !important;
-			overflow: hidden;
-		}
-
-		table {
-			border: 0;
-		}
-
-		table caption {
-			font-size: 1.3em;
-		}
-
-		table thead {
-			border: none;
-			clip: rect(0 0 0 0);
-			height: 30px;
-			margin: -1px;
-			overflow: hidden;
-			padding: 0;
-			position: absolute;
-			width: 1px;
-		}
-
-		table tr {
-			/* border-bottom: 3px solid #ddd; */
-			display: block;
-			/* padding-bottom:2px; */
-		}
-
-		table td {
-			border-bottom: 1px solid #ddd;
-			display: block;
-			font-size: .8em;
-			text-align: right;
-		}
-
-		table td::before {
-			content: attr(data-label);
-			float: left;
-			font-weight: bold;
-			text-transform: uppercase;
-		}
-
-		table td:last-child {
-			border-bottom: 0;
-		}
-	}
-
 	.radiusTableport_daily thead th {
 
 		background: rgba(55, 159, 166, 1);
@@ -136,13 +86,13 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td style='background-color: #B6E2E9;'>รวมด่านบก</td>
+						<td style='background-color: rgba(97, 190, 201, 1);'><b>รวมด่านบก</b></td>
 						<?php foreach ($port[1] as $p) {
 							@$sum[$d] += @$data[$p['PORT_ID']][$d];
 							@$sum_type1[$d] += @$data[$p['PORT_ID']][$d];
 						} ?>
 						<?php foreach ($period as $d) {
-							echo "<td style='background-color: #B6E2E9;'  align='right'>" . number_format(@$sum_type1[$d]) . "</td>";
+							echo "<td style='background-color: rgba(97, 190, 201, 1);'  align='right'> <b> " . number_format(@$sum_type1[$d]) . "</b> </td>";
 						} ?>
 					</tr>
 					<?php foreach ($port[1] as $p) { ?>
@@ -156,13 +106,13 @@
 						</tr>
 					<?php } ?>
 					<tr>
-						<td style="background-color: #B6E2E9;">รวมด่านอากาศ</td>
+						<td style="background-color: rgba(97, 190, 201, 1);"><b>รวมด่านอากาศ</b></td>
 						<?php foreach ($port[2] as $p) {
 							@$sum[$d] += @$data[$p['PORT_ID']][$d];
 							@$sum_type2[$d] += @$data[$p['PORT_ID']][$d];
 						} ?>
 						<?php foreach ($period as $d) {
-							echo "<td  style='background-color: #B6E2E9;' align='right'>" . number_format(@$sum_type2[$d]) . "</td>";
+							echo "<td  style='background-color: rgba(97, 190, 201, 1);' align='right'> <b>" . number_format(@$sum_type2[$d]) . "</b> </td>";
 						} ?>
 					</tr>
 					<?php foreach ($port[2] as $p) { ?>
@@ -178,9 +128,9 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td style='background-color: #007C84;'>รวมทั้งหมด</td>
+						<td style='background-color: rgba(97, 190, 201, 1);'><b>รวมทั้งหมด</b></td>
 						<?php foreach ($period as $d) {
-							echo "<td   style='background-color: #007C84;' align='right'>" . number_format(@$sum[$d]) . "</td>";
+							echo "<td   style='background-color: rgba(97, 190, 201, 1);' align='right'> <b>" . number_format(@$sum[$d]) . "</b> </td>";
 						} ?>
 					</tr>
 				</tfoot>

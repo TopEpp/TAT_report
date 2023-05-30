@@ -125,7 +125,7 @@
 		<div class="col-md-3 col-12 my-auto ">
 			<div class="row" style="margin-top: 0px;">
 				<div class="col-md-6 col-6 SetAlignInputleft1">
-					<input type="text" name="start_date" id="start_date" class="SetwidthInput1 form-control date_picker" style="display: inline;" value="" placeholder="form">
+					<input type="text" name="start_date" id="start_date" class="SetwidthInput1 form-control date_picker" style="display: inline;" value="" placeholder="from">
 				</div>
 				<div class="col-md-6 col-6 SetAlignInputleft2">
 					<input type="text" name="end_date" id="end_date" class="SetwidthInput2 form-control date_picker" style="display: inline;" value="" placeholder="to" />
@@ -187,7 +187,9 @@
 											} else {
 												echo '<img src="' . base_url('public/img/arrowDown.png') . '" alt="" style="width: 15px;"> ลดลง ' . $percent . ' % จากปีที่ผ่านมา';
 											}
-										}else{ echo '-';}?>
+										} else {
+											echo '-';
+										} ?>
 									</p>
 								</div>
 							</div>
@@ -225,15 +227,17 @@
 							</div>
 							<div class="col-md-12">
 								<div class="d-flex justify-content-center">
-									<?php 
-										if($SumMonthData_past>0){
-											$percent = number_format($SumMonthData/$SumMonthData_past*100,2);
-											if($SumMonthData > $SumMonthData_past ){
-												echo '<img src="'.base_url('public/img/arrow.png').'" alt="" style="width: 15px;"> เพิ่มขึ้น '.$percent.' % จากปีที่ผ่านมา'; 
-											}else{
-												echo '<img src="'.base_url('public/img/arrowDown.png').'" alt="" style="width: 15px;"> ลดลง '.$percent.' % จากปีที่ผ่านมา'; 
-											}
-										}else{ echo '-';}?>
+									<?php
+									if ($SumMonthData_past > 0) {
+										$percent = number_format($SumMonthData / $SumMonthData_past * 100, 2);
+										if ($SumMonthData > $SumMonthData_past) {
+											echo '<img src="' . base_url('public/img/arrow.png') . '" alt="" style="width: 15px;"> เพิ่มขึ้น ' . $percent . ' % จากปีที่ผ่านมา';
+										} else {
+											echo '<img src="' . base_url('public/img/arrowDown.png') . '" alt="" style="width: 15px;"> ลดลง ' . $percent . ' % จากปีที่ผ่านมา';
+										}
+									} else {
+										echo '-';
+									} ?>
 								</div>
 							</div>
 						</div>

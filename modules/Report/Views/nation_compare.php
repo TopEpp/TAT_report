@@ -5,6 +5,16 @@
 <?php $user_menu = $session->get('user_menu'); ?>
 
 <style>
+	@media screen and (max-width: 600px) {
+		.table-responsive {
+			overflow-x: auto !important;
+		}
+	}
+
+	.table-responsive {
+		overflow-x: inherit;
+	}
+
 	.table thead th {
 		background: #379FA6;
 		border-bottom: 0;
@@ -32,6 +42,14 @@
 	table.dataTable thead th,
 	table.dataTable thead td {
 		border-bottom: 0px
+	}
+
+	.table-responsive {
+		border-radius: 12px;
+	}
+
+	table.dataTable {
+		margin-top: 0px !important;
 	}
 </style>
 <div class="row">
@@ -105,42 +123,44 @@
 			$end_date2 = $day . '-' . $month . '-' . $year;
 
 			?>
-			<table class="table table-striped ColorTableBody shadow-lg">
-				<thead>
-					<tr>
-						<th></th>
-						<th>สะสมวันที่ <?php echo $Mydate->date_eng2thai($start_date1, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($end_date1, 543, 'S', 'S') ?></th>
-						<th>สะสมวันที่ <?php echo $Mydate->date_eng2thai($start_date2, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($end_date2, 543, 'S', 'S') ?></th>
-						<th>อัตราการเปลี่ยนแปลง (%)</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr style="background-color:#B6E2E9">
-						<td style="font-weight: bolder;">GRAND TOTAL</td>
-						<?php
-						$sum1 = $sum2 = $sum_diff = 0;
-						$sum_compare = '';
-						$dataSum = getSumData($data1, $data2, $region, 0, $country);
-						$sum1 = $dataSum['sum1'];
-						$sum2 = $dataSum['sum2'];
-						if ($sum2 > 0) {
-							$sum_diff = $sum2 - $sum1;
-							if ($sum1 > 0) {
-								$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
+			<div class="table-responsive shadow-lg">
+				<table class="table table-striped ColorTableBody shadow-lg">
+					<thead>
+						<tr>
+							<th></th>
+							<th>สะสมวันที่ <?php echo $Mydate->date_eng2thai($start_date1, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($end_date1, 543, 'S', 'S') ?></th>
+							<th>สะสมวันที่ <?php echo $Mydate->date_eng2thai($start_date2, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($end_date2, 543, 'S', 'S') ?></th>
+							<th>อัตราการเปลี่ยนแปลง (%)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr style="background-color:#B6E2E9">
+							<td style="font-weight: bolder;">GRAND TOTAL</td>
+							<?php
+							$sum1 = $sum2 = $sum_diff = 0;
+							$sum_compare = '';
+							$dataSum = getSumData($data1, $data2, $region, 0, $country);
+							$sum1 = $dataSum['sum1'];
+							$sum2 = $dataSum['sum2'];
+							if ($sum2 > 0) {
+								$sum_diff = $sum2 - $sum1;
+								if ($sum1 > 0) {
+									$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
+								}
+								if ($sum_diff < 0) {
+									$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
+								}
 							}
-							if ($sum_diff < 0) {
-								$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
-							}
-						}
 
-						?>
-						<td align="right"><?php echo number_format($sum1); ?></td>
-						<td align="right"><?php echo number_format($sum2); ?></td>
-						<td align="center"><?php echo $sum_compare; ?></td>
-					</tr>
-					<?php genTableData($data1, $data2, $region, 0, $country) ?>
-				</tbody>
-			</table>
+							?>
+							<td align="right"><?php echo number_format($sum1); ?></td>
+							<td align="right"><?php echo number_format($sum2); ?></td>
+							<td align="right"><?php echo $sum_compare; ?></td>
+						</tr>
+						<?php genTableData($data1, $data2, $region, 0, $country) ?>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
@@ -178,7 +198,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
 			echo '<td align="right" >' . number_format($sum1) . '</td>';
 			echo '<td align="right">' . number_format($sum2) . '</td>';
-			echo '<td  align="center">' . $sum_compare . '</td>';
+			echo '<td  align="right">' . $sum_compare . '</td>';
 			echo '</tr>';
 			$idx = 0;
 			if (!empty($country[$re['MD_STD_REG_ID']]) && $re['IS_OTHERS'] != 'Y') {
@@ -206,12 +226,12 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 						echo '<td style="background: #D6EFF2; padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
 						echo '<td align="right" style="background: #D6EFF2;">' . number_format(@$num1) . '</td>';
 						echo '<td align="right" style="background: #D6EFF2;">' . number_format(@$num2) . '</td>';
-						echo '<td align="center" style="background: #D6EFF2;">' . $compare . '</td>';
+						echo '<td align="right" style="background: #D6EFF2;">' . $compare . '</td>';
 					} else {
 						echo '<td style="background:white; padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
 						echo '<td align="right" style="background: white;">' . number_format(@$num1) . '</td>';
 						echo '<td align="right" style="background: white;">' . number_format(@$num2) . '</td>';
-						echo '<td align="center" style="background: white;">' . $compare . '</td>';
+						echo '<td align="right" style="background: white;">' . $compare . '</td>';
 					}
 
 
