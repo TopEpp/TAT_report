@@ -193,7 +193,7 @@ foreach ($data_month_lastyear as $v) {
 		$('.date_picker').datepicker({
 			format: "dd/mm/yyyy",
 			autoclose: true,
-			language: 'en-en',
+			language: 'th-th',
 			endDate: new Date('<?php echo $to_date; ?>')
 		});
 

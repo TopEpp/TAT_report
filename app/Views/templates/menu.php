@@ -110,6 +110,9 @@ $method =  $request->uri->getSegment(2);
                 <a class="collapse-item <?php if ( $controller == 'import' && $method == 'monthly') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('import/monthly') ?>">Monthly</a>
+                <a class="collapse-item <?php if ( $controller == 'import' && $method == 'raw_monthly') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('import/raw_monthly') ?>">Raw Monthly</a>
             </div>
         </div>
     </li>

@@ -59,7 +59,7 @@ class Import extends BaseController
 		$Main_model = new Main_model();
 		$data['month_label'] = $this->month_en;
 		$data['year'] = date('Y');
-		$data['data'] = $Model->getRawDataMonthly($data['year']);
+		$data['data'] = $Model->getDataMonthly($data['year']);
 
 		return view('Modules\Import\Views\monthly', $data);
 	}
@@ -75,6 +75,43 @@ class Import extends BaseController
 
 		if ($xlsx = SimpleXLSX::parse($file['import_file'])) {
 			$data['text'] = $Model->import_file_monthly($input, $xlsx);
+		}
+
+		return view('Modules\Import\Views\detail', $data);
+	}
+
+	public function raw_monthly()
+	{
+		$data = array();
+		$Model = new Import_model();
+		$Main_model = new Main_model();
+		$data['month_label'] = $this->month_en;
+		$data['year'] = date('Y');
+		$data['month'] = date('m');
+		if (!empty($_GET['m'])) {
+			$data['month'] = $_GET['m'];
+		}
+		if (!empty($_GET['y'])) {
+			$data['year'] = $_GET['y'];
+		}
+		$data['port'] = $Model->getPortMonthly();
+		$data['point'] = $Model->getPointMonthly();
+		$data['data'] = $Model->getRawDataMonthly($data['year'],$data['month']);
+
+		return view('Modules\Import\Views\raw_monthly', $data);
+	}
+
+	function import_file_raw_monthly()
+	{
+		ini_set('memory_limit', '-1');
+		ini_set('max_execution_time', '3000');
+		$Model = new Import_model();
+		$data['session'] = session();
+		$input = $this->request->getPost();
+		$file = $this->request->getFiles();
+
+		if ($xlsx = SimpleXLSX::parse($file['import_file'])) {
+			$data['text'] = $Model->import_file_raw_monthly($input, $xlsx);
 		}
 
 		return view('Modules\Import\Views\detail', $data);

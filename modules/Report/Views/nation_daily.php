@@ -165,7 +165,7 @@ function getSumData($data, $region, $region_id, $country, $period, &$sum = array
 		$('.date_picker').datepicker({
 			format: "dd/mm/yyyy",
 			autoclose: true,
-			language: 'en-en',
+			language: 'th-th',
 		});
 	});
 

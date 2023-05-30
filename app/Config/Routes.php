@@ -76,6 +76,9 @@ $routes->group('import', ['namespace' => '\Modules\Import\Controllers'], functio
 
     $routes->get('monthly', 'Import::monthly');
     $routes->post('import_file_monthly', 'Import::import_file_monthly');
+
+    $routes->get('raw_monthly', 'Import::raw_monthly');
+    $routes->post('import_file_raw_monthly', 'Import::import_file_raw_monthly');
 });
 
 $routes->group('setting', ['namespace' => '\Modules\Setting\Controllers'], function ($routes) {

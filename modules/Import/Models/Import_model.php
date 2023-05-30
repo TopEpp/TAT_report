@@ -298,7 +298,7 @@ class Import_model extends Model
 	    return $text;
 	}
 
-	function getRawDataMonthly($year){
+	function getDataMonthly($year){
 		$builder = $this->db->table($this->table_month);
 	    $builder->select("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN, {$this->table_month}.* ");
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table_month}.COUNTRY_ID");
@@ -307,5 +307,131 @@ class Import_model extends Model
 		$res = $builder->get()->getResultArray();
 
 		return $res;
+	}
+
+	function import_file_raw_monthly($input,$xlsx){
+		$count = 1; $text = '';
+		$port_id = $point_id = array();
+
+		$builder_import = $this->db->table('REPORT_RAW_MONTHLY');
+		$builder_import->where('MONTH',$input['month']);
+        $builder_import->where('YEAR',$input['year']);
+        $builder_import->delete();
+
+	    foreach($xlsx->rows() as $row_id=> $row){
+	    	
+	    	if($row_id == 6){
+	    		foreach($row as $col_id=> $col){
+	    			if($col_id >=7 && $col_id<=44){
+
+	    				$builder = $this->db->table('MD_PORT');
+			      		$builder->select('PORT_ID');
+				      	$builder->where('PORT_NAME_FULL', trim($col));
+				      	$port = $builder->get()->getRowArray();
+				      	if(!empty($port['PORT_ID'])){
+				      		$port_id[$col_id] = $port['PORT_ID'];
+				      		// echo $col_id.' == '.$port['PORT_ID'].' == ';
+				      	}
+				      	// echo $col.'<br>';
+	    			}
+	    			
+	    		}
+	    	}
+
+	    	if($row_id == 7){
+	    		foreach($row as $col_id=> $col){
+	    			if($col_id >=7 && $col_id<=44){
+	    				
+	    				$builder = $this->db->table('MD_PORT_POINT');
+			      		$builder->select('*');
+				      	$builder->where('POINT_NAME', trim($col));
+				      	$port = $builder->get()->getRowArray();
+				      	if(!empty($port['POINT_ID'])){
+				      		$point_id[$col_id] = $port['POINT_ID'];
+				      		// echo $port['PORT_ID'].' == '.$port['POINT_ID'].' == ';
+				      	}
+				      	// echo $col.'<br>';
+	    			}
+	    		}
+	    	}
+
+	    	if($row_id >= 8 ){
+		    	$country_name = strtoupper($row[4]);
+		    	// echo $country_name;
+		    	$builder = $this->db->table('MD_COUNTRY');
+	      		$builder->select('COUNTRYID');
+		      	$builder->like('COUNTRYSHORTNAMEEN', trim($country_name).'%');
+		      	$co = $builder->get()->getRowArray();
+		      	if(!empty($co['COUNTRYID'])){
+		      		$count++;
+		      		// echo ':: '.$co['COUNTRYID'].' == ';
+		      		foreach($row as $col_id=> $col){
+		    			if($col_id >= 7){
+			    			if($col_id >=7 && $col_id<=44){
+		    					// echo @$port_id[$col_id].'='.@$point_id[$col_id].'='.$col.' || ';
+			    				$builder_import = $this->db->table('REPORT_RAW_MONTHLY');
+					            $builder_import->set('COUNTRY_ID',$co['COUNTRYID']);
+					            $builder_import->set('PORT_ID',@$port_id[$col_id]);
+					            $builder_import->set('POINT_ID',@$point_id[$col_id]);
+					            $builder_import->set('NUM',$col);
+					            $builder_import->set('MONTH',$input['month']);
+					            $builder_import->set('YEAR',$input['year']);
+					            $builder_import->insert();
+		    				}
+		    			}
+		    		}
+		      	}
+	    	}
+	    }
+
+	    $text .= 'Insert Data Complete : '.$count.' Row';
+
+	    return $text;
+
+
+	}
+
+	function getRawDataMonthly($year,$month){
+		$data = array();
+		$builder = $this->db->table('REPORT_RAW_MONTHLY');
+		$builder->select('REPORT_RAW_MONTHLY.*,MD_COUNTRY.COUNTRY_NAME_EN');
+		$builder->join('MD_COUNTRY','MD_COUNTRY.COUNTRYID = REPORT_RAW_MONTHLY.COUNTRY_ID');
+		$builder->where('MONTH',$month);
+        $builder->where('YEAR',$year);
+        $builder->orderBy('COUNTRY_NAME_EN');
+        $query = $builder->get()->getResultArray();
+        foreach($query as $row){
+        	$point = 0;
+        	if($row['POINT_ID']){
+        		$point = $row['POINT_ID'];
+        	}
+        	$data[$row['COUNTRY_ID']]['COUNTRY_NAME_EN'] = $row['COUNTRY_NAME_EN'];
+        	$data[$row['COUNTRY_ID']]['NUM'][$row['PORT_ID']][$point] = $row['NUM'];
+        }
+
+        return $data;
+	}
+
+	function getPortMonthly(){
+		$builder = $this->db->table('MD_PORT');
+  		$builder->select('MD_PORT.PORT_ID,MD_PORT.PORT_NAME_FULL,PORT_ORDER_MONTHLY');
+      	$builder->join('REPORT_RAW_MONTHLY','REPORT_RAW_MONTHLY.PORT_ID = MD_PORT.PORT_ID');
+      	$builder->groupBy('MD_PORT.PORT_ID,MD_PORT.PORT_NAME_FULL,PORT_ORDER_MONTHLY');
+      	$builder->orderby('PORT_ORDER_MONTHLY');
+      	$query = $builder->get()->getResultArray();
+
+      	return $query;
+	}
+
+	function getPointMonthly(){
+		$data = array();
+		$builder = $this->db->table('MD_PORT_POINT');
+  		$builder->select('*');
+      	$query = $builder->get()->getResultArray();
+      	foreach($query as $row){
+      		$data[$row['PORT_ID']][$row['POINT_ID']] = $row;
+      	}
+
+      	return $data;
 	}
 }
