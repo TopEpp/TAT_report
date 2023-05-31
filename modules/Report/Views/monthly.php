@@ -71,7 +71,7 @@
 <div class="row">
 	<div class="col-md-12 col-12">
 		<div class="table-responsive">
-			<table class="table table-striped table-tableborder radiusTableNation shadow-lg">
+			<table class="table table-striped table-tableborder radiusTableNation ">
 				<thead>
 					<tr>
 						<th rowspan="2" >ประเทศ</th>
