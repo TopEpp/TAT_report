@@ -68,14 +68,14 @@
 				<div class="row" style="margin-bottom:5px;">
 					<div class="col-md-2">
 						<select class="form-control" id="m" name="m" onchange="ChangeFilter()">
-						<?php foreach($month_label as $m_id=>$name){ $sel = ''; if($month==$m_id){ echo $sel='selected="selected"';  }?>
+						<?php foreach($month_label as $m_id=>$name){ $sel = ''; if($month==$m_id){  $sel='selected="selected"';  }?>
 							<option value="<?php echo $m_id?>" <?php echo $sel;?> ><?php echo $name?></option>
 						<?php } ?>
 						</select>
 					</div>
 					<div class="col-md-2">
 						<select class="form-control" id="y" name="y" onchange="ChangeFilter()" >
-						<?php for($i=date('Y');$i >= date('Y')-5;$i--){ $sel = ''; if($year==$i){ echo $sel='selected="selected"';  }?>
+						<?php for($i=date('Y');$i >= date('Y')-5;$i--){ $sel = ''; if($year==$i){  $sel='selected="selected"';  }?>
 							<option value="<?php echo $i?>" <?php echo $sel;?> ><?php echo $i?></option>
 						<?php }?>
 						</select>
