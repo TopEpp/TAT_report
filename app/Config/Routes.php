@@ -68,6 +68,8 @@ $routes->group('report', ['namespace' => '\Modules\Report\Controllers'], functio
 
     $routes->get('export_nation', 'Report::export_nation');
     $routes->get('export_port', 'Report::export_port');
+
+    $routes->get('monthly', 'Report::monthly');
 });
 
 $routes->group('import', ['namespace' => '\Modules\Import\Controllers'], function ($routes) {

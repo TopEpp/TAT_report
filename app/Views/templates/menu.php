@@ -91,6 +91,9 @@ $method =  $request->uri->getSegment(2);
                 <a class="collapse-item <?php if ($method == 'port_daily') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('report/port_daily') ?>">รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทยรายวัน จำแนกรายด่าน</a>
+                <a class="collapse-item <?php if ($method == 'monthly') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('report/monthly') ?>">รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทยรายเดือน</a>
             </div>
         </div>
     </li>

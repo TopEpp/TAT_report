@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use Modules\Report\Models\Report_model;
 use Modules\Setting\Models\Setting_model;
 use Modules\Main\Models\Main_model;
+use Modules\Import\Models\Import_model;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
@@ -332,8 +333,36 @@ class Report extends BaseController
 		}
 	}
 
+	public function monthly()
+	{
+		$data = array();
+		$Model = new Import_model();
+		$data['session'] = session();
+		$data['Mydate'] = $this->Mydate;
+		$data['month_label'] = $this->month_en;
+		$data['year'] = date('Y');
+		$data['month'] = date('m');
+		if (!empty($_GET['m'])) {
+			$data['month'] = $_GET['m'];
+		}
+		if (!empty($_GET['y'])) {
+			$data['year'] = $_GET['y'];
+		}
+		$data['port'] = $Model->getPortMonthly();
+		$data['point'] = $Model->getPointMonthly();
+		$data['data'] = $Model->getRawDataMonthly($data['year'],$data['month']);
 
-	####### Export #######
+		if (@$_GET['export_type'] == 'excel') {
+			$this->export_excel('monthly.xlsx', 'Modules\Report\Views\export\monthly', $data);
+		} else if (@$_GET['export_type'] == 'pdf') {
+			$this->export_pdf('Modules\Report\Views\export\monthly', $data, 'L');
+		} else {
+			return view('Modules\Report\Views\monthly', $data);
+		}
+	}
+
+
+	################################### Export ##########################################
 	function export_excel($file, $view, $data)
 	{
 
