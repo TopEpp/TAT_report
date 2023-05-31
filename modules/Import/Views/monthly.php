@@ -2,6 +2,55 @@
 
 <!-- content -->
 <?php $this->section('content') ?>
+<style>
+	@media screen and (max-width: 600px) {
+		.table-responsive {
+			overflow-x: auto !important;
+		}
+	}
+
+	.table-responsive {
+		overflow-x: inherit;
+	}
+
+	.table thead th {
+		background: #379FA6;
+		border-bottom: 0;
+		padding: 16px
+	}
+
+	.ColorTableBody {
+		border-radius: 1em;
+		overflow: hidden;
+	}
+
+	.table-responsive {
+		overflow-x: initial
+	}
+
+	.ColorTableBody thead tr {
+		margin: 20px;
+	}
+
+	table {
+		border-radius: 12px;
+		background-color: #F6F6F6;
+	}
+
+	table.dataTable thead th,
+	table.dataTable thead td {
+		border-bottom: 0px
+	}
+
+	.table-responsive {
+		border-radius: 12px;
+	}
+
+	table.dataTable {
+		margin-top: 0px !important;
+	}
+</style>
+
 <div class="row">
 	<div class="col-md-12">
 		<div class="card">
@@ -67,7 +116,7 @@
 				</div>
 			</div>
 			<div class="card-body">
-				<table class="table table-striped table-bordered" id="myTable">
+				<table class="table table-striped table-bordered ColorTableBody shadow-lg" id="myTable">
 					<thead>
 						<tr>
 							<th>YEAR</th>
