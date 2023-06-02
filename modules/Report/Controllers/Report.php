@@ -336,21 +336,39 @@ class Report extends BaseController
 	public function monthly()
 	{
 		$data = array();
-		$Model = new Import_model();
+		$Model_import = new Import_model();
+		$Model = new Report_model();
 		$data['session'] = session();
 		$data['Mydate'] = $this->Mydate;
-		$data['month_label'] = $this->month_en;
+		$data['month_label'] = $this->month_th;
 		$data['year'] = date('Y');
 		$data['month'] = date('m');
+		$data['port_type'] = array();
+		$data['point_type'] = array();
+		$data['country_type'] = 'all';
 		if (!empty($_GET['m'])) {
 			$data['month'] = $_GET['m'];
 		}
 		if (!empty($_GET['y'])) {
-			$data['year'] = $_GET['y'];
+			$data['year'] = $_GET['y']-543;
 		}
-		$data['port'] = $Model->getPortMonthly();
-		$data['point'] = $Model->getPointMonthly();
-		$data['data'] = $Model->getRawDataMonthly($data['year'],$data['month']);
+		if (!empty($_GET['country_type'])) {
+			$data['country_type'] = $_GET['country_type'];
+		}
+		if (!empty($_GET['port_type'])) {
+			$data['port_type'] = explode(',', $_GET['port_type']);
+		}
+		if (!empty($_GET['point_type'])) {
+			$data['point_type'] = explode(',', $_GET['point_type']);
+		}
+
+		
+		$data['port'] = $Model->getPortGroupTypeMonthly();
+		$data['port_colunm'] = $Model_import->getPortMonthly($data['port_type']);
+		$data['point'] = $Model_import->getPointMonthly($data['point_type']);
+		$data['data'] = $Model_import->getRawDataMonthly($data['year'],$data['month']);
+		$data['region'] = $Model->getSTDRegion($data['country_type']);
+		$data['country'] = $Model->getCountryByRegion($data['country_type']);
 
 		if (@$_GET['export_type'] == 'excel') {
 			$this->export_excel('monthly.xlsx', 'Modules\Report\Views\export\monthly', $data);

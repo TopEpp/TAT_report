@@ -412,21 +412,28 @@ class Import_model extends Model
         return $data;
 	}
 
-	function getPortMonthly(){
+	function getPortMonthly($port_type=''){
 		$builder = $this->db->table('MD_PORT');
   		$builder->select('MD_PORT.PORT_ID,MD_PORT.PORT_NAME_FULL,PORT_ORDER_MONTHLY');
       	$builder->join('REPORT_RAW_MONTHLY','REPORT_RAW_MONTHLY.PORT_ID = MD_PORT.PORT_ID');
       	$builder->groupBy('MD_PORT.PORT_ID,MD_PORT.PORT_NAME_FULL,PORT_ORDER_MONTHLY');
+      	if($port_type){
+      		$builder->whereIn("MD_PORT.PORT_ID",$port_type);
+      	}
+      	
       	$builder->orderby('PORT_ORDER_MONTHLY');
       	$query = $builder->get()->getResultArray();
 
       	return $query;
 	}
 
-	function getPointMonthly(){
+	function getPointMonthly($point_type=''){
 		$data = array();
 		$builder = $this->db->table('MD_PORT_POINT');
   		$builder->select('*');
+  		if($point_type){
+      		$builder->whereIn("POINT_ID",$point_type);
+      	}
       	$query = $builder->get()->getResultArray();
       	foreach($query as $row){
       		$data[$row['PORT_ID']][$row['POINT_ID']] = $row;

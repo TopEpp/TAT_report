@@ -60,22 +60,7 @@
 	<div class="col-md-1 py-2 py-md-0 text-center mt-auto">
 		<div class="btn btn-primary" onclick="ChangeFilter()">ตกลง</div>
 	</div>
-	<!-- <div class="col-md-2 col-4" style="text-align:right; padding-top: 5px;">
-		
-	</div>
-	<div class="col-md-2 col-4" >
-		<select class="form-control" id="country_type" >
-			<option value="standard" <?php if (@$country_type == 'standard') {
-											echo "selected='selected'";
-										} ?> >Standard</option>
-			<option value="all" <?php if (@$country_type == 'all') {
-									echo "selected='selected'";
-								} ?> >All Country</option>
-		</select>
-	</div>
-	<div class="col-md-1 col-4 text-left" >
-		
-	</div> -->
+
 </div>
 <div class="row">
 	<div class="col-md-12 col-12 py-2 py-md-0">
@@ -89,7 +74,7 @@
 			<div class="col-md-12">
 				<label>
 					<input type="checkbox" name="port_type_1" id="port_type_1" class="port_checkbox">
-					<b> ด่านบก</b>
+					<b> ไม่ใช่ด่านอากาศ</b>
 				</label>
 			</div>
 			<?php foreach ($port[1] as $p) { ?>
@@ -118,28 +103,6 @@
 
 		</div>
 	</div>
-	<!-- <div class="col-md-6 col-6">
-		<div class="row">
-			<?php foreach ($port[1] as $p) { ?>
-				<div class="col-md-6">
-					<label style="font-weight:normal;"><input type="checkbox" name="port_type[]" id="port_type" class="port_1 port_checkbox" value="<?php echo $p['PORT_ID'] ?>" <?php if (in_array($p['PORT_ID'], $port_type)) {
-																																														echo "checked='checked'";
-																																													} ?>> <?php echo $p['PORT_NAME'] ?></label>
-				</div>
-			<?php } ?>
-		</div>
-	</div>
-	<div class="col-md-6">
-		<div class="row">
-			<?php foreach ($port[2] as $p) { ?>
-				<div class="col-md-6 col-6">
-					<label style="font-weight:normal;"><input type="checkbox" name="port_type[]" id="port_type" class="port_2 port_checkbox" value="<?php echo $p['PORT_ID'] ?>" <?php if (in_array($p['PORT_ID'], $port_type)) {
-																																														echo "checked='checked'";
-																																													} ?>> <?php echo $p['PORT_NAME'] ?></label>
-				</div>
-			<?php } ?>
-		</div>
-	</div> -->
 </div>
 
 <div class="row">

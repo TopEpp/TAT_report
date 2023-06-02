@@ -283,4 +283,20 @@ class Report_model extends Model
 	    }
 	    return $data;
 	}
+
+	function getPortGroupTypeMonthly(){
+		$data = array();
+		$builder = $this->db->table('MD_PORT');
+		$builder->select('MD_PORT.PORT_ID,MD_PORT.PORT_NAME_FULL,PORT_ORDER_MONTHLY,MD_PORT.PORT_TYPE_ID');
+		$builder->join('REPORT_RAW_MONTHLY','REPORT_RAW_MONTHLY.PORT_ID = MD_PORT.PORT_ID');
+		$builder->where('PORT_CATEGORY_ID',1);
+		$builder->orderby('PORT_ORDER_MONTHLY');
+		$builder->groupBy('MD_PORT.PORT_ID,MD_PORT.PORT_NAME_FULL,PORT_ORDER_MONTHLY,MD_PORT.PORT_TYPE_ID');
+		$res = $builder->get()->getResultArray();
+	    foreach($res as $r){
+	    	$data[$r['PORT_TYPE_ID']][] = $r; 
+	    }
+
+	    return $data;
+	}
 }
