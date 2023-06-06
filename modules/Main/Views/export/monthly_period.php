@@ -1,7 +1,4 @@
-<?php $this->extend('templates/main') ?>
 
-<!-- content -->
-<?php $this->section('content') ?>
 <style type="text/css">
 	.gm-style .gm-style-iw-c {
 		padding: 0 !important;
@@ -210,21 +207,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-2 my-auto SetSpaceBtn">
-		<div class="row" style="margin-top: 0px;">
-			<div class="col-md-6 col-6 SetAlingBtn1">
-				<div class="btn btn_Color" onclick="ChangeFilter()">ตกลง</div>
-			</div>
-			<div class="col-md-6 col-6 SetAlingBtn2">
-				<div class="btn btn_Color" onclick="ClearFilter()">ล้างค่า</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-1 col-12 my-auto text-center">
-		<button type="button" onclick="btnExport()" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
-			<i class="fa-solid fa-file-pdf"></i> PDF
-		</button>
-	</div>
 </div>
 
 <div class="row">
@@ -357,29 +339,3 @@
 	</div>
 </div>
 ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
-<?php $this->endSection() ?>
-<?= $this->section("scripts") ?>
-<script type="text/javascript">
-
-
-function ChangeFilter() {
-	var month = $('#month').val();
-	var month2 = $('#month2').val();
-	var year = $('#year').val();
-	var limit= $('#limit').val();
-	window.location.href = base_url + '/main/monthly_period?month=' + month+'&month2='+month2+'&year='+year+'&limit='+limit;
-}
-
-function ClearFilter() {
-	window.location.href = base_url + '/main/monthly_period';
-}
-
-function btnExport(){
-	var month = $('#month').val();
-	var month2 = $('#month2').val();
-	var year = $('#year').val();
-	var limit= $('#limit').val();
-	window.open( base_url + '/main/monthly_period?month=' + month+'&month2='+month2+'&year='+year+'&limit='+limit+"&export_type=pdf");
-}
-</script>
-<?= $this->endSection() ?>

@@ -1,7 +1,4 @@
-<?php $this->extend('templates/main') ?>
 
-<!-- content -->
-<?php $this->section('content') ?>
 <style type="text/css">
 	.gm-style .gm-style-iw-c {
 		padding: 0 !important;
@@ -168,9 +165,9 @@
 	<div class="col-md-2 col-12 my-auto text-center py-2">
 		เลือกเดือน/ปี
 	</div>
-	<div class="col-md-4 col-12 my-auto ">
+	<div class="col-md-3 col-12 my-auto ">
 		<div class="row" style="margin-top: 0px;">
-			<div class="col-md-4 col-4 SetAlignInputleft1">
+			<div class="col-md-6 col-6 SetAlignInputleft1">
 				<select class="form-control" id="month">
 				<?php 
 				foreach($month_label as $m_id=>$name){
@@ -183,20 +180,7 @@
 				<?php } ?>
 				</select>
 			</div>
-			<div class="col-md-4 col-4 SetAlignInputleft1">
-				<select class="form-control" id="month2">
-				<?php 
-				foreach($month_label as $m_id=>$name){
-					$sel = '';
-					if($month2==$m_id){
-						$sel = 'selected="selected"';
-					}
-				?>
-					<option value="<?php echo $m_id?>" <?php echo $sel;?> ><?php echo $name?></option>
-				<?php } ?>
-				</select>
-			</div>
-			<div class="col-md-4 col-4 SetAlignInputleft1">
+			<div class="col-md-6 col-6 SetAlignInputleft1">
 				<select class="form-control" id="year">
 				 	<?php for($i=date('Y');$i >= date('Y')-5;$i--){ 
 				 		$sel = '';
@@ -210,23 +194,41 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-2 my-auto SetSpaceBtn">
-		<div class="row" style="margin-top: 0px;">
-			<div class="col-md-6 col-6 SetAlingBtn1">
-				<div class="btn btn_Color" onclick="ChangeFilter()">ตกลง</div>
-			</div>
-			<div class="col-md-6 col-6 SetAlingBtn2">
-				<div class="btn btn_Color" onclick="ClearFilter()">ล้างค่า</div>
-			</div>
+</div>
+<div class="row">
+	<div class="col-12">
+		<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_monthly.png') ?>" style="width:100%; height:210px">
+	</div>
+	<div class="col-12">
+		<div style="overflow: auto;">
+			<table class="table table-striped table-bordered ">
+				<tr>
+					<td align="center">ปี</td>
+					<?php $chart_label = $chart_current = $chart_pre = array();
+					foreach ($month_label as $m_id=>$name) { $chart_label[] = $name; ?>
+						<td align="center"><?php echo $name;?></td>
+					<?php } ?>
+				</tr>
+				<tr>
+					<td style="background-color: #3cacae;"><?php echo $year+543  ?></td>
+					<?php
+					foreach ($month_label as $d=>$name) { ?>
+						<td style="background:#3cacae" align="center"><?php echo number_format(@$SumMonth[$d]);
+																		$chart_current[] = @$SumMonth[$d] ? @$SumMonth[$d] : 0; ?></td>
+					<?php } ?>
+				</tr>
+				<tr>
+					<td style="background-color: #e95d61;"><?php echo $year +542 ?></td>
+					<?php
+					foreach ($month_label as $d=>$name) {?>
+						<td style="background:#e95d61" align="center"><?php echo number_format(@$SumMonth_past[$d]);
+																		$chart_pre[] = @$SumMonth_past[$d] ? @$SumMonth_past[$d] : 0; ?></td>
+					<?php } ?>
+				</tr>
+			</table>
 		</div>
 	</div>
-	<div class="col-md-1 col-12 my-auto text-center">
-		<button type="button" onclick="btnExport()" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
-			<i class="fa-solid fa-file-pdf"></i> PDF
-		</button>
-	</div>
 </div>
-
 <div class="row">
 	<div class="col-6">
 		<table class="table ColorTableBody shadow-lg">
@@ -349,7 +351,7 @@
 				<tr>
 					<td><?php echo ($i++).'.'.$value['COUNTRY_NAME_EN']?></td>
 					<td align="right"><?php echo is_numeric(@$value['NUM'])? number_format(@$value['NUM']) : @$value['NUM'] ; ?> </td>
-					<td align="right"><?php echo $value['CHANGE']; ?> </td>
+					<td align="right"><?php echo $value['CHANGE']; ?>  </td>
 				</tr>
 			<?php }?>
 			</tbody>
@@ -357,29 +359,3 @@
 	</div>
 </div>
 ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
-<?php $this->endSection() ?>
-<?= $this->section("scripts") ?>
-<script type="text/javascript">
-
-
-function ChangeFilter() {
-	var month = $('#month').val();
-	var month2 = $('#month2').val();
-	var year = $('#year').val();
-	var limit= $('#limit').val();
-	window.location.href = base_url + '/main/monthly_period?month=' + month+'&month2='+month2+'&year='+year+'&limit='+limit;
-}
-
-function ClearFilter() {
-	window.location.href = base_url + '/main/monthly_period';
-}
-
-function btnExport(){
-	var month = $('#month').val();
-	var month2 = $('#month2').val();
-	var year = $('#year').val();
-	var limit= $('#limit').val();
-	window.open( base_url + '/main/monthly_period?month=' + month+'&month2='+month2+'&year='+year+'&limit='+limit+"&export_type=pdf");
-}
-</script>
-<?= $this->endSection() ?>

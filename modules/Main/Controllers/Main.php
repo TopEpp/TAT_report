@@ -88,12 +88,14 @@ class Main extends BaseController
 	function monthly()
 	{
 		$Model = new Main_model();
+		$Report_model = new Report_model();
 		$data['session'] = session();
 		$data['Mydate'] = $this->Mydate;
 		$data['month'] = date('m');
 		$data['year'] = date('Y');
+		$data['to_date'] = date('d-m-Y');
 		$data['limit'] = 5;
-		$data['month_label'] = $this->month_en;
+		$data['month_label'] = $this->month_th;
 
 		if (!empty($_GET['month'])) {
 			$data['month'] = $_GET['month'];
@@ -107,8 +109,11 @@ class Main extends BaseController
 
 		$data['SumMonth'] = $Model->getSumMonthly($data['year']);
 		$data['SumMonth_past'] = $Model->getSumMonthly(($data['year'] - 1));
-		$data['SumRegion'] = $Model->getSumMonthlyRegion($data['month'], $data['year']);
+		$data['SumRegionDateData'] = $Model->getSumMonthlyRegion($data['month'], $data['year']);
+		$data['SumRegionDateData_past'] = $Model->getSumMonthlyRegion($data['month'], $data['year']-1);
 		$data['SumCountry'] = $Model->getSumMonthlyCountry($data['month'], $data['year'], $data['limit']);
+
+
 		$data['export_type'] = @$_GET['export_type'];
 
 		if (@$_GET['export_type'] == 'pdf') {
@@ -124,10 +129,10 @@ class Main extends BaseController
 		$data['session'] = session();
 		$data['Mydate'] = $this->Mydate;
 		$data['month'] = 1;
-		$data['month2'] = date('m');
+ 		$data['month2'] = date('m');
 		$data['year'] = date('Y');
 		$data['limit'] = 5;
-		$data['month_label'] = $this->month_en;
+		$data['month_label'] = $this->month_th;
 
 		if (!empty($_GET['month'])) {
 			$data['month'] = $_GET['month'];
@@ -142,7 +147,8 @@ class Main extends BaseController
 			$data['limit'] = $_GET['limit'];
 		}
 
-		$data['SumRegion'] = $Model->getSumMonthlyRegionPeriod($data['month'], $data['month2'], $data['year']);
+		$data['SumRegionDateData'] = $Model->getSumMonthlyRegionPeriod($data['month'], $data['month2'], $data['year']);
+		$data['SumRegionDateData_past'] = $Model->getSumMonthlyRegionPeriod($data['month'], $data['month2'], $data['year']-1);
 		$data['SumCountry'] = $Model->getSumMonthlyCountryPeriod($data['month'], $data['month2'], $data['year'], $data['limit']);
 		$data['export_type'] = @$_GET['export_type'];
 

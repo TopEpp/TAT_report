@@ -12,7 +12,7 @@ use App\Libraries\Hash;
 class Main_model extends Model
 {
 	protected $table = 'CAL_SUM_DATA_REPORT';
-	protected $table_month = 'CAL_MONTHLY_REPORT';
+	protected $table_month = 'CAL_MONTHLY_RAW_REPORT';
 	protected $primaryKey = 'REC_ID';
 	protected $allowedFields = [];
 
@@ -260,6 +260,7 @@ class Main_model extends Model
 
 	function getSumMonthly($year)
 	{
+		$data = array();
 		$builder = $this->db->table($this->table_month);
 		$builder->select("{$this->table_month}.MONTH, SUM({$this->table_month}.NUM) AS NUM ");
 		$builder->where("{$this->table_month}.YEAR", $year);
@@ -274,23 +275,27 @@ class Main_model extends Model
 
 	function getSumMonthlyRegion($month, $year)
 	{
+		$data = array();
 		$builder = $this->db->table($this->table_month);
-		$builder->select("MD_STD_REGION.MD_STD_REG_ID, MD_STD_REGION.MD_STD_REG_NAMEEN, SUM({$this->table_month}.NUM) AS NUM ");
+		$builder->select("MD_COUNTRY.STD_REGION_ID, SUM({$this->table_month}.NUM) AS NUM ");
 		$builder->join('MD_COUNTRY', "MD_COUNTRY.COUNTRYID = {$this->table_month}.COUNTRY_ID");
-		$builder->join('MD_STD_REGION', "MD_STD_REGION.MD_STD_REG_ID = MD_COUNTRY.STD_REGION_ID ");
+		$builder->join('MD_SUB_REGION', "MD_COUNTRY.REGIONID = MD_SUB_REGION.SUB_REGION_ID");
 		$builder->where("{$this->table_month}.MONTH", $month);
 		$builder->where("{$this->table_month}.YEAR", $year);
-		$builder->groupBy("MD_STD_REGION.MD_STD_REG_ID, MD_STD_REGION.MD_STD_REG_NAMEEN");
-		$builder->orderBy('MD_STD_REG_NAMEEN');
-		$data = $builder->get()->getResultArray();
-
+		$builder->groupBy("MD_COUNTRY.STD_REGION_ID");
+		$res = $builder->get()->getResultArray();
+		foreach ($res as $r) {
+			$data[$r['STD_REGION_ID']] = $r['NUM'];
+		}
 		return $data;
+
 	}
 
 	function getSumMonthlyCountry($month, $year, $limit)
 	{
+		$data = array();
 		$builder = $this->db->table($this->table_month);
-		$builder->select("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN, {$this->table_month}.NUM, {$this->table_month}.GROWTH_RATE ");
+		$builder->select("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN, {$this->table_month}.NUM");
 		$builder->join('MD_COUNTRY', "MD_COUNTRY.COUNTRYID = {$this->table_month}.COUNTRY_ID");
 		$builder->where("{$this->table_month}.MONTH", $month);
 		$builder->where("{$this->table_month}.YEAR", $year);
@@ -325,17 +330,20 @@ class Main_model extends Model
 
 	function getSumMonthlyRegionPeriod($month, $month2, $year)
 	{
+	
+		$data = array();
 		$builder = $this->db->table($this->table_month);
-		$builder->select("MD_STD_REGION.MD_STD_REG_ID, MD_STD_REGION.MD_STD_REG_NAMEEN, SUM({$this->table_month}.NUM) AS NUM ");
+		$builder->select("MD_COUNTRY.STD_REGION_ID, SUM({$this->table_month}.NUM) AS NUM ");
 		$builder->join('MD_COUNTRY', "MD_COUNTRY.COUNTRYID = {$this->table_month}.COUNTRY_ID");
-		$builder->join('MD_STD_REGION', "MD_STD_REGION.MD_STD_REG_ID = MD_COUNTRY.STD_REGION_ID ");
+		$builder->join('MD_SUB_REGION', "MD_COUNTRY.REGIONID = MD_SUB_REGION.SUB_REGION_ID");
 		$builder->where("{$this->table_month}.MONTH >=", $month);
 		$builder->where("{$this->table_month}.MONTH <=", $month2);
 		$builder->where("{$this->table_month}.YEAR", $year);
-		$builder->groupBy("MD_STD_REGION.MD_STD_REG_ID, MD_STD_REGION.MD_STD_REG_NAMEEN");
-		$builder->orderBy('MD_STD_REG_NAMEEN');
-		$data = $builder->get()->getResultArray();
-
+		$builder->groupBy("MD_COUNTRY.STD_REGION_ID");
+		$res = $builder->get()->getResultArray();
+		foreach ($res as $r) {
+			$data[$r['STD_REGION_ID']] = $r['NUM'];
+		}
 		return $data;
 	}
 

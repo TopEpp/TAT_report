@@ -162,7 +162,7 @@
 <div class="row">
 	<div class="col-md-3 col-12 headerColumn my-auto">
 		<div class="my-auto" style="font-size: 15px;">
-			ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+			
 		</div>
 	</div>
 	<div class="col-md-2 col-12 my-auto text-center py-2">
@@ -191,7 +191,7 @@
 							$sel = 'selected="selected"';
 						}
 					?>
-						<option value="<?php echo $i?>" <?php echo $sel;?> ><?php echo $i?></option>
+						<option value="<?php echo $i?>" <?php echo $sel;?> ><?php echo $i+543?></option>
 					<?php }?>
 				</select>
 			</div>
@@ -208,13 +208,13 @@
 		</div>
 	</div>
 	<div class="col-md-1 col-12 my-auto text-center">
-		<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/monthly?export_type=pdf'); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
+		<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/monthly?export_type=pdf&month='.$month.'&year='.$year.'&limit='.$limit); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
 			<i class="fa-solid fa-file-pdf"></i> PDF
 		</button>
 	</div>
 </div>
 <div class="row">
-	<div class="col-12">
+	<div class="col-12" id="htmltoimage_chart_monthly">
 		<canvas id="chart_main" height="220" style="height:220px !important"></canvas>
 	</div>
 	<div class="col-12">
@@ -228,7 +228,7 @@
 					<?php } ?>
 				</tr>
 				<tr>
-					<td style="background-color: #3cacae;"><?php echo $year  ?></td>
+					<td style="background-color: #3cacae;"><?php echo $year+543  ?></td>
 					<?php
 					foreach ($month_label as $d=>$name) { ?>
 						<td style="background:#3cacae" align="center"><?php echo number_format(@$SumMonth[$d]);
@@ -236,7 +236,7 @@
 					<?php } ?>
 				</tr>
 				<tr>
-					<td style="background-color: #e95d61;"><?php echo $year -1 ?></td>
+					<td style="background-color: #e95d61;"><?php echo $year +542 ?></td>
 					<?php
 					foreach ($month_label as $d=>$name) {?>
 						<td style="background:#e95d61" align="center"><?php echo number_format(@$SumMonth_past[$d]);
@@ -256,7 +256,104 @@
 				</tr>
 			</thead>
 			<tbody>
-			
+				<?php
+				$asia = @$SumRegionDateData[13] + @$SumRegionDateData[15] + @$SumRegionDateData[38] + @$SumRegionDateData[23];
+				$asia_past = @$SumRegionDateData_past[13] + @$SumRegionDateData_past[15] + @$SumRegionDateData_past[38] + @$SumRegionDateData_past[23];
+				
+				$asean = @$SumRegionDateData[13];
+				$asean_past = @$SumRegionDateData_past[13];
+
+				$north_east_asia = @$SumRegionDateData[15] + @$SumRegionDateData[38];
+				$north_east_asia_past = @$SumRegionDateData_past[15] + @$SumRegionDateData_past[38];
+
+				$south_asia = @$SumRegionDateData[23];
+				$south_asia_past = @$SumRegionDateData_past[23];
+
+				$eu = @$SumRegionDateData[2] + @$SumRegionDateData[44];
+				$eu_past = @$SumRegionDateData_past[2] + @$SumRegionDateData_past[44];
+
+				$east_eu = @$SumRegionDateData[37] + @$SumRegionDateData[36];
+				$east_eu_past = @$SumRegionDateData_past[37] + @$SumRegionDateData_past[36];
+
+				$america = @$SumRegionDateData[7] + @$SumRegionDateData[45];
+				$america_past = @$SumRegionDateData_past[7] + @$SumRegionDateData_past[45];
+
+				$oceania = @$SumRegionDateData[5] + @$SumRegionDateData[46];
+				$oceania_past = @$SumRegionDateData_past[5] + @$SumRegionDateData_past[46];
+
+				$middle_east = @$SumRegionDateData[20];
+				$middle_east_past = @$SumRegionDateData_past[20];
+
+				$africa = @$SumRegionDateData[6] + @$SumRegionDateData[40];
+				$africa_past = @$SumRegionDateData_past[6] + @$SumRegionDateData_past[40];
+
+				$stateless = @$SumRegionDateData[29];
+				$stateless_past = @$SumRegionDateData_past[29];
+				?>
+				<tr >
+					<td style="padding-left: 15px;">ASIA</td>
+					<td align="right"><?php echo number_format( $asia) ?></td>
+					<td align="right"><?php echo $asia_past >0 ? number_format( $asia/$asia_past*100 ,2 ) : '-'; ?></td>
+				</tr>
+				<tr >
+					<td style="padding-left: 40px;">ASEAN</td>
+					<td align="right"><?php echo number_format($asean) ?></td>
+					<td align="right"><?php echo $asean_past >0 ? number_format( $asean/$asean_past*100 ,2 ) : '-'; ?></td>
+				</tr>
+				
+				<tr >
+					<td style="padding-left: 40px;">NORTH-EAST ASIA</td>
+					<td align="right"><?php echo number_format($north_east_asia) ?></td>
+					<td align="right"><?php echo $north_east_asia_past >0 ? number_format( $north_east_asia/$north_east_asia_past*100 ,2 ) : '-';?></td>
+				</tr>
+				
+				<tr >
+					<td style="padding-left: 40px;">SOUTH ASIA</td>
+					<td align="right"><?php echo number_format($south_asia) ?></td>
+					<td align="right"><?php echo $south_asia_past >0 ? number_format( $south_asia/$south_asia_past*100 ,2 ) : '-';?></td>
+				</tr>
+				
+				<tr >
+					<td style="padding-left: 15px;">EUROPE</td>
+					<td align="right"><?php echo number_format($eu) ?></td>
+					<td align="right"><?php echo $eu_past >0 ? number_format( $eu/$eu_past*100 ,2 ) : '-'; ?></td>
+				</tr>
+				
+				<tr >
+					<td style="padding-left: 40px;">EAST EUROPE</td>
+					<td align="right"><?php echo number_format($east_eu) ?></td>
+					<td align="right"><?php echo $east_eu_past >0 ? number_format( $east_eu/$east_eu_past*100 ,2 ) : '-'; ?></td>
+				</tr>
+				
+				<tr >
+					<td style="padding-left: 15px;">THE AMERICAS</td>
+					<td align="right"><?php echo number_format($america) ?></td>
+					<td align="right"><?php echo $america_past >0 ? number_format( $america/$america_past*100 ,2 ) : '-'; ?></td>
+				</tr>
+				
+				<tr >
+					<td style="padding-left: 15px;">OCEANIA</td>
+					<td align="right"><?php echo number_format($oceania) ?></td>
+					<td align="right"><?php echo $oceania_past >0 ? number_format( $oceania/$oceania_past*100 ,2 ) : '-'; ?></td>
+				</tr>
+				
+				<tr >
+					<td style="padding-left: 15px;">MIDDLE EAST</td>
+					<td align="right"><?php echo number_format($middle_east) ?></td>
+					<td align="right"><?php echo $middle_east_past >0 ? number_format( $middle_east/$middle_east_past*100 ,2 ) : '-'; ?></td>
+				</tr>
+				
+				<tr >
+					<td style="padding-left: 15px;">AFRICA</td>
+					<td align="right"><?php echo number_format($africa) ?></td>
+					<td align="right"><?php echo $africa_past >0 ? number_format( $africa/$africa_past*100 ,2 ) : '-';?></td>
+				</tr>
+				
+				<tr >
+					<td style="padding-left: 15px;">STATELESS</td>
+					<td align="right"><?php echo number_format($stateless) ?></td>
+					<td align="right"><?php echo $stateless_past >0 ? number_format( $stateless/$stateless_past*100 ,2 ) : '-'; ?></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
@@ -272,13 +369,14 @@
 				<tr>
 					<td><?php echo ($i++).'.'.$value['COUNTRY_NAME_EN']?></td>
 					<td align="right"><?php echo is_numeric(@$value['NUM'])? number_format(@$value['NUM']) : @$value['NUM'] ; ?> </td>
-					<td align="right"><?php echo $value['CHANGE']; ?> </td>
+					<td align="right"><?php echo $value['CHANGE']; ?>  </td>
 				</tr>
 			<?php }?>
 			</tbody>
 		</table>
 	</div>
 </div>
+ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
 <?php $this->endSection() ?>
 <?= $this->section("scripts") ?>
 <script src="<?= base_url('public/js/script.js') ?>"></script>
@@ -330,8 +428,42 @@ function ChangeFilter() {
 	window.location.href = base_url + '/main/monthly?month=' + month+'&year='+year+'&limit='+limit;
 }
 
-function ClearFilter() {
+	function ClearFilter() {
 		window.location.href = base_url + '/main/monthly';
+	}
+
+	function SaveImg2ExportPdf(url2SaveImg, url2DowloadReport) {
+		$('.btn-download').hide();
+		const chart_array = ["chart_monthly"];
+		var count_canvas = 0;
+		$.each(chart_array, function(key, value) {
+			var container = document.getElementById("htmltoimage_" + value);
+			html2canvas(container, {
+				allowTaint: true
+			}).then(function(canvas) {
+
+				var link = document.createElement("a");
+				document.body.appendChild(link);
+				link.download =  "<?php echo $to_date; ?>"+value + ".jpg";
+				link.href = canvas.toDataURL();
+				link.target = '_blank';
+
+
+				var dataURL = link.href;
+				$.post(url2SaveImg, {
+					imgBase64: dataURL,
+					imgName: "<?php echo $to_date; ?>" + value
+				}, function(data, status) {
+					count_canvas++;
+					// console.log(count_canvas+' == '+chart_array.length );
+					if (count_canvas == chart_array.length) {
+						window.open(url2DowloadReport);
+					}
+
+				});
+			});
+
+		});
 	}
 </script>
 <?= $this->endSection() ?>
