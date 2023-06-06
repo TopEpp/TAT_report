@@ -157,6 +157,11 @@
 	}
 </style>
 <div class="row">
+	<div class="col-md-12 text-center" style="font-size: 1.4em;">
+		สถิตินักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย
+	</div>
+</div>
+<div class="row">
 	<div class="col-md-3 col-12 headerColumn my-auto">
 		<div class="my-auto" style="font-size: 15px;">
 			
