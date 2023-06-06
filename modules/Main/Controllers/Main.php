@@ -110,7 +110,7 @@ class Main extends BaseController
 		$data['SumMonth'] = $Model->getSumMonthly($data['year']);
 		$data['SumMonth_past'] = $Model->getSumMonthly(($data['year'] - 1));
 		$data['SumRegionDateData'] = $Model->getSumMonthlyRegion($data['month'], $data['year']);
-		$data['SumRegionDateData_past'] = $Model->getSumMonthlyRegion($data['month'], $data['year']-1);
+		$data['SumRegionDateData_past'] = $Model->getSumMonthlyRegion($data['month'], $data['year'] - 1);
 		$data['SumCountry'] = $Model->getSumMonthlyCountry($data['month'], $data['year'], $data['limit']);
 
 
@@ -129,7 +129,7 @@ class Main extends BaseController
 		$data['session'] = session();
 		$data['Mydate'] = $this->Mydate;
 		$data['month'] = 1;
- 		$data['month2'] = date('m');
+		$data['month2'] = date('m');
 		$data['year'] = date('Y');
 		$data['limit'] = 5;
 		$data['month_label'] = $this->month_th;
@@ -148,7 +148,7 @@ class Main extends BaseController
 		}
 
 		$data['SumRegionDateData'] = $Model->getSumMonthlyRegionPeriod($data['month'], $data['month2'], $data['year']);
-		$data['SumRegionDateData_past'] = $Model->getSumMonthlyRegionPeriod($data['month'], $data['month2'], $data['year']-1);
+		$data['SumRegionDateData_past'] = $Model->getSumMonthlyRegionPeriod($data['month'], $data['month2'], $data['year'] - 1);
 		$data['SumCountry'] = $Model->getSumMonthlyCountryPeriod($data['month'], $data['month2'], $data['year'], $data['limit']);
 		$data['export_type'] = @$_GET['export_type'];
 
@@ -251,18 +251,18 @@ class Main extends BaseController
 			'orientation' => 'L', // L แนวนอน P แนวตั้งง
 		]);
 
-		$footer = '<table width="100%" border=0 style="border:0px">
-                <tr border=0 style="border:0px ">
-                  <td align="left" border=0 style="border:0px ">
-                    <img src="' . base_url('public/img/logotat.png') . '">
-                  </td>
-                  <td align="right" border=0 style="border:0px;color:white ">
-                    Source of Data : Tourism Authority of Thailand <br>
-                    As of : ' . date('d M Y H:i:s') . '
-                  </td>
-                </tr>
-              </table>';
-		$mpdf->SetFooter($footer);
+		// $footer = '<table width="100%" border=0 style="border:0px">
+		//         <tr border=0 style="border:0px ">
+		//           <td align="left" border=0 style="border:0px ">
+		//             <img src="' . base_url('public/img/logotat.png') . '">
+		//           </td>
+		//           <td align="right" border=0 style="border:0px;color:white ">
+		//             Source of Data : Tourism Authority of Thailand <br>
+		//             As of : ' . date('d M Y H:i:s') . '
+		//           </td>
+		//         </tr>
+		//       </table>';
+		// $mpdf->SetFooter($footer);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 	}
