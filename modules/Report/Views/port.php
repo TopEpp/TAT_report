@@ -86,8 +86,8 @@ foreach ($data_month_lastyear as $v) {
 	}
 </style>
 <div class="row">
-	<div class="col-md-6 col-12 text-center text-md-left" style="font-size: 1.4em;">
-		<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+	<div class="col-md-6 col-12 text-center text-md-left" >
+		
 	</div>
 	<div class="col-md-6 col-12 py-2 py-md-0" style="text-align: right;">
 		<a target="_blank" href="<?php echo base_url('report/port/?export_type=excel&d=' . $to_date); ?>" class="btn btn-success" style="width : 70px">
@@ -97,7 +97,7 @@ foreach ($data_month_lastyear as $v) {
 			<i class="fa-solid fa-file-pdf"></i> PDF
 		</a>
 	</div>
-	<div class="col-md-12 text-center py-2">
+	<div class="col-md-12 text-center py-2" style="font-size: 1.4em;">
 		รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน วันที่ :
 		<input type="text" name="report_data" id="report_data" class="form-control date_picker" style="width: 200px;display: inline;" value="<?php echo $Mydate->date_thai2eng($to_date_label, 543, '/') ?> ">
 	</div>
@@ -196,7 +196,7 @@ foreach ($data_month_lastyear as $v) {
 		<span style="font-size:0.8em">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</span>
 	</div>
 </div>
-
+<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
 <?php $this->endSection() ?>
 
 <?= $this->section("scripts") ?>

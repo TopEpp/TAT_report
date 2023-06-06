@@ -365,6 +365,7 @@ class Report extends BaseController
 		
 		$data['port'] = $Model->getPortGroupTypeMonthly();
 		$data['port_colunm'] = $Model_import->getPortMonthly($data['port_type']);
+		$data['point_select'] = $Model_import->getPointMonthly();
 		$data['point'] = $Model_import->getPointMonthly($data['point_type']);
 		$data['data'] = $Model_import->getRawDataMonthly($data['year'],$data['month']);
 		$data['region'] = $Model->getSTDRegion($data['country_type']);

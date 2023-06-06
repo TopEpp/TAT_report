@@ -54,7 +54,7 @@
 </style>
 <div class="row">
 	<div class="col-md-6 col-12" style="font-size: 1.4em;">
-		<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+		
 	</div>
 	<div class="col-md-6 col-12 py-2 py-md-0" style="text-align: right;">
 		<a target="_blank" href="<?php echo base_url('report/nation_compare/?export_type=excel&start1=' . $start_date1 . '&end1=' . $end_date1 . '&start2=' . $start_date2 . '&end2=' . $end_date2 . '&country_type=' . $country_type); ?>" class="btn btn-success" style="width : 70px">
@@ -64,7 +64,7 @@
 			<i class="fa-solid fa-file-pdf"></i> PDF
 		</a>
 	</div>
-	<div class="col-md-12 text-center py-2">
+	<div class="col-md-12 text-center py-2" style="font-size: 1.4em;">
 		รายงานเปรียบเทียบจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายสัญชาติ
 	</div>
 </div>
@@ -164,6 +164,7 @@
 		</div>
 	</div>
 </div>
+<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
 <?php
 
 function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)

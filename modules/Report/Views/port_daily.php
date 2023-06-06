@@ -31,8 +31,8 @@
 </style>
 
 <div class="row">
-	<div class="col-md-6 text-center text-md-left" style="font-size: 1.4em;">
-		<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+	<div class="col-md-6 text-center text-md-left" >
+		
 	</div>
 	<div class="col-md-6 col-12 py-2" style="text-align: right;">
 		<a target="_blank" onclick="export_report('excel')" class="btn btn-success" style="width : 70px">
@@ -42,7 +42,7 @@
 			<i class="fa-solid fa-file-pdf"></i> PDF
 		</a>
 	</div>
-	<div class="col-md-12 text-center py-2">
+	<div class="col-md-12 text-center py-2" style="font-size: 1.4em;">
 		รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทยรายวัน รายด่าน
 	</div>
 
@@ -59,17 +59,6 @@
 		<div class="btn btn-primary" onclick="ChangeDate()">ตกลง</div>
 	</div>
 </div>
-<!-- <div class="d-flex justify-content-center py-2 pb-3 flex-column flex-md-row">
-	<div class="d-flex align-items-center mx-md-2 mx-auto">
-	วันที่เริ่มต้น <input type="text" name="report_data1" id="report_data1" class="form-control date_picker ml-2" style="width: 200px;display: inline;" value="<?php echo $Mydate->date_thai2eng($date_start, 543, '/') ?>">
-	</div>
-	<div class="d-flex align-items-center mx-md-2 mx-auto my-2 my-md-none">
-	วันที่สิ้นสุด <input type="text" name="report_data2" id="report_data2" class="form-control date_picker ml-2" style="width: 200px;display: inline;" value="<?php echo $Mydate->date_thai2eng($date_end, 543, '/') ?>">
-	</div>
-	<div class="align-items-center mx-md-2 mx-auto my-auto ">
-		<div class="btn btn-primary" onclick="ChangeDate()">ตกลง</div>
-	</div>
-</div> -->
 
 <div class="row">
 	<div class="col-md-12 col-12">
@@ -138,7 +127,7 @@
 		</div>
 	</div>
 </div>
-
+<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
 <?php $this->endSection() ?>
 
 <?= $this->section("scripts") ?>

@@ -29,8 +29,8 @@
 	}
 </style>
 <div class="row">
-	<div class="col-md-6 text-center text-md-left" style="font-size: 1.4em;">
-		<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+	<div class="col-md-6 text-center text-md-left" >
+		
 	</div>
 	<div class="col-md-6 col-12 py-2 py-md-0" style="text-align: right;">
 		<a target="_blank" onclick="export_report('excel')" class="btn btn-success" style="width : 70px">
@@ -40,7 +40,7 @@
 			<i class="fa-solid fa-file-pdf"></i> PDF
 		</a>
 	</div>
-	<div class="col-md-12 text-center py-2">
+	<div class="col-md-12 text-center py-2" style="font-size: 1.4em;">
 		รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทยรายวัน จำแนกรายสัญชาติ
 	</div>
 	<!-- <div class="col-md-12" >
@@ -91,6 +91,7 @@
 		</div>
 	</div>
 </div>
+<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
 <?php
 
 function genTableData($data, $region, $region_id, $country, $period, $level = 1)

@@ -100,8 +100,8 @@
 																																														echo "checked='checked'";
 																																													} ?>> <?php echo $p['PORT_NAME_FULL'] ?></label>
 				</div>
-				<?php if(!empty($point[$p['PORT_ID']])){ 
-						foreach($point[$p['PORT_ID']] as $po){ ?>
+				<?php if(!empty($point_select[$p['PORT_ID']])){ 
+						foreach($point_select[$p['PORT_ID']] as $po){ ?>
 							<div class="col-md-12 col-12" style="padding-left: 60px;">
 								<label style="font-weight:normal;"><input type="checkbox" name="point_type[]" id="point_type" class="port_1 point_<?php echo $p['PORT_ID']; ?> point_checkbox port_checkbox" value="<?php echo $po['POINT_ID'] ?>" <?php if (in_array($po['POINT_ID'], $point_type)) {
 																																																	echo "checked='checked'";
@@ -125,8 +125,8 @@
 																																														echo "checked='checked'";
 																																													} ?>> <?php echo $p['PORT_NAME_FULL'] ?></label>
 				</div>
-				<?php if(!empty($point[$p['PORT_ID']])){ 
-						foreach($point[$p['PORT_ID']] as $po){ ?>
+				<?php if(!empty($point_select[$p['PORT_ID']])){ 
+						foreach($point_select[$p['PORT_ID']] as $po){ ?>
 							<div class="col-md-12 col-12" style="padding-left: 60px;">
 								<label style="font-weight:normal;"><input type="checkbox" name="point_type[]" id="point_type" class="port_2 point_<?php echo $p['PORT_ID']; ?> point_checkbox port_checkbox" value="<?php echo $po['POINT_ID'] ?>" <?php if (in_array($po['POINT_ID'], $point_type)) {
 																																																	echo "checked='checked'";
@@ -357,7 +357,7 @@ function getSumData($data, $region, $region_id, $country, $port_id, $point_id, &
 			}
 		}).get();
 
-		window.location.href = base_url + '/report/monthly?m=' + month+'&y='+year+'&country_type='+country_type+'&port_type='+port_type+'&point_type='+point_type+'&export_type='+type;
+		window.open (base_url + '/report/monthly?m=' + month+'&y='+year+'&country_type='+country_type+'&port_type='+port_type+'&point_type='+point_type+'&export_type='+type);
 	}
 
 </script>
