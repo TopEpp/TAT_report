@@ -188,7 +188,7 @@
 		background: #fff1cc;
 		border-radius: 12px !important;
 		margin: auto auto;
-		box-shadow: 0px 7px 0px 0px hsl(0, 7%, 50%);
+		box-shadow: 0px 5px 0px 0px hsl(0, 7%, 50%);
 	}
 
 	#resultsTable4 {
@@ -211,20 +211,20 @@
 					<img src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="" style="width: 200px;">
 				</td>
 				<td style="text-align: center; color: black;width: 90%; padding-top: 10px;">
-					<p style="margin: 0px; line-height: normal; font-size: 45px;">
+					<h5 style="margin: 0px; line-height: normal; font-size: 35px;">
 						สถิตินักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย
-					</p>
+					</h5>
 
 				</td>
 				<td style="width: 5%;text-align: center;">
-					<img src="<?php echo base_url('public/img/amazing-th.png') ?>" alt="" style="width: 150px; padding-left: 35px;">
+					<img src="<?php echo base_url('public/img/amazingTH-Logo-04.png') ?>" alt="" style="width: 150px; padding-left: 35px;">
 				</td>
 			</tr>
 			<tr>
 				<td colspan="3" style="text-align: center; color: black; width: 100%;">
-					<h3 style="margin: 0px; line-height: normal; font-size: 40;margin-bottom: 30px;">
+					<h5 style="margin: 0px; line-height: normal; font-size: 35px;margin-bottom: 30px;">
 						เดือนมีนาคม 2566
-					</h3>
+					</h5>
 				</td>
 			</tr>
 			<tr>
@@ -236,6 +236,7 @@
 			</tr>
 		</thead>
 	</table>
+
 	<div class="col12">
 		<div class="col6">
 			<div style="padding: 0px 10px;">
@@ -353,17 +354,18 @@
 				<table class="table ColorTableBody shadow-lg" style="width: 100%;">
 					<thead>
 						<tr>
-							<th colspan="3" style="padding: 10;">รายสัญชาติ <select onchange="ChangeFilter()" id="limit">
-									<option value="5" <?php if ($limit == 5) {
-															echo 'selected="selected"';
-														} ?>>5</option>
-									<option value="10" <?php if ($limit == 10) {
-															echo 'selected="selected"';
-														} ?>>10</option>
-									<option value="20" <?php if ($limit == 20) {
-															echo 'selected="selected"';
-														} ?>>20</option>
-								</select> อันดับแรก</th>
+							<th colspan="3" style="padding: 10;">รายสัญชาติ
+
+								<?php if ($limit == 5) {
+									echo '5';
+								} ?>
+								<?php if ($limit == 15) {
+									echo '15';
+								} ?>
+								<?php if ($limit == 20) {
+									echo '20';
+								} ?> อันดับแรก
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -384,7 +386,7 @@
 				<table class="table" style="width: 100%;">
 					<tbody style="line-height: 1.5em;">
 						<tr style="text-align:center; border: 0;">
-							<td style="padding: 10px 0px 0px 0px; font-size: 25px; text-align: center; font-weight: bold;">
+							<td style="padding: 10px 0px 0px 0px; font-size: 25px; text-align: center; font-weight: bold; color: #0b4172;">
 								รวมทุกภูมิภาค
 							</td>
 						</tr>
@@ -394,13 +396,13 @@
 					<table style="width: 100%;">
 						<tbody>
 							<tr style="border: 0;padding: 0px 0px;">
-								<td style="text-align: center;padding: 5px ; font-size: 37px;">
+								<td style="text-align: center;padding: 5px ; font-size: 37px;color: #0b4172;">
 									6,477,538 คน
 								</td>
 
 							</tr>
 							<tr>
-								<td style="text-align: center;padding: 5px ; font-size: 20px;">
+								<td style="text-align: center;padding: 5px ; font-size: 20px;color: #0b4172;">
 									(+1,202.43%)
 								</td>
 							</tr>
@@ -410,8 +412,15 @@
 			</div>
 		</div>
 		<div class="col7">
-			<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_monthly.png') ?>" style="width:100%; height:170px">
-			<table class="table table-striped table-bordered " style="width: 100%;">
+			<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_monthly.png') ?>" style="width:100%; height:190px">
+
+			<!-- <div style="margin: auto; height: 60px; border: 1px solid red;">
+				<p style=" margin: 0; text-align: right; padding-right: 16%; padding-top: 1.5%; border: 1px solid blue;">
+					หมายเหตุ : ข้อมูลเบื้องต้นจาก กระทรวงท่องเที่ยวเเละกีฬา
+				</p>
+			</div> -->
+
+			<!-- <table class="table table-striped table-bordered " style="width: 100%;">
 				<tr>
 					<td align="center">ปี</td>
 					<?php $chart_label = $chart_current = $chart_pre = array();
@@ -436,8 +445,9 @@
 																		$chart_pre[] = @$SumMonth_past[$d] ? @$SumMonth_past[$d] : 0; ?></td>
 					<?php } ?>
 				</tr>
-			</table>
+			</table> -->
 		</div>
+
 	</div>
 	<!-- 
 	<div class="row">
@@ -479,7 +489,7 @@
 			</div>
 		</div>
 	</div> -->
-	<div class="row">
+	<!-- <div class="row">
 		<div class="col-12">
 			<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_monthly.png') ?>" style="width:100%; height:210px">
 		</div>
@@ -654,5 +664,21 @@
 			</table>
 		</div>
 	</div>
-	ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+
+	ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?> -->
+
+	<div style="position: absolute; bottom: 5px; right: 25px;">
+		<img src="<?php echo base_url('public/img/TATIC-Logo-06.png') ?>" alt="" style="width: 80px;">
+	</div>
+	<div style="position: absolute; bottom: 0px; left: 0px;">
+		<img src="<?php echo base_url('public/img/TATIC-Logo-05.png') ?>" alt="" style="width: 350px;">
+	</div>
+	<div style="position: absolute; bottom: 40px; right: 120px;">
+		<p>
+			หมายเหตุ : ข้อมูลเบื้องต้นจาก กระทรวงท่องเที่ยวเเละกีฬา
+		</p>
+		<p style="text-align: right;">
+			(ณ วันที่ 27 เมษายน 2566)
+		</p>
+	</div>
 </body>

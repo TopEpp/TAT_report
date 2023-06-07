@@ -38,7 +38,6 @@ class Main_model extends Model
 		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
 		$builder->where("TO_CHAR( {$this->table}.REPORT_DATE, 'YYYY-MM-DD') = ", $date);
 		$data = $builder->get()->getRowArray();
-
 		return $data['NUM'];
 	}
 
@@ -288,7 +287,6 @@ class Main_model extends Model
 			$data[$r['STD_REGION_ID']] = $r['NUM'];
 		}
 		return $data;
-
 	}
 
 	function getSumMonthlyCountry($month, $year, $limit)
@@ -330,7 +328,7 @@ class Main_model extends Model
 
 	function getSumMonthlyRegionPeriod($month, $month2, $year)
 	{
-	
+
 		$data = array();
 		$builder = $this->db->table($this->table_month);
 		$builder->select("MD_COUNTRY.STD_REGION_ID, SUM({$this->table_month}.NUM) AS NUM ");
