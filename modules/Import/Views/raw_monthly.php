@@ -59,13 +59,10 @@
 			<div class="card-header">
 				<div class="row">
 					<div class="col-md-4 col-4">Monthly Raw Data</div>
-					<div class="col-md-4 col-4"></div>
-					<div class="col-md-2 col-2" style="text-align:right; padding-top: 5px;">
+					<div class="col-md-2 col-2"></div>
+					<div class="col-md-2" style="text-align: right;">
+						ค้นหา
 					</div>
-				</div>
-			</div>
-			<div class="card-body" style="width:99%; overflow:auto;">
-				<div class="row" style="margin-bottom:5px;">
 					<div class="col-md-2">
 						<select class="form-control" id="m" name="m" onchange="ChangeFilter()">
 						<?php foreach($month_label as $m_id=>$name){ $sel = ''; if($month==$m_id){  $sel='selected="selected"';  }?>
@@ -80,6 +77,11 @@
 						<?php }?>
 						</select>
 					</div>
+				</div>
+			</div>
+			<div class="card-body" style="width:99%; overflow:auto;">
+				<div class="row" style="margin-bottom:5px;">
+
 				</div>
 				<table class="table table-striped table-bordered" id="myTable">
 					<thead>
