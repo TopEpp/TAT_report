@@ -267,7 +267,7 @@
 						$stateless = @$SumRegionDateData[29];
 						$stateless_past = @$SumRegionDateData_past[29];
 						?>
-						<tr style="border: 1px solid #e3e193; background-color: #fff2e9; ">
+						<tr style="border: 1px solid #e3e193; background-color: #fff2e9;">
 							<td style="padding-left: 15px; font-size: 18px; width: 40%;color:#1e6760; font-weight: 500; ">ASIA</td>
 							<td style="font-size:18px; width:35%;color:#1e6760;" align="right"><?php echo number_format($asia) ?></td>
 							<td align="right" style="font-size:18px; width: 25%; padding-right: 10px; color:#1e6760;"><?php echo $asia_past > 0 ? number_format($asia / $asia_past * 100, 2) : '-'; ?></td>
@@ -398,7 +398,7 @@
 		</div>
 	</div>
 	<div style="position: absolute; bottom: 0px; left: 100px;">
-		<img src="<?php echo base_url('public/img/TATIC-Logo-05.png') ?>" alt="" style=" width: 370px;height: 150px;">
+		<img src="<?php echo base_url('public/img/TATIC-Logo-05.png') ?>" alt="" style=" width: 370px;height: 100px;">
 	</div>
 	<div style="position: absolute; bottom: 180px; left: 80px;">
 		<img src="<?php echo base_url('public/img/TATIC-Logo-06.png') ?>" alt="" style="width: 80px;">
