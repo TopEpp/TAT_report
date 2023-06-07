@@ -243,7 +243,7 @@
 				<table class="table ColorTableBody shadow-lg" style="width: 100%;">
 					<thead>
 						<tr>
-							<th colspan="3" style="padding: 10;">รายภูมิภาค</th>
+							<th colspan="3" style="padding: 10; font-size: 20px;">รายภูมิภาค</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -322,25 +322,25 @@
 							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $america_past > 0 ? number_format($america / $america_past * 100, 2) : '-'; ?></td>
 						</tr>
 
-						<tr style="border: 1px solid #e3e193; background-color: #fef4e8; ">
+						<tr style="border: 1px solid #e3e193; background-color: white; ">
 							<td style=" padding-left: 15px;font-size: 18px;color:black;">OCEANIA</td>
 							<td align="right" style="font-size: 18px;color:black;"><?php echo number_format($oceania) ?></td>
 							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $oceania_past > 0 ? number_format($oceania / $oceania_past * 100, 2) : '-'; ?></td>
 						</tr>
 
-						<tr style="border: 1px solid #e3e193; background-color: white; ">
-							<td style=" padding-left: 15px;font-size: 18px;color:black;">MIDDLE EAST</td>
+						<tr style="border: 1px solid #e3e193; background-color: #fef4e8; ">
+							<td style="padding-left: 15px;font-size: 18px;color:black;	">MIDDLE EAST</td>
 							<td align="right" style="font-size: 18px;color:black;"><?php echo number_format($middle_east) ?></td>
 							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $middle_east_past > 0 ? number_format($middle_east / $middle_east_past * 100, 2) : '-'; ?></td>
 						</tr>
 
-						<tr style="border: 1px solid #e3e193; background-color: #fef4e8; ">
+						<tr style="border: 1px solid #e3e193; background-color: white; ">
 							<td style=" padding-left: 15px;font-size: 18px;color:black;">AFRICA</td>
 							<td align="right" style="font-size: 18px;color:black;"><?php echo number_format($africa) ?></td>
 							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $africa_past > 0 ? number_format($africa / $africa_past * 100, 2) : '-'; ?></td>
 						</tr>
 
-						<tr style="border: 1px solid #e3e193; background-color: white; ">
+						<tr style="border: 1px solid #e3e193; background-color:#fef4e8; ">
 							<td style=" padding-left: 15px;font-size: 18px;color:black;">STATELESS</td>
 							<td align="right" style="font-size: 18px;color:black;"><?php echo number_format($stateless) ?></td>
 							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $stateless_past > 0 ? number_format($stateless / $stateless_past * 100, 2) : '-'; ?></td>
@@ -354,13 +354,12 @@
 				<table class="table ColorTableBody shadow-lg" style="width: 100%;">
 					<thead>
 						<tr>
-							<th colspan="3" style="padding: 10;">รายสัญชาติ
-
+							<th colspan="3" style="padding: 10;font-size: 20px;">รายสัญชาติ
 								<?php if ($limit == 5) {
 									echo '5';
 								} ?>
-								<?php if ($limit == 15) {
-									echo '15';
+								<?php if ($limit == 10) {
+									echo '10';
 								} ?>
 								<?php if ($limit == 20) {
 									echo '20';
@@ -371,10 +370,10 @@
 					<tbody>
 						<?php $i = 1;
 						foreach ($SumCountry as $key => $value) { ?>
-							<tr>
-								<td><?php echo ($i++) . '.' . $value['COUNTRY_NAME_EN'] ?></td>
-								<td align="right"><?php echo is_numeric(@$value['NUM']) ? number_format(@$value['NUM']) : @$value['NUM']; ?> </td>
-								<td align="right"><?php echo $value['CHANGE']; ?> </td>
+							<tr style="border: 1px solid #e3e193;  background-color:<?php echo ($i % 2 != 0 ? "#fef4e8" : "white"); ?>;">
+								<td style="font-size: 18px;color:black; width: 55%;"><?php echo ($i++) . '.' . $value['COUNTRY_NAME_EN'] ?></td>
+								<td style="font-size: 18px;color:black;width: 25%;" align="right"><?php echo is_numeric(@$value['NUM']) ? number_format(@$value['NUM']) : @$value['NUM']; ?> </td>
+								<td style="font-size: 18px;color:black;width: 20%;" align="right"><?php echo $value['CHANGE']; ?> </td>
 							</tr>
 						<?php } ?>
 					</tbody>
@@ -667,13 +666,13 @@
 
 	ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?> -->
 
-	<div style="position: absolute; bottom: 5px; right: 25px;">
+	<div style="position: absolute; bottom: 0px; right: 25px;">
 		<img src="<?php echo base_url('public/img/TATIC-Logo-06.png') ?>" alt="" style="width: 80px;">
 	</div>
 	<div style="position: absolute; bottom: 0px; left: 0px;">
 		<img src="<?php echo base_url('public/img/TATIC-Logo-05.png') ?>" alt="" style="width: 350px;">
 	</div>
-	<div style="position: absolute; bottom: 40px; right: 120px;">
+	<div style="position: absolute; bottom: 30px; right: 120px;">
 		<p>
 			หมายเหตุ : ข้อมูลเบื้องต้นจาก กระทรวงท่องเที่ยวเเละกีฬา
 		</p>
