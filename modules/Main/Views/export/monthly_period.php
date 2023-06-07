@@ -198,20 +198,20 @@
 					<img src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="" style="width: 200px;">
 				</td>
 				<td style="text-align: center; color: black;width: 90%; padding-top: 10px;">
-					<p style="margin: 0px; line-height: normal; font-size: 45px;">
+					<h4 style="margin: 0px; line-height: normal; font-size: 45px;">
 						สถิตินักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย
-					</p>
+					</h4>
 
 				</td>
 				<td style="width: 5%;text-align: center;">
-					<img src="<?php echo base_url('public/img/amazing-th.png') ?>" alt="" style="width: 150px; padding-left: 35px;">
+					<img src="<?php echo base_url('public/img/amazingTH-Logo-04.png') ?>" alt="" style="width: 150px; padding-left: 35px;">
 				</td>
 			</tr>
 			<tr>
 				<td colspan="3" style="text-align: center; color: black; width: 100%;">
-					<h3 style="margin: 0px; line-height: normal; font-size: 40;margin-bottom: 30px;">
+					<h4 style="margin: 0px; line-height: normal; font-size: 40;margin-bottom: 30px;">
 						เดือนมกราคม - มีนาคม 2566
-					</h3>
+					</h4>
 				</td>
 			</tr>
 			<tr>
@@ -229,7 +229,7 @@
 				<table class="table ColorTableBody shadow-lg" style="width: 100%; ">
 					<thead>
 						<tr>
-							<th colspan="3" style="font-size: 25px; color: white; padding: 10;">รายภูมิภาค</th>
+							<th colspan="3" style="font-size: 20px; color: white; padding: 8;">รายภูมิภาค</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -338,7 +338,7 @@
 				<table class="table" style="width: 100%;">
 					<tbody style="line-height: 1.5em;">
 						<tr style="text-align:center; border: 0;">
-							<td style="padding: 10px 0px 0px 0px; font-size: 25px; text-align: center; font-weight: bold;">
+							<td style="padding: 10px 0px 0px 0px; font-size: 25px; text-align: center; font-weight: bold;color: #0d4472;">
 								จำนวนทุกภูมิภาค
 							</td>
 						</tr>
@@ -348,13 +348,13 @@
 					<table style="width: 100%;">
 						<tbody>
 							<tr style="border: 0;padding: 0px 0px;">
-								<td style="text-align: center;padding: 5px ; font-size: 37px;">
+								<td style="text-align: center;padding: 5px ; font-size: 37px; color: #0d4472;">
 									6,477,538 คน
 								</td>
 
 							</tr>
 							<tr>
-								<td style="text-align: center;padding: 5px ; font-size: 20px;">
+								<td style="text-align: center;padding: 5px ; font-size: 20px; color: #0d4472;">
 									(+1,202.43%)
 								</td>
 							</tr>
@@ -369,11 +369,11 @@
 				<table class="table ColorTableBody shadow-lg" style="width: 100%;">
 					<thead>
 						<tr>
-							<th colspan="3" style="font-size: 25px; color: white; padding: 10;">รายสัญชาติ <select onchange="ChangeFilter()" id="limit">
+							<th colspan="3" style="font-size: 20px; color: white; padding: 8;">รายสัญชาติ <select onchange="ChangeFilter()" id="limit">
 									<option value="5" <?php if ($limit == 5) {
 															echo 'selected="selected"';
 														} ?>>5</option>
-									<option value="10" <?php if ($limit == 10) {
+									<option value="15" <?php if ($limit == 15) {
 															echo 'selected="selected"';
 														} ?>>10</option>
 									<option value="20" <?php if ($limit == 20) {
@@ -385,10 +385,10 @@
 					<tbody>
 						<?php $i = 1;
 						foreach ($SumCountry as $key => $value) { ?>
-							<tr style="border: 1px solid #e3e193;">
-								<td style="font-size:18px; <?php ($i % 2 == 0) ? 'border: 1px solid #e3e193; background-color: #fff2e9;' : 'border: 1px solid #e3e193; background-color: white;' ?>"><?php echo ($i++) . '.' . $value['COUNTRY_NAME_EN'] ?></td>
-								<td style="font-size:18px;" align="right"><?php echo is_numeric(@$value['NUM']) ? number_format(@$value['NUM']) : @$value['NUM']; ?> </td>
-								<td style="font-size:18px;" align="right"><?php echo $value['CHANGE']; ?> </td>
+							<tr style=" border: 1px solid #e3e193; background-color:<?php echo ($i % 2 != 0 ? "#fef4e8" : "white"); ?>;">
+								<td style="font-size:18px; width: 55%;color:#1e6760;"><?php echo ($i++) . '.' . $value['COUNTRY_NAME_EN'] ?></td>
+								<td style="font-size:18px;width: 20%;color:#1e6760;" align="right"><?php echo is_numeric(@$value['NUM']) ? number_format(@$value['NUM']) : @$value['NUM']; ?> </td>
+								<td style="font-size:18px;width: 25%;color:#1e6760;" align="right"><?php echo $value['CHANGE']; ?> </td>
 							</tr>
 						<?php } ?>
 					</tbody>
@@ -396,13 +396,13 @@
 			</div>
 		</div>
 	</div>
-	<div style="position: absolute; bottom: 0px; left: 0px;">
-		<img src="<?php echo base_url('public/img/TATIC-Logo-05.png') ?>" alt="" style=" width: 550px;height: 150px;">
+	<div style="position: absolute; bottom: 0px; left: 100px;">
+		<img src="<?php echo base_url('public/img/TATIC-Logo-05.png') ?>" alt="" style=" width: 370px;height: 150px;">
 	</div>
 	<div style="position: absolute; bottom: 180px; left: 80px;">
 		<img src="<?php echo base_url('public/img/TATIC-Logo-06.png') ?>" alt="" style="width: 80px;">
 	</div>
-	<div style="position: absolute; bottom: 10px; right: 40px;">
+	<div style="position: absolute; bottom: 20px; right: 40px;">
 		<p>
 			หมายเหตุ : ข้อมูลเบื้องต้นจาก กระทรวงท่องเที่ยวเเละกีฬา (ณ วันที่ 27 เมษายน 2566)
 		</p>

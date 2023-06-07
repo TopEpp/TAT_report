@@ -167,7 +167,7 @@
 <div class="row">
 	<div class="col-md-3 col-12 headerColumn my-auto">
 		<div class="my-auto" style="font-size: 15px;">
-			
+
 		</div>
 	</div>
 	<div class="col-md-2 col-12 my-auto text-center py-2">
@@ -177,40 +177,40 @@
 		<div class="row" style="margin-top: 0px;">
 			<div class="col-md-4 col-4 SetAlignInputleft1">
 				<select class="form-control" id="month">
-				<?php 
-				foreach($month_label as $m_id=>$name){
-					$sel = '';
-					if($month==$m_id){
-						$sel = 'selected="selected"';
-					}
-				?>
-					<option value="<?php echo $m_id?>" <?php echo $sel;?> ><?php echo $name?></option>
-				<?php } ?>
+					<?php
+					foreach ($month_label as $m_id => $name) {
+						$sel = '';
+						if ($month == $m_id) {
+							$sel = 'selected="selected"';
+						}
+					?>
+						<option value="<?php echo $m_id ?>" <?php echo $sel; ?>><?php echo $name ?></option>
+					<?php } ?>
 				</select>
 			</div>
 			<div class="col-md-4 col-4 SetAlignInputleft1">
 				<select class="form-control" id="month2">
-				<?php 
-				foreach($month_label as $m_id=>$name){
-					$sel = '';
-					if($month2==$m_id){
-						$sel = 'selected="selected"';
-					}
-				?>
-					<option value="<?php echo $m_id?>" <?php echo $sel;?> ><?php echo $name?></option>
-				<?php } ?>
+					<?php
+					foreach ($month_label as $m_id => $name) {
+						$sel = '';
+						if ($month2 == $m_id) {
+							$sel = 'selected="selected"';
+						}
+					?>
+						<option value="<?php echo $m_id ?>" <?php echo $sel; ?>><?php echo $name ?></option>
+					<?php } ?>
 				</select>
 			</div>
 			<div class="col-md-4 col-4 SetAlignInputleft1">
 				<select class="form-control" id="year">
-				 	<?php for($i=date('Y');$i >= date('Y')-5;$i--){ 
-				 		$sel = '';
-						if($year==$i){
+					<?php for ($i = date('Y'); $i >= date('Y') - 5; $i--) {
+						$sel = '';
+						if ($year == $i) {
 							$sel = 'selected="selected"';
 						}
 					?>
-						<option value="<?php echo $i?>" <?php echo $sel;?> ><?php echo $i+543?></option>
-					<?php }?>
+						<option value="<?php echo $i ?>" <?php echo $sel; ?>><?php echo $i + 543 ?></option>
+					<?php } ?>
 				</select>
 			</div>
 		</div>
@@ -244,7 +244,7 @@
 				<?php
 				$asia = @$SumRegionDateData[13] + @$SumRegionDateData[15] + @$SumRegionDateData[38] + @$SumRegionDateData[23];
 				$asia_past = @$SumRegionDateData_past[13] + @$SumRegionDateData_past[15] + @$SumRegionDateData_past[38] + @$SumRegionDateData_past[23];
-				
+
 				$asean = @$SumRegionDateData[13];
 				$asean_past = @$SumRegionDateData_past[13];
 
@@ -275,69 +275,69 @@
 				$stateless = @$SumRegionDateData[29];
 				$stateless_past = @$SumRegionDateData_past[29];
 				?>
-				<tr >
+				<tr>
 					<td style="padding-left: 15px;">ASIA</td>
-					<td align="right"><?php echo number_format( $asia) ?></td>
-					<td align="right"><?php echo $asia_past >0 ? number_format( $asia/$asia_past*100 ,2 ) : '-'; ?></td>
+					<td align="right"><?php echo number_format($asia) ?></td>
+					<td align="right"><?php echo $asia_past > 0 ? number_format($asia / $asia_past * 100, 2) : '-'; ?></td>
 				</tr>
-				<tr >
+				<tr>
 					<td style="padding-left: 40px;">ASEAN</td>
 					<td align="right"><?php echo number_format($asean) ?></td>
-					<td align="right"><?php echo $asean_past >0 ? number_format( $asean/$asean_past*100 ,2 ) : '-'; ?></td>
+					<td align="right"><?php echo $asean_past > 0 ? number_format($asean / $asean_past * 100, 2) : '-'; ?></td>
 				</tr>
-				
-				<tr >
+
+				<tr>
 					<td style="padding-left: 40px;">NORTH-EAST ASIA</td>
 					<td align="right"><?php echo number_format($north_east_asia) ?></td>
-					<td align="right"><?php echo $north_east_asia_past >0 ? number_format( $north_east_asia/$north_east_asia_past*100 ,2 ) : '-';?></td>
+					<td align="right"><?php echo $north_east_asia_past > 0 ? number_format($north_east_asia / $north_east_asia_past * 100, 2) : '-'; ?></td>
 				</tr>
-				
-				<tr >
+
+				<tr>
 					<td style="padding-left: 40px;">SOUTH ASIA</td>
 					<td align="right"><?php echo number_format($south_asia) ?></td>
-					<td align="right"><?php echo $south_asia_past >0 ? number_format( $south_asia/$south_asia_past*100 ,2 ) : '-';?></td>
+					<td align="right"><?php echo $south_asia_past > 0 ? number_format($south_asia / $south_asia_past * 100, 2) : '-'; ?></td>
 				</tr>
-				
-				<tr >
+
+				<tr>
 					<td style="padding-left: 15px;">EUROPE</td>
 					<td align="right"><?php echo number_format($eu) ?></td>
-					<td align="right"><?php echo $eu_past >0 ? number_format( $eu/$eu_past*100 ,2 ) : '-'; ?></td>
+					<td align="right"><?php echo $eu_past > 0 ? number_format($eu / $eu_past * 100, 2) : '-'; ?></td>
 				</tr>
-				
-				<tr >
+
+				<tr>
 					<td style="padding-left: 40px;">EAST EUROPE</td>
 					<td align="right"><?php echo number_format($east_eu) ?></td>
-					<td align="right"><?php echo $east_eu_past >0 ? number_format( $east_eu/$east_eu_past*100 ,2 ) : '-'; ?></td>
+					<td align="right"><?php echo $east_eu_past > 0 ? number_format($east_eu / $east_eu_past * 100, 2) : '-'; ?></td>
 				</tr>
-				
-				<tr >
+
+				<tr>
 					<td style="padding-left: 15px;">THE AMERICAS</td>
 					<td align="right"><?php echo number_format($america) ?></td>
-					<td align="right"><?php echo $america_past >0 ? number_format( $america/$america_past*100 ,2 ) : '-'; ?></td>
+					<td align="right"><?php echo $america_past > 0 ? number_format($america / $america_past * 100, 2) : '-'; ?></td>
 				</tr>
-				
-				<tr >
+
+				<tr>
 					<td style="padding-left: 15px;">OCEANIA</td>
 					<td align="right"><?php echo number_format($oceania) ?></td>
-					<td align="right"><?php echo $oceania_past >0 ? number_format( $oceania/$oceania_past*100 ,2 ) : '-'; ?></td>
+					<td align="right"><?php echo $oceania_past > 0 ? number_format($oceania / $oceania_past * 100, 2) : '-'; ?></td>
 				</tr>
-				
-				<tr >
+
+				<tr>
 					<td style="padding-left: 15px;">MIDDLE EAST</td>
 					<td align="right"><?php echo number_format($middle_east) ?></td>
-					<td align="right"><?php echo $middle_east_past >0 ? number_format( $middle_east/$middle_east_past*100 ,2 ) : '-'; ?></td>
+					<td align="right"><?php echo $middle_east_past > 0 ? number_format($middle_east / $middle_east_past * 100, 2) : '-'; ?></td>
 				</tr>
-				
-				<tr >
+
+				<tr>
 					<td style="padding-left: 15px;">AFRICA</td>
 					<td align="right"><?php echo number_format($africa) ?></td>
-					<td align="right"><?php echo $africa_past >0 ? number_format( $africa/$africa_past*100 ,2 ) : '-';?></td>
+					<td align="right"><?php echo $africa_past > 0 ? number_format($africa / $africa_past * 100, 2) : '-'; ?></td>
 				</tr>
-				
-				<tr >
+
+				<tr>
 					<td style="padding-left: 15px;">STATELESS</td>
 					<td align="right"><?php echo number_format($stateless) ?></td>
-					<td align="right"><?php echo $stateless_past >0 ? number_format( $stateless/$stateless_past*100 ,2 ) : '-'; ?></td>
+					<td align="right"><?php echo $stateless_past > 0 ? number_format($stateless / $stateless_past * 100, 2) : '-'; ?></td>
 				</tr>
 			</tbody>
 		</table>
@@ -346,17 +346,28 @@
 		<table class="table ColorTableBody shadow-lg">
 			<thead>
 				<tr>
-					<th colspan="3">รายสัญชาติ <select onchange="ChangeFilter()" id="limit"><option value="5" <?php if($limit==5){ echo 'selected="selected"'; }?>>5</option><option value="10" <?php if($limit==10){ echo 'selected="selected"'; }?>>10</option><option value="20" <?php if($limit==20){ echo 'selected="selected"'; }?>>20</option></select> อันดับแรก</th>
+					<th colspan="3">รายสัญชาติ <select onchange="ChangeFilter()" id="limit">
+							<option value="5" <?php if ($limit == 5) {
+													echo 'selected="selected"';
+												} ?>>5</option>
+							<option value="15" <?php if ($limit == 15) {
+													echo 'selected="selected"';
+												} ?>>15</option>
+							<option value="20" <?php if ($limit == 20) {
+													echo 'selected="selected"';
+												} ?>>20</option>
+						</select> อันดับแรก</th>
 				</tr>
 			</thead>
 			<tbody>
-			<?php $i=1; foreach ($SumCountry as $key => $value) { ?>
-				<tr>
-					<td><?php echo ($i++).'.'.$value['COUNTRY_NAME_EN']?></td>
-					<td align="right"><?php echo is_numeric(@$value['NUM'])? number_format(@$value['NUM']) : @$value['NUM'] ; ?> </td>
-					<td align="right"><?php echo $value['CHANGE']; ?> </td>
-				</tr>
-			<?php }?>
+				<?php $i = 1;
+				foreach ($SumCountry as $key => $value) { ?>
+					<tr>
+						<td><?php echo ($i++) . '.' . $value['COUNTRY_NAME_EN'] ?></td>
+						<td align="right"><?php echo is_numeric(@$value['NUM']) ? number_format(@$value['NUM']) : @$value['NUM']; ?> </td>
+						<td align="right"><?php echo $value['CHANGE']; ?> </td>
+					</tr>
+				<?php } ?>
 			</tbody>
 		</table>
 	</div>
@@ -365,26 +376,24 @@
 <?php $this->endSection() ?>
 <?= $this->section("scripts") ?>
 <script type="text/javascript">
+	function ChangeFilter() {
+		var month = $('#month').val();
+		var month2 = $('#month2').val();
+		var year = $('#year').val();
+		var limit = $('#limit').val();
+		window.location.href = base_url + '/main/monthly_period?month=' + month + '&month2=' + month2 + '&year=' + year + '&limit=' + limit;
+	}
 
+	function ClearFilter() {
+		window.location.href = base_url + '/main/monthly_period';
+	}
 
-function ChangeFilter() {
-	var month = $('#month').val();
-	var month2 = $('#month2').val();
-	var year = $('#year').val();
-	var limit= $('#limit').val();
-	window.location.href = base_url + '/main/monthly_period?month=' + month+'&month2='+month2+'&year='+year+'&limit='+limit;
-}
-
-function ClearFilter() {
-	window.location.href = base_url + '/main/monthly_period';
-}
-
-function btnExport(){
-	var month = $('#month').val();
-	var month2 = $('#month2').val();
-	var year = $('#year').val();
-	var limit= $('#limit').val();
-	window.open( base_url + '/main/monthly_period?month=' + month+'&month2='+month2+'&year='+year+'&limit='+limit+"&export_type=pdf");
-}
+	function btnExport() {
+		var month = $('#month').val();
+		var month2 = $('#month2').val();
+		var year = $('#year').val();
+		var limit = $('#limit').val();
+		window.open(base_url + '/main/monthly_period?month=' + month + '&month2=' + month2 + '&year=' + year + '&limit=' + limit + "&export_type=pdf");
+	}
 </script>
 <?= $this->endSection() ?>

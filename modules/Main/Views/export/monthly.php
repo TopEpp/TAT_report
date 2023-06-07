@@ -211,9 +211,9 @@
 					<img src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="" style="width: 200px;">
 				</td>
 				<td style="text-align: center; color: black;width: 90%; padding-top: 10px;">
-					<p style="margin: 0px; line-height: normal; font-size: 45px;">
+					<h5 style="margin: 0px; line-height: normal; font-size: 35px;">
 						สถิตินักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย
-					</p>
+					</h5>
 
 				</td>
 				<td style="width: 5%;text-align: center;">
@@ -222,9 +222,9 @@
 			</tr>
 			<tr>
 				<td colspan="3" style="text-align: center; color: black; width: 100%;">
-					<h3 style="margin: 0px; line-height: normal; font-size: 40;margin-bottom: 30px;">
+					<h5 style="margin: 0px; line-height: normal; font-size: 35px;margin-bottom: 30px;">
 						เดือนมีนาคม 2566
-					</h3>
+					</h5>
 				</td>
 			</tr>
 			<tr>
@@ -236,12 +236,7 @@
 			</tr>
 		</thead>
 	</table>
-	<div style="position: absolute; bottom: 16px; right: 25px;">
-		<img src="<?php echo base_url('public/img/TATIC-Logo-06.png') ?>" alt="" style="width: 80px;">
-	</div>
-	<div style="position: absolute; bottom: 0px; left: 0px;">
-		<img src="<?php echo base_url('public/img/TATIC-Logo-05.png') ?>" alt="" style="width: 380px;">
-	</div>
+
 	<div class="col12">
 		<div class="col6">
 			<div style="padding: 0px 10px;">
@@ -416,16 +411,13 @@
 			</div>
 		</div>
 		<div class="col7">
-			<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_monthly.png') ?>" style="width:100%; height:175px">
+			<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_monthly.png') ?>" style="width:100%; height:190px">
 
-			<div style="margin: auto; height: 60px; border: 1px solid red;">
+			<!-- <div style="margin: auto; height: 60px; border: 1px solid red;">
 				<p style=" margin: 0; text-align: right; padding-right: 16%; padding-top: 1.5%; border: 1px solid blue;">
 					หมายเหตุ : ข้อมูลเบื้องต้นจาก กระทรวงท่องเที่ยวเเละกีฬา
 				</p>
-				<p style="margin: 0; text-align: right; padding-right: 16%;border: 1px solid blue;">
-					(ณ วันที่ 27 เมษายน 2566)
-				</p>
-			</div>
+			</div> -->
 
 			<!-- <table class="table table-striped table-bordered " style="width: 100%;">
 				<tr>
@@ -454,6 +446,7 @@
 				</tr>
 			</table> -->
 		</div>
+
 	</div>
 	<!-- 
 	<div class="row">
@@ -672,4 +665,19 @@
 	</div>
 
 	ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?> -->
+
+	<div style="position: absolute; bottom: 5px; right: 25px;">
+		<img src="<?php echo base_url('public/img/TATIC-Logo-06.png') ?>" alt="" style="width: 80px;">
+	</div>
+	<div style="position: absolute; bottom: 0px; left: 0px;">
+		<img src="<?php echo base_url('public/img/TATIC-Logo-05.png') ?>" alt="" style="width: 350px;">
+	</div>
+	<div style="position: absolute; bottom: 40px; right: 120px;">
+		<p>
+			หมายเหตุ : ข้อมูลเบื้องต้นจาก กระทรวงท่องเที่ยวเเละกีฬา
+		</p>
+		<p style="text-align: right;">
+			(ณ วันที่ 27 เมษายน 2566)
+		</p>
+	</div>
 </body>
