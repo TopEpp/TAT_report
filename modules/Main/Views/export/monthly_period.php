@@ -369,17 +369,18 @@
 				<table class="table ColorTableBody shadow-lg" style="width: 100%;">
 					<thead>
 						<tr>
-							<th colspan="3" style="font-size: 20px; color: white; padding: 8;">รายสัญชาติ <select onchange="ChangeFilter()" id="limit">
-									<option value="5" <?php if ($limit == 5) {
-															echo 'selected="selected"';
-														} ?>>5</option>
-									<option value="15" <?php if ($limit == 15) {
-															echo 'selected="selected"';
-														} ?>>10</option>
-									<option value="20" <?php if ($limit == 20) {
-															echo 'selected="selected"';
-														} ?>>20</option>
-								</select> อันดับแรก</th>
+							<th colspan="3" style="font-size: 20px; color: white; padding: 8;">รายสัญชาติ
+								<?php if ($limit == 5) {
+									echo '5';
+								} ?>
+								<?php if ($limit == 15) {
+									echo '15';
+								} ?>
+								<?php if ($limit == 20) {
+									echo '20';
+								} ?>
+								อันดับแรก
+							</th>
 						</tr>
 					</thead>
 					<tbody>

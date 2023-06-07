@@ -188,7 +188,7 @@
 		background: #fff1cc;
 		border-radius: 12px !important;
 		margin: auto auto;
-		box-shadow: 0px 7px 0px 0px hsl(0, 7%, 50%);
+		box-shadow: 0px 5px 0px 0px hsl(0, 7%, 50%);
 	}
 
 	#resultsTable4 {
@@ -354,17 +354,18 @@
 				<table class="table ColorTableBody shadow-lg" style="width: 100%;">
 					<thead>
 						<tr>
-							<th colspan="3" style="padding: 10;">รายสัญชาติ <select onchange="ChangeFilter()" id="limit">
-									<option value="5" <?php if ($limit == 5) {
-															echo 'selected="selected"';
-														} ?>>5</option>
-									<option value="10" <?php if ($limit == 10) {
-															echo 'selected="selected"';
-														} ?>>10</option>
-									<option value="20" <?php if ($limit == 20) {
-															echo 'selected="selected"';
-														} ?>>20</option>
-								</select> อันดับแรก</th>
+							<th colspan="3" style="padding: 10;">รายสัญชาติ
+
+								<?php if ($limit == 5) {
+									echo '5';
+								} ?>
+								<?php if ($limit == 15) {
+									echo '15';
+								} ?>
+								<?php if ($limit == 20) {
+									echo '20';
+								} ?> อันดับแรก
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -385,7 +386,7 @@
 				<table class="table" style="width: 100%;">
 					<tbody style="line-height: 1.5em;">
 						<tr style="text-align:center; border: 0;">
-							<td style="padding: 10px 0px 0px 0px; font-size: 25px; text-align: center; font-weight: bold;">
+							<td style="padding: 10px 0px 0px 0px; font-size: 25px; text-align: center; font-weight: bold; color: #0b4172;">
 								รวมทุกภูมิภาค
 							</td>
 						</tr>
@@ -395,13 +396,13 @@
 					<table style="width: 100%;">
 						<tbody>
 							<tr style="border: 0;padding: 0px 0px;">
-								<td style="text-align: center;padding: 5px ; font-size: 37px;">
+								<td style="text-align: center;padding: 5px ; font-size: 37px;color: #0b4172;">
 									6,477,538 คน
 								</td>
 
 							</tr>
 							<tr>
-								<td style="text-align: center;padding: 5px ; font-size: 20px;">
+								<td style="text-align: center;padding: 5px ; font-size: 20px;color: #0b4172;">
 									(+1,202.43%)
 								</td>
 							</tr>
