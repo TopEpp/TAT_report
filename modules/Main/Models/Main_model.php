@@ -316,7 +316,7 @@ class Main_model extends Model
 
 			if (@$res_past['NUM'] > 0) {
 				$data[$row['COUNTRYID']]['NUM_PAST'] = $res_past['NUM'];
-				$data[$row['COUNTRYID']]['CHANGE'] = number_format($row['NUM'] / $res_past['NUM'] * 100, 2) . ' %';
+				$data[$row['COUNTRYID']]['CHANGE'] = $row['NUM']>0 ? number_format( ($row['NUM'] - $res_past['NUM']) / $row['NUM'] * 100, 2) . ' %' : '-';
 			} else {
 				$data[$row['COUNTRYID']]['NUM_PAST'] = 0;
 				$data[$row['COUNTRYID']]['CHANGE'] = '-';
@@ -373,7 +373,7 @@ class Main_model extends Model
 
 			if (@$res_past['NUM'] > 0) {
 				$data[$row['COUNTRYID']]['NUM_PAST'] = $res_past['NUM'];
-				$data[$row['COUNTRYID']]['CHANGE'] = number_format($row['NUM'] / $res_past['NUM'] * 100, 2) . ' %';
+				$data[$row['COUNTRYID']]['CHANGE'] = $row['NUM']>0 ? number_format( ($row['NUM'] - $res_past['NUM']) / $row['NUM'] * 100, 2) . ' %' : '-';
 			} else {
 				$data[$row['COUNTRYID']]['CHANGE'] = '-';
 			}

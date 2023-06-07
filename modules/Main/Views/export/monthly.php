@@ -250,100 +250,111 @@
 						<?php
 						$asia = @$SumRegionDateData[13] + @$SumRegionDateData[15] + @$SumRegionDateData[38] + @$SumRegionDateData[23];
 						$asia_past = @$SumRegionDateData_past[13] + @$SumRegionDateData_past[15] + @$SumRegionDateData_past[38] + @$SumRegionDateData_past[23];
+						$diff_asia = $asia >0 ? number_format( ($asia - $asia_past) / $asia * 100, 2).'%': '-';
 
 						$asean = @$SumRegionDateData[13];
 						$asean_past = @$SumRegionDateData_past[13];
+						$diff_asean = $asean >0 ? number_format( ($asean - $asean_past) / $asean * 100, 2).'%': '-';
 
 						$north_east_asia = @$SumRegionDateData[15] + @$SumRegionDateData[38];
 						$north_east_asia_past = @$SumRegionDateData_past[15] + @$SumRegionDateData_past[38];
+						$diff_north_east_asia = $north_east_asia >0 ? number_format( ($north_east_asia - $north_east_asia_past) / $north_east_asia * 100, 2).'%': '-';
 
 						$south_asia = @$SumRegionDateData[23];
 						$south_asia_past = @$SumRegionDateData_past[23];
+						$diff_south_asia = $south_asia >0 ? number_format( ($south_asia - $south_asia_past) / $south_asia * 100, 2).'%': '-';
 
 						$eu = @$SumRegionDateData[2] + @$SumRegionDateData[44];
 						$eu_past = @$SumRegionDateData_past[2] + @$SumRegionDateData_past[44];
+						$diff_eu = $eu >0 ? number_format( ($eu - $eu_past) / $eu * 100, 2).'%': '-';
 
 						$east_eu = @$SumRegionDateData[37] + @$SumRegionDateData[36];
 						$east_eu_past = @$SumRegionDateData_past[37] + @$SumRegionDateData_past[36];
+						$diff_east_eu = $east_eu >0 ? number_format( ($east_eu - $east_eu_past) / $east_eu * 100, 2).'%': '-';
 
 						$america = @$SumRegionDateData[7] + @$SumRegionDateData[45];
 						$america_past = @$SumRegionDateData_past[7] + @$SumRegionDateData_past[45];
+						$diff_america = $america >0 ? number_format( ($america - $america_past) / $america * 100, 2).'%': '-';
 
 						$oceania = @$SumRegionDateData[5] + @$SumRegionDateData[46];
 						$oceania_past = @$SumRegionDateData_past[5] + @$SumRegionDateData_past[46];
+						$diff_oceania = $oceania >0 ? number_format( ($oceania - $oceania_past) / $oceania * 100, 2).'%': '-';
 
 						$middle_east = @$SumRegionDateData[20];
 						$middle_east_past = @$SumRegionDateData_past[20];
+						$diff_middle_east = $middle_east >0 ? number_format( ($middle_east - $middle_east_past) / $middle_east * 100, 2).'%': '-';
 
 						$africa = @$SumRegionDateData[6] + @$SumRegionDateData[40];
 						$africa_past = @$SumRegionDateData_past[6] + @$SumRegionDateData_past[40];
+						$diff_africa = $africa >0 ? number_format( ($africa - $africa_past) / $africa * 100, 2).'%': '-';
 
 						$stateless = @$SumRegionDateData[29];
 						$stateless_past = @$SumRegionDateData_past[29];
+						$diff_stateless = $stateless >0 ? number_format( ($stateless - $stateless_past) / $stateless * 100, 2).'%': '-';
 						?>
 						<tr style="border: 1px solid #e3e193; background-color: #fef4e8; ">
 							<td style=" padding-left: 15px;font-size: 18px;color:black; width: 40%;">ASIA</td>
 							<td align="right" style="font-size: 18px;color:black; width: 35%;"><?php echo number_format($asia) ?></td>
-							<td align="right" style="font-size: 18px;color:black; width: 25%; padding-right: 10px;"><?php echo $asia_past > 0 ? number_format($asia / $asia_past * 100, 2) : '-'; ?></td>
+							<td align="right" style="font-size: 18px;color:black; width: 25%; padding-right: 10px;"><?php echo $diff_asia; ?></td>
 						</tr>
 						<tr style="border: 1px solid #e3e193; background-color: white; ">
 							<td style=" padding-left: 40px;font-size: 18px;color:black;">ASEAN</td>
 							<td align="right" style="font-size: 18px;color:black;"><?php echo number_format($asean) ?></td>
-							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $asean_past > 0 ? number_format($asean / $asean_past * 100, 2) : '-'; ?></td>
+							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $diff_asean; ?></td>
 						</tr>
 
 						<tr style="border: 1px solid #e3e193; background-color: #fef4e8; ">
 							<td style=" padding-left: 40px;font-size: 18px;color:black;">NORTH-EAST ASIA</td>
 							<td align="right" style="font-size: 18px;color:black;"><?php echo number_format($north_east_asia) ?></td>
-							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $north_east_asia_past > 0 ? number_format($north_east_asia / $north_east_asia_past * 100, 2) : '-'; ?></td>
+							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $diff_north_east_asia; ?></td>
 						</tr>
 
 						<tr style="border: 1px solid #e3e193; background-color: white; ">
 							<td style=" padding-left: 40px;font-size: 18px;color:black;">SOUTH ASIA</td>
 							<td align="right" style="font-size: 18px;color:black;"><?php echo number_format($south_asia) ?></td>
-							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $south_asia_past > 0 ? number_format($south_asia / $south_asia_past * 100, 2) : '-'; ?></td>
+							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $diff_south_asia; ?></td>
 						</tr>
 
 						<tr style="border: 1px solid #e3e193; background-color: #fef4e8; ">
 							<td style=" padding-left: 15px;font-size: 18px;color:black;">EUROPE</td>
 							<td align="right" style="font-size: 18px;color:black;"><?php echo number_format($eu) ?></td>
-							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $eu_past > 0 ? number_format($eu / $eu_past * 100, 2) : '-'; ?></td>
+							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $diff_eu; ?></td>
 						</tr>
 
 						<tr style="border: 1px solid #e3e193; background-color: white; ">
 							<td style=" padding-left: 40px;font-size: 18px;color:black;">EAST EUROPE</td>
 							<td align="right" style="font-size: 18px;color:black;"><?php echo number_format($east_eu) ?></td>
-							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $east_eu_past > 0 ? number_format($east_eu / $east_eu_past * 100, 2) : '-'; ?></td>
+							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $diff_east_eu; ?></td>
 						</tr>
 
 						<tr style="border: 1px solid #e3e193; background-color: #fef4e8; ">
 							<td style=" padding-left: 15px;font-size: 18px;color:black;">THE AMERICAS</td>
 							<td align="right" style="font-size: 18px;color:black;"><?php echo number_format($america) ?></td>
-							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $america_past > 0 ? number_format($america / $america_past * 100, 2) : '-'; ?></td>
+							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $diff_america; ?></td>
 						</tr>
 
 						<tr style="border: 1px solid #e3e193; background-color: white; ">
 							<td style=" padding-left: 15px;font-size: 18px;color:black;">OCEANIA</td>
 							<td align="right" style="font-size: 18px;color:black;"><?php echo number_format($oceania) ?></td>
-							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $oceania_past > 0 ? number_format($oceania / $oceania_past * 100, 2) : '-'; ?></td>
+							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $diff_oceania; ?></td>
 						</tr>
 
 						<tr style="border: 1px solid #e3e193; background-color: #fef4e8; ">
 							<td style="padding-left: 15px;font-size: 18px;color:black;	">MIDDLE EAST</td>
 							<td align="right" style="font-size: 18px;color:black;"><?php echo number_format($middle_east) ?></td>
-							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $middle_east_past > 0 ? number_format($middle_east / $middle_east_past * 100, 2) : '-'; ?></td>
+							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $diff_middle_east; ?></td>
 						</tr>
 
 						<tr style="border: 1px solid #e3e193; background-color: white; ">
 							<td style=" padding-left: 15px;font-size: 18px;color:black;">AFRICA</td>
 							<td align="right" style="font-size: 18px;color:black;"><?php echo number_format($africa) ?></td>
-							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $africa_past > 0 ? number_format($africa / $africa_past * 100, 2) : '-'; ?></td>
+							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $diff_africa; ?></td>
 						</tr>
 
 						<tr style="border: 1px solid #e3e193; background-color:#fef4e8; ">
 							<td style=" padding-left: 15px;font-size: 18px;color:black;">STATELESS</td>
 							<td align="right" style="font-size: 18px;color:black;"><?php echo number_format($stateless) ?></td>
-							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $stateless_past > 0 ? number_format($stateless / $stateless_past * 100, 2) : '-'; ?></td>
+							<td align="right" style="font-size: 18px;color:black;padding-right: 10px;"><?php echo $diff_stateless; ?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -396,13 +407,20 @@
 						<tbody>
 							<tr style="border: 0;padding: 0px 0px;">
 								<td style="text-align: center;padding: 5px ; font-size: 37px;color: #0b4172;">
-									6,477,538 คน
+									<?php $sum = $sum_past = 0;
+									foreach ($SumRegionDateData as $v) { $sum += $v; }
+									foreach ($SumRegionDateData_past as $v){ $sum_past += $v; }
+									$diff = ($sum-$sum_past);
+									$percent = $sum > 0 ? number_format( ($sum-$sum_past)/$sum *100,2 ).' %' : '-';
+									 
+									?>
+									<?php echo number_format($sum);?> คน
 								</td>
 
 							</tr>
 							<tr>
 								<td style="text-align: center;padding: 5px ; font-size: 20px;color: #0b4172;">
-									(+1,202.43%)
+									(<?php echo $diff>0?'+ ' : ''; echo  $percent;?>)
 								</td>
 							</tr>
 						</tbody>
