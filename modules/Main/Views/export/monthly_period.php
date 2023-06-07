@@ -397,8 +397,8 @@
 			</div>
 		</div>
 	</div>
-	<div style="position: absolute; bottom: 0px; left: 100px;">
-		<img src="<?php echo base_url('public/img/TATIC-Logo-05.png') ?>" alt="" style=" width: 370px;height: 100px;">
+	<div style="position: absolute; bottom: 0px; left: 0px;">
+		<img src="<?php echo base_url('public/img/TATIC-Logo-05.png') ?>" alt="" style=" width: 570px;height: auto;">
 	</div>
 	<div style="position: absolute; bottom: 180px; left: 80px;">
 		<img src="<?php echo base_url('public/img/TATIC-Logo-06.png') ?>" alt="" style="width: 80px;">
