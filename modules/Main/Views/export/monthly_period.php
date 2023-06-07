@@ -363,6 +363,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="col6">
 			<div style="padding: 0px 10px;">
 				<table class="table ColorTableBody shadow-lg" style="width: 100%;">
@@ -394,5 +395,17 @@
 				</table>
 			</div>
 		</div>
+	</div>
+	<div style="position: absolute; bottom: 0px; left: 0px;">
+		<img src="<?php echo base_url('public/img/TATIC-Logo-05.png') ?>" alt="" style=" width: 550px;height: 150px;">
+	</div>
+	<div style="position: absolute; bottom: 180px; left: 80px;">
+		<img src="<?php echo base_url('public/img/TATIC-Logo-06.png') ?>" alt="" style="width: 80px;">
+	</div>
+	<div style="position: absolute; bottom: 10px; right: 40px;">
+		<p>
+			หมายเหตุ : ข้อมูลเบื้องต้นจาก กระทรวงท่องเที่ยวเเละกีฬา (ณ วันที่ 27 เมษายน 2566)
+		</p>
+
 	</div>
 </body>
