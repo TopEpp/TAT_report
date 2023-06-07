@@ -363,7 +363,9 @@ class Import_model extends Model
 		      	$builder->like('COUNTRYSHORTNAMEEN', trim($country_name).'%');
 		      	$co = $builder->get()->getRowArray();
 
-		      	if(trim($country_name) == 'South Africa'){
+		      	$country_name2 = str_replace(' ', '', $country_name);
+
+		      	if(trim($country_name) == 'South Africa' || $country_name2 == 'SOUTHAFRICA'){
 			        $co['COUNTRYID'] = '225';
 			      }else if(trim($country_name) == 'USA'){
 			        $co['COUNTRYID'] = '131';
@@ -413,11 +415,11 @@ class Import_model extends Model
 			        $co['COUNTRYID'] = '43';
 			      }else if( trim($country_name) == 'FRENCH SOUTHERN AND ANTARCTIC TERRITORIES' ){
 			        $co['COUNTRYID'] = '92';
-			      }else if( trim($country_name) == 'ANTIGUA AND BARBUDA' ){
-			        $co['COUNTRYID'] = '21';
-			      }else if( trim($country_name) == 'BRITISH VIRGIN ISLANDS' ){
+			      }else if( trim($country_name) == 'ANTIGUA AND BARBUDA' || $country_name2 == 'ANTIGUAANDBARBUDA'){
+			        $co['COUNTRYID'] = '21'; 
+			      }else if( trim($country_name) == 'BRITISH VIRGIN ISLANDS' || $country_name2 == 'BRITISHVIRGINISLANDS' ){
 			        $co['COUNTRYID'] = '1';
-			      }else if( trim($country_name) == 'CAYMAN ISLANDS' ){
+			      }else if( trim($country_name) == 'CAYMAN ISLANDS' || $country_name2 == 'CAYMANISLANDS'){
 			        $co['COUNTRYID'] = '13';
 			      }else if( trim($country_name) == 'REPúBLICA DOMINICANA' ){
 			        $co['COUNTRYID'] = '4';
@@ -425,77 +427,77 @@ class Import_model extends Model
 			        $co['COUNTRYID'] = '8';
 			      }else if( trim($country_name) == 'PUERTO RICO' ){
 			        $co['COUNTRYID'] = '9';
-			      }else if( trim($country_name) == 'SAINT LUCIA' ){
+			      }else if( trim($country_name) == 'SAINT LUCIA' || $country_name2 == 'SAINTLUCIA'){
 			        $co['COUNTRYID'] = '17';
-			      }else if( trim($country_name) == 'ST. KITTS AND NEVIS' ){
+			      }else if( trim($country_name) == 'ST. KITTS AND NEVIS' || $country_name2 == 'ST.KITTSANDNEVIS' ){
 			        $co['COUNTRYID'] = '18';
-			      }else if( trim($country_name) == 'ST. MAARTEN' ){
+			      }else if( trim($country_name) == 'ST. MAARTEN' || trim($country_name) == 'ST.  MAARTEN' ){
 			        $co['COUNTRYID'] = '280';
-			      }else if( trim($country_name) == 'SAINT MARTIN' ){
+			      }else if( trim($country_name) == 'SAINT MARTIN' || $country_name2 == 'SAINTMARTIN'){
 			        $co['COUNTRYID'] = '139';
-			      }else if( trim($country_name) == 'SAINT PIERRE AND MIQUELON' ){
+			      }else if( trim($country_name) == 'SAINT PIERRE AND MIQUELON' || $country_name2 == 'SAINTPIERREANDMIQUELON'){
 			        $co['COUNTRYID'] = '140';
-			      }else if( trim($country_name) == 'ST. VINCENT AND THE GRENADINES' ){
+			      }else if( trim($country_name) == 'ST. VINCENT AND THE GRENADINES' || $country_name2 == 'ST.VINCENTANDTHEGRENADINES'){
 			        $co['COUNTRYID'] = '19';
-			      }else if( trim($country_name) == 'TURKS AND CAICOS' ){
+			      }else if( trim($country_name) == 'TURKS AND CAICOS' || $country_name2 == 'TURKSANDCAICOS'){
 			        $co['COUNTRYID'] = '24';
-			      }else if( trim($country_name) == 'UNITED STATES VIRGIN ISLAND' ){
+			      }else if( trim($country_name) == 'UNITED STATES VIRGIN ISLAND' || $country_name2 == 'UNITEDSTATESVIRGINISLAND'){
 			        $co['COUNTRYID'] = '14';
-			      }else if( trim($country_name) == 'NETHERLANDS ANTILLES' ){
+			      }else if( trim($country_name) == 'NETHERLANDS ANTILLES' || $country_name2 == 'NETHERLANDSANTILLES'){
 			        $co['COUNTRYID'] = '135';
-			      }else if( trim($country_name) == 'SAINT BARTHELEMY' ){
+			      }else if( trim($country_name) == 'SAINT BARTHELEMY' || $country_name2 == 'SAINTBARTHELEMY'){
 			        $co['COUNTRYID'] = '138';
-			      }else if( trim($country_name) == 'SAINT EUSTATIUS' ){
+			      }else if( trim($country_name) == 'SAINT EUSTATIUS' || $country_name2 == 'SAINTEUSTATIUS'){
 			        $co['COUNTRYID'] = '279';
-			      }else if( trim($country_name) == 'CLIPPERTON ISLAND' ){
+			      }else if( trim($country_name) == 'CLIPPERTON ISLAND' || $country_name2 == 'CLIPPERTONISLAND' ){
 			        $co['COUNTRYID'] = '136';
 			      }else if( trim($country_name) == 'GUATAMALA' ){
 			        $co['COUNTRYID'] = '112';
-			      }else if( trim($country_name) == 'FRENCH GUIANA' ){
+			      }else if( trim($country_name) == 'FRENCH GUIANA' || $country_name2 == 'FRENCHGUIANA' ){
 			        $co['COUNTRYID'] = '132';
-			      }else if( trim($country_name) == 'FALKLAND ISLANDS' ){
+			      }else if( trim($country_name) == 'FALKLAND ISLANDS' || $country_name2 == 'FALKLANDISLANDS'){
 			        $co['COUNTRYID'] = '129';
 			      }else if( trim($country_name) == 'SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS' ){
 			        $co['COUNTRYID'] = '176';
 			      }else if( trim($country_name) == 'LIBIA' ){
 			        $co['COUNTRYID'] = '40';
-			      }else if( trim($country_name) == 'COOK ISLANDS' ){
+			      }else if( trim($country_name) == 'COOK ISLANDS' || $country_name2 == 'COOKISLANDS' ){
 			        $co['COUNTRYID'] = '271';
-			      }else if( trim($country_name) == 'FRENCH POLYNESIA' ){
+			      }else if( trim($country_name) == 'FRENCH POLYNESIA' || $country_name2 == 'FRENCHPOLYNESIA'){
 			        $co['COUNTRYID'] = '256';
 			      }else if( trim($country_name) == 'MICRONESIA FSM' ){
 			        $co['COUNTRYID'] = '242';
 			      }else if( trim($country_name) == 'N. MARIANA ISLANDS' ){
 			        $co['COUNTRYID'] = '260';
-			      }else if( trim($country_name) == 'SOLOMON ISLANDS' ){
+			      }else if( trim($country_name) == 'SOLOMON ISLANDS' || $country_name2 == 'SOLOMONISLANDS' ){
 			        $co['COUNTRYID'] = '245';
 			      }else if( trim($country_name) == 'VANAUTU' ){
 			        $co['COUNTRYID'] = '250';
-			      }else if( trim($country_name) == 'BAKER ISLAND' ){
+			      }else if( trim($country_name) == 'BAKER ISLAND' || $country_name2 == 'BAKERISLAND'){
 			        $co['COUNTRYID'] = '265';
-			      }else if( trim($country_name) == 'BOUVET ISLAND' ){
+			      }else if( trim($country_name) == 'BOUVET ISLAND'  || $country_name2 == 'BOUVETISLAND'){
 			        $co['COUNTRYID'] = '174';
-			      }else if( trim($country_name) == 'CORAL SEA ISLANDS' ){
+			      }else if( trim($country_name) == 'CORAL SEA ISLANDS' || $country_name2 == 'CORALSEAISLANDS' ){
 			        $co['COUNTRYID'] = '259';
-			      }else if( trim($country_name) == 'HEARD AND MCDONALD ISLANDS' ){
+			      }else if( trim($country_name) == 'HEARD AND MCDONALD ISLANDS' || $country_name2 == 'HEARDANDMCDONALDISLANDS'){
 			        $co['COUNTRYID'] = '175';
-			      }else if( trim($country_name) == 'JARVIS ISLAND' ){
+			      }else if( trim($country_name) == 'JARVIS ISLAND' || $country_name2 == 'JARVISISLAND'){
 			        $co['COUNTRYID'] = '267';
-			      }else if( trim($country_name) == 'KINGMAN REEF' ){
+			      }else if( trim($country_name) == 'KINGMAN REEF' || $country_name2 == 'KINGMANREEF'){
 			        $co['COUNTRYID'] = '268';
-			      }else if( trim($country_name) == 'MIDWAY ISLANDS' ){
+			      }else if( trim($country_name) == 'MIDWAY ISLANDS' || $country_name2 == 'MIDWAYISLANDS'){
 			        $co['COUNTRYID'] = '263';
-			      }else if( trim($country_name) == 'NORFALK ISLAND' ){
+			      }else if( trim($country_name) == 'NORFALK ISLAND' || $country_name2 == 'NORFALKISLAND'){
 			        $co['COUNTRYID'] = '254';
-			      }else if( trim($country_name) == 'ROSS DEPENDENCY' ){
+			      }else if( trim($country_name) == 'ROSS DEPENDENCY' || $country_name2 == 'ROSSDEPENDENCY'){
 			        $co['COUNTRYID'] = '177';
-			      }else if( trim($country_name) == 'WAKE ISLAND' ){
+			      }else if( trim($country_name) == 'WAKE ISLAND' || $country_name2 =='WAKEISLAND'){
 			        $co['COUNTRYID'] = '261';
-			      }else if( trim($country_name) == 'WALLIS AND FUTUNA ISLANDS' ){
+			      }else if( trim($country_name) == 'WALLIS AND FUTUNA ISLANDS' || $country_name2 =='WALLISANDFUTUNAISLANDS'){
 			        $co['COUNTRYID'] = '264';
-			      }else if( trim($country_name) == 'BURKINA FASO' ){
+			      }else if( trim($country_name) == 'BURKINA FASO' || $country_name2 == 'BURKINAFASO'){
 			        $co['COUNTRYID'] = '201';
-			      }else if( trim($country_name) == 'CANARY ISLANDS' ){
+			      }else if( trim($country_name) == 'CANARY ISLANDS' || $country_name2 == 'CANARYISLANDS'){
 			        $co['COUNTRYID'] = '230';
 			      }else if( trim($country_name) == 'CAPE VERDE REP.' ){
 			        $co['COUNTRYID'] = '202';
@@ -505,17 +507,17 @@ class Import_model extends Model
 			        $co['COUNTRYID'] = '193';
 			      }else if( trim($country_name) == "RéPUBLIQUE DéMOCRATIQUE DU CONGO" ){
 			        $co['COUNTRYID'] = '184';
-			      }else if( trim($country_name) == "EQUATORIAL GUINEA" ){
+			      }else if( trim($country_name) == "EQUATORIAL GUINEA" || $country_name2 == 'EQUATORIALGUINEA'){
 			        $co['COUNTRYID'] = '187';
 			      }else if( trim($country_name) == "GUINEA-BISSAU" ){
 			        $co['COUNTRYID'] = '205';
-			      }else if( trim($country_name) == "SAINT HELENA" ){
+			      }else if( trim($country_name) == "SAINT HELENA" || $country_name2 == 'SAINTHELENA'){
 			        $co['COUNTRYID'] = '223';
 			      }else if( trim($country_name) == "SAO TOME/PRINCIPE" ){
 			        $co['COUNTRYID'] = '178';
 			      }else if( trim($country_name) == "SOUTH SUDAN" ){
 			        $co['COUNTRYID'] = '235';
-			      }else if( trim($country_name) == "WESTERN SAHARA" ){
+			      }else if( trim($country_name) == "WESTERN SAHARA" || $country_name2 == 'WESTERN SAHARA'){
 			        $co['COUNTRYID'] = '204';
 			      }
 
