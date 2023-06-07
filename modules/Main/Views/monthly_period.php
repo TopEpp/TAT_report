@@ -392,7 +392,7 @@
 		var month = $('#month').val();
 		var month2 = $('#month2').val();
 		var year = $('#year').val();
-		var limit = $('#limit').val();
+		var limit = 15; //$('#limit').val();
 		window.open(base_url + '/main/monthly_period?month=' + month + '&month2=' + month2 + '&year=' + year + '&limit=' + limit + "&export_type=pdf");
 	}
 </script>
