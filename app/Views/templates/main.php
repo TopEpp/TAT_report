@@ -52,7 +52,8 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php echo view('templates/menu'); ?>
+
+        <?php if($session->get('report_type') != 'none'){ echo view('templates/menu'); }?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->

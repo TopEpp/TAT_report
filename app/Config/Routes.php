@@ -47,6 +47,7 @@ $routes->group('main', ['namespace' => '\Modules\Main\Controllers', 'filter' => 
     $routes->get('/', 'Main::index');
     $routes->get('menu1', 'Main::menu1');
     $routes->get('menu2', 'Main::menu2');
+    $routes->get('daily', 'Main::daily');
     $routes->get('update_country', 'Main::update_country');
     $routes->get('export_dashboard', 'Main::export_dashboard');
     $routes->post('saveImg2Report', 'Main::saveImg2Report');

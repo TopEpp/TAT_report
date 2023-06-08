@@ -14,9 +14,20 @@ class Main extends BaseController
 
 	public function index()
 	{
+		$data['session'] = session();
+		$ses_data = ['report_type' => 'none'];
+		$data['session']->set($ses_data);
+		return view("Modules\Main\Views\index");
+	}
+
+	public function daily()
+	{
 		$Model = new Main_model();
 		$Report_model = new Report_model();
 		$data['session'] = session();
+		$ses_data = ['report_type' => 'daily'];
+      	$data['session']->set($ses_data);
+
 		$data['Mydate'] = $this->Mydate;
 		// $date = date('Y-m-d');
 		$month = date('m');
@@ -76,7 +87,7 @@ class Main extends BaseController
 
 		$data['SumChartData'] = $Model->getSumChart($end_date);
 		$data['api_code'] = $this->Api_Code;
-		return view("Modules\Main\Views\index", $data);
+		return view("Modules\Main\Views\daily", $data);
 	}
 
 	function update_country()
@@ -90,6 +101,9 @@ class Main extends BaseController
 		$Model = new Main_model();
 		$Report_model = new Report_model();
 		$data['session'] = session();
+		$ses_data = ['report_type' => 'monthly'];
+      	$data['session']->set($ses_data);
+
 		$data['Mydate'] = $this->Mydate;
 		$data['month'] = date('m');
 		$data['year'] = date('Y');
@@ -127,6 +141,8 @@ class Main extends BaseController
 	{
 		$Model = new Main_model();
 		$data['session'] = session();
+		$ses_data = ['report_type' => 'monthly'];
+      	$data['session']->set($ses_data);
 		$data['Mydate'] = $this->Mydate;
 		$data['month'] = 1;
 		$data['month2'] = date('m');
@@ -167,6 +183,9 @@ class Main extends BaseController
 		$Model = new Main_model();
 		$Report_model = new Report_model();
 		$data['session'] = session();
+		$ses_data = ['report_type' => 'daily'];
+      	$data['session']->set($ses_data);
+
 		$data['Mydate'] = $this->Mydate;
 		// $date = date('Y-m-d');
 		$month = date('m');
