@@ -347,7 +347,7 @@
           var html = '';
           var month = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
           $.each(data, function(key, value) {
-            html = html + '<tr><td>' + value.COUNTRY_NAME_EN + '</td><td>' + value.VISA_NAME + '</td><td>' + (parseInt(value.YEAR) + 543) + '</td><td>' + month[value.MONTH - 1] + '</td><td>สัดส่วน : ' + value.RATIO + '</td></tr>';
+            html = html + '<tr><td>' + value.COUNTRY_NAME_EN + '</td><td>' + value.VISA_NAME + '</td><td>' + (parseInt(value.YEAR) + 543) + '</td><td>' + month[value.MONTH - 1] + '</td><td>สัดส่วน : ' + parseFloat(value.RATIO) + '</td></tr>';
           });
           $('#table_ratio_detail').html(html);
         }
