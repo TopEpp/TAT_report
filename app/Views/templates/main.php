@@ -53,7 +53,7 @@
 
         <!-- Sidebar -->
 
-        <?php if($session->get('report_type') != 'none'){ echo view('templates/menu'); }?>
+        <?php if($session->get('report_type') != 'none' || $session->get('report_type') == ''){ echo view('templates/menu'); }?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->

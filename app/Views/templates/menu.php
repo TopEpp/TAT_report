@@ -122,7 +122,7 @@ $method =  $request->uri->getSegment(2);
             </div>
         </div>
     </li>
-    <?php }else if($session->get('report_type') == 'monthly'){?>
+    <?php }else if($session->get('report_type') == 'monthly' ){?>
         <li class="nav-item <?php if ($controller == 'main') {
                             echo 'active';
                         } ?>">
