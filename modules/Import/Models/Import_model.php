@@ -461,6 +461,7 @@ class Import_model extends Model
 	}
 
 	function import_file_raw_monthly($input,$xlsx){
+		$fail = false;
 		$count = 1; $text = '';
 		$port_id = $point_id = array();
 
@@ -676,29 +677,157 @@ class Import_model extends Model
 
 		      	if(!empty($co['COUNTRYID'])){
 		      		$count++;
+
+		      		if( $co['COUNTRYID'] == 91
+	      				|| trim($co['COUNTRYID'] ) == 1
+	      				|| trim($co['COUNTRYID'] ) == 242
+	      				|| trim($co['COUNTRYID'] ) == 261
+	      				|| trim($co['COUNTRYID'] ) == 228
+	      				|| trim($co['COUNTRYID'] ) == 212 ){
+
+			      		foreach($row as $col_id=> $col){
+			    			if($col_id >= 7){
+				    			if($col_id >=7 && $col_id<=44){
+
+				    				if( !is_numeric($col) ){ 
+					      				$text .= 'Fail :: Row - '.($row_id+1).'. '.trim($country_name).' :: '.$col.' is not number <br>';
+					      				$fail = true;
+					      				break 2;
+					      			}
+				    				$builder_co = $this->db->table('REPORT_RAW_MONTHLY');
+				    				$builder_co->select('NUM');
+						            $builder_co->where('COUNTRY_ID',$co['COUNTRYID']);
+						            $builder_co->where('PORT_ID',@$port_id[$col_id]);
+						            $builder_co->where('POINT_ID',@$point_id[$col_id]);
+						            $builder_co->where('MONTH',$input['month']);
+						            $builder_co->where('YEAR',$input['year']);
+						            $row_co = $builder_co->get()->getRowArray();
+						            if(!empty($row_co['NUM'])){
+						            	$builder_import = $this->db->table('REPORT_RAW_MONTHLY');
+							            $builder_import->where('COUNTRY_ID',$co['COUNTRYID']);
+							            $builder_import->where('PORT_ID',@$port_id[$col_id]);
+							            $builder_import->where('POINT_ID',@$point_id[$col_id]);
+							            $builder_import->where('MONTH',$input['month']);
+							            $builder_import->where('YEAR',$input['year']);
+							            $builder_import->set('NUM',($col+$row_co['NUM']));
+							            $builder_import->update();
+						            }else{
+						            	$builder_import = $this->db->table('REPORT_RAW_MONTHLY');
+							            $builder_import->set('COUNTRY_ID',$co['COUNTRYID']);
+							            $builder_import->set('PORT_ID',@$port_id[$col_id]);
+							            $builder_import->set('POINT_ID',@$point_id[$col_id]);
+							            $builder_import->set('NUM',$col);
+							            $builder_import->set('MONTH',$input['month']);
+							            $builder_import->set('YEAR',$input['year']);
+							            $builder_import->insert();
+						            }
+
+
+				    			}
+				    		}
+				    	}
+				    }else{
 		      		// echo ':: '.$co['COUNTRYID'].' == ';
+			      		foreach($row as $col_id=> $col){
+			    			if($col_id >= 7){
+				    			if($col_id >=7 && $col_id<=44){
+				    				if( !is_numeric($col) ){ 
+					      				$text .= 'Fail :: Row - '.($row_id+1).'. '.trim($country_name).' :: '.$col.' is not number <br>';
+					      				$fail = true;
+					      				break 2;
+					      			}
+			    					// echo @$port_id[$col_id].'='.@$point_id[$col_id].'='.$col.' || ';
+				    				$builder_import = $this->db->table('REPORT_RAW_MONTHLY');
+						            $builder_import->set('COUNTRY_ID',$co['COUNTRYID']);
+						            $builder_import->set('PORT_ID',@$port_id[$col_id]);
+						            $builder_import->set('POINT_ID',@$point_id[$col_id]);
+						            $builder_import->set('NUM',$col);
+						            $builder_import->set('MONTH',$input['month']);
+						            $builder_import->set('YEAR',$input['year']);
+						            $builder_import->insert();
+			    				}
+			    			}
+			    		}	
+			    	}
+		      	}else if( trim($country_name) == "UTOPIA" 
+	      				|| trim($country_name) == "BRITISH COLONY" 
+	      				|| trim($country_name) == "TRUST PACIFIC" 
+	      				|| trim($country_name) == "UNITED STATES MINOR OUTLYING ISLAND"
+	      				|| trim($country_name) == "ESWATINI" 
+	      				|| trim($country_name) == "MAURITUN" ){
+
 		      		foreach($row as $col_id=> $col){
 		    			if($col_id >= 7){
 			    			if($col_id >=7 && $col_id<=44){
-		    					// echo @$port_id[$col_id].'='.@$point_id[$col_id].'='.$col.' || ';
-			    				$builder_import = $this->db->table('REPORT_RAW_MONTHLY');
-					            $builder_import->set('COUNTRY_ID',$co['COUNTRYID']);
-					            $builder_import->set('PORT_ID',@$port_id[$col_id]);
-					            $builder_import->set('POINT_ID',@$point_id[$col_id]);
-					            $builder_import->set('NUM',$col);
-					            $builder_import->set('MONTH',$input['month']);
-					            $builder_import->set('YEAR',$input['year']);
-					            $builder_import->insert();
-		    				}
-		    			}
-		    		}
+			    				if( !is_numeric($col) ){ 
+				      				$text .= 'Fail :: Row - '.($row_id+1).'. '.trim($country_name).' :: '.$col.' is not number <br>';
+				      				$fail = true;
+				      				break 2;
+				      			}
+
+			    				if( trim($country_name) == "UTOPIA" ){
+			    					$co['COUNTRYID'] = 91;
+			    				}else if( trim($country_name) == "BRITISH COLONY" ){
+			    					$co['COUNTRYID'] = 1;
+			    				}else if( trim($country_name) == "TRUST PACIFIC" ){
+			    					$co['COUNTRYID'] = 242;
+			    				}else if( trim($country_name) == "UNITED STATES MINOR OUTLYING ISLAND" ){
+			    					$co['COUNTRYID'] = 261;
+			    				}else if( trim($country_name) == "ESWATINI" ){
+			    					$co['COUNTRYID'] = 228;
+			    				}else if( trim($country_name) == "MAURITUN" ){
+			    					$co['COUNTRYID'] = 212;
+			    				}
+
+
+			    				$builder_co = $this->db->table('REPORT_RAW_MONTHLY');
+			    				$builder_co->select('NUM');
+					            $builder_co->where('COUNTRY_ID',$co['COUNTRYID']);
+					            $builder_co->where('PORT_ID',@$port_id[$col_id]);
+					            $builder_co->where('POINT_ID',@$point_id[$col_id]);
+					            $builder_co->where('MONTH',$input['month']);
+					            $builder_co->where('YEAR',$input['year']);
+					            $row_co = $builder_co->get()->getRowArray();
+					            if(!empty($row_co['NUM'])){
+					            	$builder_import = $this->db->table('REPORT_RAW_MONTHLY');
+						            $builder_import->where('COUNTRY_ID',$co['COUNTRYID']);
+						            $builder_import->where('PORT_ID',@$port_id[$col_id]);
+						            $builder_import->where('POINT_ID',@$point_id[$col_id]);
+						            $builder_import->where('MONTH',$input['month']);
+						            $builder_import->where('YEAR',$input['year']);
+						            $builder_import->set('NUM',($col+$row_co['NUM']));
+						            $builder_import->update();
+					            }else{
+					            	$builder_import = $this->db->table('REPORT_RAW_MONTHLY');
+						            $builder_import->set('COUNTRY_ID',$co['COUNTRYID']);
+						            $builder_import->set('PORT_ID',@$port_id[$col_id]);
+						            $builder_import->set('POINT_ID',@$point_id[$col_id]);
+						            $builder_import->set('NUM',$col);
+						            $builder_import->set('MONTH',$input['month']);
+						            $builder_import->set('YEAR',$input['year']);
+						            $builder_import->insert();
+					            }
+
+
+			    			}
+			    		}
+			    	}
+
+
 		      	}else{
-		      		$text .= 'Fail :: Row - '.$row_id.' '.trim($country_name).'<br>';
+		      		$text .= 'Fail :: Row - '.($row_id+1).'. '.trim($country_name).'<br>';
 		      	}
 	    	}
 	    }
-
-	    $text .= 'Insert Data Complete : '.$count.' Row';
+	    if($fail){
+	    	$builder_import = $this->db->table('REPORT_RAW_MONTHLY');
+            $builder_import->where('MONTH',$input['month']);
+            $builder_import->where('YEAR',$input['year']);
+            $builder_import->delete();
+	    }else{
+	    	$text .= 'Insert Data Complete : '.$count.' Row';
+	    }
+	    
 
 	    return $text;
 	}
