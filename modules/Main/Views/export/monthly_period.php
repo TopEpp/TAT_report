@@ -236,47 +236,47 @@
 						<?php
 						$asia = @$SumRegionDateData[13] + @$SumRegionDateData[15] + @$SumRegionDateData[38] + @$SumRegionDateData[23];
 						$asia_past = @$SumRegionDateData_past[13] + @$SumRegionDateData_past[15] + @$SumRegionDateData_past[38] + @$SumRegionDateData_past[23];
-						$diff_asia = $asia >0 ? number_format( ($asia - $asia_past) / $asia * 100, 2).'%': '-';
+						$diff_asia = $asia > 0 ? number_format(($asia - $asia_past) / $asia * 100, 2) . '%' : '-';
 
 						$asean = @$SumRegionDateData[13];
 						$asean_past = @$SumRegionDateData_past[13];
-						$diff_asean = $asean >0 ? number_format( ($asean - $asean_past) / $asean * 100, 2).'%': '-';
+						$diff_asean = $asean > 0 ? number_format(($asean - $asean_past) / $asean * 100, 2) . '%' : '-';
 
 						$north_east_asia = @$SumRegionDateData[15] + @$SumRegionDateData[38];
 						$north_east_asia_past = @$SumRegionDateData_past[15] + @$SumRegionDateData_past[38];
-						$diff_north_east_asia = $north_east_asia >0 ? number_format( ($north_east_asia - $north_east_asia_past) / $north_east_asia * 100, 2).'%': '-';
+						$diff_north_east_asia = $north_east_asia > 0 ? number_format(($north_east_asia - $north_east_asia_past) / $north_east_asia * 100, 2) . '%' : '-';
 
 						$south_asia = @$SumRegionDateData[23];
 						$south_asia_past = @$SumRegionDateData_past[23];
-						$diff_south_asia = $south_asia >0 ? number_format( ($south_asia - $south_asia_past) / $south_asia * 100, 2).'%': '-';
+						$diff_south_asia = $south_asia > 0 ? number_format(($south_asia - $south_asia_past) / $south_asia * 100, 2) . '%' : '-';
 
 						$eu = @$SumRegionDateData[2] + @$SumRegionDateData[44];
 						$eu_past = @$SumRegionDateData_past[2] + @$SumRegionDateData_past[44];
-						$diff_eu = $eu >0 ? number_format( ($eu - $eu_past) / $eu * 100, 2).'%': '-';
+						$diff_eu = $eu > 0 ? number_format(($eu - $eu_past) / $eu * 100, 2) . '%' : '-';
 
 						$east_eu = @$SumRegionDateData[37] + @$SumRegionDateData[36];
 						$east_eu_past = @$SumRegionDateData_past[37] + @$SumRegionDateData_past[36];
-						$diff_east_eu = $east_eu >0 ? number_format( ($east_eu - $east_eu_past) / $east_eu * 100, 2).'%': '-';
+						$diff_east_eu = $east_eu > 0 ? number_format(($east_eu - $east_eu_past) / $east_eu * 100, 2) . '%' : '-';
 
 						$america = @$SumRegionDateData[7] + @$SumRegionDateData[45];
 						$america_past = @$SumRegionDateData_past[7] + @$SumRegionDateData_past[45];
-						$diff_america = $america >0 ? number_format( ($america - $america_past) / $america * 100, 2).'%': '-';
+						$diff_america = $america > 0 ? number_format(($america - $america_past) / $america * 100, 2) . '%' : '-';
 
 						$oceania = @$SumRegionDateData[5] + @$SumRegionDateData[46];
 						$oceania_past = @$SumRegionDateData_past[5] + @$SumRegionDateData_past[46];
-						$diff_oceania = $oceania >0 ? number_format( ($oceania - $oceania_past) / $oceania * 100, 2).'%': '-';
+						$diff_oceania = $oceania > 0 ? number_format(($oceania - $oceania_past) / $oceania * 100, 2) . '%' : '-';
 
 						$middle_east = @$SumRegionDateData[20];
 						$middle_east_past = @$SumRegionDateData_past[20];
-						$diff_middle_east = $middle_east >0 ? number_format( ($middle_east - $middle_east_past) / $middle_east * 100, 2).'%': '-';
+						$diff_middle_east = $middle_east > 0 ? number_format(($middle_east - $middle_east_past) / $middle_east * 100, 2) . '%' : '-';
 
 						$africa = @$SumRegionDateData[6] + @$SumRegionDateData[40];
 						$africa_past = @$SumRegionDateData_past[6] + @$SumRegionDateData_past[40];
-						$diff_africa = $africa >0 ? number_format( ($africa - $africa_past) / $africa * 100, 2).'%': '-';
+						$diff_africa = $africa > 0 ? number_format(($africa - $africa_past) / $africa * 100, 2) . '%' : '-';
 
 						$stateless = @$SumRegionDateData[29];
 						$stateless_past = @$SumRegionDateData_past[29];
-						$diff_stateless = $stateless >0 ? number_format( ($stateless - $stateless_past) / $stateless * 100, 2).'%': '-';
+						$diff_stateless = $stateless > 0 ? number_format(($stateless - $stateless_past) / $stateless * 100, 2) . '%' : '-';
 						?>
 						<tr style="border: 1px solid #e3e193; background-color: #fff2e9;">
 							<td style="padding-left: 15px; font-size: 18px; width: 40%;color:#1e6760; font-weight: 500; ">ASIA</td>
@@ -361,19 +361,24 @@
 							<tr style="border: 0;padding: 0px 0px;">
 								<td style="text-align: center;padding: 5px ; font-size: 37px; color: #0d4472;">
 									<?php $sum = $sum_past = 0;
-									foreach ($SumRegionDateData as $v) { $sum += $v; }
-									foreach ($SumRegionDateData_past as $v){ $sum_past += $v; }
-									$diff = ($sum-$sum_past);
-									 $percent = $sum > 0 ? number_format( ($sum-$sum_past)/$sum *100,2 ).' %' : '-';
-									 
+									foreach ($SumRegionDateData as $v) {
+										$sum += $v;
+									}
+									foreach ($SumRegionDateData_past as $v) {
+										$sum_past += $v;
+									}
+									$diff = ($sum - $sum_past);
+									$percent = $sum > 0 ? number_format(($sum - $sum_past) / $sum * 100, 2) . ' %' : '-';
+
 									?>
-									<?php echo number_format($sum);?> คน
+									<?php echo number_format($sum); ?> คน
 								</td>
 
 							</tr>
 							<tr>
 								<td style="text-align: center;padding: 5px ; font-size: 20px; color: #0d4472;">
-									(<?php echo $diff>0?'+ ' : ''; echo  $percent;?>)
+									(<?php echo $diff > 0 ? '+ ' : '';
+										echo  $percent; ?>)
 								</td>
 							</tr>
 						</tbody>
