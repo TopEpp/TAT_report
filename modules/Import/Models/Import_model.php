@@ -670,6 +670,8 @@ class Import_model extends Model
 			        $co['COUNTRYID'] = '235';
 			      }else if( trim($country_name) == "WESTERN SAHARA" || $country_name2 == 'WESTERNSAHARA'){
 			        $co['COUNTRYID'] = '204';
+			      }else if( trim($country_name) == "NORTH MACEDONIA" ){
+			        $co['COUNTRYID'] = '85';
 			      }
 
 		      	if(!empty($co['COUNTRYID'])){
