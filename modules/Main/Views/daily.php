@@ -116,7 +116,7 @@
 	<div class="row">
 		<div class="col-md-3 col-12 headerColumn my-auto">
 			<div class="my-auto" style="font-size: 15px;">
-				ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+				
 			</div>
 		</div>
 		<div class="col-md-2 col-12 my-auto text-center py-2">
@@ -274,12 +274,12 @@
 							<?php } ?>
 						</tr>
 						<tr>
-							<td style="background-color: #e95d61;"><?php echo $year + 542 ?></td>
+							<td ><?php echo $year + 542 ?></td>
 							<?php
 							foreach ($period as $d) {
 								$d_ex = explode('-', $d);
 								$d_pre = ($d_ex[0] - 1) . '-' . $d_ex[1] . '-' . $d_ex[2];   ?>
-								<td style="background:#e95d61" align="center"><?php echo number_format(@$SumChartData['past'][$d_pre]);
+								<td align="center"><?php echo number_format(@$SumChartData['past'][$d_pre]);
 																				$chart_pre[] = @$SumChartData['past'][$d_pre] ? @$SumChartData['past'][$d_pre] : 0; ?></td>
 							<?php } ?>
 						</tr>
@@ -837,6 +837,8 @@
 		</div>
 	</div>
 </div>
+
+ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
 
 <div class="modal fade" id="modalInfo3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">

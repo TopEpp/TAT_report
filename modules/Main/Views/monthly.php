@@ -125,7 +125,7 @@
 	.table thead th {
 		background: #379FA6;
 		border-bottom: 0;
-		padding: 16px
+		padding: 5px
 	}
 
 	.ColorTableBody {
@@ -241,10 +241,10 @@
 					<?php } ?>
 				</tr>
 				<tr>
-					<td style="background-color: #e95d61;"><?php echo $year +542 ?></td>
+					<td ><?php echo $year +542 ?></td>
 					<?php
 					foreach ($month_label as $d=>$name) {?>
-						<td style="background:#e95d61" align="center"><?php echo number_format(@$SumMonth_past[$d]);
+						<td  align="center"><?php echo number_format(@$SumMonth_past[$d]);
 																		$chart_pre[] = @$SumMonth_past[$d] ? @$SumMonth_past[$d] : 0; ?></td>
 					<?php } ?>
 				</tr>
@@ -258,6 +258,11 @@
 			<thead>
 				<tr>
 					<th colspan="3">รายภูมิภาค</th>
+				</tr>
+				<tr>
+					<th>ภูมิภาค</th>
+					<th width="20%">จำนวน (คน)</th>
+					<th width="20%">อัตราการการเปลี่ยนแปลง</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -379,11 +384,16 @@
 				<tr>
 					<th colspan="3">รายสัญชาติ <select onchange="ChangeFilter()" id="limit"><option value="5" <?php if($limit==5){ echo 'selected="selected"'; }?>>5</option><option value="10" <?php if($limit==10){ echo 'selected="selected"'; }?>>10</option><option value="20" <?php if($limit==20){ echo 'selected="selected"'; }?>>20</option></select> อันดับแรก</th>
 				</tr>
+				<tr>
+					<th>สัญชาติ</th>
+					<th width="20%">จำนวน (คน)</th>
+					<th width="20%">อัตราการการเปลี่ยนแปลง</th>
+				</tr>
 			</thead>
 			<tbody>
 			<?php $i=1; foreach ($SumCountry as $key => $value) { ?>
 				<tr>
-					<td><?php echo ($i++).'.'.$value['COUNTRY_NAME_EN']?></td>
+					<td><?php echo ($i++).'. '.$value['COUNTRY_NAME_EN']?></td>
 					<td align="right"><?php echo is_numeric(@$value['NUM'])? number_format(@$value['NUM']) : @$value['NUM'] ; ?> </td>
 					<td align="right"><?php echo $value['CHANGE']; ?>  </td>
 				</tr>

@@ -125,7 +125,7 @@
 	.table thead th {
 		background: #379FA6;
 		border-bottom: 0;
-		padding: 16px
+		padding: 5px
 	}
 
 	.ColorTableBody {
@@ -165,15 +165,13 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-3 col-12 headerColumn my-auto">
-		<div class="my-auto" style="font-size: 15px;">
-
-		</div>
-	</div>
 	<div class="col-md-2 col-12 my-auto text-center py-2">
 		เลือกเดือน/ปี
 	</div>
-	<div class="col-md-4 col-12 my-auto ">
+	<div class="col-md-1 col-12 headerColumn my-auto" style="text-align: right;">
+		เริ่มต้น
+	</div>
+	<div class="col-md-6 col-12 my-auto ">
 		<div class="row" style="margin-top: 0px;">
 			<div class="col-md-4 col-4 SetAlignInputleft1">
 				<select class="form-control" id="month">
@@ -188,6 +186,9 @@
 					<?php } ?>
 				</select>
 			</div>
+			<div class="col-md-2 col-4 headerColumn my-auto" style="text-align: right;">
+				สิ้นสุด
+			</div>
 			<div class="col-md-4 col-4 SetAlignInputleft1">
 				<select class="form-control" id="month2">
 					<?php
@@ -201,8 +202,8 @@
 					<?php } ?>
 				</select>
 			</div>
-			<div class="col-md-4 col-4 SetAlignInputleft1">
-				<select class="form-control" id="year">
+			<div class="col-md-2 col-4 SetAlignInputleft1">
+				<select class="form-control" id="year" style="padding-right: 0;">
 					<?php for ($i = date('Y'); $i >= date('Y') - 5; $i--) {
 						$sel = '';
 						if ($year == $i) {
@@ -238,6 +239,11 @@
 			<thead>
 				<tr>
 					<th colspan="3">รายภูมิภาค</th>
+				</tr>
+				<tr>
+					<th>ภูมิภาค</th>
+					<th width="20%">จำนวน (คน)</th>
+					<th width="20%">อัตราการการเปลี่ยนแปลง</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -361,13 +367,18 @@
 							<option value="5" <?php if ($limit == 5) {
 													echo 'selected="selected"';
 												} ?>>5</option>
-							<option value="15" <?php if ($limit == 15) {
+							<option value="15" <?php if ($limit == 10) {
 													echo 'selected="selected"';
 												} ?>>15</option>
 							<option value="20" <?php if ($limit == 20) {
 													echo 'selected="selected"';
 												} ?>>20</option>
 						</select> อันดับแรก</th>
+				</tr>
+				<tr>
+					<th>ภูมิภาค</th>
+					<th width="20%">จำนวน (คน)</th>
+					<th width="20%">อัตราการการเปลี่ยนแปลง</th>
 				</tr>
 			</thead>
 			<tbody>

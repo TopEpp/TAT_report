@@ -45,7 +45,7 @@
 			<table class="table table-striped table-tableborder radiusTableNation ">
 				<thead>
 					<tr>
-						<th rowspan="2" >ประเทศ</th>
+						<th rowspan="2" >สัญชาติ</th>
 						<?php foreach($port_colunm as $p){ 
 							$colspan= 1;
 							if(!empty($point[$p['PORT_ID']])){ $colspan = count($point[$p['PORT_ID']]); } 

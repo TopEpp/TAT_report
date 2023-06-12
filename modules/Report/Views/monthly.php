@@ -82,7 +82,14 @@
 <div class="row">
 	<div class="col-md-12 col-12 py-2 py-md-0">
 		<label>
-			<input type="checkbox" name="port_all" id="port_all">
+			<?php
+			$check_all = '';
+			if( (count($port[1]) + count($port[2])) == count($port_type) ){
+				$check_all = 'checked="checked"';
+			}
+			?>
+			<input type="checkbox" name="port_all" id="port_all" <?php echo $check_all;?>>
+			
 			<b> ด่านทั้งหมด</b>
 		</label>
 	</div>
@@ -90,7 +97,14 @@
 		<div class="row">
 			<div class="col-md-12">
 				<label>
-					<input type="checkbox" name="port_type_1" id="port_type_1" class="port_checkbox">
+					<?php $check_port = 'checked="checked"';
+					foreach($port[1] as $pid){
+						if( !in_array($pid['PORT_ID'] , $port_type)){
+							$check_port = '';
+						}
+					}
+					?>
+					<input type="checkbox" name="port_type_1" id="port_type_1" class="port_checkbox" <?php echo $check_port;?> > 
 					<b> ไม่ใช่ด่านอากาศ</b>
 				</label>
 			</div>
@@ -116,7 +130,14 @@
 	<div class="col-md-6 col-12  py-2 py-md-0">
 		<div class="row">
 			<div class="col-md-12">
-				<label><input type="checkbox" name="port_type_2" id="port_type_2" class="port_checkbox"> <b> ด่านอากาศ</b></label>
+				<?php $check_port = 'checked="checked"';
+					foreach($port[2] as $pid){
+						if( !in_array($pid['PORT_ID'] , $port_type)){
+							$check_port = '';
+						}
+					}
+					?>
+				<label><input type="checkbox" name="port_type_2" id="port_type_2" class="port_checkbox" <?php echo $check_port;?>> <b> ด่านอากาศ</b></label>
 			</div>
 
 			<?php foreach ($port[2] as $p) { ?>
@@ -147,7 +168,7 @@
 			<table class="table table-striped table-tableborder radiusTableNation ">
 				<thead>
 					<tr>
-						<th rowspan="2" >ประเทศ</th>
+						<th rowspan="2" >สัญชาติ</th>
 						<?php foreach($port_colunm as $p){ 
 							$colspan= 1;
 							if(!empty($point[$p['PORT_ID']])){ $colspan = count($point[$p['PORT_ID']]); } 

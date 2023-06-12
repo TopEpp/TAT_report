@@ -42,7 +42,7 @@ $method =  $request->uri->getSegment(2);
                         } ?>">
         <a class="nav-link <?php if ($controller == 'main' && ($method == 'daily' || $method == '')) {
                                             echo 'active';
-                                        } ?>" href="<?php echo base_url('') ?>">
+                                        } ?>" href="<?php echo base_url('main/daily') ?>">
             <i class="fas fa-fw fa-dashboard"></i>
             <span>Dashboard</span>
         </a>

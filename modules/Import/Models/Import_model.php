@@ -309,6 +309,157 @@ class Import_model extends Model
 		return $res;
 	}
 
+	function import_file_raw_monthly_TH($input,$xlsx){
+		$count = 1; $text = '';
+		$port_id = $point_id = array();
+
+		$builder_import = $this->db->table('REPORT_RAW_MONTHLY');
+		$builder_import->where('MONTH',$input['month']);
+        $builder_import->where('YEAR',$input['year']);
+        $builder_import->delete();
+
+	    foreach($xlsx->rows() as $row_id=> $row){
+	    	
+	    	if($row_id == 6){
+	    		foreach($row as $col_id=> $col){
+	    			if($col_id >=7 && $col_id<=44){
+
+	    				$builder = $this->db->table('MD_PORT');
+			      		$builder->select('PORT_ID');
+				      	$builder->where('PORT_NAME_FULL', trim($col));
+				      	$port = $builder->get()->getRowArray();
+				      	if(!empty($port['PORT_ID'])){
+				      		$port_id[$col_id] = $port['PORT_ID'];
+				      		// echo $col_id.' == '.$port['PORT_ID'].' == ';
+				      	}
+				      	// echo $col.'<br>';
+	    			}
+	    			
+	    		}
+	    	}
+
+	    	if($row_id == 7){
+	    		foreach($row as $col_id=> $col){
+	    			if($col_id >=7 && $col_id<=44){
+	    				
+	    				$builder = $this->db->table('MD_PORT_POINT');
+			      		$builder->select('*');
+				      	$builder->where('POINT_NAME', trim($col));
+				      	$port = $builder->get()->getRowArray();
+				      	if(!empty($port['POINT_ID'])){
+				      		$point_id[$col_id] = $port['POINT_ID'];
+				      		// echo $port['PORT_ID'].' == '.$port['POINT_ID'].' == ';
+				      	}
+				      	// echo $col.'<br>';
+	    			}
+	    		}
+	    	}
+
+	    	if($row_id >= 8 ){
+		    	// $country_name = strtoupper($row[4]);
+		    	$country_name = $row[5];
+		    	// echo $country_name;
+		    	$builder = $this->db->table('MD_COUNTRY');
+		      	$builder->select('COUNTRYID AS COUNTRY_ID');
+				$builder->where('COUNTRY_NAME_TH2',$country_name);
+		      	$country = $builder->get()->getRowArray();
+
+		      	if(empty($country['COUNTRY_ID'])){
+					if($country_name=='ไม่มีสัญชาติ'){
+						$country['COUNTRY_ID'] = 275;
+					}else if( $country_name=='บริติช (OVERSEAS)'){
+						$country['COUNTRY_ID'] = 274;
+					}else if( $country_name=='ดินามาร์คซ'){
+						$country['COUNTRY_ID'] = 102;
+					}else if( $country_name=='คอซอวอ'){
+						$country['COUNTRY_ID'] = 43;
+					}else if( $country_name=='กินี'){
+						$country['COUNTRY_ID'] = 192;
+					}else if( $country_name=='โคโลนีอังกฤษ'){
+						$country['COUNTRY_ID'] = 1;
+					}else if( $country_name=='รัฐเอกราชซามัว'){
+						$country['COUNTRY_ID'] = 244;
+					}else if( $country_name=='ซาอีร์'){
+						$country['COUNTRY_ID'] = 183;
+					}else if( $country_name=='สาธารณรัฐซิมบับเว (ZWE)'){
+						$country['COUNTRY_ID'] = 185;
+					}else if( $country_name=='ไดโต'){
+						$country['COUNTRY_ID'] = 122;
+					}else if( $country_name=='สาธารณรัฐติมอร์ตะวันออก'){
+						$country['COUNTRY_ID'] = 151;
+					}else if( $country_name=='ทรัสต์แปซิฟิค'){
+						$country['COUNTRY_ID'] = 242;
+					}else if( $country_name=='มาเรียนา'){
+						$country['COUNTRY_ID'] = 131;
+					}else if( $country_name=='สหพันธ์สาธารณรัฐยูโกสลาเวีย'){
+						$country['COUNTRY_ID'] = 43;
+					}else if( $country_name=='ยูโทเปีย'){
+						$country['COUNTRY_ID'] = 91;
+					}else if( $country_name=='ยูเอส ไมเนอร์ เอ๊าไลน์นิ่ง ไอร์แลนด์'){
+						$country['COUNTRY_ID'] = 261;
+					}else if( $country_name=='เยเมนเหนือ'){
+						$country['COUNTRY_ID'] = 39;
+					}else if( $country_name=='เยอรมันตะวันออก'){
+						$country['COUNTRY_ID'] = 48;
+					}else if( $country_name=='นครรัฐวาติกัน'){
+						$country['COUNTRY_ID'] = 88;
+					}else if( $country_name=='สก็อตแลนด์'){
+						$country['COUNTRY_ID'] = 274;
+					}else if( $country_name=='สฟาลบาร์และหมู่เกาะยานไมเอน'){
+						$country['COUNTRY_ID'] = 105;
+					}else if( $country_name=='อัลมาดินา'){
+						$country['COUNTRY_ID'] = 37;
+					}else if( $country_name=='อังกฤษ-ฮ่องกง'){
+						$country['COUNTRY_ID'] = 156;
+					}else if( $country_name=='สาธารณรัฐเซาท์ซูดาน'){
+						$country['COUNTRY_ID'] = 235;
+					}else if( $country_name=='เฟรนช์โปลินีเซีย'){
+						$country['COUNTRY_ID'] = 256;
+					}else if( $country_name=='ปรินซีเบิล'){
+						$country['COUNTRY_ID'] = 0;
+					}else if( $country_name=='ผู้อพยพ (1951 CONVENTION)'){
+						$country['COUNTRY_ID'] = 0;
+					}else if( $country_name=='ผู้อพยพ (อื่นๆ)'){
+						$country['COUNTRY_ID'] = 0;
+					}else if( $country_name=='หน่วยงานพิเศษ ยูเอ็น'){
+						$country['COUNTRY_ID'] = 0;
+					}else if( $country_name=='ยูเอ็น'){
+						$country['COUNTRY_ID'] = 0;
+					}else if( $country_name=='องค์การสหประชาชาติ'){
+						$country['COUNTRY_ID'] = 0;
+					}
+
+				}
+
+		      	if(!empty($country['COUNTRY_ID'])){
+		      		$count++;
+		      		// echo ':: '.$co['COUNTRYID'].' == ';
+		      		foreach($row as $col_id=> $col){
+		    			if($col_id >= 7){
+			    			if($col_id >=7 && $col_id<=44){
+		    					// echo @$port_id[$col_id].'='.@$point_id[$col_id].'='.$col.' || ';
+			    				$builder_import = $this->db->table('REPORT_RAW_MONTHLY');
+					            $builder_import->set('COUNTRY_ID',$country['COUNTRY_ID']);
+					            $builder_import->set('PORT_ID',@$port_id[$col_id]);
+					            $builder_import->set('POINT_ID',@$point_id[$col_id]);
+					            $builder_import->set('NUM',$col);
+					            $builder_import->set('MONTH',$input['month']);
+					            $builder_import->set('YEAR',$input['year']);
+					            $builder_import->insert();
+		    				}
+		    			}
+		    		}
+		      	}else{
+		      		$text .= 'Fail :: Row - '.$row_id.' '.trim($country_name).'<br>';
+		      	}
+	    	}
+	    }
+
+	    $text .= 'Insert Data Complete : '.$count.' Row';
+
+	    return $text;
+	}
+
 	function import_file_raw_monthly($input,$xlsx){
 		$count = 1; $text = '';
 		$port_id = $point_id = array();
@@ -540,7 +691,7 @@ class Import_model extends Model
 		    			}
 		    		}
 		      	}else{
-		      		$text .= 'Fail :: '.trim($country_name).'<br>';
+		      		$text .= 'Fail :: Row - '.$row_id.' '.trim($country_name).'<br>';
 		      	}
 	    	}
 	    }
@@ -548,8 +699,6 @@ class Import_model extends Model
 	    $text .= 'Insert Data Complete : '.$count.' Row';
 
 	    return $text;
-
-
 	}
 
 	function getRawDataMonthly($year,$month){
