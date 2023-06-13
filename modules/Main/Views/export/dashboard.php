@@ -34,7 +34,7 @@
 	.col6 {
 		width: 25%;
 		float: left;
-		padding-top: 1%;
+		/* padding-top: 1%; */
 	}
 
 	.col12 {
@@ -59,12 +59,13 @@
 	}
 
 	#resultsTable {
-		height: 327px;
+		height: 349px;
 		width: 210px;
 		background: #a7ffff;
 		overflow: hidden;
 		border-radius: 25px !important;
-		margin: auto auto;
+		margin: 0px auto;
+		position: absolute;
 	}
 
 	#resultsTable3 {
@@ -79,7 +80,7 @@
 
 	#resultsTable2 {
 		width: 210px;
-		height: 327px;
+		height: 349px;
 		background: #fff1cc;
 		overflow: hidden;
 		border-radius: 25px !important;
@@ -150,10 +151,11 @@
 			</div>
 			<div id="resultsTableForCard2">
 				<table class="table">
-					<tbody style="line-height: 1em;">
+					<tbody style="line-height: 0.5em;">
 						<tr style="text-align: center; border: 0;">
-							<td style="padding: 20px 0px 0px 0px; font-size: 15px; text-align: center; font-weight: bold;">
-								สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
+							<td style="padding: 7px 0px 0px 0px; font-size: 15px; text-align: center; font-weight: bold;">
+								สะสม <br>
+								<?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
 							</td>
 						</tr>
 					</tbody>
@@ -177,25 +179,25 @@
 	</div>
 
 
-	<div style="position: absolute; top: 308px; left: 20px;">
-		<img src="<?php echo base_url('public/img/tourist.png') ?>" alt="" style="width: 90px;">
+	<div style="position: absolute; top: 318px; left: 40px;">
+		<img src="<?php echo base_url('public/img/tourist.png') ?>" alt="" style="width: 65px;">
 	</div>
-	<div style="position: absolute; top: 355px; left: 100px;">
-		<img src="<?php echo base_url('public/img/destination.png') ?>" alt="" style="width: 45px;">
+	<div style="position: absolute; top: 350px; left: 110px;">
+		<img src="<?php echo base_url('public/img/destination.png') ?>" alt="" style="width: 32px;">
 	</div>
-	<div style="position: absolute; top: 375px; right: 470px;">
+	<div style="position: absolute; top: 340px; right: 480px;">
 		<img src="<?php echo base_url('public/img/airplaneICON.png') ?>" alt="" style="width: 100px;">
 	</div>
 	<div class="vl"></div>
 	<table style="width: 100%; margin-top: 8px; padding: 0px;">
 		<tbody>
 			<tr style="padding: 0px 50px;">
-				<td style="text-align: center;font-size: 20px; color: white; padding-left: 50px; width: 50%;">
+				<td style="text-align: center;font-size: 18px; color: white; padding-left: 50px; width: 50%;">
 					จำนวนนักท่องเที่ยว
 					<br>
 					จำเเนกรายสัญชาติ 5 อันดับเเรก
 				</td>
-				<td style="width: 50%; text-align: center; font-size: 20px; padding-left:50px; color: white;">
+				<td style="width: 50%; text-align: center; font-size: 18px; padding-left:50px; color: white;">
 					จำนวนนักท่องเที่ยว <br>จำเเนกรายด่าน 5 อันดับเเรก
 				</td>
 			</tr>
@@ -204,6 +206,16 @@
 	<div class="col12">
 		<div class="col6">
 			<div id="resultsTable" style="display: flex; flex-direction: row; padding: 0px 15px;">
+				<table style="width: 100%;">
+					<tbody>
+						<tr>
+							<td colspan="3" style="text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;">
+								จำแนกรายสัญชาติ<br>
+								<?php echo $Mydate->date_eng2thai($to_date, 543) ?>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 				<?php $c = 0;
 				foreach ($SumNatDateData as $v) {
 					$c++;
@@ -217,8 +229,8 @@
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="3" style="text-align: right;padding: 4.5px 13px; margin: auto 0px;">
-										<span id="" style="font-weight:bold; font-size: 16px;color: #193666;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
+									<td colspan="3" style="text-align: right;padding: 4.2px 10px; margin: auto 0px;">
+										<span id="" style="font-weight:bold; font-size: 14px;color: #193666;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 									</td>
 								</tr>
 							</tbody>
@@ -227,12 +239,12 @@
 							<table style="width: 100%;">
 								<tr style="border: 0;">
 									<td style="width: 15%;">
-										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 36px; ">
+										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
 									</td>
-									<td style="text-align: right; padding: 8px 15px;color: #193666; font-size: 16px;font-weight: bold; width: 55%;">
+									<td style="text-align: right; padding: 8px 15px;color: #193666; font-size: 14px;font-weight: bold; width: 55%;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
-									<td style="font-size: 17px; color: #193666; font-weight: bold; width: 30%; text-align: left;">
+									<td style="font-size: 14px; color: #193666; font-weight: bold; width: 30%; text-align: left;">
 										คน
 									</td>
 								</tr>
@@ -245,6 +257,16 @@
 		</div>
 		<div class="col6">
 			<div id="resultsTable2" style="display: flex; flex-direction: row; padding: 0px 15px;">
+				<table style="width: 100%;">
+					<tbody>
+						<tr>
+							<td colspan="3" style="text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;">
+								จำแนกรายสัญชาติสะสม<br>
+								<?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 				<?php $c = 0;
 				foreach ($SumNatMonthData as $v) {
 					$c++;
@@ -258,8 +280,8 @@
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="3" style="text-align: right;padding: 4.5px 13px; margin: auto 0px;">
-										<span id="" style="font-weight:bold; font-size: 16px;color: #193666;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
+									<td colspan="3" style="text-align: right;padding: 4.2px 13px; margin: auto 0px;">
+										<span id="" style="font-weight:bold; font-size: 14px;color: #193666;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 									</td>
 								</tr>
 							</tbody>
@@ -268,12 +290,12 @@
 							<table style="width: 100%;">
 								<tr>
 									<td style="width: 15%;">
-										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 36px; ">
+										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px;">
 									</td>
-									<td style="text-align: right; padding: 8px 15px;color: #193666; font-size: 16px;font-weight: bold; width: 55%;">
+									<td style="text-align: right; padding: 8px 15px;color: #193666; font-size: 14px;font-weight: bold; width: 55%;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
-									<td style="font-size: 17px; color: #193666; font-weight: bold; width: 30%; text-align: left;">
+									<td style="font-size: 14px; color: #193666; font-weight: bold; width: 30%; text-align: left;">
 										คน
 									</td>
 								</tr>
@@ -287,6 +309,16 @@
 
 		<div class="col6">
 			<div id="resultsTable" style="display: flex; flex-direction: row; padding: 0px 15px;">
+				<table style="width: 100%;">
+					<tbody>
+						<tr>
+							<td colspan="3" style="text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;">
+								จำแนกรายด่าน<br>
+								<?php echo $Mydate->date_eng2thai($to_date, 543) ?>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 				<?php $c = 0;
 				foreach ($SumPortDateData as $v) {
 					$c++;  ?>
@@ -294,8 +326,8 @@
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="2" style="color: #193666; text-align: right; padding: 4.5px 13px; margin: auto 0px;">
-										<span style="font-weight:bold; font-size: 16px;"><?php echo $v['PORT_NAME'] ?></span>
+									<td colspan="2" style="color: #193666; text-align: right; padding: 4.3px 13px; margin: auto 0px;">
+										<span style="font-weight:bold; font-size: 14px;"><?php echo $v['PORT_NAME'] ?></span>
 									</td>
 								</tr>
 							</tbody>
@@ -303,10 +335,10 @@
 						<div id="resultsTable3">
 							<table style="width: 100%;">
 								<tr>
-									<td style="text-align: right; padding: 8px 15px;color: #193666; font-size: 16px;font-weight: bold;">
+									<td style="text-align: right; padding: 8.5px 14px;color: #193666; font-size: 14px;font-weight: bold;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
-									<td style="font-size: 17px; color: #193666; font-weight: bold;">
+									<td style="font-size: 14px; color: #193666; font-weight: bold;">
 										คน
 									</td>
 								</tr>
@@ -319,6 +351,16 @@
 		</div>
 		<div class="col6">
 			<div id="resultsTable2" style="display: flex; flex-direction: row; padding: 0px 15px;">
+				<table style="width: 100%;">
+					<tbody>
+						<tr>
+							<td colspan="3" style="text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;">
+								จำแนกรายด่าน<br>
+								<?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 				<?php $c = 0;
 				foreach ($SumPortMonthData as $v) {
 					$c++;  ?>
@@ -326,8 +368,8 @@
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="2" style="color: #193666; text-align: right; padding: 4.5px 13px; margin: auto 0px;">
-										<span style="font-weight:bold; font-size: 16px;"><?php echo $v['PORT_NAME'] ?></span>
+									<td colspan="2" style="color: #193666; text-align: right; padding: 4.2px 13px; margin: auto 0px;">
+										<span style="font-weight:bold; font-size: 14px;"><?php echo $v['PORT_NAME'] ?></span>
 									</td>
 								</tr>
 							</tbody>
@@ -335,10 +377,10 @@
 						<div id="resultsTable3">
 							<table style="width: 100%;">
 								<tr>
-									<td style="text-align: right; padding: 8px 12px;color: #193666; font-size: 16px;font-weight: bold;">
+									<td style="text-align: right; padding: 8.5px 12px;color: #193666; font-size: 14px;font-weight: bold;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
-									<td style="font-size: 17px; color: #193666;font-weight: bold;">
+									<td style="font-size: 14px; color: #193666;font-weight: bold;">
 										คน
 									</td>
 								</tr>

@@ -18,7 +18,7 @@ class Main extends BaseController
 		$ses_data = ['report_type' => 'none'];
 		$data['session']->set($ses_data);
 		$data['Mydate'] = $this->Mydate;
-		return view("Modules\Main\Views\index",$data);
+		return view("Modules\Main\Views\index", $data);
 	}
 
 	public function daily()
@@ -27,7 +27,7 @@ class Main extends BaseController
 		$Report_model = new Report_model();
 		$data['session'] = session();
 		$ses_data = ['report_type' => 'daily'];
-      	$data['session']->set($ses_data);
+		$data['session']->set($ses_data);
 
 		$data['Mydate'] = $this->Mydate;
 		// $date = date('Y-m-d');
@@ -103,7 +103,7 @@ class Main extends BaseController
 		$Report_model = new Report_model();
 		$data['session'] = session();
 		$ses_data = ['report_type' => 'monthly'];
-      	$data['session']->set($ses_data);
+		$data['session']->set($ses_data);
 
 		$data['Mydate'] = $this->Mydate;
 		$data['month'] = date('m');
@@ -143,7 +143,7 @@ class Main extends BaseController
 		$Model = new Main_model();
 		$data['session'] = session();
 		$ses_data = ['report_type' => 'monthly'];
-      	$data['session']->set($ses_data);
+		$data['session']->set($ses_data);
 		$data['Mydate'] = $this->Mydate;
 		$data['month'] = 1;
 		$data['month2'] = date('m');
@@ -188,7 +188,7 @@ class Main extends BaseController
 		$Report_model = new Report_model();
 		$data['session'] = session();
 		$ses_data = ['report_type' => 'daily'];
-      	$data['session']->set($ses_data);
+		$data['session']->set($ses_data);
 
 		$data['Mydate'] = $this->Mydate;
 		// $date = date('Y-m-d');
@@ -270,7 +270,7 @@ class Main extends BaseController
 			'margin_left' => 2,
 			'margin_right' => 2,
 			'margin_header' => 2, // 30mm not pixel
-			'margin_footer' => 2, // 10mm
+			'margin_footer' => 0, // 10mm
 			'orientation' => 'L', // L แนวนอน P แนวตั้งง
 		]);
 
