@@ -490,23 +490,23 @@
 				$dataRegionMap[2]['id'] = 15;
 				$dataRegionMap[2]['name'] = 'NORTH-EAST ASIA';
 				$dataRegionMap[2]['valueDay'] = number_format(@$SumRegionDateData[15] + @$SumRegionDateData[38]);
-				$dataRegionMap[2]['valueMonth'] = number_format(@$SumRegionMonthData[15] + @$SumRegionDateData[38]);
+				$dataRegionMap[2]['valueMonth'] = number_format(@$SumRegionMonthData[15] + @$SumRegionMonthData[38]);
 				$dataRegionMap[2]['latlong'] = '31.022402, 130.159335';
 				$dataRegionMap[2]['color'] = '#241C88';
 				$dataRegionMap[2]['marker'] = base_url('public/img/icon-map/Group.png');
 
 				$dataRegionMap[3]['id'] = 23;
 				$dataRegionMap[3]['name'] = 'SOUTH ASIA';
-				$dataRegionMap[3]['valueDay'] = number_format(@$SumRegionDateData[23]);
-				$dataRegionMap[3]['valueMonth'] = number_format(@$SumRegionMonthData[23]);
+				$dataRegionMap[3]['valueDay'] = number_format(@$SumRegionDateData[23]+@$SumRegionDateData[39]);
+				$dataRegionMap[3]['valueMonth'] = number_format(@$SumRegionMonthData[23]+@$SumRegionMonthData[39]);
 				$dataRegionMap[3]['latlong'] = '8.893284, 78.128085';
 				$dataRegionMap[3]['color'] = '#C80B0B';
 				$dataRegionMap[3]['marker'] = base_url('public/img/icon-map/Group-8.png');
 
 				$dataRegionMap[4]['id'] = 2;
 				$dataRegionMap[4]['name'] = 'EUROPE';
-				$dataRegionMap[4]['valueDay'] = number_format(@$SumRegionDateData[2] + @$SumRegionDateData[44]);
-				$dataRegionMap[4]['valueMonth'] = number_format(@$SumRegionMonthData[2] + @$SumRegionDateData[44]);
+				$dataRegionMap[4]['valueDay'] = number_format(@$SumRegionDateData[2] + @$SumRegionDateData[44]+ @$SumRegionDateData[36]+@$SumRegionDateData[37]);
+				$dataRegionMap[4]['valueMonth'] = number_format(@$SumRegionMonthData[2] + @$SumRegionMonthData[44]+ @$SumRegionMonthData[36]+@$SumRegionMonthData[37]);
 				$dataRegionMap[4]['latlong'] = '47.135605, 7.464025';
 				$dataRegionMap[4]['color'] = '#70D667';
 				$dataRegionMap[4]['marker'] = base_url('public/img/icon-map/Group-4.png');
@@ -522,7 +522,7 @@
 				$dataRegionMap[6]['id'] = 7;
 				$dataRegionMap[6]['name'] = 'THE AMERICAS';
 				$dataRegionMap[6]['valueDay'] = number_format(@$SumRegionDateData[7] + @$SumRegionDateData[45]);
-				$dataRegionMap[6]['valueMonth'] = number_format(@$SumRegionMonthData[7] + @$SumRegionDateData[45]);
+				$dataRegionMap[6]['valueMonth'] = number_format(@$SumRegionMonthData[7] + @$SumRegionMonthData[45]);
 				$dataRegionMap[6]['latlong'] = '20.434802, -100.114100';
 				$dataRegionMap[6]['color'] = '#39A5ED';
 				$dataRegionMap[6]['marker'] = base_url('public/img/icon-map/Group-5.png');
@@ -530,15 +530,15 @@
 				$dataRegionMap[7]['id'] = 5;
 				$dataRegionMap[7]['name'] = 'OCEANIA';
 				$dataRegionMap[7]['valueDay'] = number_format(@$SumRegionDateData[5] + @$SumRegionDateData[46]);
-				$dataRegionMap[7]['valueMonth'] = number_format(@$SumRegionMonthData[5] + @$SumRegionDateData[46]);
+				$dataRegionMap[7]['valueMonth'] = number_format(@$SumRegionMonthData[5] + @$SumRegionMonthData[46]);
 				$dataRegionMap[7]['latlong'] = '-30.781896, 144.749177';
 				$dataRegionMap[7]['color'] = '#EB7D40';
 				$dataRegionMap[7]['marker'] = base_url('public/img/icon-map/Group-1.png');
 
 				$dataRegionMap[8]['id'] = 20;
 				$dataRegionMap[8]['name'] = 'MIDDLE EAST';
-				$dataRegionMap[8]['valueDay'] = number_format(@$SumRegionDateData[20]);
-				$dataRegionMap[8]['valueMonth'] = number_format(@$SumRegionMonthData[20]);
+				$dataRegionMap[8]['valueDay'] = number_format(@$SumRegionDateData[20]+@$SumRegionDateData[47]);
+				$dataRegionMap[8]['valueMonth'] = number_format(@$SumRegionMonthData[20]+@$SumRegionMonthData[47]);
 				$dataRegionMap[8]['latlong'] = '27.807562, 49.827303';
 				$dataRegionMap[8]['color'] = '#970EAD';
 				$dataRegionMap[8]['marker'] = base_url('public/img/icon-map/Group-3.png');
@@ -546,7 +546,7 @@
 				$dataRegionMap[9]['id'] = 6;
 				$dataRegionMap[9]['name'] = 'AFRICA';
 				$dataRegionMap[9]['valueDay'] = number_format(@$SumRegionDateData[6] + @$SumRegionDateData[40]);
-				$dataRegionMap[9]['valueMonth'] = number_format(@$SumRegionMonthData[6] + @$SumRegionDateData[40]);
+				$dataRegionMap[9]['valueMonth'] = number_format(@$SumRegionMonthData[6] + @$SumRegionMonthData[40]);
 				$dataRegionMap[9]['latlong'] = '2.834002, 17.403791';
 				$dataRegionMap[9]['color'] = '#BF9C56';
 				$dataRegionMap[9]['marker'] = base_url('public/img/icon-map/Group-6.png');
@@ -565,8 +565,8 @@
 						<tbody>
 							<tr style="background-color: #BD98A1;">
 								<td style="padding-left: 15px;">ASIA</td>
-								<td align="right"><?php echo number_format(@$SumRegionDateData[13] + @$SumRegionDateData[15] + @$SumRegionDateData[38] + @$SumRegionDateData[23]) ?></td>
-								<td align="right"><?php echo number_format(@$SumRegionMonthData[13] + @$SumRegionMonthData[15] + @$SumRegionMonthData[38] + @$SumRegionMonthData[23]) ?></td>
+								<td align="right"><?php echo number_format(@$SumRegionDateData[13] + @$SumRegionDateData[15] + @$SumRegionDateData[38] + @$SumRegionDateData[23]+ @$SumRegionDateData[39]) ?></td>
+								<td align="right"><?php echo number_format(@$SumRegionMonthData[13] + @$SumRegionMonthData[15] + @$SumRegionMonthData[38] + @$SumRegionMonthData[23]+ @$SumRegionMonthData[39]) ?></td>
 							</tr>
 							<tr style="background:#EBABC0;">
 								<td style="padding-left: 40px;">ASEAN</td>
@@ -593,7 +593,7 @@
 								</tr>
 							<?php } ?>
 							<?php foreach ($country_region[38] as $c) { ?>
-								<tr class="region_15 tr_country" style="display:none">
+								<tr class="region_15 tr_country" style="display:none;background-color: #F9C9B2">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
 									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
 									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
@@ -601,8 +601,8 @@
 							<?php } ?>
 							<tr style="background: #FFFFAE">
 								<td style="padding-left: 40px;">SOUTH ASIA</td>
-								<td align="right"><?php echo number_format(@$SumRegionDateData[23]) ?></td>
-								<td align="right"><?php echo number_format(@$SumRegionMonthData[23]) ?></td>
+								<td align="right"><?php echo number_format(@$SumRegionDateData[23]+@$SumRegionDateData[39]) ?></td>
+								<td align="right"><?php echo number_format(@$SumRegionMonthData[23]+@$SumRegionMonthData[39]) ?></td>
 							</tr>
 							<?php foreach ($country_region[23] as $c) { ?>
 								<tr class="region_23 tr_country" style="display:none;background: #FFFFAE">
@@ -611,10 +611,17 @@
 									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
 								</tr>
 							<?php } ?>
+							<?php foreach ($country_region[39] as $c) { ?>
+								<tr class="region_23 tr_country" style="display:none;background: #FFFFAE">
+									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+								</tr>
+							<?php } ?>
 							<tr style="background: #C6A7CB">
 								<td style="padding-left: 15px;">EUROPE</td>
-								<td align="right"><?php echo number_format(@$SumRegionDateData[2] + @$SumRegionDateData[44]) ?></td>
-								<td align="right"><?php echo number_format(@$SumRegionMonthData[2] + @$SumRegionMonthData[44]) ?></td>
+								<td align="right"><?php echo number_format(@$SumRegionDateData[2] + @$SumRegionDateData[44]+ @$SumRegionDateData[36]+@$SumRegionDateData[37]) ?></td>
+								<td align="right"><?php echo number_format(@$SumRegionMonthData[2] + @$SumRegionMonthData[44]+ @$SumRegionMonthData[36]+@$SumRegionMonthData[37]) ?></td>
 							</tr>
 							<?php foreach ($country_region[2] as $c) { ?>
 								<tr class="region_2 tr_country" style="display:none;background: #C6A7CB">
@@ -624,6 +631,13 @@
 								</tr>
 							<?php } ?>
 							<?php foreach ($country_region[44] as $c) { ?>
+								<tr class="region_2 tr_country" style="display:none;background: #C6A7CB">
+									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+								</tr>
+							<?php } ?>
+							<?php foreach ($country_region[36] as $c) { ?>
 								<tr class="region_2 tr_country" style="display:none;background: #C6A7CB">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
 									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
@@ -689,10 +703,17 @@
 							<?php } ?>
 							<tr style="background: #9CC1A7">
 								<td style="padding-left: 15px;">MIDDLE EAST</td>
-								<td align="right"><?php echo number_format(@$SumRegionDateData[20]) ?></td>
-								<td align="right"><?php echo number_format(@$SumRegionMonthData[20]) ?></td>
+								<td align="right"><?php echo number_format(@$SumRegionDateData[20]+@$SumRegionDateData[47]) ?></td>
+								<td align="right"><?php echo number_format(@$SumRegionMonthData[20]+@$SumRegionMonthData[47]) ?></td>
 							</tr>
 							<?php foreach ($country_region[20] as $c) { ?>
+								<tr class="region_20 tr_country" style="display:none;background: #9CC1A7">
+									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+								</tr>
+							<?php } ?>
+							<?php foreach ($country_region[47] as $c) { ?>
 								<tr class="region_20 tr_country" style="display:none;background: #9CC1A7">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
 									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>

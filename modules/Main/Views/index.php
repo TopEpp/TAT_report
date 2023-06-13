@@ -9,7 +9,7 @@
 		</a>
 	</div>
 	<div class="col-6" style="text-align: center;">
-		<a href="<?php echo base_url('main/monthly')?>">
+		<a href="<?php echo base_url('main/monthly_period')?>">
 			<img src="<?php echo base_url('public/img/monthly_banner.png')?>">
 		</a>
 	</div>

@@ -126,6 +126,18 @@ $method =  $request->uri->getSegment(2);
         <li class="nav-item <?php if ($controller == 'main') {
                             echo 'active';
                         } ?>">
+            <a class="nav-link <?php if ($controller == 'main' && ($method == 'monthly' || $method == '')) {
+                                                echo 'active';
+                                            } ?>" href="<?php echo base_url('main/monthly_period') ?>">
+                <i class="fas fa-fw fa-dashboard"></i>
+                <span>Dashboard</span>
+            </a>
+           
+        </li>
+        
+        <!-- <li class="nav-item <?php if ($controller == 'main') {
+                            echo 'active';
+                        } ?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMain" aria-expanded="true" aria-controls="collapseMain">
             <i class="fas fa-fw fa-dashboard"></i>
             <span>Dashboard</span>
@@ -140,7 +152,7 @@ $method =  $request->uri->getSegment(2);
                                         } ?>" href="<?php echo base_url('main/monthly_period') ?>">Monthly Period</a>
             </div>
         </div>
-    </li>
+    </li> -->
 
 
     <!-- Nav Item - Pages Collapse Menu -->

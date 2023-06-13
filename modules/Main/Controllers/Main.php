@@ -150,6 +150,7 @@ class Main extends BaseController
 		$data['year'] = date('Y');
 		$data['limit'] = 5;
 		$data['month_label'] = $this->month_th;
+		$data['to_date'] = date('d-m-Y');
 
 		if (!empty($_GET['month'])) {
 			$data['month'] = $_GET['month'];
@@ -164,6 +165,8 @@ class Main extends BaseController
 			$data['limit'] = $_GET['limit'];
 		}
 
+		$data['SumMonth'] = $Model->getSumMonthly($data['year']);
+		$data['SumMonth_past'] = $Model->getSumMonthly(($data['year'] - 1));
 		$data['SumRegionDateData'] = $Model->getSumMonthlyRegionPeriod($data['month'], $data['month2'], $data['year']);
 		$data['SumRegionDateData_past'] = $Model->getSumMonthlyRegionPeriod($data['month'], $data['month2'], $data['year'] - 1);
 		$data['SumCountry'] = $Model->getSumMonthlyCountryPeriod($data['month'], $data['month2'], $data['year'], $data['limit']);

@@ -446,6 +446,7 @@ $(function() {
 	});
 
 });
+
 function ChangeFilter() {
 	var month = $('#month').val();
 	var year = $('#year').val();

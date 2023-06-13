@@ -160,11 +160,6 @@
 	}
 </style>
 <div class="row">
-	<div class="col-md-12 text-center" style="font-size: 1.4em;">
-		สถิตินักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย
-	</div>
-</div>
-<div class="row">
 	<div class="col-md-2 col-12 my-auto text-center py-2">
 		เลือกเดือน/ปี
 	</div>
@@ -232,7 +227,40 @@
 		</button>
 	</div>
 </div>
-
+<div class="row">
+	<div class="col-12" id="htmltoimage_chart_monthly">
+		<canvas id="chart_main" height="220" style="height:220px !important"></canvas>
+	</div>
+	<div class="col-12">
+		<div style="overflow: auto;">
+			<table class="table table-striped table-bordered ">
+				<tr>
+					<td align="center">ปี</td>
+					<?php $chart_label = $chart_current = $chart_pre = array();
+					foreach ($month_label as $m_id=>$name) { $chart_label[] = $name; ?>
+						<td align="center"><?php echo $name;?></td>
+					<?php } ?>
+				</tr>
+				<tr>
+					<td style="background-color: #3cacae;"><?php echo $year+543  ?></td>
+					<?php
+					foreach ($month_label as $d=>$name) { ?>
+						<td style="background:#3cacae" align="center"><?php echo number_format(@$SumMonth[$d]);
+																		$chart_current[] = @$SumMonth[$d] ? @$SumMonth[$d] : null; ?></td>
+					<?php } ?>
+				</tr>
+				<tr>
+					<td ><?php echo $year +542 ?></td>
+					<?php
+					foreach ($month_label as $d=>$name) {?>
+						<td  align="center"><?php echo number_format(@$SumMonth_past[$d]);
+																		$chart_pre[] = @$SumMonth_past[$d] ? @$SumMonth_past[$d] : null; ?></td>
+					<?php } ?>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
 <div class="row">
 	<div class="col-6">
 		<table class="table ColorTableBody shadow-lg">
@@ -396,7 +424,48 @@
 </div>
 <?php $this->endSection() ?>
 <?= $this->section("scripts") ?>
+<script src="<?php echo base_url('public/vendor/html2canvas/html2canvas.js'); ?>"></script>
+<script src="<?php echo base_url('public/vendor/chart.js/Chart.min.js'); ?>" type="text/javascript"></script>
 <script type="text/javascript">
+var chart_label = <?php echo json_encode($chart_label); ?>;
+var chart_current = <?php echo json_encode($chart_current); ?>;
+var chart_pre = <?php echo json_encode($chart_pre); ?>;
+	$(function() {
+		const ctx = document.getElementById('chart_main');
+		const data_chart = {
+			labels: chart_label,
+			datasets: [{
+					label: '<?php echo date('Y') + 543 ?>',
+					data: chart_current,
+					borderColor: '#57DACC',
+					backgroundColor: '#57DACC',
+				},
+				{
+					label: '<?php echo date('Y') + 542 ?>',
+					data: chart_pre,
+					borderColor: '#FACE74',
+					backgroundColor: '#FACE74',
+				}
+			]
+		};
+		const chart_main = new Chart(ctx, {
+			type: 'line',
+			data: data_chart,
+			options: {
+				responsive: true,
+				interaction: {
+					mode: 'index',
+					intersect: false,
+				},
+				stacked: false,
+			},
+			options: {
+				maintainAspectRatio: false,
+			}
+		});
+
+	});
+
 	function ChangeFilter() {
 		var month = $('#month').val();
 		var month2 = $('#month2').val();
@@ -415,6 +484,40 @@
 		var year = $('#year').val();
 		var limit = 20; //$('#limit').val();
 		window.open(base_url + '/main/monthly_period?month=' + month + '&month2=' + month2 + '&year=' + year + '&limit=' + limit + "&export_type=pdf");
+	}
+
+	function SaveImg2ExportPdf(url2SaveImg, url2DowloadReport) {
+		$('.btn-download').hide();
+		const chart_array = ["chart_monthly"];
+		var count_canvas = 0;
+		$.each(chart_array, function(key, value) {
+			var container = document.getElementById("htmltoimage_" + value);
+			html2canvas(container, {
+				allowTaint: true
+			}).then(function(canvas) {
+
+				var link = document.createElement("a");
+				document.body.appendChild(link);
+				link.download =  "<?php echo $to_date; ?>"+value + ".jpg";
+				link.href = canvas.toDataURL();
+				link.target = '_blank';
+
+
+				var dataURL = link.href;
+				$.post(url2SaveImg, {
+					imgBase64: dataURL,
+					imgName: "<?php echo $to_date; ?>" + value
+				}, function(data, status) {
+					count_canvas++;
+					// console.log(count_canvas+' == '+chart_array.length );
+					if (count_canvas == chart_array.length) {
+						window.open(url2DowloadReport);
+					}
+
+				});
+			});
+
+		});
 	}
 </script>
 <?= $this->endSection() ?>
