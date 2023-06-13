@@ -151,7 +151,6 @@
 		</div>
 	</div>
 </div>
-<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
 <?php
 
 function genTableData($data, $region, $region_id, $country, $port_colunm, $period, $level = 1)

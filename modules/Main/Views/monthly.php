@@ -402,7 +402,6 @@
 		</table>
 	</div>
 </div>
-ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
 <?php $this->endSection() ?>
 <?= $this->section("scripts") ?>
 <script src="<?= base_url('public/js/script.js') ?>"></script>

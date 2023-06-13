@@ -196,7 +196,6 @@ foreach ($data_month_lastyear as $v) {
 		<span style="font-size:0.8em">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</span>
 	</div>
 </div>
-<i class="fa fa-clock"></i> ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
 <?php $this->endSection() ?>
 
 <?= $this->section("scripts") ?>

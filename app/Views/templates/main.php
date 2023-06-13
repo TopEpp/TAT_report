@@ -71,7 +71,7 @@
                     </button>
 
                     <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 " style="width:100%; text-align: center;">
-                        <span style="font-size:1.4em; ">สถิตินักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย</span>
+                        <span style="font-size:1.8em; ">สถิตินักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย</span>
                     </div>
 
                     <!-- Topbar Navbar -->
@@ -107,8 +107,19 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid" style="padding-bottom: 10px;">
 
-                    <?php $this->renderSection('content'); ?>
+                    <?php $this->renderSection('content');
 
+                     ?>
+                    <div class="row" style="padding:10px" >
+                        <div class="col-md-6 col-6">
+                            ที่มา : สำนักงานตรวจคนเข้าเมือง <br>
+                            จัดทำโดย : ด้านดิจิทัล วิจัย และพัฒนา
+                        </div>
+                        <div class="col-md-6 col-6" style="text-align: right;">
+                            ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?> <br>
+                            ระบบนี้นำเข้าข้อมูลตั้งแต่วันที่ 1 มกราคม 2566
+                        </div>
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
 

@@ -269,7 +269,7 @@
 							<?php
 							foreach ($period as $d) { ?>
 								<td style="background:#3cacae" align="center"><?php echo number_format(@$SumChartData['current'][$d]);
-																				$chart_current[] = @$SumChartData['current'][$d] ? @$SumChartData['current'][$d] : 0; ?></td>
+																				$chart_current[] = @$SumChartData['current'][$d] ? @$SumChartData['current'][$d] : null; ?></td>
 							<?php } ?>
 						</tr>
 						<tr>
@@ -279,7 +279,7 @@
 								$d_ex = explode('-', $d);
 								$d_pre = ($d_ex[0] - 1) . '-' . $d_ex[1] . '-' . $d_ex[2];   ?>
 								<td align="center"><?php echo number_format(@$SumChartData['past'][$d_pre]);
-																				$chart_pre[] = @$SumChartData['past'][$d_pre] ? @$SumChartData['past'][$d_pre] : 0; ?></td>
+																				$chart_pre[] = @$SumChartData['past'][$d_pre] ? @$SumChartData['past'][$d_pre] : null; ?></td>
 							<?php } ?>
 						</tr>
 					</table>
@@ -837,7 +837,6 @@
 	</div>
 </div>
 
-ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
 
 <div class="modal fade" id="modalInfo3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -956,8 +955,6 @@
 			endDate: new Date('<?php list($day, $month, $year) = explode('-', $to_date);
 								echo $year . '-' . $month . '-' . ($day); ?>')
 		});
-
-
 
 
 		const ctx = document.getElementById('chart_main');
