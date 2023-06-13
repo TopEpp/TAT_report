@@ -58,12 +58,12 @@ class Report_model extends Model
 
 	function getPortDateData($date){
 		$builder = $this->db->table('MD_PORT');
-	    $builder->select("MD_PORT.PORT_ID, MD_PORT.PORT_NAME , MD_PORT.PORT_TYPE , 
+	    $builder->select("MD_PORT.PORT_ID, MD_PORT.PORT_NAME , MD_PORT.PORT_TYPE , MD_PORT.PORT_LATLONG,
 	    					CASE WHEN SUM({$this->table}.SUM ) IS NOT NULL THEN  SUM({$this->table}.SUM ) ELSE 0 END AS NUM ");
 	   
 	    $builder->join($this->table,"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID AND TO_CHAR( {$this->table}.REPORT_DATE, 'YYYY-MM-DD') = '{$date}' ",'LEFT');
 	    $builder->where('MD_PORT.PORT_CATEGORY_ID',1);
-	    $builder->groupBy("MD_PORT.PORT_ID, MD_PORT.PORT_NAME, MD_PORT.PORT_TYPE ");
+	    $builder->groupBy("MD_PORT.PORT_ID, MD_PORT.PORT_NAME, MD_PORT.PORT_TYPE, MD_PORT.PORT_LATLONG ");
 	    $builder->orderBy("NUM DESC,PORT_NAME");
 	    $data = $builder->get()->getResultArray();
 
@@ -74,12 +74,12 @@ class Report_model extends Model
 		$date_start = '01/01/'.$year;
 		$date_end = $day.'/'.$month.'/'.$year;
 	    $builder = $this->db->table('MD_PORT');
-	    $builder->select("MD_PORT.PORT_ID, MD_PORT.PORT_NAME , MD_PORT.PORT_TYPE ,
+	    $builder->select("MD_PORT.PORT_ID, MD_PORT.PORT_NAME , MD_PORT.PORT_TYPE , MD_PORT.PORT_LATLONG,
 	    					CASE WHEN SUM({$this->table}.SUM ) IS NOT NULL THEN  SUM({$this->table}.SUM ) ELSE 0 END AS NUM ");
 	    $builder->join($this->table,"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID");
 	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$date_start}','dd/mm/yyyy') AND TO_DATE('{$date_end}','dd/mm/yyyy') ");
 	    $builder->where('MD_PORT.PORT_CATEGORY_ID',1);
-	    $builder->groupBy("MD_PORT.PORT_ID, MD_PORT.PORT_NAME,MD_PORT.PORT_TYPE  ");
+	    $builder->groupBy("MD_PORT.PORT_ID, MD_PORT.PORT_NAME,MD_PORT.PORT_TYPE , MD_PORT.PORT_LATLONG ");
 	    $builder->orderBy("NUM DESC,PORT_NAME");
 	    $data = $builder->get()->getResultArray();
 

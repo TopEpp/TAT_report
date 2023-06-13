@@ -64,6 +64,8 @@ class Import_model extends Model
 					$country['COUNTRY_ID'] = $temp_country[$row[2]];
 				}
 
+				
+
 				if(empty($country['COUNTRY_ID'])){
 					if($row[2]=='ไม่มีสัญชาติ'){
 						$country['COUNTRY_ID'] = 275;
@@ -516,6 +518,17 @@ class Import_model extends Model
 		      	$co = $builder->get()->getRowArray();
 
 		      	$country_name2 = str_replace(' ', '', $country_name);
+
+		      	// switch ($country_name) {
+				//   	case "South Africa":
+				//      	$co['COUNTRYID'] = '225';
+				//     	break;
+			    // 	case "USA":
+				//      	$co['COUNTRYID'] = '131';
+				//     	break;
+			    //   	default:
+			    //   	 	$co['COUNTRYID'] = '';
+			    // }
 
 		      	if(trim($country_name) == 'South Africa' || $country_name2 == 'SOUTHAFRICA'){
 			        $co['COUNTRYID'] = '225';

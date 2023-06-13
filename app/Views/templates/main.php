@@ -110,6 +110,7 @@
                     <?php $this->renderSection('content');
 
                      ?>
+                    <?php if(!empty($Mydate)){?>
                     <div class="row" style="padding:10px" >
                         <div class="col-md-6 col-6">
                             ที่มา : สำนักงานตรวจคนเข้าเมือง <br>
@@ -120,6 +121,7 @@
                             ระบบนี้นำเข้าข้อมูลตั้งแต่วันที่ 1 มกราคม 2566
                         </div>
                     </div>
+                    <?php } ?>
                 </div>
                 <!-- /.container-fluid -->
 

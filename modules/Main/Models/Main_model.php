@@ -144,6 +144,7 @@ class Main_model extends Model
 
 	function getSumRegionDate($date)
 	{
+		$data = array();
 		$date_ex = explode('-', $date);
 		$month = $date_ex[1];
 		$year = $date_ex[0];
@@ -182,6 +183,7 @@ class Main_model extends Model
 
 	function getSumCountryDate($date)
 	{
+		$data = array();
 		$date_ex = explode('-', $date);
 		$month = $date_ex[1];
 		$year = $date_ex[0];

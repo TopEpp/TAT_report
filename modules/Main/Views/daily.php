@@ -143,7 +143,7 @@
 			</div>
 		</div>
 		<div class="col-md-1 col-12 my-auto text-center">
-			<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard'); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
+			<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard?start_date='.$start_date.'&end_date='.$end_date); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
 				<i class="fa-solid fa-file-pdf"></i> PDF
 			</button>
 		</div>
@@ -952,7 +952,7 @@
 			format: "dd/mm/yyyy",
 			autoclose: true,
 			language: 'th-th',
-			endDate: new Date('<?php list($day, $month, $year) = explode('-', $to_date);
+			endDate: new Date('<?php list($year, $month, $day) = explode('-', $to_date);
 								echo $year . '-' . $month . '-' . ($day); ?>')
 		});
 
@@ -997,22 +997,23 @@
 	}
 
 	function ChangeFilter() {
-		var date = $('#start_date').val();
-		date = date.split('/');
-		// start_date1 = (date[2]-543)+'-'+date[1]+'-'+date[0];
-		start_date = date[0] + '-' + date[1] + '-' + (date[2] - 543);
+		if($('#start_date').val()!='' && $('#start_date').val() != ''){
+			var date = $('#start_date').val();
+			date = date.split('/');
+			start_date = date[0] + '-' + date[1] + '-' + (date[2] - 543);
 
-		var date = $('#end_date').val();
-		date = date.split('/');
-		// end_date1 = (date[2]-543)+'-'+date[1]+'-'+date[0];
-		end_date = date[0] + '-' + date[1] + '-' + (date[2] - 543);
-
-
-		window.location.href = base_url + '/main?start_date=' + start_date + '&end_date=' + end_date;
+			var date = $('#end_date').val();
+			date = date.split('/');
+			end_date = date[0] + '-' + date[1] + '-' + (date[2] - 543);
+			window.location.href = base_url + '/main/daily?start_date=' + start_date + '&end_date=' + end_date;
+		}else{
+			window.location.href = base_url + '/main/daily';
+		}
+		
 	}
 
 	function ClearFilter() {
-		window.location.href = base_url + '/main';
+		window.location.href = base_url + '/main/daily';
 	}
 
 	var rendererOptions = {
@@ -1071,8 +1072,8 @@
 					"</button>" +
 					"<div style='padding:5px;color:#000;background:" + value.color + "'>" + value.name + "</div>" +
 					"<div style='margin:8px;'><table style='width: 100%;'>" +
-					"<tr><td style='text-align: left;border-right: 1px solid #aaa;border-bottom: 1px solid #aaa;'><?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></td><td style='text-align: right;border-bottom: 1px solid #aaa;'>" + value.valueDay + "</td></tr>" +
-					"<tr><td style='text-align: left;border-right: 1px solid #aaa;'><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></td><td style='text-align: right;'>" + value.valueMonth + "</td></tr>" +
+					"<tr><td style='text-align: left;border-right: 1px solid #aaa;border-bottom: 1px solid #aaa;'><?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></td><td style='text-align: right;border-bottom: 1px solid #aaa;'>" + numberWithCommas(value.valueDay) + "</td></tr>" +
+					"<tr><td style='text-align: left;border-right: 1px solid #aaa;'><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></td><td style='text-align: right;'>" + numberWithCommas(value.valueMonth) + "</td></tr>" +
 					"</table></div>" +
 					"</div>";
 
@@ -1139,6 +1140,15 @@
 			});
 
 		});
+	}
+
+	function numberWithCommas(x) {
+	    if(x){
+	        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	    }else{
+	        return 0;
+	    }
+	    
 	}
 </script>
 <?= $this->endSection() ?>
