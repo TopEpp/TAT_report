@@ -134,7 +134,7 @@ $method =  $request->uri->getSegment(2);
             </a>
            
         </li>
-        
+
         <!-- <li class="nav-item <?php if ($controller == 'main') {
                             echo 'active';
                         } ?>">
@@ -182,12 +182,12 @@ $method =  $request->uri->getSegment(2);
         <div id="collapseImport" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 
-                <a class="collapse-item <?php if ( $controller == 'import' && $method == 'monthly') {
+               <!--  <a class="collapse-item <?php if ( $controller == 'import' && $method == 'monthly') {
                                             echo 'active';
-                                        } ?>" href="<?php echo base_url('import/monthly') ?>">Monthly</a>
+                                        } ?>" href="<?php echo base_url('import/monthly') ?>">Monthly</a> -->
                 <a class="collapse-item <?php if ( $controller == 'import' && $method == 'raw_monthly') {
                                             echo 'active';
-                                        } ?>" href="<?php echo base_url('import/raw_monthly') ?>">Raw Monthly</a>
+                                        } ?>" href="<?php echo base_url('import/raw_monthly') ?>">Monthly</a>
             </div>
         </div>
     </li>
