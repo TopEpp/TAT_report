@@ -69,7 +69,7 @@
 			<table class="table table-striped table-tableborder radiusTableNation shadow-lg">
 				<thead>
 					<tr>
-						<th>Nation</th>
+						<th>สัญชาติ</th>
 						<?php foreach ($period as $d) {
 							echo "<th>{$Mydate->date_eng2thai($d, 543, 'S', 'S')}</th>";
 						} ?>
@@ -166,6 +166,7 @@ function getSumData($data, $region, $region_id, $country, $period, &$sum = array
 			format: "dd/mm/yyyy",
 			autoclose: true,
 			language: 'th-th',
+			endDate: new Date('<?php echo $to_date; ?>')
 		});
 	});
 

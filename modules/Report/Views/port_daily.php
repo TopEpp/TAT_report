@@ -75,10 +75,12 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td style='background-color: rgba(97, 190, 201, 1);'><b>รวมด่านบก</b></td>
+						<td style='background-color: rgba(97, 190, 201, 1);'><b>ไม่ใช่ด่านอากาศ</b></td>
 						<?php foreach ($port[1] as $p) {
-							@$sum[$d] += @$data[$p['PORT_ID']][$d];
-							@$sum_type1[$d] += @$data[$p['PORT_ID']][$d];
+							foreach ($period as $d) {
+								@$sum[$d] += @$data[$p['PORT_ID']][$d];
+								@$sum_type1[$d] += @$data[$p['PORT_ID']][$d];
+							}
 						} ?>
 						<?php foreach ($period as $d) {
 							echo "<td style='background-color: rgba(97, 190, 201, 1);'  align='right'> <b> " . number_format(@$sum_type1[$d]) . "</b> </td>";
@@ -89,16 +91,17 @@
 							<td data-label="ด่าน"><?php echo $p['PORT_NAME'] ?></td>
 							<?php foreach ($period as $d) {
 								echo "<td data-label='" . $Mydate->date_eng2thai($d, 543, 'S', 'S') . "' align='right'>" . number_format(@$data[$p['PORT_ID']][$d]) . "</td>";
-								@$sum[$d] += @$data[$p['PORT_ID']][$d];
-								@$sum_type1[$d] += @$data[$p['PORT_ID']][$d];
+								
 							} ?>
 						</tr>
 					<?php } ?>
 					<tr>
 						<td style="background-color: rgba(97, 190, 201, 1);"><b>รวมด่านอากาศ</b></td>
 						<?php foreach ($port[2] as $p) {
-							@$sum[$d] += @$data[$p['PORT_ID']][$d];
-							@$sum_type2[$d] += @$data[$p['PORT_ID']][$d];
+							foreach ($period as $d) {
+								@$sum[$d] += @$data[$p['PORT_ID']][$d];
+								@$sum_type2[$d] += @$data[$p['PORT_ID']][$d];
+							}
 						} ?>
 						<?php foreach ($period as $d) {
 							echo "<td  style='background-color: rgba(97, 190, 201, 1);' align='right'> <b>" . number_format(@$sum_type2[$d]) . "</b> </td>";
@@ -109,8 +112,7 @@
 							<td data-label="ด่าน"><?php echo $p['PORT_NAME'] ?></td>
 							<?php foreach ($period as $d) {
 								echo "<td data-label='" . $Mydate->date_eng2thai($d, 543, 'S', 'S') . "'  align='right'>" . number_format(@$data[$p['PORT_ID']][$d]) . "</td>";
-								@$sum[$d] += @$data[$p['PORT_ID']][$d];
-								@$sum_type2[$d] += @$data[$p['PORT_ID']][$d];
+								
 							} ?>
 						</tr>
 					<?php } ?>
@@ -136,6 +138,7 @@
 			format: "dd/mm/yyyy",
 			autoclose: true,
 			language: 'th-th',
+			endDate: new Date('<?php echo $to_date; ?>')
 		});
 	});
 

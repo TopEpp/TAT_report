@@ -10,7 +10,7 @@
 <table border="1" class="table table-striped table-bordered tbl_nation_compare" style="width:100%">
 	<thead>
 		<tr>
-			<th style="background-color:#369fa7;border: 1px solid black ;">Nation</th>
+			<th style="background-color:#369fa7;border: 1px solid black ;">สัญชาติ</th>
 			<?php foreach ($period as $d) {
 				echo "<th style='background-color:#369fa7;border: 1px solid black ;'>{$Mydate->date_eng2thai($d, 543, 'S', 'S')}</th>";
 			} ?>

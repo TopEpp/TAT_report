@@ -236,6 +236,7 @@
 			format: "dd/mm/yyyy",
 			autoclose: true,
 			language: 'th-th',
+			endDate: new Date('<?php echo $to_date; ?>')
 		});
 	});
 	$('#table2').DataTable({

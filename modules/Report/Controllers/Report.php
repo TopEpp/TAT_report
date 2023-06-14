@@ -255,6 +255,7 @@ class Report extends BaseController
 		$Main_model = new Main_model();
 		$data['session'] = session();
 		$date = $Main_model->getMaxDate();
+		$data['to_date'] = $date;
 		$data['Mydate'] = $this->Mydate;
 
 		if (empty($_GET['d1']) && empty($_GET['d2'])) {
@@ -299,6 +300,7 @@ class Report extends BaseController
 		$Main_model = new Main_model();
 		$Setting_model = new Setting_model();
 		$date = $Main_model->getMaxDate();
+		$data['to_date'] = $date;
 		$data['session'] = session();
 		$data['Mydate'] = $this->Mydate;
 

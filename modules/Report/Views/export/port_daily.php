@@ -19,8 +19,10 @@
 		<tr>
 			<td style='background-color: #61bec9;'><b>รวมด่านบก</b></td>
 			<?php foreach ($port[1] as $p) {
-				@$sum[$d] += @$data[$p['PORT_ID']][$d];
-				@$sum_type1[$d] += @$data[$p['PORT_ID']][$d];
+					foreach ($period as $d) {
+						@$sum[$d] += @$data[$p['PORT_ID']][$d];
+						@$sum_type1[$d] += @$data[$p['PORT_ID']][$d];
+					}
 			} ?>
 			<?php foreach ($period as $d) {
 				echo "<td style='background-color: #61bec9;'  align='right'> <b> " . number_format(@$sum_type1[$d]) . "</b> </td>";
@@ -31,8 +33,6 @@
 				<td><?php echo $p['PORT_NAME'] ?></td>
 				<?php foreach ($period as $d) {
 					echo "<td align='right'>" . number_format(@$data[$p['PORT_ID']][$d]) . "</td>";
-					@$sum[$d] += @$data[$p['PORT_ID']][$d];
-					@$sum_type1[$d] += @$data[$p['PORT_ID']][$d];
 				} ?>
 			</tr>
 		<?php } ?>
@@ -45,8 +45,10 @@
 		<tr>
 			<td style="background-color: #61bec9;"><b>รวมด่านอากาศ</b></td>
 			<?php foreach ($port[2] as $p) {
-				@$sum[$d] += @$data[$p['PORT_ID']][$d];
-				@$sum_type2[$d] += @$data[$p['PORT_ID']][$d];
+					foreach ($period as $d) {
+						@$sum[$d] += @$data[$p['PORT_ID']][$d];
+						@$sum_type2[$d] += @$data[$p['PORT_ID']][$d];
+					}
 			} ?>
 			<?php foreach ($period as $d) {
 				echo "<td  style='background-color: #61bec9;' align='right'> <b>" . number_format(@$sum_type2[$d]) . "</b> </td>";
@@ -57,8 +59,6 @@
 				<td><?php echo $p['PORT_NAME'] ?></td>
 				<?php foreach ($period as $d) {
 					echo "<td align='right'>" . number_format(@$data[$p['PORT_ID']][$d]) . "</td>";
-					@$sum[$d] += @$data[$p['PORT_ID']][$d];
-					@$sum_type2[$d] += @$data[$p['PORT_ID']][$d];
 				} ?>
 			</tr>
 		<?php } ?>
