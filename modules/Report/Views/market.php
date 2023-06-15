@@ -119,6 +119,14 @@
 		overflow-x: inherit
 	}
 </style>
+<?php 
+foreach ($data['Short'] as $key=> $c) {
+	@$data['Short']['SUM'] += $c['NUM'];
+}
+foreach ($data['Long'] as $key=> $c) {
+	@$data['Long']['SUM'] += $c['NUM'];
+}
+?>
 <div class="row m-0">
 	<div class="col-md-6 text-center text-md-left" >
 		
@@ -176,20 +184,23 @@
 				</thead>
 				<tbody>
 					<?php $i = 0;
-					foreach ($country['Short'] as $c) {
+					foreach ($data['Short'] as $key=> $c) {
+						if($key!='SUM'){
+
 						$i++;
 						$ratio = 0;
-						if (@$data[$c['COUNTRYID']]['NUM'] > 0) {
-							$ratio = @$data[$c['COUNTRYID']]['NUM'] / $data['SUM'] * 100;
+						if ($c['NUM'] > 0) {
+							$ratio = $c['NUM'] / $data['Short']['SUM'] * 100;
 						}
 					?>
 						<tr>
 							<td data-label="ลำดับ"><?php echo $i ?></td>
 							<td data-label="สัญชาติ" align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-							<td data-label="จำนวนนักท่องเที่ยว" align="right"><?php echo @number_format(@$data[$c['COUNTRYID']]['NUM']) ?></td>
+							<td data-label="จำนวนนักท่องเที่ยว" align="right"><?php echo @number_format($c['NUM']) ?></td>
 							<td data-label="สัดส่วน" align="right"><?php echo number_format($ratio, 2); ?></td>
 						</tr>
-					<?php } ?>
+					<?php } }
+				?>
 				</tbody>
 			</table>
 		</div>
@@ -208,20 +219,21 @@
 				</thead>
 				<tbody>
 					<?php $i = 0;
-					foreach ($country['Long'] as $c) {
+					foreach ($data['Long'] as $key=> $c) {
+						if($key!='SUM'){
 						$i++;
 						$ratio = 0;
-						if (@$data[$c['COUNTRYID']]['NUM'] > 0) {
-							$ratio = @$data[$c['COUNTRYID']]['NUM'] / $data['SUM'] * 100;
+						if ($c['NUM'] > 0) {
+							$ratio = @$c['NUM'] / $data['Long']['SUM'] * 100;
 						}
 					?>
 						<tr>
 							<td data-label="ลำดับ"><?php echo $i ?></td>
 							<td data-label="สัญชาติ" align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-							<td data-label="จำนวนนักท่องเที่ยว" align="right"><?php echo @number_format(@$data[$c['COUNTRYID']]['NUM']) ?></td>
+							<td data-label="จำนวนนักท่องเที่ยว" align="right"><?php echo @number_format(@$c['NUM']) ?></td>
 							<td data-label="สัดส่วน" align="right"><?php echo number_format($ratio, 2); ?></td>
 						</tr>
-					<?php } ?>
+					<?php } }?>
 				</tbody>
 			</table>
 		</div>

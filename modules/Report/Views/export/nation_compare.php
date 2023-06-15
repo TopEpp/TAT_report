@@ -37,7 +37,7 @@ $end_date2 = $day . '-' . $month . '-' . $year;
 				<td style="font-weight: bolder; background-color:#B6E2E9;border: 1px solid black ;">GRAND TOTAL</td>
 				<?php
 				$sum1 = $sum2 = $sum_diff = 0;
-				$sum_compare = '';
+				$sum_compare = '-';
 				$dataSum = getSumData($data1, $data2, $region, 0, $country);
 				$sum1 = $dataSum['sum1'];
 				$sum2 = $dataSum['sum2'];
@@ -83,7 +83,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 		foreach ($region[$region_id] as $re) {
 
 			$sum1 = $sum2 = $sum_diff = 0;
-			$sum_compare = '';
+			$sum_compare = '-';
 			$dataSum = getSumData($data1, $data2, $region, $re['MD_STD_REG_ID'], $country);
 			$sum1 = $dataSum['sum1'];
 			$sum2 = $dataSum['sum2'];
@@ -114,7 +114,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 
 			if (!empty($country[$re['MD_STD_REG_ID']])  && $re['IS_OTHERS'] != 'Y') {
 				foreach ($country[$re['MD_STD_REG_ID']] as $co) {
-					$compare = '';
+					$compare = '-';
 					$num1 = @$data1[$co['COUNTRYID']]['NUM'];
 					$num2 = @$data2[$co['COUNTRYID']]['NUM'];
 					if ($num2 > 0) {

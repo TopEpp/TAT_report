@@ -238,17 +238,17 @@ class Main extends BaseController
 		$data['SumPortDateData'] = $Model->getSumPortDate($end_date);
 		$data['SumPortMonthData'] = $Model->getSumPortMonth($start_date, $end_date);
 
-		$data['SumRegionDateData'] = $Model->getSumRegionDate($end_date);
-		$data['SumRegionMonthData'] = $Model->getSumRegionMonth($start_date, $end_date);
-		$data['SumCountryDateData'] = $Model->getSumCountryDate($end_date);
-		$data['SumCountryMonthData'] = $Model->getSumCountryMonth($start_date, $end_date);
+		// $data['SumRegionDateData'] = $Model->getSumRegionDate($end_date);
+		// $data['SumRegionMonthData'] = $Model->getSumRegionMonth($start_date, $end_date);
+		// $data['SumCountryDateData'] = $Model->getSumCountryDate($end_date);
+		// $data['SumCountryMonthData'] = $Model->getSumCountryMonth($start_date, $end_date);
 
-		$data['region'] = $Report_model->getSTDRegion('standard');
-		$data['sub_region'] = $Model->getSubRegion();
-		$data['country_region'] = $Report_model->getCountryByRegion('standard');
+		// $data['region'] = $Report_model->getSTDRegion('standard');
+		// $data['sub_region'] = $Model->getSubRegion();
+		// $data['country_region'] = $Report_model->getCountryByRegion('standard');
 
-		$data['SumChartData'] = $Model->getSumChart($end_date);
-		$data['api_code'] = $this->Api_Code;
+		// $data['SumChartData'] = $Model->getSumChart($end_date);
+		// $data['api_code'] = $this->Api_Code;
 
 		// return view('Modules\Main\Views\export\dashboard', $data);
 
@@ -267,6 +267,7 @@ class Main extends BaseController
 			'mode' => 'utf-8',
 			'format' => 'A4',
 			'margin_top' => 3,
+			'margin_bottom' => 0,
 			'margin_left' => 2,
 			'margin_right' => 2,
 			'margin_header' => 2, // 30mm not pixel

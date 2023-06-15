@@ -270,16 +270,16 @@ class Report_model extends Model
 	function getMarketData($start_date,$end_date){
 		$data = array();
 		$builder = $this->db->table($this->table);
-	    $builder->select("{$this->table}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_EN , SUM({$this->table}.SUM) AS NUM ");
+	    $builder->select("{$this->table}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_EN , SUM({$this->table}.SUM) AS NUM,MARKET_TYPE ");
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
 	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$start_date}','dd-mm-yyyy') AND TO_DATE('{$end_date}','dd-mm-yyyy') ");	
-	    $builder->groupBy("{$this->table}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_EN ");
+	    $builder->groupBy("{$this->table}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_EN,MARKET_TYPE ");
 	    $builder->orderBy("NUM DESC");
 	    $res = $builder->get()->getResultArray();
 	    foreach($res as $row){
-	    	$data[$row['COUNTRY_ID']] = $row;
-	    	@$data['SUM'] += $row['NUM'];
+	    	$data[$row['MARKET_TYPE']][] = $row;
+	    	// @$data[$row['MARKET_TYPE']]['SUM'] += $row['NUM'];
 	    }
 	    return $data;
 	}

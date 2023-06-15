@@ -1,4 +1,12 @@
 <?php include_once("export_css.php"); ?>
+<?php 
+foreach ($data['Short'] as $key=> $c) {
+	@$data['Short']['SUM'] += $c['NUM'];
+}
+foreach ($data['Long'] as $key=> $c) {
+	@$data['Long']['SUM'] += $c['NUM'];
+}
+?>
 <table style="width:100%">
 	<tr>
 		<td class="headderTable">
@@ -22,20 +30,22 @@
 	</thead>
 	<tbody>
 		<?php $i = 0;
-		foreach ($country['Short'] as $c) {
+		foreach ($data['Short'] as $key=> $c) {
+			if($key!='SUM'){
+
 			$i++;
 			$ratio = 0;
-			if (@$data[$c['COUNTRYID']]['NUM'] > 0) {
-				$ratio = @$data[$c['COUNTRYID']]['NUM'] / $data['SUM'] * 100;
+			if ($c['NUM'] > 0) {
+				$ratio = $c['NUM'] / $data['Short']['SUM'] * 100;
 			}
 		?>
 			<tr>
 				<td align="center"><?php echo $i ?></td>
 				<td align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-				<td align="right"><?php echo @number_format(@$data[$c['COUNTRYID']]['NUM']) ?></td>
+				<td align="right"><?php echo @number_format(@$c['NUM']) ?></td>
 				<td align="right"><?php echo number_format($ratio, 2); ?></td>
 			</tr>
-		<?php } ?>
+		<?php } }?>
 		<?php if ($export_type == 'excel') { ?>
 			<tr style="border:0px">
 				<td colspan="5">
@@ -70,18 +80,19 @@
 		</thead>
 		<tbody>
 			<?php $i = 0;
-			foreach ($country['Long'] as $c) {
-				$i++;
-				$ratio = 0;
-				if (@$data[$c['COUNTRYID']]['NUM'] > 0) {
-					$ratio = @$data[$c['COUNTRYID']]['NUM'] / $data['SUM'] * 100;
-				}
-			?>
+					foreach ($data['Long'] as $key=> $c) {
+						if($key!='SUM'){
+						$i++;
+						$ratio = 0;
+						if ($c['NUM'] > 0) {
+							$ratio = @$c['NUM'] / $data['Long']['SUM'] * 100;
+						}
+					?>
 
 				<tr>
 					<td align="center"><?php echo $i ?></td>
 					<td align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-					<td align="right"><?php echo @number_format(@$data[$c['COUNTRYID']]['NUM']) ?></td>
+					<td align="right"><?php echo @number_format(@$c['NUM']) ?></td>
 					<td align="right"><?php echo number_format($ratio, 2); ?></td>
 				</tr>
 			<?php } ?>
@@ -92,7 +103,7 @@
 					</td>
 				</tr>
 			<?php
-			}
+			} }
 			?>
 		</tbody>
 	</table>
