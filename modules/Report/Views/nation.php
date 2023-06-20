@@ -135,11 +135,11 @@ foreach ($data_month_lastyear as $v) {
 			<table class="table table-striped  radiusTable1 " id="table1" style="">
 				<thead style="font-weight:bold;">
 					<tr>
-						<th class="">ลำดับ<br><?php echo $year + 543; ?></th>
-						<th>ลำดับ<br><?php echo $year + 542; ?></th>
+						<th width="5%">ลำดับ<br><?php echo $year + 543; ?></th>
+						<th width="5%">ลำดับ<br><?php echo $year + 542; ?></th>
 						<th>สัญชาติ</th>
-						<th>จำนวนนักท่องเที่ยว (คน)</th>
-						<th class="">สัดส่วน (%)</th>
+						<th width="20%">จำนวนนักท่องเที่ยว (คน)</th>
+						<th width="10%">สัดส่วน (%)</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -195,11 +195,11 @@ foreach ($data_month_lastyear as $v) {
 			<table class="table table-striped shadow-lg  radiusTable2" id="table2">
 				<thead>
 					<tr>
-						<th>ลำดับ<br><?php echo $year + 543; ?></th>
-						<th>ลำดับ<br><?php echo $year + 542; ?></th>
+						<th width="5%">ลำดับ<br><?php echo $year + 543; ?></th>
+						<th width="5%">ลำดับ<br><?php echo $year + 542; ?></th>
 						<th>สัญชาติ</th>
-						<th>จำนวนนักท่องเที่ยว (คน)</th>
-						<th>สัดส่วน (%)</th>
+						<th width="20%">จำนวนนักท่องเที่ยว (คน)</th>
+						<th width="10%">สัดส่วน (%)</th>
 					</tr>
 				</thead>
 				<tbody>
