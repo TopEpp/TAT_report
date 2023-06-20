@@ -30,8 +30,8 @@ class Import extends BaseController
 		list($year, $month, $day) = explode('-', $data['date']);
 		$data['to_date_label'] = $day . '/' . $month . '/' . $year;
 
+		// $Model->clearDataDaily();
 		$data['data'] = $Model->getRawData($data['date']);
-
 
 		return view('Modules\Import\Views\index', $data);
 	}

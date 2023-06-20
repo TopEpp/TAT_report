@@ -134,7 +134,42 @@ class Import_model extends Model
 				}
 
 
-				if(!empty($PORT['PORT_ID']) && !empty($visa['VISA_ID']) &&  (!empty($country['COUNTRY_ID']) || $country['COUNTRY_ID']==0) ) {
+				if(!empty($PORT['PORT_ID']) && !empty($visa['VISA_ID']) && ( !empty($country['COUNTRY_ID']) || @$country['COUNTRY_ID'] == 0) ) {
+					// $builder = $this->db->table($this->table);
+					// $builder->select('NUM');
+					// $builder->where('COUNTRY_ID',$country['COUNTRY_ID']);
+					// $builder->where('VISA_ID',$visa['VISA_ID']);
+					// $builder->where('OFFICE_ID',$PORT['PORT_ID']);
+					// $builder->where('REPORT_DATE', 'to_date(' . '\'' . $this->Mydate->date_thai2eng($input['REPORT_DATE'], -543) . '\'' . ',\'YYYY-MM-DD\')', false);
+					// $builder->where('DIRECTION',$row[1]);
+					// $data = $builder->get()->getRowArray();
+					// if(!empty($data['NUM'])){
+					// 	$NUM = $row[6]+$data['NUM'];
+					// 	$builder = $this->db->table($this->table);
+					// 	$builder->set('NUM',$NUM);
+					// 	$builder->where('DIRECTION',$row[1]);
+					// 	$builder->where('REPORT_DATE', 'to_date(' . '\'' . $this->Mydate->date_thai2eng($input['REPORT_DATE'], -543) . '\'' . ',\'YYYY-MM-DD\')', false);
+					// 	$builder->where('COUNTRY_ID',$country['COUNTRY_ID']);
+					// 	$builder->where('VISA_ID',$visa['VISA_ID']);
+					// 	$builder->where('OFFICE_ID',$PORT['PORT_ID']);
+					// 	$builder->update();
+					// }else{
+					// 	$NUM = $row[6];
+					// 	$builder = $this->db->table($this->table);
+					// 	$builder->set('REPORT_DATE', 'to_date(' . '\'' . $this->Mydate->date_thai2eng($input['REPORT_DATE'], -543) . '\'' . ',\'YYYY-MM-DD\')', false);
+					// 	$builder->set('DIRECTION',$row[1]);
+					// 	$builder->set('NATION',$row[2]);
+					// 	$builder->set('VISA',$row[3]);
+					// 	$builder->set('OFFICE',$row[4]);
+					// 	$builder->set('HEAD_OFFICE',$row[5]);
+					// 	$builder->set('NUM',$NUM);
+					// 	$builder->set('COUNTRY_ID',$country['COUNTRY_ID']);
+					// 	$builder->set('VISA_ID',$visa['VISA_ID']);
+					// 	$builder->set('OFFICE_ID',$PORT['PORT_ID']);
+					// 	$builder->insert();
+					// }
+
+					$NUM = $row[6];
 					$builder = $this->db->table($this->table);
 					$builder->set('REPORT_DATE', 'to_date(' . '\'' . $this->Mydate->date_thai2eng($input['REPORT_DATE'], -543) . '\'' . ',\'YYYY-MM-DD\')', false);
 					$builder->set('DIRECTION',$row[1]);
@@ -142,7 +177,7 @@ class Import_model extends Model
 					$builder->set('VISA',$row[3]);
 					$builder->set('OFFICE',$row[4]);
 					$builder->set('HEAD_OFFICE',$row[5]);
-					$builder->set('NUM',$row[6]);
+					$builder->set('NUM',$NUM);
 					$builder->set('COUNTRY_ID',$country['COUNTRY_ID']);
 					$builder->set('VISA_ID',$visa['VISA_ID']);
 					$builder->set('OFFICE_ID',$PORT['PORT_ID']);
@@ -159,7 +194,7 @@ class Import_model extends Model
 						$text .= ' VISA :: '.$row[3];
 					}
 
-					if(empty($country['COUNTRY_ID']) && $country['COUNTRY_ID'] != 0){
+					if(empty($country['COUNTRY_ID']) || @$country['COUNTRY_ID'] != 0){
 						$text .= ' NATION :: '.$row[2];
 					}
 					$text .= '<br>';
@@ -171,6 +206,50 @@ class Import_model extends Model
 
 		return $text;
 
+	}
+
+	function clearDataDaily(){
+		$builder = $this->db->table($this->table);
+	    $builder->select(" COUNT(NUM) AS CC,
+	    					SUM(NUM) AS SUM,
+						    REPORT_RAW_DATA.OFFICE_ID, 
+						    REPORT_RAW_DATA.VISA_ID,
+						    REPORT_RAW_DATA.COUNTRY_ID,
+						    TO_CHAR(REPORT_DATE, 'YYYY-MM-DD') AS REPORT_DATE_CHAR,
+						    REPORT_RAW_DATA.REPORT_DATE");
+	    $builder->where('DIRECTION','ขาเข้า');
+	    $builder->where('COUNTRY_ID <>',0);
+	    $builder->orderBy("REPORT_DATE");
+	    $builder->groupBy("REPORT_RAW_DATA.OFFICE_ID , 
+						    REPORT_RAW_DATA.VISA_ID,
+						    REPORT_RAW_DATA.COUNTRY_ID,
+						    REPORT_RAW_DATA.REPORT_DATE");
+	    $builder->having("COUNT(NUM) > ",1);
+	    $data = $builder->get()->getResultArray();
+	   	foreach($data as $row){
+	   		if($row['CC'] > 1){
+
+	   			$builder = $this->db->table($this->table);
+				$builder->where("TO_CHAR( {$this->table}.REPORT_DATE, 'YYYY-MM-DD') = ",$row['REPORT_DATE_CHAR']);
+				$builder->where('DIRECTION','ขาเข้า');
+				$builder->where('COUNTRY_ID',$row['COUNTRY_ID']);
+				$builder->where('VISA_ID',$row['VISA_ID']);
+				$builder->where('OFFICE_ID',$row['OFFICE_ID']);
+				$builder->delete();
+
+	   			// echo $row['REPORT_DATE'].' '.$row['COUNTRY_ID'].' || '.$row['CC'].'<br>';
+
+	   			$builder = $this->db->table($this->table);
+				$builder->set('NUM',$row['SUM']);
+				$builder->set('REPORT_DATE', 'to_date(' . '\'' . $row['REPORT_DATE_CHAR'] . '\'' . ',\'YYYY-MM-DD\')', false);
+				$builder->set('DIRECTION','ขาเข้า');
+				$builder->set('COUNTRY_ID',$row['COUNTRY_ID']);
+				$builder->set('VISA_ID',$row['VISA_ID']);
+				$builder->set('OFFICE_ID',$row['OFFICE_ID']);
+				$builder->insert();
+	   		}
+			
+	   	}
 	}
 
 	function getRawData($date){
@@ -461,6 +540,8 @@ class Import_model extends Model
 
 	    return $text;
 	}
+
+
 
 	function import_file_raw_monthly($input,$xlsx){
 		$fail = false;

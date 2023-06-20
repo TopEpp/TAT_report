@@ -30,6 +30,7 @@ class Main_model extends Model
 
 	function getSumDate($date)
 	{
+		$data = array();
 		$date_ex = explode('-', $date);
 		$month = $date_ex[1];
 		$year = $date_ex[0];
@@ -43,12 +44,12 @@ class Main_model extends Model
 
 	function getSumMonth($start_date, $end_date)
 	{
+		$data = array();
 		$builder = $this->db->table($this->table);
 		$builder->select("SUM({$this->table}.SUM) AS NUM");
 		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
 		$builder->where("REPORT_DATE BETWEEN TO_DATE('{$start_date}','YYYY-MM-DD') AND TO_DATE('{$end_date}','YYYY-MM-DD') ");
 		$data = $builder->get()->getRowArray();
-
 		return $data['NUM'];
 	}
 
