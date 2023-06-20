@@ -326,6 +326,18 @@
   }
 
   function saveVisaRatio() {
+    if($('#country_id').val()==''){
+      alert('กรุณาเลือกประเทศ');
+      $('#country_id').focus();
+      return false;
+    }
+
+    if($('#ratio').val()==''){
+      alert('กรุณาระบุสัดส่วน');
+      $('#ratio').focus();
+      return false;
+    }
+
     $.ajax({
       type: 'POST',
       url: base_url + '/setting/saveVisaRatio',

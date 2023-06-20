@@ -65,7 +65,7 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <select class="form-control" id="country_id" name="country_id">
+              <select class="form-control" id="country_id" name="country_id" required>
                 <option value="">เลือก</option>
                 <?php foreach ($country as $key => $c) : ?>
                   <option value="<?php echo $c['COUNTRYID'] ?>"><?php echo $c['COUNTRY_NAME_EN'] ?></option>
@@ -83,7 +83,7 @@
           </div>
           <div class="row">
             <div class="col-md-8">
-              <select class="form-control" id="visa_id" name="visa_id">
+              <select class="form-control" id="visa_id" name="visa_id" required>
                 <option value="">เลือก</option>
                 <?php foreach ($visa as $key => $c) : ?>
                   <option value="<?php echo $c['VISA_ID'] ?>"><?php echo $c['VISA_NAME'] ?></option>
@@ -91,7 +91,7 @@
               </select>
             </div>
             <div class="col-md-4">
-              <input class="form-control" id="ratio" name="ratio">
+              <input class="form-control" id="ratio" name="ratio" required>
             </div>
           </div>
           <div class="row">
@@ -104,14 +104,14 @@
           </div>
           <div class="row">
             <div class="col-md-8">
-              <select class="form-control" name="month" id="month">
+              <select class="form-control" name="month" id="month" required>
                 <?php foreach ($month_label as $key => $m) { ?>
                   <option value="<?php echo $key ?>"><?php echo $m ?></option>
                 <?php } ?>
               </select>
             </div>
             <div class="col-md-4">
-              <select class="form-control" name="year" id="year">
+              <select class="form-control" name="year" id="year" required>
                 <?php for ($y = date('Y'); $y > date('Y') - 5; $y--) { ?>
                   <option value="<?php echo $y ?>"><?php echo $y + 543 ?></option>
                 <?php } ?>
@@ -324,6 +324,24 @@
   }
 
   function savePortRatio() {
+    if($('#country_id').val()==''){
+      alert('กรุณาเลือกประเทศ');
+      $('#country_id').focus();
+      return false;
+    }
+
+    if($('#visa_id').val()==''){
+      alert('กรุณาเลือก Visa');
+      $('#visa_id').focus();
+      return false;
+    }
+
+    if($('#ratio').val()==''){
+      alert('กรุณาระบุสัดส่วน');
+      $('#ratio').focus();
+      return false;
+    }
+
     $.ajax({
       type: 'POST',
       url: base_url + '/setting/savePortRatio',
