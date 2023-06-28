@@ -100,6 +100,20 @@ class Setting extends BaseController{
  		$data = $Model->getVisaRatio($visa_id);
  		return $this->setResponseFormat('json')->respond($data);
 	}
+
+	public function updateVisaRatio($year){
+		$Model = new Setting_model();
+		$data = $Model->updateVisaRatio($year);
+	}
+
+	public function updateCalReportDaily(){
+		$Model = new Setting_model();
+		$year = @$_GET['year'];
+		$month = @$_GET['month'];
+		$day = @$_GET['day'];
+
+		$Model->updateCalReportDaily($year,$month,$day);
+	}
 }
 
 ?>

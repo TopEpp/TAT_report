@@ -29,9 +29,9 @@
                 <td><?php echo $d['PORT_TYPE'] ?></td>
                 <td><?php echo $d['PORT_CATEGORY'] ?></td>
                 <td align="center">
-                  <a href="#" class="btn btn-primary" onclick="editPort('<?php echo $d['PORT_ID'] ?>')"><i class="fa fa-pencil"></i></a>
+                  <!-- <a href="#" class="btn btn-primary" onclick="editPort('<?php echo $d['PORT_ID'] ?>')"><i class="fa fa-pencil"></i></a> -->
                   <a href="#" class="btn btn-primary" onclick="editPortRatio('<?php echo $d['PORT_ID'] ?>','<?php echo $d['PORT_NAME'] ?>')"><i class="fa fa-cog"></i></a>
-                  <button type="button" class="btn btn-primary" onclick="deletePort('<?= $d['PORT_ID'] ?>')"><i class="fa fa-trash"></i></button>
+                  <!-- <button type="button" class="btn btn-primary" onclick="deletePort('<?= $d['PORT_ID'] ?>')"><i class="fa fa-trash"></i></button> -->
                 </td>
                 <input type="hidden" id="port_name_<?php echo $d['PORT_ID'] ?>" value="<?php echo $d['PORT_NAME'] ?>">
                 <input type="hidden" id="port_cate_<?php echo $d['PORT_ID'] ?>" value="<?php echo $d['PORT_CATEGORY_ID'] ?>">

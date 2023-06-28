@@ -204,8 +204,37 @@ class Import_model extends Model
 
 		$text .= 'Insert Data Complete : '.$countData.' Row';
 
+		list($year, $month, $day) = explode('-', $REPORT_DATE);
+		updateCalReportDaily($year,$month,$day);
+
 		return $text;
 
+	}
+
+	function updateCalReportDaily($year,$month,$day=''){
+		$builder_delete = $this->db->table('REPORT_CAL_DAILY');
+		if($day){ $builder_delete->where("TO_CHAR( REPORT_DATE, 'DD') = ",$day); }
+		$builder_delete->where("TO_CHAR( REPORT_DATE, 'MM') = ",$month);
+	    $builder_delete->where("TO_CHAR( REPORT_DATE, 'YYYY') = ",$year);
+		$builder_delete->delete();
+
+		$builder = $this->db->table('CAL_DAILY_REPORT');
+		if($day){ $builder->where("TO_CHAR( REPORT_DATE, 'DD') = ",$day); }
+	    $builder->where("TO_CHAR( REPORT_DATE, 'MM') = ",intval($month));
+	    $builder->where("TO_CHAR( REPORT_DATE, 'YYYY') = ",$year);
+	    $data = $builder->get()->getResultArray();
+
+		foreach ($data as $key => $value) {
+			$c++;
+			$builder_insert = $this->db->table('REPORT_CAL_DAILY');
+			$builder_insert->set('COUNTRY_ID',$value['COUNTRY_ID']);
+			$builder_insert->set('REPORT_DATE',$value['REPORT_DATE']);
+			$builder_insert->set('OFFICE_ID',$value['OFFICE_ID']);
+			$builder_insert->set('COUNTRY_NAME_TH',$value['COUNTRY_NAME_TH']);
+			$builder_insert->set('COUNTRY_NAME_EN',$value['COUNTRY_NAME_EN']);
+			$builder_insert->set('SUM',$value['SUM']);
+			$builder_insert->insert();
+		}
 	}
 
 	function clearDataDaily(){

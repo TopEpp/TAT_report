@@ -101,6 +101,8 @@ $routes->group('setting', ['namespace' => '\Modules\Setting\Controllers'], funct
     $routes->get('getVisaRatio/(:num)','Setting::getVisaRatio/$1');
     $routes->post('deleteVisa', 'Setting::deleteVisa');
 
+    $routes->get('updateVisaRatio/(:num)','Setting::updateVisaRatio/$1');
+    $routes->get('updateCalReportDaily','Setting::updateCalReportDaily');
 
 });
 

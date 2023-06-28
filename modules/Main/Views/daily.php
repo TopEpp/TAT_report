@@ -335,7 +335,7 @@
 	<div class="col-md-3 py-2 col-12">
 		<div class="card" style="border-radius: 20px; overflow: hidden;">
 			<div class="card-header pt-3 px-4" style="background-color: #3cacae; ">
-				<span style="font-weight:bold; font-size: 16px; color: white;">จำแนกรายสัญชาติสะสม (คน)</span><br>
+				<span style="font-weight:bold; font-size: 15px; color: white;">จำแนกรายสัญชาติสะสม (คน)</span><br>
 				<span style="font-size:13px;  color: white;"><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
 			</div>
 			<div class="card-body px-4" style="background: white; padding: 0; border-radius: 0.35rem;">

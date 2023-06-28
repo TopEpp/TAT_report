@@ -86,17 +86,21 @@ $method =  $request->uri->getSegment(2);
         </div>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" target="_blank" href="<?php echo base_url('public/uploads/definition.pdf') ?>">
+            <i class="fas fa-fw fa-file"></i>
+            <span>คำนิยาม</span>
+        </a>
+    </li>
+
     <li class="nav-item <?php if ($controller == 'import') {
                             echo 'active';
                         } ?>">
-
         <a class="nav-link  <?php if ( $controller == 'import' && ($method == 'index' || $method == '')) {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('import') ?>"> 
                                         <i class="fas fa-fw fa-upload"></i>
             <span>Import</span></a>
-
-       
     </li>
 
 

@@ -41,7 +41,6 @@ class Setting_model extends Model
 		$builder_delete->where('PORT_ID',$input['port_id']);
 		$builder_delete->where('YEAR',$input['year']);
 		$builder_delete->where('MONTH',$input['month']);
-		$builder_delete->where('RATIO',$input['ratio']);
 		$builder_delete->where('VISA_ID',$input['visa_id']);
 		$builder_delete->where('COUNTRY_ID',$input['country_id']);
 		$builder_delete->delete();
@@ -54,25 +53,51 @@ class Setting_model extends Model
 		$builder->set('VISA_ID',$input['visa_id']);
 		$builder->set('COUNTRY_ID',$input['country_id']);
 		$builder->insert();
+
+		updateCalReportDaily($input['year'],$input['month'],'',$input['visa_id'],$input['port_id'],$value['COUNTRYID']);
 	}
 
 
 	function saveVisaRatio($input){
-		$builder_delete = $this->db->table('MD_VISA_RATIO');
-		$builder_delete->where('YEAR',$input['year']);
-		$builder_delete->where('MONTH',$input['month']);
-		$builder_delete->where('RATIO',$input['ratio']);
-		$builder_delete->where('VISA_ID',$input['visa_id']);
-		$builder_delete->where('COUNTRY_ID',$input['country_id']);
-		$builder_delete->delete();
+		if($input['country_id']=='all'){
+			$builder_delete = $this->db->table('MD_VISA_RATIO');
+			$builder_delete->where('YEAR',$input['year']);
+			$builder_delete->where('MONTH',$input['month']);
+			$builder_delete->where('VISA_ID',$input['visa_id']);
+			$builder_delete->delete();
 
-		$builder = $this->db->table('MD_VISA_RATIO');
-		$builder->set('YEAR',$input['year']);
-		$builder->set('MONTH',$input['month']);
-		$builder->set('RATIO',$input['ratio']);
-		$builder->set('VISA_ID',$input['visa_id']);
-		$builder->set('COUNTRY_ID',$input['country_id']);
-		$builder->insert();
+			$builder = $this->db->table('MD_COUNTRY');
+			$builder->select('COUNTRYID ');
+			$builder->where('MARKET_TYPE IS NOT NULL');
+			$co = $builder->get()->getResultArray();
+			foreach ($co as $key => $value) {
+				$builder = $this->db->table('MD_VISA_RATIO');
+				$builder->set('YEAR',$input['year']);
+				$builder->set('MONTH',$input['month']);
+				$builder->set('RATIO',$input['ratio']);
+				$builder->set('VISA_ID',$input['visa_id']);
+				$builder->set('COUNTRY_ID',$value['COUNTRYID']);
+				$builder->insert();
+			}
+		}else{
+			$builder_delete = $this->db->table('MD_VISA_RATIO');
+			$builder_delete->where('YEAR',$input['year']);
+			$builder_delete->where('MONTH',$input['month']);
+			$builder_delete->where('VISA_ID',$input['visa_id']);
+			$builder_delete->where('COUNTRY_ID',$input['country_id']);
+			$builder_delete->delete();
+
+			$builder = $this->db->table('MD_VISA_RATIO');
+			$builder->set('YEAR',$input['year']);
+			$builder->set('MONTH',$input['month']);
+			$builder->set('RATIO',$input['ratio']);
+			$builder->set('VISA_ID',$input['visa_id']);
+			$builder->set('COUNTRY_ID',$input['country_id']);
+			$builder->insert();
+		}
+
+		updateCalReportDaily($input['year'],$input['month'],'',$input['visa_id'],'',$value['COUNTRYID']);
+		
 	}
 
 	function saveVisa($input){
@@ -142,4 +167,76 @@ class Setting_model extends Model
 		$data = $builder->get()->getResultArray();
 	    return $data;
 	}
+
+	function updateVisaRatio($year){
+		set_time_limit(1000);
+		$builder = $this->db->table('MD_VISA');
+		$builder->select('VISA_ID');
+		$builder->where('VISA_TYPE_ID',1);
+		$builder->where('IS_DELETED',1);
+		$data = $builder->get()->getResultArray();
+		foreach ($data as $key => $value) {
+			$builder_co = $this->db->table('MD_COUNTRY');
+			$builder_co->select('COUNTRYID');
+			$builder_co->where('MARKET_TYPE IS NOT NULL');
+			$co = $builder_co->get()->getResultArray();
+			foreach ($co as $c) {
+
+				for ($i=1; $i <= 12 ; $i++) { 
+					$builder_delete = $this->db->table('MD_VISA_RATIO');
+					$builder_delete->where('YEAR',$year);
+					$builder_delete->where('MONTH',$i);
+					$builder_delete->where('VISA_ID',$value['VISA_ID']);
+					$builder_delete->where('COUNTRY_ID',$c['COUNTRYID']);
+					$builder_delete->delete();
+
+					$builder_insert = $this->db->table('MD_VISA_RATIO');
+					$builder_insert->set('YEAR',$year);
+					$builder_insert->set('MONTH',$i);
+					$builder_insert->set('RATIO',1);
+					$builder_insert->set('VISA_ID',$value['VISA_ID']);
+					$builder_insert->set('COUNTRY_ID',$c['COUNTRYID']);
+					$builder_insert->insert();
+				}
+			
+			}
+		}
+	}
+
+	function updateCalReportDaily($year,$month,$day='',$visa='',$port='',$country=''){
+		$builder_delete = $this->db->table('REPORT_CAL_DAILY');
+		if($day){ $builder_delete->where("TO_CHAR( REPORT_DATE, 'DD') = ",$day); }
+		if($visa){ $builder_delete->where("VISA_ID",$visa); }
+		if($port){ $builder_delete->where("PORT_ID",$port); }
+		if($country){ $builder_delete->where("COUNTRY_ID",$country); }
+		$builder_delete->where("TO_CHAR( REPORT_DATE, 'MM') = ",$month);
+	    $builder_delete->where("TO_CHAR( REPORT_DATE, 'YYYY') = ",$year);
+		$builder_delete->delete();
+
+		$builder = $this->db->table('CAL_DAILY_REPORT');
+		if($day){ $builder->where("TO_CHAR( REPORT_DATE, 'DD') = ",$day); }
+		if($visa){ $builder->where("VISA_ID",$visa); }
+		if($port){ $builder->where("PORT_ID",$port); }
+		if($country){ $builder->where("COUNTRY_ID",$country); }
+	    $builder->where("TO_CHAR( REPORT_DATE, 'MM') = ",intval($month));
+	    $builder->where("TO_CHAR( REPORT_DATE, 'YYYY') = ",$year);
+	    $data = $builder->get()->getResultArray();
+
+	    echo ' COUNT :: '.count($data); $c=0;
+		foreach ($data as $key => $value) {
+			$c++;
+			$builder_insert = $this->db->table('REPORT_CAL_DAILY');
+			$builder_insert->set('COUNTRY_ID',$value['COUNTRY_ID']);
+			$builder_insert->set('REPORT_DATE',$value['REPORT_DATE']);
+			$builder_insert->set('OFFICE_ID',$value['OFFICE_ID']);
+			$builder_insert->set('COUNTRY_NAME_TH',$value['COUNTRY_NAME_TH']);
+			$builder_insert->set('COUNTRY_NAME_EN',$value['COUNTRY_NAME_EN']);
+			$builder_insert->set('SUM',$value['SUM']);
+			$builder_insert->insert();
+		}
+
+		echo ' :: '.$c;
+	}
+
+
 }

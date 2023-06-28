@@ -8,7 +8,7 @@ use App\Libraries\Mydate;
 use App\Libraries\Hash;
 class Report_model extends Model
 {
-	protected $table = 'CAL_SUM_DATA_REPORT';
+	protected $table = 'REPORT_CAL_DAILY';//CAL_SUM_DATA_REPORT
   	protected $primaryKey = 'REC_ID';
   	protected $allowedFields = [];
 

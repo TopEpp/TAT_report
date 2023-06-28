@@ -26,9 +26,9 @@
                 <td><?php echo $d['VISA_NAME'] ?> <?php if ($visa_ratio[$d['VISA_ID']] > 0) { ?> <a onclick="openDetail('<?php echo $d['VISA_ID'] ?>','<?php echo $d['VISA_NAME'] ?>')"><i class="fa fa-certificate" style="color:orange; cursor: pointer;"></i></a> <?php } ?></td>
                 <td><?php echo $d['VISA_TYPE'] ?></td>
                 <td align="center">
-                  <a href="#" class="btn btn-primary" onclick="manageVisa('<?= $d['VISA_ID'] ?>')"><i class="fa fa-pen"></i></a>
+                  <!-- <a href="#" class="btn btn-primary" onclick="manageVisa('<?= $d['VISA_ID'] ?>')"><i class="fa fa-pen"></i></a> -->
                   <a href="#" class="btn btn-primary" onclick="editCalVISA('<?php echo $d['VISA_ID'] ?>','<?php echo $d['VISA_NAME'] ?>')"><i class="fa fa-cog"></i></a>
-                  <button type="button" class="btn btn-primary" onclick="deleteVisa('<?= $d['VISA_ID'] ?>')"><i class="fa fa-trash"></i></button>
+                  <!-- <button type="button" class="btn btn-primary" onclick="deleteVisa('<?= $d['VISA_ID'] ?>')"><i class="fa fa-trash"></i></button> -->
 
                   <input type="hidden" id="visa_id_<?= $d['VISA_ID'] ?>" value="<?= $d['VISA_ID'] ?>">
                   <input type="hidden" id="visa_name_<?= $d['VISA_ID'] ?>" value="<?= $d['VISA_NAME'] ?>">
@@ -107,6 +107,7 @@
             <div class="col-md-8">
               <select class="form-control" id="country_id" name="country_id">
                 <option value="">เลือก</option>
+                <option value="all">ทั้งหมด</option>
                 <?php foreach ($country as $key => $c) : ?>
                   <option value="<?php echo $c['COUNTRYID'] ?>"><?php echo $c['COUNTRY_NAME_EN'] ?></option>
                   <?php endforeach ?>?>
@@ -153,7 +154,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <input type="hidden" name="visa_id" id="visa_id" value="">
+          <input type="hidden" name="visa_id" id="visa_id_ratio" value="">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
           <button type="button" class="btn btn-primary" onclick="saveVisaRatio();">บันทึก</button>
         </div>
@@ -300,7 +301,7 @@
   }
 
   function editCalVISA(id, name) {
-    $('#visa_id').val(id);
+    $('#visa_id_ratio').val(id);
     $('#ratio').val('');
 
     $('#port_name_label').html(name);
@@ -343,7 +344,7 @@
       url: base_url + '/setting/saveVisaRatio',
       data: $('#form_ratio').serialize(),
       success: function(data) {
-        $('#modalPort').modal('hide');
+        $('#modalVisa').modal('hide');
       },
     });
   }

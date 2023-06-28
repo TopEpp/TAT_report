@@ -11,15 +11,15 @@ use App\Libraries\Hash;
 
 class Main_model extends Model
 {
-	protected $table = 'CAL_SUM_DATA_REPORT';
+	protected $table = 'REPORT_CAL_DAILY'; //CAL_SUM_DATA_REPORT
 	protected $table_month = 'CAL_MONTHLY_RAW_REPORT';
 	protected $primaryKey = 'REC_ID';
 	protected $allowedFields = [];
 
 	function getMaxDate()
 	{
-		$builder = $this->db->table('REPORT_RAW_DATA');
-		$builder->select("TO_CHAR(REPORT_RAW_DATA.REPORT_DATE,'YYYY-MM-DD') AS REPORT_DATE");
+		$builder = $this->db->table($this->table);
+		$builder->select("TO_CHAR(REPORT_DATE,'YYYY-MM-DD') AS REPORT_DATE");
 		$builder->orderBy('REPORT_DATE DESC');
 		$builder->limit(1);
 
