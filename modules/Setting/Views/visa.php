@@ -144,12 +144,16 @@
 
           <div class="row" style="margin-top:20px;">
             <div class="col-md-12">
-              <label>ข้อมูลสัดส่วน</label>
-              <table class="table table-striped table-bordered" id="table_ratio">
-                <tr>
-                  <td align="center">ไม่มีข้อมูล</td>
-                </tr>
-              </table>
+              <div class="card" style="">
+                <div class="card-body">
+                  <label>ข้อมูลสัดส่วน</label>
+                  <table class="table table-striped table-bordered" id="table_ratio">
+                    <tr>
+                      <td align="center">ไม่มีข้อมูล</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -54,7 +54,7 @@ class Setting_model extends Model
 		$builder->set('COUNTRY_ID',$input['country_id']);
 		$builder->insert();
 
-		updateCalReportDaily($input['year'],$input['month'],'',$input['visa_id'],$input['port_id'],$value['COUNTRYID']);
+		$this->updateCalReportDaily($input['year'],$input['month'],'',$input['visa_id'],$input['port_id'],$value['COUNTRYID']);
 	}
 
 
@@ -96,7 +96,7 @@ class Setting_model extends Model
 			$builder->insert();
 		}
 
-		updateCalReportDaily($input['year'],$input['month'],'',$input['visa_id'],'',$value['COUNTRYID']);
+		$this->updateCalReportDaily($input['year'],$input['month'],'',$input['visa_id'],'',$value['COUNTRYID']);
 		
 	}
 

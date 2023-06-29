@@ -23,7 +23,9 @@ class Import_model extends Model
 		$builder_del->delete();
 
 		$temp_PORT = $temp_visa = $temp_country = array();
-		$countData = 0; $text='';
+
+		list($year, $month, $day) = explode('-', $REPORT_DATE);
+		$countData = 0; $text=' Report Date :: '.$day.'/'.$month.'/'.$year.'<br>';
 		foreach($xlsx->rows() as $key => $row){
 			$PORT['PORT_ID'] = $visa['VISA_ID'] = $country['COUNTRY_ID'] = null;
 			if(is_numeric($row[6])){
@@ -64,77 +66,282 @@ class Import_model extends Model
 					$country['COUNTRY_ID'] = $temp_country[$row[2]];
 				}
 
-				
 
 				if(empty($country['COUNTRY_ID'])){
-					if($row[2]=='ไม่มีสัญชาติ'){
-						$country['COUNTRY_ID'] = 275;
-					}else if( $row[2]=='บริติช (OVERSEAS)'){
-						$country['COUNTRY_ID'] = 274;
-					}else if( $row[2]=='ดินามาร์คซ'){
-						$country['COUNTRY_ID'] = 102;
-					}else if( $row[2]=='คอซอวอ'){
-						$country['COUNTRY_ID'] = 43;
-					}else if( $row[2]=='กินี'){
-						$country['COUNTRY_ID'] = 192;
-					}else if( $row[2]=='โคโลนีอังกฤษ'){
-						$country['COUNTRY_ID'] = 1;
-					}else if( $row[2]=='รัฐเอกราชซามัว'){
-						$country['COUNTRY_ID'] = 244;
-					}else if( $row[2]=='ซาอีร์'){
-						$country['COUNTRY_ID'] = 183;
-					}else if( $row[2]=='สาธารณรัฐซิมบับเว (ZWE)'){
-						$country['COUNTRY_ID'] = 185;
-					}else if( $row[2]=='ไดโต'){
-						$country['COUNTRY_ID'] = 122;
-					}else if( $row[2]=='สาธารณรัฐติมอร์ตะวันออก'){
-						$country['COUNTRY_ID'] = 151;
-					}else if( $row[2]=='ทรัสต์แปซิฟิค'){
-						$country['COUNTRY_ID'] = 242;
-					}else if( $row[2]=='มาเรียนา'){
-						$country['COUNTRY_ID'] = 131;
-					}else if( $row[2]=='สหพันธ์สาธารณรัฐยูโกสลาเวีย'){
-						$country['COUNTRY_ID'] = 43;
-					}else if( $row[2]=='ยูโทเปีย'){
-						$country['COUNTRY_ID'] = 91;
-					}else if( $row[2]=='ยูเอส ไมเนอร์ เอ๊าไลน์นิ่ง ไอร์แลนด์'){
-						$country['COUNTRY_ID'] = 261;
-					}else if( $row[2]=='เยเมนเหนือ'){
-						$country['COUNTRY_ID'] = 39;
-					}else if( $row[2]=='เยอรมันตะวันออก'){
-						$country['COUNTRY_ID'] = 48;
-					}else if( $row[2]=='นครรัฐวาติกัน'){
-						$country['COUNTRY_ID'] = 88;
-					}else if( $row[2]=='สก็อตแลนด์'){
-						$country['COUNTRY_ID'] = 274;
-					}else if( $row[2]=='สฟาลบาร์และหมู่เกาะยานไมเอน'){
-						$country['COUNTRY_ID'] = 105;
-					}else if( $row[2]=='อัลมาดินา'){
-						$country['COUNTRY_ID'] = 37;
-					}else if( $row[2]=='อังกฤษ-ฮ่องกง'){
-						$country['COUNTRY_ID'] = 156;
-					}else if( $row[2]=='สาธารณรัฐเซาท์ซูดาน'){
-						$country['COUNTRY_ID'] = 235;
-					}else if( $row[2]=='เฟรนช์โปลินีเซีย'){
-						$country['COUNTRY_ID'] = 256;
-					}else if( $row[2]=='ปรินซีเบิล'){
-						$country['COUNTRY_ID'] = 0;
-					}else if( $row[2]=='ผู้อพยพ (1951 CONVENTION)'){
-						$country['COUNTRY_ID'] = 0;
-					}else if( $row[2]=='ผู้อพยพ (อื่นๆ)'){
-						$country['COUNTRY_ID'] = 0;
-					}else if( $row[2]=='หน่วยงานพิเศษ ยูเอ็น'){
-						$country['COUNTRY_ID'] = 0;
-					}else if( $row[2]=='ยูเอ็น'){
-						$country['COUNTRY_ID'] = 0;
-					}else if( $row[2]=='องค์การสหประชาชาติ'){
-						$country['COUNTRY_ID'] = 0;
+					switch ( trim($row[2])) {
+						case 'ไม่มีสัญชาติ':
+							$country['COUNTRY_ID'] = 275;
+							break;
+						case 'บริติช (OVERSEAS)':
+							$country['COUNTRY_ID'] = 274;
+							break;
+						case 'ดินามาร์คซ':
+							$country['COUNTRY_ID'] = 102;
+							break;
+						case 'คอซอวอ':
+							$country['COUNTRY_ID'] = 43;
+							break;
+						case 'กินี':
+							$country['COUNTRY_ID'] = 192;
+							break;
+						case 'โคโลนีอังกฤษ':
+							$country['COUNTRY_ID'] = 1;
+							break;
+						case 'รัฐเอกราชซามัว':
+							$country['COUNTRY_ID'] = 244;
+							break;
+						case 'ซาอีร์':
+							$country['COUNTRY_ID'] = 183;
+							break;
+						case 'สาธารณรัฐซิมบับเว (ZWE)':
+							$country['COUNTRY_ID'] = 185;
+							break;
+						case 'ไดโต':
+							$country['COUNTRY_ID'] = 122;
+							break;
+						case 'สาธารณรัฐติมอร์ตะวันออก':
+							$country['COUNTRY_ID'] = 151;
+							break;
+						case 'ทรัสต์แปซิฟิค':
+							$country['COUNTRY_ID'] = 242;
+							break;
+						case 'มาเรียนา':
+							$country['COUNTRY_ID'] = 131;
+							break;
+						case 'สหพันธ์สาธารณรัฐยูโกสลาเวีย':
+							$country['COUNTRY_ID'] = 43;
+							break;
+						case 'ยูโทเปีย':
+							$country['COUNTRY_ID'] = 91;
+							break;
+						case 'ยูเอส ไมเนอร์ เอ๊าไลน์นิ่ง ไอร์แลนด์':
+							$country['COUNTRY_ID'] = 261;
+							break;
+						case 'เยเมนเหนือ':
+							$country['COUNTRY_ID'] = 39;
+							break;
+						case 'เยอรมันตะวันออก':
+							$country['COUNTRY_ID'] = 48;
+							break;
+						case 'นครรัฐวาติกัน':
+							$country['COUNTRY_ID'] = 88;
+							break;
+						case 'สก็อตแลนด์':
+							$country['COUNTRY_ID'] = 274;
+							break;
+						case 'สฟาลบาร์และหมู่เกาะยานไมเอน':
+							$country['COUNTRY_ID'] = 105;
+							break;
+						case 'อัลมาดินา':
+							$country['COUNTRY_ID'] = 37;
+							break;
+						case 'อังกฤษ-ฮ่องกง':
+							$country['COUNTRY_ID'] = 156;
+							break;
+						case 'สาธารณรัฐเซาท์ซูดาน':
+							$country['COUNTRY_ID'] = 235;
+							break;
+						case 'เฟรนช์โปลินีเซีย':
+							$country['COUNTRY_ID'] = 256;
+							break;
+						case 'ปรินซีเบิล':
+							$country['COUNTRY_ID'] = 0;
+							break;
+						case 'ซินต์มาร์เติน':
+							$country['COUNTRY_ID'] = 139;
+							break;
+						case 'กรีนแลนเดอร์':
+							$country['COUNTRY_ID'] = 109;
+							break;
+						case 'กัวมาเนียน':
+							$country['COUNTRY_ID'] = 248;
+							break;
+						case 'กาวเดอลูเปียน':
+							$country['COUNTRY_ID'] = 6;
+							break;
+						case 'กิเนียน':
+							$country['COUNTRY_ID'] = 192;
+							break;
+						case 'คูราเชาอัน':
+							$country['COUNTRY_ID'] = 16;
+							break;
+						case 'หมู่เกาะโบเวท':
+							$country['COUNTRY_ID'] = 174;
+							break;
+						case 'ไอล์ออฟแมน':
+							$country['COUNTRY_ID'] = 80;
+							break;
+						case 'ยูเอส ไมเนอร์ เอ๊าไลน์นิ่ง ไอร์แลนด์':
+							$country['COUNTRY_ID'] = 261;
+							break;
+						case 'เดอวอยต์':
+							$country['COUNTRY_ID'] = 193;
+							break;
+						case 'ซาอีเรียน':
+							$country['COUNTRY_ID'] = 184;
+							break;
+						case 'เจอร์ซีย์':
+							$country['COUNTRY_ID'] = 77;
+							break;
+						case 'เกิร์นซีย์':
+							$country['COUNTRY_ID'] = 76;
+							break;
+						case 'อัลมาดินา':
+							$country['COUNTRY_ID'] = 37;
+							break;
+						case 'ซิมบับเว (ZWE)':
+							$country['COUNTRY_ID'] = 185;
+							break;
+						case 'แซ็ง-บาร์เตเลมี':
+							$country['COUNTRY_ID'] = 138;
+							break;
+						case 'ยูโกสลาฟ':
+							$country['COUNTRY_ID'] = 43;
+							break;
+						case 'เซนต์ปิแอร์และมิคิวลอน':
+							$country['COUNTRY_ID'] = 140;
+							break;
+						case 'ติมอร์ตะวันออก':
+							$country['COUNTRY_ID'] = 151;
+							break;
+						case 'สฟาลบาร์และหมู่เกาะยานไมเอน':
+							$country['COUNTRY_ID'] = 105;
+							break;
+						case 'นิวคาลิโตเนียน':
+							$country['COUNTRY_ID'] = 247;
+							break;
+						case 'สก็อตติช':
+							$country['COUNTRY_ID'] = 274;
+							break;
+						case 'แอนทาร์ติก้า':
+							$country['COUNTRY_ID'] = 173;
+							break;
+						case 'โบแนเรอ':
+							$country['COUNTRY_ID'] = 25;
+							break;
+						case 'เบอร์มูดาน':
+							$country['COUNTRY_ID'] = 11;
+							break;
+						case 'สาธารณรัฐโบพูทัตสวา':
+							$country['COUNTRY_ID'] = 229;
+							break;
+						case 'ฟรานส์ เมโทรโปริแทรน':
+							$country['COUNTRY_ID'] = 78;
+							break;
+						case 'เฟรนช์เซาเทิร์นและแอนตาร์กติกแลนส์':
+							$country['COUNTRY_ID'] = 92;
+							break;
+						case 'เฟรนช์โปลินีเซีย':
+							$country['COUNTRY_ID'] = 256;
+							break;
+						case 'มาร์ตินิก':
+							$country['COUNTRY_ID'] = 26;
+							break;
+						case 'เยเมนเหนือ':
+							$country['COUNTRY_ID'] = 39;
+							break;
+						case 'เยอรมนีตะวันออก':
+							$country['COUNTRY_ID'] = 70;
+							break;
+						case 'ซามัว':
+							$country['COUNTRY_ID'] = 244;
+							break;
+						case 'เรอุนยอง':
+							$country['COUNTRY_ID'] = 222;
+							break;
+						case 'สเปนิชซาฮารา':
+							$country['COUNTRY_ID'] = 90;
+							break;
+						case 'แอฟริกันกลาง':
+							$country['COUNTRY_ID'] = 186;
+							break;
+						case 'หมู่เกาะคะแนรี':
+							$country['COUNTRY_ID'] = 230;
+							break;
+						case 'คาโรไลน์':
+							$country['COUNTRY_ID'] = 162;
+							break;
+						case 'เคย์แมน':
+							$country['COUNTRY_ID'] = 13;
+							break;
+						case 'หมู่เกาะโคโคส, หมู่เกาะคีลิง':
+							$country['COUNTRY_ID'] = 153;
+							break;
+						case 'มาเรียนัน':
+							$country['COUNTRY_ID'] = 260;
+							break;
+						case 'โคโลนีอังกฤษ':
+							$country['COUNTRY_ID'] = 1;
+							break;
+						case 'พิตแคร์น':
+							$country['COUNTRY_ID'] = 252;
+							break;
+						case 'หมู่เกาะฟอล์กแลนด์ (มัลบีนัส)':
+							$country['COUNTRY_ID'] = 129;
+							break;
+						case 'แฟโรส์':
+							$country['COUNTRY_ID'] = 107;
+							break;
+						case 'มาเดรา':
+							$country['COUNTRY_ID'] = 75;
+							break;
+						case 'เวอร์จิน':
+							$country['COUNTRY_ID'] = 14;
+							break;
+						case 'ไดโต':
+							$country['COUNTRY_ID'] = 122;
+							break;
+						case 'แองกูล่า':
+							$country['COUNTRY_ID'] = 20;
+							break;
+						case 'ฮ่องกง-อังกฤษ':
+							$country['COUNTRY_ID'] = 156;
+							break;
+						case 'กรีนแลนด์':
+							$country['COUNTRY_ID'] = 109;
+							break;
+						case 'เฟรนช์เกียนา':
+							$country['COUNTRY_ID'] = 132;
+							break;
+						case 'ทรัสต์แปซิฟิก':
+							$country['COUNTRY_ID'] = 242;
+							break;
+						case 'กะลาลลิตนูนาต':
+							$country['COUNTRY_ID'] = 109;
+							break;
+						case 'ผู้อพยพ (1951 CONVENTION)':
+							$country['COUNTRY_ID'] = 'other';
+							break;
+						case 'ผู้อพยพ (อื่นๆ)':
+							$country['COUNTRY_ID'] = 'other';
+							break;
+						case 'หน่วยงานพิเศษ ยูเอ็น':
+							$country['COUNTRY_ID'] = 'other';
+							break;
+						case 'หน่วยงานพิเศษยูเอ็น':
+							$country['COUNTRY_ID'] = 'other';
+							break;
+						case 'ยูเอ็น':
+							$country['COUNTRY_ID'] = 'other';
+							break;
+						case 'องค์การสหประชาชาติ':
+							$country['COUNTRY_ID'] = 'other';
+							break;
+						case 'องค์การสหประชาชาติ  ':
+							$country['COUNTRY_ID'] = 'other';
+							break;
+						case 'ไม่ทราบ':
+							$country['COUNTRY_ID'] = 'other';
+							break;
+						
+						default:
+							$country['COUNTRY_ID'] = null;
+							break;
 					}
-
 				}
 
-
-				if(!empty($PORT['PORT_ID']) && !empty($visa['VISA_ID']) && ( !empty($country['COUNTRY_ID']) || @$country['COUNTRY_ID'] == 0) ) {
+				// $text .= ' NATION :: '.$country['COUNTRY_ID'].' -- '.$row[2].'<br>';
+				if(!empty($PORT['PORT_ID']) && !empty($visa['VISA_ID']) && @$country['COUNTRY_ID'] != null  ) {
 					// $builder = $this->db->table($this->table);
 					// $builder->select('NUM');
 					// $builder->where('COUNTRY_ID',$country['COUNTRY_ID']);
@@ -168,6 +375,9 @@ class Import_model extends Model
 					// 	$builder->set('OFFICE_ID',$PORT['PORT_ID']);
 					// 	$builder->insert();
 					// }
+					if($country['COUNTRY_ID'] =='other'){
+						$country['COUNTRY_ID'] = 0;
+					}
 
 					$NUM = $row[6];
 					$builder = $this->db->table($this->table);
@@ -205,7 +415,7 @@ class Import_model extends Model
 		$text .= 'Insert Data Complete : '.$countData.' Row';
 
 		list($year, $month, $day) = explode('-', $REPORT_DATE);
-		updateCalReportDaily($year,$month,$day);
+		$this->updateCalReportDaily($year,$month,$day);
 
 		return $text;
 
@@ -214,7 +424,7 @@ class Import_model extends Model
 	function updateCalReportDaily($year,$month,$day=''){
 		$builder_delete = $this->db->table('REPORT_CAL_DAILY');
 		if($day){ $builder_delete->where("TO_CHAR( REPORT_DATE, 'DD') = ",$day); }
-		$builder_delete->where("TO_CHAR( REPORT_DATE, 'MM') = ",$month);
+		$builder_delete->where("TO_CHAR( REPORT_DATE, 'MM') = ",intval($month));
 	    $builder_delete->where("TO_CHAR( REPORT_DATE, 'YYYY') = ",$year);
 		$builder_delete->delete();
 
@@ -225,7 +435,6 @@ class Import_model extends Model
 	    $data = $builder->get()->getResultArray();
 
 		foreach ($data as $key => $value) {
-			$c++;
 			$builder_insert = $this->db->table('REPORT_CAL_DAILY');
 			$builder_insert->set('COUNTRY_ID',$value['COUNTRY_ID']);
 			$builder_insert->set('REPORT_DATE',$value['REPORT_DATE']);
