@@ -54,7 +54,7 @@ class Setting_model extends Model
 		$builder->set('COUNTRY_ID',$input['country_id']);
 		$builder->insert();
 
-		$this->updateCalReportDaily($input['year'],$input['month'],'',$input['visa_id'],$input['port_id'],$value['COUNTRYID']);
+		$this->updateCalReportDaily($input['year'],$input['month'],'',$input['port_id'],$input['country_id']);
 	}
 
 
@@ -96,7 +96,7 @@ class Setting_model extends Model
 			$builder->insert();
 		}
 
-		$this->updateCalReportDaily($input['year'],$input['month'],'',$input['visa_id'],'',$value['COUNTRYID']);
+		$this->updateCalReportDaily($input['year'],$input['month']);
 		
 	}
 
@@ -146,24 +146,36 @@ class Setting_model extends Model
 		$builder->update();
 	}
 
-	function getPortRatio($port_id){
+	function getPortRatio($port_id,$month='',$year=''){
 		$builder = $this->db->table('MD_PORT_RATIO');
 		$builder->select('MD_PORT_RATIO.* , MD_COUNTRY.COUNTRY_NAME_EN, MD_VISA.VISA_NAME ');
 		$builder->join('MD_COUNTRY','MD_COUNTRY.COUNTRYID = MD_PORT_RATIO.COUNTRY_ID');
 		$builder->join('MD_VISA','MD_VISA.VISA_ID = MD_PORT_RATIO.VISA_ID');
 		$builder->where('PORT_ID',$port_id);
+		if($month){
+			$builder->where('MD_PORT_RATIO.MONTH',$month);
+		}
+		if($year){
+			$builder->where('MD_PORT_RATIO.YEAR',$year);
+		}
 		$builder->orderBy('YEAR,MONTH');
 		$data = $builder->get()->getResultArray();
 	    return $data;
 	}
 
-	function getVisaRatio($visa_id){
+	function getVisaRatio($visa_id,$month='',$year=''){
 		$builder = $this->db->table('MD_VISA_RATIO');
 		$builder->select('MD_VISA_RATIO.* , MD_COUNTRY.COUNTRY_NAME_EN, MD_VISA.VISA_NAME ');
 		$builder->join('MD_COUNTRY','MD_COUNTRY.COUNTRYID = MD_VISA_RATIO.COUNTRY_ID');
 		$builder->join('MD_VISA','MD_VISA.VISA_ID = MD_VISA_RATIO.VISA_ID');
 		$builder->where('MD_VISA_RATIO.VISA_ID',$visa_id);
-		$builder->orderBy('YEAR,MONTH');
+		if($month){
+			$builder->where('MD_VISA_RATIO.MONTH',$month);
+		}
+		if($year){
+			$builder->where('MD_VISA_RATIO.YEAR',$year);
+		}
+		$builder->orderBy('YEAR,MONTH,COUNTRY_NAME_EN');
 		$data = $builder->get()->getResultArray();
 	    return $data;
 	}
@@ -203,28 +215,26 @@ class Setting_model extends Model
 		}
 	}
 
-	function updateCalReportDaily($year,$month,$day='',$visa='',$port='',$country=''){
+	function updateCalReportDaily($year,$month,$day='',$port='',$country=''){
 		$builder_delete = $this->db->table('REPORT_CAL_DAILY');
 		if($day){ $builder_delete->where("TO_CHAR( REPORT_DATE, 'DD') = ",$day); }
-		if($visa){ $builder_delete->where("VISA_ID",$visa); }
-		if($port){ $builder_delete->where("PORT_ID",$port); }
+		if($port){ $builder_delete->where("OFFICE_ID",$port); }
 		if($country){ $builder_delete->where("COUNTRY_ID",$country); }
-		$builder_delete->where("TO_CHAR( REPORT_DATE, 'MM') = ",$month);
+		$builder_delete->where("TO_CHAR( REPORT_DATE, 'MM') = ",intval($month));
 	    $builder_delete->where("TO_CHAR( REPORT_DATE, 'YYYY') = ",$year);
 		$builder_delete->delete();
 
 		$builder = $this->db->table('CAL_DAILY_REPORT');
 		if($day){ $builder->where("TO_CHAR( REPORT_DATE, 'DD') = ",$day); }
-		if($visa){ $builder->where("VISA_ID",$visa); }
-		if($port){ $builder->where("PORT_ID",$port); }
+		if($port){ $builder->where("OFFICE_ID",$port); }
 		if($country){ $builder->where("COUNTRY_ID",$country); }
 	    $builder->where("TO_CHAR( REPORT_DATE, 'MM') = ",intval($month));
 	    $builder->where("TO_CHAR( REPORT_DATE, 'YYYY') = ",$year);
 	    $data = $builder->get()->getResultArray();
 
-	    echo ' COUNT :: '.count($data); $c=0;
+	    // echo ' COUNT :: '.count($data); $c=0;
 		foreach ($data as $key => $value) {
-			$c++;
+			// $c++;
 			$builder_insert = $this->db->table('REPORT_CAL_DAILY');
 			$builder_insert->set('COUNTRY_ID',$value['COUNTRY_ID']);
 			$builder_insert->set('REPORT_DATE',$value['REPORT_DATE']);
@@ -235,7 +245,7 @@ class Setting_model extends Model
 			$builder_insert->insert();
 		}
 
-		echo ' :: '.$c;
+		// echo ' :: '.$c;
 	}
 
 

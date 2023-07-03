@@ -78,26 +78,30 @@ class Setting extends BaseController{
  	public function savePortRatio(){
  		$Model = new Setting_model();
  		$input = $this->request->getPost();
- 		$Model->savePortRatio($input);
- 		return true;
+ 		$res = $Model->savePortRatio($input);
+ 		return $this->setResponseFormat('json')->respond($res);
 	}
 
 	public function getPortRatio($port_id){
 		$Model = new Setting_model();
- 		$data = $Model->getPortRatio($port_id);
+		$month = @$_GET['month'];
+		$year = @$_GET['year'];
+ 		$data = $Model->getPortRatio($port_id,$month,$year);
  		return $this->setResponseFormat('json')->respond($data);
 	}
 
 	function saveVisaRatio(){
 		$Model = new Setting_model();
  		$input = $this->request->getPost();
- 		$Model->saveVisaRatio($input);
- 		return true;
+ 		$res = $Model->saveVisaRatio($input);
+ 		return $this->setResponseFormat('json')->respond($res);
 	}
 
 	public function getVisaRatio($visa_id){
 		$Model = new Setting_model();
- 		$data = $Model->getVisaRatio($visa_id);
+		$month = @$_GET['month'];
+		$year = @$_GET['year'];
+ 		$data = $Model->getVisaRatio($visa_id,$month,$year);
  		return $this->setResponseFormat('json')->respond($data);
 	}
 

@@ -7,9 +7,9 @@
     <div class="card">
       <div class="card-header">
         Visa
-        <button type="button" class="btn btn-primary btn-sm float-right rounded" onclick="manageVisa()">
+        <!-- <button type="button" class="btn btn-primary btn-sm float-right rounded" onclick="manageVisa()">
           <i class="fa fa-plus"></i> เพิ่มข้อมูล VISA
-        </button>
+        </button> -->
       </div>
       <div class="card-body">
         <table class="table table-striped table-bordered" id="myTable">
@@ -127,14 +127,14 @@
           </div>
           <div class="row">
             <div class="col-md-8">
-              <select class="form-control" name="month" id="month">
-                <?php foreach ($month_label as $key => $m) { ?>
-                  <option value="<?php echo $key ?>"><?php echo $m ?></option>
+              <select class="form-control" name="month" id="month" onchange="changeMonth(this.value,$('#year').val())">
+                <?php foreach ($month_label as $key => $m) { $sel=""; if($key==date('m')){ $sel="selected='selected'";} ?>
+                  <option <?php echo $sel; ?>value="<?php echo $key ?>"><?php echo $m ?></option>
                 <?php } ?>
               </select>
             </div>
             <div class="col-md-4">
-              <select class="form-control" name="year" id="year">
+              <select class="form-control" name="year" id="year" onchange="changeMonth($('#month').val(),$('#year').val())">
                 <?php for ($y = date('Y'); $y > date('Y') - 5; $y--) { ?>
                   <option value="<?php echo $y ?>"><?php echo $y + 543 ?></option>
                 <?php } ?>
@@ -145,8 +145,9 @@
           <div class="row" style="margin-top:20px;">
             <div class="col-md-12">
               <div class="card" style="">
-                <div class="card-body">
-                  <label>ข้อมูลสัดส่วน</label>
+                <label style="padding: 5px;">ข้อมูลสัดส่วน</label>
+                <div class="card-body" style="height: 300px; overflow: auto;">
+                  
                   <table class="table table-striped table-bordered" id="table_ratio">
                     <tr>
                       <td align="center">ไม่มีข้อมูล</td>
@@ -173,20 +174,47 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">จัดการสัดส่วน - <b><label id="port_name_label_detail"></label></b></h5>
+        <h5 class="modal-title" id="exampleModalLabel">ข้อมูลสัดส่วน - <b><label id="port_name_label_detail"></label></b></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="row" style="margin-top:20px;">
+        <div class="row">
+          <div class="col-12">
+            <label style="padding: 5px;">ข้อมูลสัดส่วน</label>
+          </div>
+          <div class="col-2" style="text-align: right;">
+            เดือน
+          </div>
+          <div class="col-4">
+            <select class="form-control" name="month_detail" id="month_detail" onchange="changeMonthDetail($('#visa_id_detail').val(),$('#month_detail').val(),$('#year_detail').val())">
+                <?php foreach ($month_label as $key => $m) { $sel=""; if($key==date('m')){ $sel="selected='selected'";} ?>
+                  <option <?php echo $sel; ?>value="<?php echo $key ?>"><?php echo $m ?></option>
+                <?php } ?>
+              </select>
+          </div>
+          <div class="col-2" style="text-align: right;">
+            ปี
+          </div>
+          <div class="col-4">
+              <select class="form-control" name="year" id="year_detail" onchange="changeMonthDetail($('#visa_id_detail').val(),$('#month_detail').val(),$('#year_detail').val())">
+                <?php for ($y = date('Y'); $y > date('Y') - 5; $y--) { ?>
+                  <option value="<?php echo $y ?>"><?php echo $y + 543 ?></option>
+                <?php } ?>
+              </select>
+          </div>
           <div class="col-md-12">
-            <label>ข้อมูลสัดส่วน</label>
-            <table class="table table-striped table-bordered" id="table_ratio_detail">
-              <tr>
-                <td align="center">ไม่มีข้อมูล</td>
-              </tr>
-            </table>
+              <input type="hidden" id="visa_id_detail" value="">
+              <div class="card" style="">
+                <div class="card-body" style="height: 450px; overflow: auto;">
+                  <table class="table table-striped table-bordered" id="table_ratio_detail">
+                    <tr>
+                      <td align="center">ไม่มีข้อมูล</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
           </div>
         </div>
       </div>
@@ -307,19 +335,19 @@
   function editCalVISA(id, name) {
     $('#visa_id_ratio').val(id);
     $('#ratio').val('');
-
     $('#port_name_label').html(name);
-
+    var month = $('#month').val();
+    var year = $('#year').val();
     $.ajax({
       type: 'GET',
-      url: base_url + '/setting/getVisaRatio/' + id,
+      url: base_url + '/setting/getVisaRatio/' + id+'?month='+month+'&year='+year,
       success: function(data) {
         if (data) {
           // $('#table_ratio').html('');
           var html = '';
           var month = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
           $.each(data, function(key, value) {
-            html = html + '<tr><td>' + value.COUNTRY_NAME_EN + '</td><td>' + (parseInt(value.YEAR) + 543) + '</td><td>' + month[value.MONTH - 1] + '</td><td>สัดส่วน : ' + value.RATIO + '</td></tr>';
+            html = html + '<tr><td>' + value.COUNTRY_NAME_EN + '</td><td>' + (parseInt(value.YEAR) + 543) + '</td><td>' + month[value.MONTH - 1] + '</td><td>สัดส่วน : ' + parseFloat(value.RATIO) + '</td></tr>';
           });
           $('#table_ratio').html(html);
         }
@@ -351,20 +379,25 @@
         $('#modalVisa').modal('hide');
       },
     });
+
+    $('#modalVisa').modal('hide');
   }
 
   function openDetail(id, name) {
     $('#port_name_label_detail').html(name);
+    $('#visa_id_detail').val(id);
+    var month = $('#month_detail').val();
+    var year = $('#year_detail').val();
     $.ajax({
       type: 'GET',
-      url: base_url + '/setting/getVisaRatio/' + id,
+      url: base_url + '/setting/getVisaRatio/' + id+'?month='+month+'&year='+year,
       success: function(data) {
         if (data) {
           // $('#table_ratio').html('');
           var html = '';
           var month = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
           $.each(data, function(key, value) {
-            html = html + '<tr><td>' + value.COUNTRY_NAME_EN + '</td><td>' + value.VISA_NAME + '</td><td>' + (parseInt(value.YEAR) + 543) + '</td><td>' + month[value.MONTH - 1] + '</td><td>สัดส่วน : ' + parseFloat(value.RATIO) + '</td></tr>';
+            html = html + '<tr><td>' + value.COUNTRY_NAME_EN + '</td><td>' + (parseInt(value.YEAR) + 543) + '</td><td>' + month[value.MONTH - 1] + '</td><td>สัดส่วน : ' + parseFloat(value.RATIO) + '</td></tr>';
           });
           $('#table_ratio_detail').html(html);
         }
@@ -373,6 +406,45 @@
     });
 
     $('#modalVisaDetail').modal('show');
+  }
+
+  function changeMonth(month,year){
+    $('#table_ratio').html('');
+    var id = $('#visa_id_ratio').val();
+    $.ajax({
+      type: 'GET',
+      url: base_url + '/setting/getVisaRatio/' + id+'?month='+month+'&year='+year,
+      success: function(data) {
+        if (data) {
+          var html = '';
+          var month = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+          $.each(data, function(key, value) {
+            html = html + '<tr><td>' + value.COUNTRY_NAME_EN + '</td><td>' + (parseInt(value.YEAR) + 543) + '</td><td>' + month[value.MONTH - 1] + '</td><td>สัดส่วน : ' + parseFloat(value.RATIO) + '</td></tr>';
+          });
+          $('#table_ratio').html(html);
+        }
+
+      },
+    });
+  }
+
+  function changeMonthDetail(id,month,year){
+    $('#table_ratio_detail').html('');
+    $.ajax({
+      type: 'GET',
+      url: base_url + '/setting/getVisaRatio/' + id+'?month='+month+'&year='+year,
+      success: function(data) {
+        if (data) {
+          var html = '';
+          var month = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+          $.each(data, function(key, value) {
+            html = html + '<tr><td>' + value.COUNTRY_NAME_EN + '</td><td>' + (parseInt(value.YEAR) + 543) + '</td><td>' + month[value.MONTH - 1] + '</td><td>สัดส่วน : ' + parseFloat(value.RATIO) + '</td></tr>';
+          });
+          $('#table_ratio_detail').html(html);
+        }
+
+      },
+    });
   }
 </script>
 <?= $this->endSection() ?>
