@@ -298,7 +298,7 @@ class Main extends BaseController
 		$uploaddir = $uploaddir[0];
 		$uploadpath = 'public/uploads/main/';
 		$uploadfile = $uploaddir . $uploadpath;
-
+		
 		$img = $_POST['imgBase64'];
 		$img = str_replace('data:image/png;base64,', '', $img);
 		$img = str_replace(' ', '+', $img);
@@ -306,6 +306,10 @@ class Main extends BaseController
 		// $file = UPLOAD_DIR . $_POST['imgName'] . '.png';
 		$file = $uploadfile . $_POST['imgName'] . '.png';
 		$success = file_put_contents($file, $data);
+
+
+		echo $file.'<br>';
+		print_r($success);
 
 		return $this->setResponseFormat('json')->respond($file);
 	}

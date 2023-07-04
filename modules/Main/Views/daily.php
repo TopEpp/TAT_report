@@ -1020,10 +1020,20 @@
 	function ChangeFilter() {
 		if ($('#start_date').val() != '' && $('#start_date').val() != '') {
 			var date = $('#start_date').val();
+			if(date==''){
+				$('#start_date').focus();
+				$('#start_date').css("border-color", "#e74a3b");
+				return false;
+			}
 			date = date.split('/');
 			start_date = date[0] + '-' + date[1] + '-' + (date[2] - 543);
 
 			var date = $('#end_date').val();
+			if(date==''){
+				$('#end_date').focus();
+				$('#end_date').css("border-color", "#e74a3b");
+				return false;
+			}
 			date = date.split('/');
 			end_date = date[0] + '-' + date[1] + '-' + (date[2] - 543);
 			window.location.href = base_url + '/main/daily?start_date=' + start_date + '&end_date=' + end_date;

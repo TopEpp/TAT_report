@@ -25,14 +25,14 @@
 					}
 			} ?>
 			<?php foreach ($period as $d) {
-				echo "<td style='background-color: #61bec9;'  align='right'> <b> " . number_format(@$sum_type1[$d]) . "</b> </td>";
+				echo "<td style='background-color: #61bec9;'  align='right'> <b> " . (@$sum_type1[$d]) . "</b> </td>";
 			} ?>
 		</tr>
 		<?php foreach ($port[1] as $p) { ?>
 			<tr>
 				<td><?php echo $p['PORT_NAME'] ?></td>
 				<?php foreach ($period as $d) {
-					echo "<td align='right'>" . number_format(@$data[$p['PORT_ID']][$d]) . "</td>";
+					echo "<td align='right'>" . (@$data[$p['PORT_ID']][$d]) . "</td>";
 				} ?>
 			</tr>
 		<?php } ?>
@@ -51,21 +51,21 @@
 					}
 			} ?>
 			<?php foreach ($period as $d) {
-				echo "<td  style='background-color: #61bec9;' align='right'> <b>" . number_format(@$sum_type2[$d]) . "</b> </td>";
+				echo "<td  style='background-color: #61bec9;' align='right'> <b>" . (@$sum_type2[$d]) . "</b> </td>";
 			} ?>
 		</tr>
 		<?php foreach ($port[2] as $p) { ?>
 			<tr>
 				<td><?php echo $p['PORT_NAME'] ?></td>
 				<?php foreach ($period as $d) {
-					echo "<td align='right'>" . number_format(@$data[$p['PORT_ID']][$d]) . "</td>";
+					echo "<td align='right'>" . (@$data[$p['PORT_ID']][$d]) . "</td>";
 				} ?>
 			</tr>
 		<?php } ?>
 		<!-- <tr>
 			<td style="background-color: #B6E2E9;border: 1px solid black ;">รวมด่านอากาศ</td>
 			<?php foreach ($period as $d) {
-				echo "<td style='background-color: #B6E2E9;border: 1px solid black ;' align='right'>" . number_format(@$sum_type2[$d]) . "</td>";
+				echo "<td style='background-color: #B6E2E9;border: 1px solid black ;' align='right'>" . (@$sum_type2[$d]) . "</td>";
 			} ?>
 		</tr> -->
 	</tbody>
@@ -73,7 +73,7 @@
 		<tr>
 			<td style='background-color:#61bec9;border: 1px solid black ;'>รวมทั้งหมด</td>
 			<?php foreach ($period as $d) {
-				echo "<td style='background-color: #61bec9;border: 1px solid black ;' align='right'>" . number_format(@$sum[$d]) . "</td>";
+				echo "<td style='background-color: #61bec9;border: 1px solid black ;' align='right'>" . (@$sum[$d]) . "</td>";
 			} ?>
 		</tr>
 		<?php if ($export_type == 'excel') { ?>

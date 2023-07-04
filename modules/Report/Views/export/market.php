@@ -42,7 +42,7 @@ foreach ($data['Long'] as $key=> $c) {
 			<tr>
 				<td align="center"><?php echo $i ?></td>
 				<td align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-				<td align="right"><?php echo @number_format(@$c['NUM']) ?></td>
+				<td align="right"><?php echo (@$c['NUM']) ?></td>
 				<td align="right"><?php echo number_format($ratio, 2); ?></td>
 			</tr>
 		<?php } }?>
@@ -92,7 +92,7 @@ foreach ($data['Long'] as $key=> $c) {
 				<tr>
 					<td align="center"><?php echo $i ?></td>
 					<td align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-					<td align="right"><?php echo @number_format(@$c['NUM']) ?></td>
+					<td align="right"><?php echo (@$c['NUM']) ?></td>
 					<td align="right"><?php echo number_format($ratio, 2); ?></td>
 				</tr>
 			<?php } ?>

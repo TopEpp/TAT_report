@@ -21,7 +21,7 @@
 			<td style="font-weight: bolder;background-color: #61bec9">GRAND TOTAL</td>
 			<?php $dataSum = getSumData($data, $region, 0, $country, $period);
 			foreach ($period as $d) {
-				echo "<td align='right' style='background-color: #61bec9'>" . number_format(@$dataSum[$d]) . "</td>";
+				echo "<td align='right' style='background-color: #61bec9'>" . (@$dataSum[$d]) . "</td>";
 			}
 			?>
 
@@ -57,7 +57,7 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1)
 			echo '<tr style="background-color: #61bec9" id="TR-' . $re['MD_STD_REG_ID'] . '" >';
 			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;background-color: #61bec9"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
 			foreach ($period as $d) {
-				echo "<td align='right' style='background-color: #61bec9'>" . number_format(@$dataSum[$d]) . "</td>";
+				echo "<td align='right' style='background-color: #61bec9'>" . (@$dataSum[$d]) . "</td>";
 			}
 			echo '</tr>';
 
@@ -70,7 +70,7 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1)
 					echo '<tr class="TR-Parent-' . $re['MD_STD_REG_ID'] . '">';
 					echo '<td style="padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
 					foreach ($period as $d) {
-						echo "<td align='right'>" . number_format(@$data[$co['COUNTRYID']][$d]) . "</td>";
+						echo "<td align='right'>" . (@$data[$co['COUNTRYID']][$d]) . "</td>";
 					}
 					echo '</tr>';
 				}

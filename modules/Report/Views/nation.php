@@ -250,6 +250,7 @@ foreach ($data_month_lastyear as $v) {
 <?php $this->endSection() ?>
 
 <?= $this->section("scripts") ?>
+<script type="text/javascript" src="https://cdn.sheetjs.com/xlsx-0.18.9/package/dist/xlsx.full.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.date_picker').datepicker({
@@ -310,5 +311,11 @@ foreach ($data_month_lastyear as $v) {
 			}
 		});
 	});
+
+	function js_excel(){
+		var elt = document.getElementById('table2');
+		var wb = XLSX.utils.table_to_book(elt, { sheet: "DRE" }); 
+		XLSX.writeFile(wb, "issue2535.xlsx")
+	}
 </script>
 <?= $this->endSection() ?>

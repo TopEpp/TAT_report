@@ -72,12 +72,12 @@
 								foreach($point[$p['PORT_ID']] as $po){
 									// echo '<td>'.@$d['NUM'][$p['PORT_ID']][$po['POINT_ID']].'</td>';
 									$sum = getSumData($data, $region, 0, $country, $p['PORT_ID'], $po['POINT_ID']);
-									echo '<td align="right">' . number_format($sum) . '</td>';
+									echo '<td align="right">' . ($sum) . '</td>';
 								} 
 							}else{
 								// echo '<td>'.@$d['NUM'][$p['PORT_ID']][0].'</td>';
 								$sum = getSumData($data, $region, 0, $country, $p['PORT_ID'], 0);
-								echo '<td align="right">' . number_format($sum) . '</td>';
+								echo '<td align="right">' . ($sum) . '</td>';
 							}
 						 }?>
 
@@ -113,11 +113,11 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $point
 					if(!empty($point[$p['PORT_ID']])){ 
 						foreach($point[$p['PORT_ID']] as $po){
 							$sum = getSumData($data, $region, $re['MD_STD_REG_ID'], $country, $p['PORT_ID'], $po['POINT_ID']);
-							echo '<td align="right">' . number_format($sum) . '</td>';
+							echo '<td align="right">' . ($sum) . '</td>';
 						} 
 					}else{
 						$sum = getSumData($data, $region, $re['MD_STD_REG_ID'], $country, $p['PORT_ID'], 0);
-							echo '<td align="right">' . number_format($sum) . '</td>';
+							echo '<td align="right">' . ($sum) . '</td>';
 					}
 				}
 			}
@@ -134,10 +134,10 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $point
 						foreach ($port_colunm as $p) {
 							if(!empty($point[$p['PORT_ID']])){ 
 								foreach($point[$p['PORT_ID']] as $po){
-									echo "<td align='right'>" . @number_format(@$data[$co['COUNTRYID']]['NUM'][$p['PORT_ID']][$po['POINT_ID']]) . "</td>";
+									echo "<td align='right'>" . (@$data[$co['COUNTRYID']]['NUM'][$p['PORT_ID']][$po['POINT_ID']]) . "</td>";
 								} 
 							}else{
-								echo "<td align='right'>" . @number_format(@$data[$co['COUNTRYID']]['NUM'][$p['PORT_ID']][0]) . "</td>";
+								echo "<td align='right'>" . (@$data[$co['COUNTRYID']]['NUM'][$p['PORT_ID']][0]) . "</td>";
 							}
 						}
 					}

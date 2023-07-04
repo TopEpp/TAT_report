@@ -52,8 +52,8 @@ $end_date2 = $day . '-' . $month . '-' . $year;
 				}
 
 				?>
-				<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo number_format($sum1); ?></td>
-				<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo number_format($sum2); ?></td>
+				<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo ($sum1); ?></td>
+				<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo ($sum2); ?></td>
 				<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo $sum_compare; ?></td>
 			</tr>
 			<?php genTableData($data1, $data2, $region, 0, $country) ?>
@@ -106,8 +106,8 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 
 			echo '<tr style="background-color:#B6E2E9;border: 1px solid black " id="TR-' . $re['MD_STD_REG_ID'] . '" >';
 			echo '<td style="background-color:#B6E2E9;border: 1px solid black ;padding-left: ' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
-			echo '<td align="right" style="background-color:#B6E2E9;border: 1px solid black ">' . number_format($sum1) . '</td>';
-			echo '<td align="right" style="background-color:#B6E2E9;border: 1px solid black ">' . number_format($sum2) . '</td>';
+			echo '<td align="right" style="background-color:#B6E2E9;border: 1px solid black ">' . ($sum1) . '</td>';
+			echo '<td align="right" style="background-color:#B6E2E9;border: 1px solid black ">' . ($sum2) . '</td>';
 			echo '<td  align="right" style="background-color:#B6E2E9;border: 1px solid black ">' . $sum_compare . '</td>';
 			echo '</tr>';
 
@@ -130,8 +130,8 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 					$padding_country = $level * 15;
 					echo '<tr style="background-color:#eaf3f4;border: 1px solid black " class="TR-Parent-' . $re['MD_STD_REG_ID'] . '">';
 					echo '<td style="background-color:#eaf3f4;border: 1px solid black ;padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
-					echo '<td style="background-color:#eaf3f4;border: 1px solid black ;" align="right">' . number_format(@$num1) . '</td>';
-					echo '<td style="background-color:#eaf3f4;border: 1px solid black ;" align="right">' . number_format(@$num2) . '</td>';
+					echo '<td style="background-color:#eaf3f4;border: 1px solid black ;" align="right">' . (@$num1) . '</td>';
+					echo '<td style="background-color:#eaf3f4;border: 1px solid black ;" align="right">' . (@$num2) . '</td>';
 					echo '<td style="background-color:#eaf3f4;border: 1px solid black ;" align="right">' . $compare . '</td>';
 					echo '</tr>';
 				}

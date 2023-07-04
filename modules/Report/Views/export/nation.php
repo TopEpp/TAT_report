@@ -73,7 +73,7 @@ foreach ($data_month_lastyear as $v) {
 							<td align="center"> <b><?php echo $i++ ?></b> </td>
 							<td align="center"> <?php echo @$numberDay[$v['COUNTRY_ID']] ?> </td>
 							<td> <?php echo $v['COUNTRY_NAME_EN'] ?> </td>
-							<td align="right"> <?php echo number_format($v['NUM']); ?> </td>
+							<td align="right"> <?php echo $v['NUM']; ?> </td>
 							<td align="right"> <?php echo number_format($v['NUM'] / $sumDay * 100, 2); ?></td>
 						</tr>
 				<?php } else {
@@ -149,8 +149,8 @@ foreach ($data_month_lastyear as $v) {
 								<td align="center"> <b><?php echo $i++ ?></b> </td>
 								<td align="center"> <?php echo @$numberMonth[$v['COUNTRY_ID']] ?> </td>
 								<td> <?php echo $v['COUNTRY_NAME_EN'] ?> </td>
-								<td align="right"> <?php echo number_format($v['NUM']); ?> </td>
-								<td align="right"> <?php echo number_format($v['NUM'] / $sumMonth * 100, 2); ?></td>
+								<td align="right" > <?php echo ($v['NUM']); ?> </td>
+								<td align="right" > <?php echo number_format($v['NUM'] / $sumMonth * 100, 2); ?></td>
 							</tr>
 					<?php  } else {
 							$sum_other += $v['NUM'];

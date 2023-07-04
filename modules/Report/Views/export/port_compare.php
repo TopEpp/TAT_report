@@ -64,7 +64,7 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $perio
 				foreach ($port_colunm as $p) {
 					foreach ($period as $d) {
 						$sum = getSumData($data, $region, $re['MD_STD_REG_ID'], $country, $p['PORT_ID'], $d);
-						echo '<td align="right" style="background-color:#4EB8CA;border: 1px solid #3a4a4a ;">' . number_format($sum) . '</td>';
+						echo '<td align="right" style="background-color:#4EB8CA;border: 1px solid #3a4a4a ;">' . ($sum) . '</td>';
 					}
 				}
 			}
@@ -80,7 +80,7 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $perio
 					if (!empty($port_colunm)) {
 						foreach ($port_colunm as $p) {
 							foreach ($period as $d) {
-								echo "<td align='right' style='background-color:#eaf3f4;border: 1px solid #3a4a4a ;'>" . @number_format(@$data[$co['COUNTRYID']][$p['PORT_ID']][$d]['NUM']) . "</td>";
+								echo "<td align='right' style='background-color:#eaf3f4;border: 1px solid #3a4a4a ;'>" . (@$data[$co['COUNTRYID']][$p['PORT_ID']][$d]['NUM']) . "</td>";
 							}
 						}
 					}
