@@ -59,13 +59,13 @@
 	}
 
 	#resultsTable {
-		height: 349px;
+		height: 350px;
 		width: 210px;
 		background: #a7ffff;
 		overflow: hidden;
 		border-radius: 25px !important;
 		margin: 0px auto;
-		position: absolute;
+		/* position: absolute; */
 	}
 
 	#resultsTable3 {
@@ -80,11 +80,11 @@
 
 	#resultsTable2 {
 		width: 210px;
-		height: 349px;
+		height: 359px;
 		background: #fff1cc;
 		overflow: hidden;
 		border-radius: 25px !important;
-		margin: auto auto;
+		margin: 0px auto;
 	}
 
 	#resultsTable4 {
@@ -256,7 +256,7 @@
 			</div>
 		</div>
 		<div class="col6">
-			<div id="resultsTable2" style="display: flex; flex-direction: row; padding: 0px 15px;">
+			<div id="resultsTable2" style="display: flex; flex-direction: row; padding: 0px 15px; ">
 				<table style="width: 100%;">
 					<tbody>
 						<tr>
@@ -306,7 +306,6 @@
 				} ?>
 			</div>
 		</div>
-
 		<div class="col6">
 			<div id="resultsTable" style="display: flex; flex-direction: row; padding: 0px 15px;">
 				<table style="width: 100%;">
