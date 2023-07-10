@@ -109,13 +109,13 @@
 					<img src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="" style="width: 200px;">
 				</td>
 				<td style="text-align: center; color: white;width: 90%;">
-					<p style="margin: 0px; line-height: normal; font-size: 45px;">
+					<p style="margin: 0px; font-weight:bold; line-height: normal; font-size: 31px;">
 						สถิตินักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย
 					</p>
-					<h3 style="margin: 0px; line-height: normal; font-size: 40;">
+					<h3 style="margin: 0px; line-height: normal; font-size: 31px; font-weight:bold;">
 						วันที่ <?php echo $Mydate->date_eng2thai($to_date, 543) ?>
 					</h3>
-					<span style="font-size: 20px;">
+					<span style="font-size: 14px;">
 						ที่มา สำนักงานตรวจคนเข้าเมือง | จัดทำโดย ด้านดิจิทัล วิจัย เเละพัฒนา
 					</span>
 				</td>
@@ -141,7 +141,7 @@
 					<table style="width: 100%;">
 						<tbody>
 							<tr style="border: 0;padding: 0px 0px;">
-								<td style="text-align: center;padding: 5px ; font-size: 25px;">
+								<td style="text-align: center;padding: 5px ; font-size: 25px;font-weight: bold;">
 									<?php echo number_format($SumDateData); ?> คน
 								</td>
 							</tr>
@@ -164,7 +164,7 @@
 					<table style="width: 100%;">
 						<tbody>
 							<tr style="border: 0;padding: 0px 0px;">
-								<td style="text-align: center;padding: 5px; font-size: 25px;">
+								<td style="text-align: center;padding: 5px; font-size: 25px;font-weight: bold;">
 									<?php echo number_format($SumMonthData); ?> คน
 								</td>
 							</tr>
@@ -192,12 +192,12 @@
 	<table style="width: 100%; margin-top: 8px; padding: 0px;">
 		<tbody>
 			<tr style="padding: 0px 50px;">
-				<td style="text-align: center;font-size: 18px; color: white; padding-left: 50px; width: 50%;">
+				<td style="text-align: center;font-size: 18px; color: white; padding-left: 50px; width: 50%;font-weight: bold;">
 					จำนวนนักท่องเที่ยว
 					<br>
 					จำเเนกรายสัญชาติ 5 อันดับเเรก
 				</td>
-				<td style="width: 50%; text-align: center; font-size: 18px; padding-left:50px; color: white;">
+				<td style="width: 50%; text-align: center; font-size: 18px; padding-left:50px; color: white;font-weight: bold;">
 					จำนวนนักท่องเที่ยว <br>จำเเนกรายด่าน 5 อันดับเเรก
 				</td>
 			</tr>
@@ -209,7 +209,7 @@
 				<table style="width: 100%;">
 					<tbody>
 						<tr>
-							<td colspan="3" style="text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;">
+							<td colspan="3" style="padding-bottom: 6px; text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;">
 								จำแนกรายสัญชาติ<br>
 								<?php echo $Mydate->date_eng2thai($to_date, 543) ?>
 							</td>
@@ -225,11 +225,11 @@
 						$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
 					}
 				?>
-					<div style="border: 0;">
+					<div style="border: 0; padding-bottom: 5px; ">
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="3" style="text-align: right;padding: 4.2px 10px; margin: auto 0px;">
+									<td colspan="3" style="text-align: right;padding: 0px 10px; margin: auto 0px;">
 										<span id="" style="font-weight:bold; font-size: 14px;color: #193666;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 									</td>
 								</tr>
@@ -241,7 +241,7 @@
 									<td style="width: 15%;">
 										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
 									</td>
-									<td style="text-align: right; padding: 8px 15px;color: #193666; font-size: 14px;font-weight: bold; width: 55%;">
+									<td style="text-align: right; padding: 8px 15px;color: #193666; font-size: 18px;font-weight: bold; width: 55%;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
 									<td style="font-size: 14px; color: #193666; font-weight: bold; width: 30%; text-align: left;">
@@ -260,7 +260,7 @@
 				<table style="width: 100%;">
 					<tbody>
 						<tr>
-							<td colspan="3" style="text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;">
+							<td colspan="3" style="padding-bottom: 6px; text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;">
 								จำแนกรายสัญชาติสะสม<br>
 								<?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
 							</td>
@@ -276,11 +276,11 @@
 						$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
 					}
 				?>
-					<div style="border: 0;">
+					<div style="border: 0;padding-bottom: 5px; ">
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="3" style="text-align: right;padding: 4.2px 13px; margin: auto 0px;">
+									<td colspan="3" style="text-align: right;padding: 0px 13px; margin: auto 0px;">
 										<span id="" style="font-weight:bold; font-size: 14px;color: #193666;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 									</td>
 								</tr>
@@ -292,7 +292,7 @@
 									<td style="width: 15%;">
 										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px;">
 									</td>
-									<td style="text-align: right; padding: 8px 15px;color: #193666; font-size: 14px;font-weight: bold; width: 55%;">
+									<td style="text-align: right; padding: 8px 15px;color: #193666; font-size: 18px;font-weight: bold; width: 55%;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
 									<td style="font-size: 14px; color: #193666; font-weight: bold; width: 30%; text-align: left;">
@@ -312,7 +312,7 @@
 				<table style="width: 100%;">
 					<tbody>
 						<tr>
-							<td colspan="3" style="text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;">
+							<td colspan="3" style="text-align: center;padding-top: 8px;padding-bottom: 5px;color: #193666;font-weight: bold;font-size: 15px;">
 								จำแนกรายด่าน<br>
 								<?php echo $Mydate->date_eng2thai($to_date, 543) ?>
 							</td>
@@ -322,11 +322,11 @@
 				<?php $c = 0;
 				foreach ($SumPortDateData as $v) {
 					$c++;  ?>
-					<div>
+					<div style="padding-bottom: 5px;">
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="2" style="color: #193666; text-align: right; padding: 4.3px 13px; margin: auto 0px;">
+									<td colspan="2" style="color: #193666; text-align: right; padding: 0px 13px; margin: auto 0px;">
 										<span style="font-weight:bold; font-size: 14px;"><?php echo $v['PORT_NAME'] ?></span>
 									</td>
 								</tr>
@@ -335,7 +335,7 @@
 						<div id="resultsTable3">
 							<table style="width: 100%;">
 								<tr>
-									<td style="text-align: right; padding: 8.5px 14px;color: #193666; font-size: 14px;font-weight: bold;">
+									<td style="text-align: right; padding: 8.5px 14px;color: #193666; font-size: 17.5px;font-weight: bold;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
 									<td style="font-size: 14px; color: #193666; font-weight: bold;">
@@ -351,10 +351,10 @@
 		</div>
 		<div class="col6">
 			<div id="resultsTable2" style="display: flex; flex-direction: row; padding: 0px 15px;">
-				<table style="width: 100%;">
+				<table style="width: 100%; ">
 					<tbody>
 						<tr>
-							<td colspan="3" style="text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;">
+							<td colspan="3" style="text-align: center;padding-top: 8px;padding-bottom: 5px;  color: #193666;font-weight: bold;font-size: 15px;">
 								จำแนกรายด่าน<br>
 								<?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
 							</td>
@@ -364,11 +364,11 @@
 				<?php $c = 0;
 				foreach ($SumPortMonthData as $v) {
 					$c++;  ?>
-					<div>
+					<div style="padding-bottom: 5px; ">
 						<table style="width: 100%;">
 							<tbody>
 								<tr style="border: 0;">
-									<td colspan="2" style="color: #193666; text-align: right; padding: 4.2px 13px; margin: auto 0px;">
+									<td colspan="2" style="color: #193666; text-align: right; padding: 0px 13px; margin: auto 0px;">
 										<span style="font-weight:bold; font-size: 14px;"><?php echo $v['PORT_NAME'] ?></span>
 									</td>
 								</tr>
@@ -377,7 +377,7 @@
 						<div id="resultsTable3">
 							<table style="width: 100%;">
 								<tr>
-									<td style="text-align: right; padding: 8.5px 12px;color: #193666; font-size: 14px;font-weight: bold;">
+									<td style="text-align: right; padding: 8.5px 12px;color: #193666; font-size: 17.5px;font-weight: bold;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
 									<td style="font-size: 14px; color: #193666;font-weight: bold;">
@@ -393,5 +393,5 @@
 		</div>
 	</div>
 	<br>
-	<span style="padding-top:5px; color: #fff; font-size:0.8em">หมายเหตุ : ข้อมูลรายสัญชาติตัดข้อมูลผู้อพยพ, หน่วยงานพิเศษ UN , ไม่มีสัญชาติ ออก  ทั้งนี้ ตั้งแต่ 1 ม.ค. 66 ได้กำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศเพิ่มเติม (สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ)</span>
+	<span style="padding-top:5px; color: #fff; font-size:0.8em">หมายเหตุ : ข้อมูลรายสัญชาติตัดข้อมูลผู้อพยพ, หน่วยงานพิเศษ UN , ไม่มีสัญชาติ ออก ทั้งนี้ ตั้งแต่ 1 ม.ค. 66 ได้กำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศเพิ่มเติม (สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ)</span>
 </body>
