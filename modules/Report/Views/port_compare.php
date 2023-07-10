@@ -28,9 +28,12 @@
 		
 	</div>
 	<div class="col-md-6 col-12 py-2 py-md-0" style="text-align: right;">
-		<a target="_blank" onclick="export_report('excel')" class="btn btn-success" style="width : 70px">
-			<i class="fa-solid fa-file-excel"></i> Excel
+		<a target="_blank" onclick="export_excel()" class="btn btn-success" style="width : 70px">
+			<i class="fa-solid fa-file-excel"></i> Excel2
 		</a>
+		<!-- <a target="_blank" onclick="export_report('excel')" class="btn btn-success" style="width : 70px">
+			<i class="fa-solid fa-file-excel"></i> Excel
+		</a> -->
 		<a target="_blank" onclick="export_report('pdf')" class="btn btn-danger" style="width : 70px">
 			<i class="fa-solid fa-file-pdf"></i> PDF
 		</a>
@@ -109,7 +112,7 @@
 	<div class="col-md-12 col-12">
 		<div class="table-responsive">
 			<?php if (!empty($country_row) && !empty($port_colunm)) { ?>
-				<table class="table table-striped table-bordered radiusTable1 ">
+				<table class="table table-striped table-bordered radiusTable1 " id="table_port_compare">
 					<thead>
 						<tr>
 							<th rowspan="2">Nation</th>
@@ -229,6 +232,9 @@ function getSumData($data, $region, $region_id, $country, $port_id, $day, &$sum 
 <?php $this->endSection() ?>
 
 <?= $this->section("scripts") ?>
+
+
+<script type="text/javascript" src="https://cdn.sheetjs.com/xlsx-0.18.9/package/dist/xlsx.full.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.date_picker').datepicker({
@@ -307,6 +313,12 @@ function getSumData($data, $region, $region_id, $country, $port_id, $day, &$sum 
 			}
 		}).get();
 		window.open(base_url + '/report/port_compare/?export_type=' + type + '&start1=' + start_date1 + '&end1=' + end_date1 + '&country_type=' + country_type + '&port_type=' + port_type);
+	}
+
+	function export_excel(){
+		var elt = document.getElementById('table_port_compare');
+		var wb = XLSX.utils.table_to_book(elt, { sheet: "รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน" }); 
+		XLSX.writeFile(wb, "port_compare.xlsx")
 	}
 </script>
 <?= $this->endSection() ?>
