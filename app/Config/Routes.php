@@ -33,6 +33,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Login::index');
 $routes->get('/logout', 'Login::logout');
+$routes->get('/welcome', 'Login::welcome');
 // $routes->get('lang/{locale}', 'Language::index');
 $routes->group('lang', ['namespace' => '\Modules\Language\Controllers', 'filter' => 'auth'], function ($routes) {
     $routes->get('(:any)', 'Language::index/$1');

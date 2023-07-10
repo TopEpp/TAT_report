@@ -18,7 +18,11 @@ class Main extends BaseController
 		$ses_data = ['report_type' => 'none'];
 		$data['session']->set($ses_data);
 		$data['Mydate'] = $this->Mydate;
-		return view("Modules\Main\Views\index", $data);
+		// return view("Modules\Main\Views\index", $data);
+
+		// http_redirect(base_url('main/daily'));
+
+		return redirect()->to('main/daily'); 
 	}
 
 	public function daily()

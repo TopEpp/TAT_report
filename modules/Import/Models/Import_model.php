@@ -88,7 +88,7 @@ class Import_model extends Model
 							$country['COUNTRY_ID'] = 1;
 							break;
 						case 'รัฐเอกราชซามัว':
-							$country['COUNTRY_ID'] = 244;
+							$country['COUNTRY_ID'] = 258;
 							break;
 						case 'ซาอีร์':
 							$country['COUNTRY_ID'] = 183;
@@ -244,7 +244,7 @@ class Import_model extends Model
 							$country['COUNTRY_ID'] = 70;
 							break;
 						case 'ซามัว':
-							$country['COUNTRY_ID'] = 244;
+							$country['COUNTRY_ID'] = 258;
 							break;
 						case 'เรอุนยอง':
 							$country['COUNTRY_ID'] = 222;

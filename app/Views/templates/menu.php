@@ -2,6 +2,7 @@
 $request = \Config\Services::request();
 $controller =  $request->uri->getSegment(1);
 $method =  $request->uri->getSegment(2);
+$user_menu = $session->get('user_menu');
 ?>
 <style>
     .sidebar-dark .nav-item .nav-link {
@@ -35,6 +36,7 @@ $method =  $request->uri->getSegment(2);
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
+
     <?php if($session->get('report_type') == 'daily'){ ?>
     
     <li class="nav-item <?php if ($controller == 'main') {
@@ -71,7 +73,7 @@ $method =  $request->uri->getSegment(2);
                                         } ?>" href="<?php echo base_url('report/nation_compare') ?>">รายงานเปรียบเทียบจำนวนนักท่องเที่ยวรายสัญชาติ</a>
                 <a class="collapse-item <?php if ($method == 'port_compare') {
                                             echo 'active';
-                                        } ?>" href="<?php echo base_url('report/port_compare') ?>">รายงานเปรียบเทียบจำนวนนักท่องเที่ยวรายด่าน</a>
+                                        } ?>" href="<?php echo base_url('report/port_compare') ?>">รายงานจำนวนนักท่องเที่ยวรายด่าน</a>
                 <a class="collapse-item <?php if ($method == 'market') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('report/market') ?>">รายงานจำนวนนักท่องเที่ยวจำแนกรายรายตลาด</a>
@@ -92,7 +94,7 @@ $method =  $request->uri->getSegment(2);
             <span>คำนิยาม</span>
         </a>
     </li>
-
+    <?php if( !empty($user_menu['import']) ){?>
     <li class="nav-item <?php if ($controller == 'import') {
                             echo 'active';
                         } ?>">
@@ -102,8 +104,9 @@ $method =  $request->uri->getSegment(2);
                                         <i class="fas fa-fw fa-upload"></i>
             <span>Import</span></a>
     </li>
+    <?php }?>
 
-
+    <?php if( !empty($user_menu['setting']) ){?>
     <li class="nav-item <?php if ($controller == 'setting') {
                             echo 'active';
                         } ?>">
@@ -126,6 +129,7 @@ $method =  $request->uri->getSegment(2);
             </div>
         </div>
     </li>
+    <?php } ?>
     <?php }else if($session->get('report_type') == 'monthly' ){?>
         <li class="nav-item <?php if ($controller == 'main') {
                             echo 'active';

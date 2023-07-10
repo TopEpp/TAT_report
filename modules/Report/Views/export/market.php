@@ -95,7 +95,7 @@ foreach ($data['Long'] as $key=> $c) {
 					<td align="right"><?php echo (@$c['NUM']) ?></td>
 					<td align="right"><?php echo number_format($ratio, 2); ?></td>
 				</tr>
-			<?php } ?>
+			<?php } }?>
 			<?php if ($export_type == 'excel') { ?>
 				<tr style="border:0px">
 					<td colspan="5">
@@ -103,7 +103,7 @@ foreach ($data['Long'] as $key=> $c) {
 					</td>
 				</tr>
 			<?php
-			} }
+			} 
 			?>
 		</tbody>
 	</table>

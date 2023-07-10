@@ -82,7 +82,7 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin TAT</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $session->get('name');?></span>
                                 <img class="img-profile rounded-circle" src="<?php echo base_url('public/img/logotat.png') ?>">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -109,7 +109,8 @@
                     <div class="row" style="padding:10px" >
                         <div class="col-md-6 col-6">
                             ที่มา : สำนักงานตรวจคนเข้าเมือง <br>
-                            จัดทำโดย : ด้านดิจิทัล วิจัย และพัฒนา
+                            จัดทำโดย : ด้านดิจิทัล วิจัย และพัฒนา<br>
+                            ข้อมูลนี้ใช้สำหรับเผยแพร่ภายใน ททท. เท่านั้น
                         </div>
                         <div class="col-md-6 col-6" style="text-align: right;">
                             ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?> <br>

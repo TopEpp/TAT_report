@@ -45,21 +45,11 @@
                                         <h6 class="h6 text-gray-900 mb-2 mt-2" style="line-height: 0.7">Tourism Authority of Thailand </h6>
                                         <h6 class="h6 text-gray-900 mb-2 mt-2" style="line-height: 0.7">การท่องเที่ยวแห่งประเทศไทย</h6>
                                     </div>
-                                    <form class="user" action="<?php echo base_url('/login/auth2'); ?>" method="post">
-                                        <div class="form-group mt-3">
-                                            <input  type="text" class="form-control form-control-user <?php if (!empty(@$session->getFlashdata('error'))): ?>
-                                              <?php echo 'border-danger'; ?>
-                                            <?php endif; ?>" id="user_name" name="user_name" value=""  aria-describedby="" placeholder="Username">
-                                        </div>
-                                        <div class="form-group mt-3">
-                                            <input  type="password" id="password" name="password" value="" class="form-control form-control-user <?php if (!empty(@$session->getFlashdata('error'))): ?>
-                                              <?php echo 'border-danger'; ?>
-                                            <?php endif; ?>" placeholder="Password">
-                                        </div>
-                                        <button type="submit" class="btn btn-orange btn-block">
-                                            เข้าสู่ระบบ
-                                        </button>
-                                    </form>
+                                    <br>
+                                    <div class="text-center" style="font-size: 2.2em;">
+                                        ระบบรายงานสถิตินักท่องเที่ยวระหว่างประเทศ สำหรับผู้บริหารระดับสูง ของ ททท. เท่านั้น
+                                    </div>    
+                                
                                 </div>
                             </div>
                         </div>

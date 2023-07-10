@@ -27,11 +27,6 @@ class Login extends BaseController{
         $password = $pastAuthPwd;
     }
 
-    $User_model = new User_model();
-    $userInfo = $User_model
-                ->where('USER_NAME', $username)
-                ->where('USER_ACTIVE_STATUS', 1)
-                ->first();
 
     if (function_exists('ldap_connect')) {
       if($this->loginAD($username,$password)){
@@ -42,66 +37,77 @@ class Login extends BaseController{
           return redirect()->to($url);
       }
     }
-      
+
+    return redirect()->to('welcome');
+  }
+
+  function auth2(){
+
+    $session = session();
+
+    $username = $this->request->getVar('user_name');
+    $password = $this->request->getVar('password');
+
+    $pastAuthUsr = $this->request->getVar('pastAuthUsr');
+    $pastAuthPwd = $this->request->getVar('pastAuthPwd');
+    if($pastAuthUsr){
+        $username = $pastAuthUsr;
+        $password = $pastAuthPwd;
+    }
+
+    $User_model = new User_model();
+    $userInfo = $User_model
+                ->where('USER_NAME', $username)
+                ->where('USER_ACTIVE_STATUS', 1)
+                ->first();
+
     // echo '<pre>'; print_r($userInfo); exit;
-    if(empty($userInfo['USER_PASSWORD'])){
-      
-      session()->setFlashdata('error','Username หรือ Password ผิด กรุณากรอกใหม่');
-      return redirect()->back()->withInput();
-    }
-
-
-    $checkPassword = Hash::check($password, $userInfo['USER_PASSWORD']);
-    if(!$checkPassword)
-    {
-      session()->setFlashdata('error','Username หรือ Password ผิด กรุณากรอกใหม่');
-      return redirect()->back()->withInput();
-    }
-    else
-    {
-      $userId = $userInfo['USER_ID'];
-      if ($userInfo['USER_PHOTO_FILE'] != '') {
-        $user_img = base_url('public/uploads/user/'.$userInfo['USER_PHOTO_FILE']);
-      }else{
-        $user_img = base_url('public/img/default-profile.jpeg');
+      if(empty($userInfo['USER_PASSWORD'])){
+        
+        session()->setFlashdata('error','Username หรือ Password ผิด กรุณากรอกใหม่');
+        return redirect()->back()->withInput();
       }
-      $session = session();
-      $userPermission = array();
-      $userRole = array();
-      // $Permission = new Permission_model();
-      // $userPermission = $Permission->getPermission($userInfo['USER_PERMISSION_TYPE'],$userInfo['USER_TYPE_ORG']);
-      // $userRole = $User_model->getRole($userInfo['USER_ID']);
 
-      // if($userInfo['USER_PERMISSION_TYPE']==3 && $userInfo['USER_TYPE_ORG']==1){
-      //   $userInfo['USER_AREA_ID'] = $Permission->getAreaId($userInfo['USER_ORG_ID']);
-      //   $userInfo['USER_REGION_ID'] = $Permission->getAreaRegionId($userInfo['USER_ORG_ID']);
-      // }
 
-      // if($userInfo['USER_TYPE_ORG']==2){
-      //   $userInfo['USER_REGION_ID'] = $Permission->getRegionId($userInfo['USER_ORG_ID']);
-      // }
-
-      $ses_data = [
-      'org_id' => $userInfo['USER_ORG_ID'],
-      'username' => $userInfo['USER_NAME'],
-      'name' =>  $userInfo['USER_NAME_TH'],
-      'user_type' => $userInfo['USER_TYPE_ORG'],
-      'user_permission_type'=>$userInfo['USER_PERMISSION_TYPE'],
-      'user_area_id' => $userInfo['USER_AREA_ID'],
-      'user_region_id' => $userInfo['USER_REGION_ID'],
-      'user_img' => $user_img,
-      'user_menu' => $userPermission,
-      'user_role' => $userRole,
-      'logged_in' => TRUE
-      ];
-      $session->set($ses_data);
-
-      $redirect_url = $session->get('redirect_url');
-      if($redirect_url){
-        return redirect()->to($redirect_url);
+      $checkPassword = Hash::check($password, $userInfo['USER_PASSWORD']);
+      if(!$checkPassword)
+      {
+        session()->setFlashdata('error','Username หรือ Password ผิด กรุณากรอกใหม่');
+        return redirect()->back()->withInput();
       }
-      return redirect()->to('/main');
-    }
+      else
+      {
+        $userId = $userInfo['USER_ID'];
+        if ($userInfo['USER_PHOTO_FILE'] != '') {
+          $user_img = base_url('public/uploads/user/'.$userInfo['USER_PHOTO_FILE']);
+        }else{
+          $user_img = base_url('public/img/default-profile.jpeg');
+        }
+        $session = session();
+        $userRole = array();
+
+        $userPermission = array('dashboard'=>1,'report'=>1,'import'=>1,'setting'=>1);
+        $ses_data = [
+        'org_id' => $userInfo['USER_ORG_ID'],
+        'username' => $userInfo['USER_NAME'],
+        'name' =>  $userInfo['USER_NAME_TH'],
+        'user_type' => $userInfo['USER_TYPE_ORG'],
+        'user_permission_type'=>$userInfo['USER_PERMISSION_TYPE'],
+        'user_area_id' => $userInfo['USER_AREA_ID'],
+        'user_region_id' => $userInfo['USER_REGION_ID'],
+        'user_img' => $user_img,
+        'user_menu' => $userPermission,
+        'user_role' => $userRole,
+        'logged_in' => TRUE
+        ];
+        $session->set($ses_data);
+
+        $redirect_url = $session->get('redirect_url');
+        if($redirect_url){
+          return redirect()->to($redirect_url);
+        }
+        return redirect()->to('/main');
+      }
   }
 
   function loginAD($username='',$pass=''){
@@ -127,12 +133,35 @@ class Login extends BaseController{
       $b = @ldap_bind($ad,$user,$pass);
       if(!$b) {
         $msg = "Login false";
+        // return redirect()->to('welcome');
         $response = false;
       }else{
           $userInfo = $this->get_entry_system_attrs($username,$ad,$dn);
-          if(!empty($userInfo['samaccountname'])){
-              $Permission = new Permission_model();
-              $userPermission = $Permission->getPermission(1,3);
+          // echo '<pre>';
+          // print_r($userInfo);
+          // exit;
+          if(!empty($userInfo['samaccountname'])
+             && ( $userInfo['title']==410202 ||  $userInfo['title']==420101 
+                  ||  $userInfo['title']==200000 
+                  ||  $userInfo['title']==300000 
+                  ||  $userInfo['title']==400000 
+                  ||  $userInfo['title']==500000
+                  ||  $userInfo['title']==600000 
+                  ||  $userInfo['title']==700000 
+                  ||  $userInfo['title']==80000 
+                  ||  $userInfo['title']==90000
+                  ||  $userInfo['title']==310302
+                   ) 
+            || $userInfo['samaccountname'] == 'sriwan.choo'
+            || $userInfo['samaccountname'] == 'prakong.phan'
+
+            ){
+           
+              // $Permission = new Permission_model();
+              $userPermission = array('dashboard'=>1,'report'=>1);
+              if( $userInfo['title']==410202 ||  $userInfo['title']==420101 ){
+                $userPermission = array('dashboard'=>1,'report'=>1,'import'=>1,'setting'=>1);
+              }
               $userRole['REPORT'] = 'REPORT';
               $ses_data = [
               'org_id' => substr($userInfo['title'], 0, -2).'00',
@@ -152,6 +181,7 @@ class Login extends BaseController{
               $msg = "Login success";
               $response = true;
           }else{
+            // return redirect()->to('welcome');
             $response = false;
           }
       }
@@ -266,6 +296,13 @@ class Login extends BaseController{
 
       return redirect()->to($AuthUrl);
     }
+  }
+
+  public function welcome(){
+    $session = session();
+    $session->destroy();
+    
+    return view('Modules\Login\Views\welcome.php');
   }
 
 
