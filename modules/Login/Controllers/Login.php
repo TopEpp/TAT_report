@@ -154,8 +154,8 @@ class Login extends BaseController{
                   ||  $userInfo['title'][0]==500000
                   ||  $userInfo['title'][0]==600000 
                   ||  $userInfo['title'][0]==700000 
-                  ||  $userInfo['title'][0]==80000 
-                  ||  $userInfo['title'][0]==90000
+                  ||  $userInfo['title'][0]==800000 
+                  ||  $userInfo['title'][0]==900000
                   ||  $userInfo['title'][0]==310302
                    ) 
             || $userInfo['samaccountname'][0] == 'sriwan.choo'
