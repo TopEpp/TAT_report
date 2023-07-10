@@ -59,13 +59,13 @@
 	}
 
 	#resultsTable {
-		height: 349px;
+		height: 350px;
 		width: 210px;
 		background: #a7ffff;
 		overflow: hidden;
 		border-radius: 25px !important;
 		margin: 0px auto;
-		position: absolute;
+		/* position: absolute; */
 	}
 
 	#resultsTable3 {
@@ -80,11 +80,11 @@
 
 	#resultsTable2 {
 		width: 210px;
-		height: 349px;
+		height: 359px;
 		background: #fff1cc;
 		overflow: hidden;
 		border-radius: 25px !important;
-		margin: auto auto;
+		margin: 0px auto;
 	}
 
 	#resultsTable4 {
@@ -179,10 +179,10 @@
 	</div>
 
 
-	<div style="position: absolute; top: 318px; left: 40px;">
+	<div style="position: absolute; top: 295px; left: 40px;">
 		<img src="<?php echo base_url('public/img/tourist.png') ?>" alt="" style="width: 65px;">
 	</div>
-	<div style="position: absolute; top: 350px; left: 110px;">
+	<div style="position: absolute; top: 330px; left: 110px;">
 		<img src="<?php echo base_url('public/img/destination.png') ?>" alt="" style="width: 32px;">
 	</div>
 	<div style="position: absolute; top: 340px; right: 480px;">
@@ -241,7 +241,7 @@
 									<td style="width: 15%;">
 										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
 									</td>
-									<td style="text-align: right; padding: 8px 15px;color: #193666; font-size: 18px;font-weight: bold; width: 55%;">
+									<td style="text-align: right; padding: 8.5px 14px;color: #193666; font-size: 20px;font-weight: bold; width: 55%;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
 									<td style="font-size: 14px; color: #193666; font-weight: bold; width: 30%; text-align: left;">
@@ -256,7 +256,7 @@
 			</div>
 		</div>
 		<div class="col6">
-			<div id="resultsTable2" style="display: flex; flex-direction: row; padding: 0px 15px;">
+			<div id="resultsTable2" style="display: flex; flex-direction: row; padding: 0px 15px; ">
 				<table style="width: 100%;">
 					<tbody>
 						<tr>
@@ -292,7 +292,7 @@
 									<td style="width: 15%;">
 										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px;">
 									</td>
-									<td style="text-align: right; padding: 8px 15px;color: #193666; font-size: 18px;font-weight: bold; width: 55%;">
+									<td style="text-align: right; padding: 8.5px 14px;color: #193666; font-size: 20px;font-weight: bold; width: 55%;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
 									<td style="font-size: 14px; color: #193666; font-weight: bold; width: 30%; text-align: left;">
@@ -306,7 +306,6 @@
 				} ?>
 			</div>
 		</div>
-
 		<div class="col6">
 			<div id="resultsTable" style="display: flex; flex-direction: row; padding: 0px 15px;">
 				<table style="width: 100%;">
@@ -335,7 +334,7 @@
 						<div id="resultsTable3">
 							<table style="width: 100%;">
 								<tr>
-									<td style="text-align: right; padding: 8.5px 14px;color: #193666; font-size: 17.5px;font-weight: bold;">
+									<td style="text-align: right; padding: 8.5px 14px;color: #193666; font-size: 20px;font-weight: bold;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
 									<td style="font-size: 14px; color: #193666; font-weight: bold;">
@@ -377,7 +376,7 @@
 						<div id="resultsTable3">
 							<table style="width: 100%;">
 								<tr>
-									<td style="text-align: right; padding: 8.5px 12px;color: #193666; font-size: 17.5px;font-weight: bold;">
+									<td style="text-align: right; padding: 8.5px 12px;color: #193666; font-size: 20px;font-weight: bold;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
 									<td style="font-size: 14px; color: #193666;font-weight: bold;">
