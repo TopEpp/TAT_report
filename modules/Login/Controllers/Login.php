@@ -160,6 +160,7 @@ class Login extends BaseController{
                    ) 
             || $userInfo['samaccountname'][0] == 'sriwan.choo'
             || $userInfo['samaccountname'][0] == 'prakong.phan'
+            || $userInfo['samaccountname'][0] == 'natchapol.phro'
             || $C == 'C9' || $C == 'C10' || $C == 'C11'
             ){
            
