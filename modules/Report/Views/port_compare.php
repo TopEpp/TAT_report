@@ -29,14 +29,14 @@
 	</div>
 	<div class="col-md-6 col-12 py-2 py-md-0" style="text-align: right;">
 		<a target="_blank" onclick="export_excel()" class="btn btn-success" style="width : 70px">
-			<i class="fa-solid fa-file-excel"></i> Excel2
+			<i class="fa-solid fa-file-excel"></i> Excel
 		</a>
 		<!-- <a target="_blank" onclick="export_report('excel')" class="btn btn-success" style="width : 70px">
 			<i class="fa-solid fa-file-excel"></i> Excel
 		</a> -->
-		<a target="_blank" onclick="export_report('pdf')" class="btn btn-danger" style="width : 70px">
+		<!-- <a target="_blank" onclick="export_report('pdf')" class="btn btn-danger" style="width : 70px">
 			<i class="fa-solid fa-file-pdf"></i> PDF
-		</a>
+		</a> -->
 	</div>
 	<div class="col-md-12 text-center py-2"  style="font-size: 1.4em;">
 		รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน
@@ -317,7 +317,7 @@ function getSumData($data, $region, $region_id, $country, $port_id, $day, &$sum 
 
 	function export_excel(){
 		var elt = document.getElementById('table_port_compare');
-		var wb = XLSX.utils.table_to_book(elt, { sheet: "รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน" }); 
+		var wb = XLSX.utils.table_to_book(elt, { sheet: "1" }); 
 		XLSX.writeFile(wb, "port_compare.xlsx")
 	}
 </script>

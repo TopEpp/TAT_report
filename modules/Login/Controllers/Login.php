@@ -137,36 +137,42 @@ class Login extends BaseController{
         $response = false;
       }else{
           $userInfo = $this->get_entry_system_attrs($username,$ad,$dn);
+          
+          $C = explode(',', $userInfo['memberof'][1]);
+          $C = explode('=', $C[0]);
+          $C = $C[1];
+          // echo 'C='.$C;
           // echo '<pre>';
           // print_r($userInfo);
           // exit;
-          if(!empty($userInfo['samaccountname'])
-             && ( $userInfo['title']==410202 ||  $userInfo['title']==420101 
-                  ||  $userInfo['title']==200000 
-                  ||  $userInfo['title']==300000 
-                  ||  $userInfo['title']==400000 
-                  ||  $userInfo['title']==500000
-                  ||  $userInfo['title']==600000 
-                  ||  $userInfo['title']==700000 
-                  ||  $userInfo['title']==80000 
-                  ||  $userInfo['title']==90000
-                  ||  $userInfo['title']==310302
-                   ) 
-            || $userInfo['samaccountname'] == 'sriwan.choo'
-            || $userInfo['samaccountname'] == 'prakong.phan'
 
+          if(!empty($userInfo['samaccountname'][0])
+             && ( $userInfo['title'][0]==410202 ||  $userInfo['title'][0]==420101 
+                  ||  $userInfo['title'][0]==200000 
+                  ||  $userInfo['title'][0]==300000 
+                  ||  $userInfo['title'][0]==400000 
+                  ||  $userInfo['title'][0]==500000
+                  ||  $userInfo['title'][0]==600000 
+                  ||  $userInfo['title'][0]==700000 
+                  ||  $userInfo['title'][0]==80000 
+                  ||  $userInfo['title'][0]==90000
+                  ||  $userInfo['title'][0]==310302
+                   ) 
+            || $userInfo['samaccountname'][0] == 'sriwan.choo'
+            || $userInfo['samaccountname'][0] == 'prakong.phan'
+            || $C == 'C9' || $C == 'C10' || $C == 'C11'
             ){
            
               // $Permission = new Permission_model();
               $userPermission = array('dashboard'=>1,'report'=>1);
-              if( $userInfo['title']==410202 ||  $userInfo['title']==420101 ){
+              if( $userInfo['title'][0]==410202 ||  $userInfo['title'][0]==420101 ){
                 $userPermission = array('dashboard'=>1,'report'=>1,'import'=>1,'setting'=>1);
               }
               $userRole['REPORT'] = 'REPORT';
               $ses_data = [
-              'org_id' => substr($userInfo['title'], 0, -2).'00',
-              'username' => $userInfo['samaccountname'],
-              'name' =>  $userInfo['cn'],
+              'org_id' => substr($userInfo['title'][0], 0, -2).'00',
+              'username' => $userInfo['samaccountname'][0],
+              'name' =>  $userInfo['cn'][0],
               'user_type' => 3,
               'user_permission_type'=>1,
               'user_area_id' => 0,
@@ -221,7 +227,7 @@ class Login extends BaseController{
                         if ('lastlogon' === $col_name || 'lastlogontimestamp' === $col_name){
                             $output = date('D M d, Y @ H:i:s', ($entries[$i][$col_name][0] / 10000000) - 11676009600); // See note below
                         }else{
-                            @$output = $entries[$i][$col_name][0];
+                            @$output = $entries[$i][$col_name];
                         }
                         
 
