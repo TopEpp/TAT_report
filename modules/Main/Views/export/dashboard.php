@@ -179,10 +179,10 @@
 	</div>
 
 
-	<div style="position: absolute; top: 318px; left: 40px;">
+	<div style="position: absolute; top: 295px; left: 40px;">
 		<img src="<?php echo base_url('public/img/tourist.png') ?>" alt="" style="width: 65px;">
 	</div>
-	<div style="position: absolute; top: 350px; left: 110px;">
+	<div style="position: absolute; top: 330px; left: 110px;">
 		<img src="<?php echo base_url('public/img/destination.png') ?>" alt="" style="width: 32px;">
 	</div>
 	<div style="position: absolute; top: 340px; right: 480px;">
