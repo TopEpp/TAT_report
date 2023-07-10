@@ -241,7 +241,7 @@
 									<td style="width: 15%;">
 										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
 									</td>
-									<td style="text-align: right; padding: 8.5px 14px;color: #193666; font-size: 20px;font-weight: bold; width: 55%;">
+									<td style="text-align: right; padding: 10px 15px;color: #193666; font-size: 20px;font-weight: bold; width: 55%;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
 									<td style="font-size: 14px; color: #193666; font-weight: bold; width: 30%; text-align: left;">
@@ -292,7 +292,7 @@
 									<td style="width: 15%;">
 										<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px;">
 									</td>
-									<td style="text-align: right; padding: 8.5px 14px;color: #193666; font-size: 20px;font-weight: bold; width: 55%;">
+									<td style="text-align: right; padding: 10px 15px;color: #193666; font-size: 20px;font-weight: bold; width: 55%;">
 										<?php echo number_format($v['NUM']); ?>
 									</td>
 									<td style="font-size: 14px; color: #193666; font-weight: bold; width: 30%; text-align: left;">
