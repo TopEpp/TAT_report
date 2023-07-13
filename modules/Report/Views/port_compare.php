@@ -234,7 +234,7 @@ function getSumData($data, $region, $region_id, $country, $port_id, $day, &$sum 
 <?= $this->section("scripts") ?>
 
 
-<script type="text/javascript" src="https://cdn.sheetjs.com/xlsx-0.18.9/package/dist/xlsx.full.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url('public/js/xlsx.full.min.js')?>"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.date_picker').datepicker({
@@ -318,6 +318,7 @@ function getSumData($data, $region, $region_id, $country, $port_id, $day, &$sum 
 	function export_excel(){
 		var elt = document.getElementById('table_port_compare');
 		var wb = XLSX.utils.table_to_book(elt, { sheet: "1" }); 
+
 		XLSX.writeFile(wb, "port_compare.xlsx")
 	}
 </script>

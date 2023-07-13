@@ -133,7 +133,6 @@ class Login extends BaseController{
       $b = @ldap_bind($ad,$user,$pass);
       if(!$b) {
         $msg = "Login false";
-        // return redirect()->to('welcome');
         $response = false;
       }else{
           $userInfo = $this->get_entry_system_attrs($username,$ad,$dn);
@@ -188,7 +187,6 @@ class Login extends BaseController{
               $msg = "Login success";
               $response = true;
           }else{
-            // return redirect()->to('welcome');
             $response = false;
           }
       }
@@ -247,7 +245,8 @@ class Login extends BaseController{
   public function logout(){
     $session = session();
     $session->destroy();
-    return redirect()->to('/');
+    // return redirect()->to('/');
+    return redirect()->to('https://marketingdb.tat.or.th/web/guest/index');
   }
 
   public function tat(){
@@ -298,8 +297,6 @@ class Login extends BaseController{
       'logged_in' => TRUE
       ];
       $session->set($ses_data);
-
-      // echo $TatAuthUsr.' '.$AuthUrl;
 
       return redirect()->to($AuthUrl);
     }

@@ -12,7 +12,8 @@ class Auth implements FilterInterface{
 			$ses_data['redirect_url'] = current_url();
 			$session->set($ses_data);
 
-		return redirect()->to('/login');
+		// return redirect()->to('/login');
+		return redirect()->to('https://marketingdb.tat.or.th/web/guest/index');
 		}
 	}
 
