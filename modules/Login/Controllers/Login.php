@@ -86,7 +86,7 @@ class Login extends BaseController{
         $session = session();
         $userRole = array();
 
-        $userPermission = array('dashboard'=>1,'report'=>1,'import'=>1,'setting'=>1);
+        $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1);
         $ses_data = [
         'org_id' => $userInfo['USER_ORG_ID'],
         'username' => $userInfo['USER_NAME'],
