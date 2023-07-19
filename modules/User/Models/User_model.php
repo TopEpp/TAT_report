@@ -383,6 +383,31 @@ class User_model extends Model
     }
   }
 
+  function getPermissionAD($group_id,$username,$C){
+    $userPermission = array();
+    $builder = $this->db->table('TAT.REPORT_PERMISSION_GROUP');
+    $builder->select('*');
+    $builder->where('GROUP_ID',$group_id);
+    $row = $builder->get()->getRowArray();
+    if(!empty($row)){
+      return $row;
+    }else{
+      $builder = $this->db->table('TAT.REPORT_PERMISSION_USER');
+      $builder->select('*');
+      $builder->where('USERNAME',$username);
+      $row = $builder->get()->getRowArray();
+      if(!empty($row)){
+        return $row;
+      }
+    }
+
+    if($C == 'C9' || $C == 'C10' || $C == 'C11'){
+      $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
+    }
+
+    return $userPermission;
+  }
+
 
 }
 

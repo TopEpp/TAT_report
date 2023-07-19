@@ -144,30 +144,35 @@ class Login extends BaseController{
           // echo '<pre>';
           // print_r($userInfo);
           // exit;
+          $userPermission = $this->getPermissionAD($userInfo['title'][0],$userInfo['samaccountname'][0],$C);
 
-          if(!empty($userInfo['samaccountname'][0])
-             && ( $userInfo['title'][0]==410202 ||  $userInfo['title'][0]==420101 
-                  ||  $userInfo['title'][0]==200100 
-                  ||  $userInfo['title'][0]==300100 
-                  ||  $userInfo['title'][0]==400100 
-                  ||  $userInfo['title'][0]==500100
-                  ||  $userInfo['title'][0]==600100 
-                  ||  $userInfo['title'][0]==700100 
-                  ||  $userInfo['title'][0]==800100 
-                  ||  $userInfo['title'][0]==900100
-                  ||  $userInfo['title'][0]==310302
-                   ) 
-            || $userInfo['samaccountname'][0] == 'sriwan.choo'
-            || $userInfo['samaccountname'][0] == 'prakong.phan'
-            || $userInfo['samaccountname'][0] == 'natchapol.phro'
-            || $C == 'C9' || $C == 'C10' || $C == 'C11'
-            ){
-           
-              // $Permission = new Permission_model();
-              $userPermission = array('dashboard'=>1,'report'=>1);
-              if( $userInfo['title'][0]==410202 ||  $userInfo['title'][0]==420101 ){
-                $userPermission = array('dashboard'=>1,'report'=>1,'import'=>1,'setting'=>1);
-              }
+          // if(!empty($userInfo['samaccountname'][0])
+          //    && ( $userInfo['title'][0]==410202 ||  $userInfo['title'][0]==420101 
+          //         ||  $userInfo['title'][0]==200100 
+          //         ||  $userInfo['title'][0]==300100 
+          //         ||  $userInfo['title'][0]==400100 
+          //         ||  $userInfo['title'][0]==500100
+          //         ||  $userInfo['title'][0]==600100 
+          //         ||  $userInfo['title'][0]==700100 
+          //         ||  $userInfo['title'][0]==800100 
+          //         ||  $userInfo['title'][0]==900100
+          //         ||  $userInfo['title'][0]==310302
+          //          ) 
+          //   || $userInfo['samaccountname'][0] == 'sriwan.choo'
+          //   || $userInfo['samaccountname'][0] == 'prakong.phan'
+          //   || $userInfo['samaccountname'][0] == 'nitiya.supa'
+          //   || $userInfo['samaccountname'][0] == 'phacharaporn.sawa'
+          //   || $userInfo['samaccountname'][0] == 'panjaporn.siri'
+          //   || $userInfo['samaccountname'][0] == 'titiwat.pati'
+
+          //   || $userInfo['samaccountname'][0] == 'natchapol.phro'
+          //   || $C == 'C9' || $C == 'C10' || $C == 'C11'
+          //   ){
+          if(!empty($userInfo['samaccountname'][0]) && $userPermission['DASHBOARD']){
+              // $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
+              // if( $userInfo['title'][0]==410202 ||  $userInfo['title'][0]==420101 ){
+              //   $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1);
+              // }
               $userRole['REPORT'] = 'REPORT';
               $ses_data = [
               'org_id' => substr($userInfo['title'][0], 0, -2).'00',
@@ -309,6 +314,11 @@ class Login extends BaseController{
     return view('Modules\Login\Views\welcome.php');
   }
 
+  function getPermissionAD($group_id,$username,$c){
+    $User_model = new User_model();
+    $userPermission = $User_model->getPermissionAD($group_id,$username,$c);
+    return $userPermission;
+  }
 
 }
 

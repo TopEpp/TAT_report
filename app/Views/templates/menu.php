@@ -51,7 +51,7 @@ $user_menu = $session->get('user_menu');
        
     </li>
 
-
+    <?php if( !empty($user_menu['REPORT']) ){?>
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item <?php if ($controller == 'report') {
                             echo 'active';
@@ -87,14 +87,14 @@ $user_menu = $session->get('user_menu');
             </div>
         </div>
     </li>
-
+    <?php }?>
     <li class="nav-item">
         <a class="nav-link" target="_blank" href="<?php echo base_url('public/uploads/definition.pdf') ?>">
             <i class="fas fa-fw fa-file"></i>
             <span>คำนิยาม</span>
         </a>
     </li>
-    <?php if( !empty($user_menu['import']) ){?>
+    <?php if( !empty($user_menu['IMPORT']) ){?>
     <li class="nav-item <?php if ($controller == 'import') {
                             echo 'active';
                         } ?>">
@@ -106,7 +106,7 @@ $user_menu = $session->get('user_menu');
     </li>
     <?php }?>
 
-    <?php if( !empty($user_menu['setting']) ){?>
+    <?php if( !empty($user_menu['SETTING']) ){?>
     <li class="nav-item <?php if ($controller == 'setting') {
                             echo 'active';
                         } ?>">
@@ -143,26 +143,7 @@ $user_menu = $session->get('user_menu');
            
         </li>
 
-        <!-- <li class="nav-item <?php if ($controller == 'main') {
-                            echo 'active';
-                        } ?>">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMain" aria-expanded="true" aria-controls="collapseMain">
-            <i class="fas fa-fw fa-dashboard"></i>
-            <span>Dashboard</span>
-        </a>
-        <div id="collapseMain" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item <?php if ($controller == 'main' && $method == 'monthly') {
-                                            echo 'active';
-                                        } ?>" href="<?php echo base_url('main/monthly') ?>">Monthly</a>
-                <a class="collapse-item <?php if ($controller == 'main' && $method == 'monthly_period') {
-                                            echo 'active';
-                                        } ?>" href="<?php echo base_url('main/monthly_period') ?>">Monthly Period</a>
-            </div>
-        </div>
-    </li> -->
-
-
+    <?php if( !empty($user_menu['REPROT']) ){?>
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item <?php if ($controller == 'report') {
                             echo 'active';
@@ -179,7 +160,8 @@ $user_menu = $session->get('user_menu');
             </div>
         </div>
     </li>
-
+    <?php } ?>
+    <?php if( !empty($user_menu['IMPORT']) ){?>
     <li class="nav-item <?php if ($controller == 'import') {
                             echo 'active';
                         } ?>">
@@ -199,7 +181,7 @@ $user_menu = $session->get('user_menu');
             </div>
         </div>
     </li>
-
+    <?php } ?>
  
     <?php } ?>
 
