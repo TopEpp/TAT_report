@@ -140,12 +140,12 @@ class Login extends BaseController{
           $C = explode(',', $userInfo['memberof'][1]);
           $C = explode('=', $C[0]);
           $C = $C[1];
-          // echo 'C='.$C;
-          // echo '<pre>';
-          // print_r($userInfo);
-          // exit;
+          
           $userPermission = $this->getPermissionAD($userInfo['title'][0],$userInfo['samaccountname'][0],$C);
 
+          // echo '<pre>';
+          // print_r($userPermission);
+          // exit;
           // if(!empty($userInfo['samaccountname'][0])
           //    && ( $userInfo['title'][0]==410202 ||  $userInfo['title'][0]==420101 
           //         ||  $userInfo['title'][0]==200100 
