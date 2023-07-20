@@ -105,6 +105,8 @@ $routes->group('setting', ['namespace' => '\Modules\Setting\Controllers'], funct
     $routes->get('updateVisaRatio/(:num)','Setting::updateVisaRatio/$1');
     $routes->get('updateCalReportDaily','Setting::updateCalReportDaily');
 
+    $routes->get('permission','Setting::permission');
+
 });
 
 

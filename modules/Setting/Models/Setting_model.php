@@ -248,5 +248,21 @@ class Setting_model extends Model
 		// echo ' :: '.$c;
 	}
 
+	function getPermissionGroup(){
+		$builder = $this->db->table('REPORT_PERMISSION_GROUP');
+		$builder->select('*');
+		$data = $builder->get()->getResultArray();
+
+		return $data;
+	}
+
+	function getPermissionUser(){
+		$builder = $this->db->table('REPORT_PERMISSION_USER');
+		$builder->select('*');
+		$data = $builder->get()->getResultArray();
+
+		return $data;
+	}
+
 
 }

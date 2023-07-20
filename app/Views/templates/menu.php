@@ -126,6 +126,9 @@ $user_menu = $session->get('user_menu');
                 <a class="collapse-item <?php if ($method == 'visa') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('setting/visa') ?>">Visa</a>
+                <a class="collapse-item <?php if ($method == 'permission') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('setting/permission') ?>">Permission</a>
             </div>
         </div>
     </li>

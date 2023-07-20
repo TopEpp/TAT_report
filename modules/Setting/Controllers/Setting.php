@@ -118,6 +118,15 @@ class Setting extends BaseController{
 
 		$Model->updateCalReportDaily($year,$month,$day);
 	}
+
+	public function permission()
+	{
+		$Model = new Setting_model();
+		$data['group'] = $Model->getPermissionGroup();
+		$data['user'] = $Model->getPermissionUser();
+
+		return view('Modules\Setting\Views\permission',$data);
+	}
 }
 
 ?>
