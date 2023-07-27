@@ -46,8 +46,8 @@
         <table class="table table-striped table-bordered" id="myTable">
           <thead>
             <tr>
-              <th>Title</th>
-              <th width="15%">User</th>
+              <th>User</th>
+              <th width="15%">Dashboard</th>
               <th width="15%">Report</th>
               <th width="15%">Import</th>
               <th width="15%">Setting</th>
