@@ -210,7 +210,7 @@
 			<tr>
 				<td colspan="3" style="text-align: center; color: black; width: 100%;">
 					<h4 style="margin: 0px; line-height: normal; font-size: 40;margin-bottom: 30px;">
-						เดือนมกราคม - มีนาคม 2566
+						เดือน<?php echo $month_label[$month]?> - <?php echo $month_label[$month2]?> 2566
 					</h4>
 				</td>
 			</tr>
@@ -277,6 +277,10 @@
 						$stateless = @$SumRegionDateData[29];
 						$stateless_past = @$SumRegionDateData_past[29];
 						$diff_stateless = $stateless > 0 ? number_format(($stateless - $stateless_past) / $stateless * 100, 2) . '%' : '-';
+
+						$total = $asia+$eu+$america+$oceania+$middle_east+$africa+$stateless;
+						$total_past = $asia_past+$eu_past+$america_past+$oceania_past+$middle_east_past+$africa_past+$stateless_past;
+						$diff_total = $total > 0 ? number_format(($total - $total_past) / $total * 100, 2) . '%' : '-';
 						?>
 						<tr style="border: 1px solid #e3e193; background-color: #fff2e9;">
 							<td style="padding-left: 15px; font-size: 18px; width: 40%;color:#1e6760; font-weight: 500; ">ASIA</td>
@@ -343,6 +347,13 @@
 							<td align="right" style="font-size:18px;padding-right: 10px;color:#1e6760;"><?php echo $diff_stateless; ?></td>
 						</tr>
 					</tbody>
+					<tfoot>
+						<tr style="border: 1px solid #e3e193; background-color: white; ">
+							<td style="padding-left: 15px;font-size:18px;color:#1e6760; font-weight: 500;">Total</td>
+							<td align="right" style="font-size:18px;color:#1e6760;"><?php echo number_format($total) ?></td>
+							<td align="right" style="font-size:18px;padding-right: 10px;color:#1e6760;"><?php echo $diff_total ?></td>
+						</tr>
+					</tfoot>
 				</table>
 			</div>
 			<div id="resultsTableForCard" style="margin-bottom: 10px; margin-top: 15px;">

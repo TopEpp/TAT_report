@@ -103,21 +103,63 @@ class Main extends BaseController
 
 	function monthly()
 	{
+
+
+		// $Model = new Main_model();
+		// $Report_model = new Report_model();
+		// $data['session'] = session();
+		// $ses_data = ['report_type' => 'monthly'];
+		// $data['session']->set($ses_data);
+
+		// $data['Mydate'] = $this->Mydate;
+		// $data['month'] = date('m');
+		// $data['year'] = date('Y');
+		// $data['to_date'] = date('d-m-Y');
+		// $data['limit'] = 5;
+		// $data['month_label'] = $this->month_th;
+
+		// if (!empty($_GET['month'])) {
+		// 	$data['month'] = $_GET['month'];
+		// }
+		// if (!empty($_GET['year'])) {
+		// 	$data['year'] = $_GET['year'];
+		// }
+		// if (!empty($_GET['limit'])) {
+		// 	$data['limit'] = $_GET['limit'];
+		// }
+
+		// $data['SumMonth'] = $Model->getSumMonthly($data['year']);
+		// $data['SumMonth_past'] = $Model->getSumMonthly(($data['year'] - 1));
+		// $data['SumRegionDateData'] = $Model->getSumMonthlyRegion($data['month'], $data['year']);
+		// $data['SumRegionDateData_past'] = $Model->getSumMonthlyRegion($data['month'], $data['year'] - 1);
+		// $data['SumCountry'] = $Model->getSumMonthlyCountry($data['month'], $data['year'], $data['limit']);
+
+
+		// $data['export_type'] = @$_GET['export_type'];
+
+		// if (@$_GET['export_type'] == 'pdf') {
+		// 	$this->export_pdf('Modules\Main\Views\export\monthly', $data);
+		// } else {
+		// 	return view("Modules\Main\Views\monthly", $data);
+		// }
+
 		$Model = new Main_model();
-		$Report_model = new Report_model();
 		$data['session'] = session();
 		$ses_data = ['report_type' => 'monthly'];
 		$data['session']->set($ses_data);
-
 		$data['Mydate'] = $this->Mydate;
-		$data['month'] = date('m');
+		$data['month'] = 1;
+		$data['month2'] = date('m');
 		$data['year'] = date('Y');
-		$data['to_date'] = date('d-m-Y');
 		$data['limit'] = 5;
 		$data['month_label'] = $this->month_th;
+		$data['to_date'] = date('d-m-Y');
 
 		if (!empty($_GET['month'])) {
 			$data['month'] = $_GET['month'];
+		}
+		if (!empty($_GET['month2'])) {
+			$data['month2'] = $_GET['month2'];
 		}
 		if (!empty($_GET['year'])) {
 			$data['year'] = $_GET['year'];
@@ -128,17 +170,15 @@ class Main extends BaseController
 
 		$data['SumMonth'] = $Model->getSumMonthly($data['year']);
 		$data['SumMonth_past'] = $Model->getSumMonthly(($data['year'] - 1));
-		$data['SumRegionDateData'] = $Model->getSumMonthlyRegion($data['month'], $data['year']);
-		$data['SumRegionDateData_past'] = $Model->getSumMonthlyRegion($data['month'], $data['year'] - 1);
-		$data['SumCountry'] = $Model->getSumMonthlyCountry($data['month'], $data['year'], $data['limit']);
-
-
+		$data['SumRegionDateData'] = $Model->getSumMonthlyRegionPeriod($data['month'], $data['month2'], $data['year']);
+		$data['SumRegionDateData_past'] = $Model->getSumMonthlyRegionPeriod($data['month'], $data['month2'], $data['year'] - 1);
+		$data['SumCountry'] = $Model->getSumMonthlyCountryPeriod($data['month'], $data['month2'], $data['year'], $data['limit']);
 		$data['export_type'] = @$_GET['export_type'];
 
 		if (@$_GET['export_type'] == 'pdf') {
-			$this->export_pdf('Modules\Main\Views\export\monthly', $data);
+			$this->export_pdf('Modules\Main\Views\export\monthly_period', $data);
 		} else {
-			return view("Modules\Main\Views\monthly", $data);
+			return view("Modules\Main\Views\monthly_period", $data);
 		}
 	}
 

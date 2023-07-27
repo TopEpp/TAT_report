@@ -120,11 +120,14 @@
 	}
 </style>
 <?php 
+$Short_SUM = $Long_SUM = 0;
 foreach ($data['Short'] as $key=> $c) {
-	@$data['Short']['SUM'] += $c['NUM'];
+	// @$data['Short']['SUM'] += $c['NUM'];
+	$Short_SUM +=$c['NUM'];
 }
 foreach ($data['Long'] as $key=> $c) {
-	@$data['Long']['SUM'] += $c['NUM'];
+	// @$data['Long']['SUM'] += $c['NUM'];
+	$Long_SUM +=$c['NUM'];
 }
 ?>
 <div class="row m-0">
@@ -185,12 +188,13 @@ foreach ($data['Long'] as $key=> $c) {
 				<tbody>
 					<?php $i = 0;
 					foreach ($data['Short'] as $key=> $c) {
-						if($key!='SUM'){
+
+						// if($key!='SUM'){
 
 						$i++;
 						$ratio = 0;
 						if ($c['NUM'] > 0) {
-							$ratio = $c['NUM'] / $data['Short']['SUM'] * 100;
+							$ratio = $c['NUM'] / $Short_SUM * 100;
 						}
 					?>
 						<tr>
@@ -199,7 +203,7 @@ foreach ($data['Long'] as $key=> $c) {
 							<td data-label="จำนวนนักท่องเที่ยว" align="right"><?php echo @number_format($c['NUM']) ?></td>
 							<td data-label="สัดส่วน" align="right"><?php echo number_format($ratio, 2); ?></td>
 						</tr>
-					<?php } }
+					<?php } 
 				?>
 				</tbody>
 			</table>
@@ -220,11 +224,11 @@ foreach ($data['Long'] as $key=> $c) {
 				<tbody>
 					<?php $i = 0;
 					foreach ($data['Long'] as $key=> $c) {
-						if($key!='SUM'){
+						// if($key!='SUM'){
 						$i++;
 						$ratio = 0;
 						if ($c['NUM'] > 0) {
-							$ratio = @$c['NUM'] / $data['Long']['SUM'] * 100;
+							$ratio = @$c['NUM'] / $Long_SUM * 100;
 						}
 					?>
 						<tr>
@@ -233,7 +237,7 @@ foreach ($data['Long'] as $key=> $c) {
 							<td data-label="จำนวนนักท่องเที่ยว" align="right"><?php echo @number_format(@$c['NUM']) ?></td>
 							<td data-label="สัดส่วน" align="right"><?php echo number_format($ratio, 2); ?></td>
 						</tr>
-					<?php } }?>
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>

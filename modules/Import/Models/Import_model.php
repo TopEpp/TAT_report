@@ -851,7 +851,7 @@ class Import_model extends Model
 
 		      	if(trim($country_name) == 'South Africa' || $country_name2 == 'SOUTHAFRICA'){
 			        $co['COUNTRYID'] = '225';
-			      }else if(trim($country_name) == 'USA'){
+			      }else if(trim($country_name) == 'USA' || $country_name == 'UNITED STATE OF AMERICA'){
 			        $co['COUNTRYID'] = '131';
 			      }else if( trim($country_name) == 'UNITED  KINGDOM' || trim($country_name) == 'UNITEDKINGDOM'){
 			        $co['COUNTRYID'] = '274';
@@ -867,7 +867,7 @@ class Import_model extends Model
 			        $co['COUNTRYID'] = '72';
 			      }else if( trim($country_name) == 'HONG KONG (CHINA)' ){
 			        $co['COUNTRYID'] = '156';
-			      }else if( trim($country_name) == "DEMOCRATIC PEOPLE'S REPUBLIC OF KOREA" ){
+			      }else if( trim($country_name) == "DEMOCRATIC PEOPLE'S REPUBLIC OF KOREA" || $country_name == "KOREA (DEM. PEOPLE'S REPUBLIC OF)" ){
 			        $co['COUNTRYID'] = '159';
 			      }else if( trim($country_name) == 'KOREA (REPUBLIC OF)' ){
 			        $co['COUNTRYID'] = '158';
@@ -1005,7 +1005,36 @@ class Import_model extends Model
 			        $co['COUNTRYID'] = '204';
 			      }else if( trim($country_name) == "NORTH MACEDONIA" ){
 			        $co['COUNTRYID'] = '85';
+			      }else if( trim($country_name) == "TAIWAN PROVINCE OF CHINA" ){
+			        $co['COUNTRYID'] = '155';
+			      }else if( trim($country_name) == "REP. MOLDOVA" ){
+			        $co['COUNTRYID'] = '57';
+			      }else if( trim($country_name) == "TAJIKSTAN" ){
+			        $co['COUNTRYID'] = '59';
+			      }else if( trim($country_name) == "REP. OF KOSOVO" ){
+			        $co['COUNTRYID'] = '43';
+			      }else if( trim($country_name) == "DOMINICAN REBUBLIC" ){
+			        $co['COUNTRYID'] = '4';
+			      }else if( trim($country_name) == "COSTARICA" ){
+			        $co['COUNTRYID'] = '111';
+			      }else if( trim($country_name) == "HONDURUS" ){
+			        $co['COUNTRYID'] = '114';
+			      }else if( trim($country_name) == "NICARAQUA" ){
+			        $co['COUNTRYID'] = '115';
+			      }else if( trim($country_name) == "PARAQUAY" ){
+			        $co['COUNTRYID'] = '124';
+			      }else if( trim($country_name) == "BURANDI" ){
+			        $co['COUNTRYID'] = '207';
+			      }else if( trim($country_name) == "CôTE D'IVOIRE (IVORY COST)" ){
+			        $co['COUNTRYID'] = '193';
+			      }else if( trim($country_name) == "DEM. REP. OF THE CONGO" ){
+			        $co['COUNTRYID'] = '183';
+			      }else if( trim($country_name) == "ESWATINI (SWAZILAND)" ){
+			        $co['COUNTRYID'] = '73';
+			      }else if( trim($country_name) == "REP. OF SOUTH SUDAN" ){
+			        $co['COUNTRYID'] = '235';
 			      }
+
 
 		      	if(!empty($co['COUNTRYID'])){
 		      		$count++;

@@ -146,7 +146,7 @@ $user_menu = $session->get('user_menu');
            
         </li>
 
-    <?php if( !empty($user_menu['REPROT']) ){?>
+    <?php if( !empty($user_menu['REPORT']) ){?>
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item <?php if ($controller == 'report') {
                             echo 'active';

@@ -319,6 +319,10 @@
 				$stateless = @$SumRegionDateData[29];
 				$stateless_past = @$SumRegionDateData_past[29];
 				$diff_stateless = $stateless >0 ? number_format( ($stateless - $stateless_past) / $stateless * 100, 2).'%': '-';
+
+				$total = $asia+$eu+$america+$oceania+$middle_east+$africa+$stateless;
+				$total_past = $asia_past+$eu_past+$america_past+$oceania_past+$middle_east_past+$africa_past+$stateless_past;
+				$diff_total = $total > 0 ? number_format(($total - $total_past) / $total * 100, 2) . '%' : '-';
 				?>
 				<tr >
 					<td style="padding-left: 15px;">ASIA</td>
@@ -385,6 +389,13 @@
 					<td align="right"><?php echo $diff_stateless; ?></td>
 				</tr>
 			</tbody>
+			<tfoot>
+				<tr>
+					<td>Total</td>
+					<td align="right" ><?php echo number_format($total) ?></td>
+					<td align="right" ><?php echo $diff_total ?></td>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 	<div class="col-6">
@@ -411,13 +422,14 @@
 			</thead>
 			<tbody>
 				<?php $i = 1;
+				if(!empty($SumCountry)){
 				foreach ($SumCountry as $key => $value) { ?>
 					<tr>
 						<td><?php echo ($i++) . '.' . $value['COUNTRY_NAME_EN'] ?></td>
 						<td align="right"><?php echo is_numeric(@$value['NUM']) ? number_format(@$value['NUM']) : @$value['NUM']; ?> </td>
 						<td align="right"><?php echo $value['CHANGE']; ?> </td>
 					</tr>
-				<?php } ?>
+				<?php } } ?>
 			</tbody>
 		</table>
 	</div>

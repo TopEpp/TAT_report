@@ -1,10 +1,13 @@
 <?php include_once("export_css.php"); ?>
 <?php 
+$Short_SUM = $Long_SUM = 0;
 foreach ($data['Short'] as $key=> $c) {
-	@$data['Short']['SUM'] += $c['NUM'];
+	// @$data['Short']['SUM'] += $c['NUM'];
+	$Short_SUM +=$c['NUM'];
 }
 foreach ($data['Long'] as $key=> $c) {
-	@$data['Long']['SUM'] += $c['NUM'];
+	// @$data['Long']['SUM'] += $c['NUM'];
+	$Long_SUM +=$c['NUM'];
 }
 ?>
 <table style="width:100%">
@@ -31,12 +34,12 @@ foreach ($data['Long'] as $key=> $c) {
 	<tbody>
 		<?php $i = 0;
 		foreach ($data['Short'] as $key=> $c) {
-			if($key!='SUM'){
+			
 
 			$i++;
 			$ratio = 0;
 			if ($c['NUM'] > 0) {
-				$ratio = $c['NUM'] / $data['Short']['SUM'] * 100;
+				$ratio = $c['NUM'] / $Short_SUM * 100;
 			}
 		?>
 			<tr>
@@ -45,7 +48,7 @@ foreach ($data['Long'] as $key=> $c) {
 				<td align="right"><?php echo (@$c['NUM']) ?></td>
 				<td align="right"><?php echo number_format($ratio, 2); ?></td>
 			</tr>
-		<?php } }?>
+		<?php } ?>
 		<?php if ($export_type == 'excel') { ?>
 			<tr style="border:0px">
 				<td colspan="5">
@@ -81,11 +84,11 @@ foreach ($data['Long'] as $key=> $c) {
 		<tbody>
 			<?php $i = 0;
 					foreach ($data['Long'] as $key=> $c) {
-						if($key!='SUM'){
+					
 						$i++;
 						$ratio = 0;
 						if ($c['NUM'] > 0) {
-							$ratio = @$c['NUM'] / $data['Long']['SUM'] * 100;
+							$ratio = @$c['NUM'] / $Long_SUM * 100;
 						}
 					?>
 
@@ -95,7 +98,7 @@ foreach ($data['Long'] as $key=> $c) {
 					<td align="right"><?php echo (@$c['NUM']) ?></td>
 					<td align="right"><?php echo number_format($ratio, 2); ?></td>
 				</tr>
-			<?php } }?>
+			<?php } ?>
 			<?php if ($export_type == 'excel') { ?>
 				<tr style="border:0px">
 					<td colspan="5">
