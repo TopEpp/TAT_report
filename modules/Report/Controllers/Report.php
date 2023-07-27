@@ -410,6 +410,7 @@ class Report extends BaseController
 
 	function export_pdf($view, $data, $orientation = 'P')
 	{
+		$session = session();
 		$html = view($view, $data);
 		$this->response->setHeader('Content-Type', 'application/pdf');
 		$mpdf = new \Mpdf\Mpdf([
@@ -435,10 +436,12 @@ class Report extends BaseController
                 <tr border=0 style="border:0px ">
                   <td align="left" border=0 style="border:0px ">
                     <img src="' . base_url('public/img/logotat.png') . '">
+                    
                   </td>
                   <td align="right" border=0 style="border:0px ">
                     Source of Data : Tourism Authority of Thailand <br>
-                    As of : ' . date('d M Y H:i:s') . '
+                    As of : ' . date('d M Y H:i:s') . '<br>
+                    '.$session->get('name').'
                   </td>
                 </tr>
               </table>';

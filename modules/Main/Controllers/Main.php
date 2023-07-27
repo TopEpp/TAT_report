@@ -351,9 +351,8 @@ class Main extends BaseController
 		$file = $uploadfile . $_POST['imgName'] . '.png';
 		$success = file_put_contents($file, $data);
 
-
-		echo $file.'<br>';
-		print_r($success);
+		// echo $file.'<br>';
+		// print_r($success);
 
 		return $this->setResponseFormat('json')->respond($file);
 	}

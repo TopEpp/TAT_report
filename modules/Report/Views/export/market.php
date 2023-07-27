@@ -103,6 +103,7 @@ foreach ($data['Long'] as $key=> $c) {
 				<tr style="border:0px">
 					<td colspan="5">
 						ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?>
+						
 					</td>
 				</tr>
 			<?php
