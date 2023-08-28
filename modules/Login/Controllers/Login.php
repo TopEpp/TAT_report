@@ -168,11 +168,10 @@ class Login extends BaseController{
           //   || $userInfo['samaccountname'][0] == 'natchapol.phro'
           //   || $C == 'C9' || $C == 'C10' || $C == 'C11'
           //   ){
-          if(!empty($userInfo['samaccountname'][0]) && $userPermission['DASHBOARD']){
-              // $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
-              // if( $userInfo['title'][0]==410202 ||  $userInfo['title'][0]==420101 ){
-              //   $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1);
-              // }
+          if(!empty($userInfo['samaccountname'][0]) && $userPermission['DASHBOARD']  && ( $C == 'C9' || $C == 'C10' || $C == 'C11') ){
+              if( $C == 'C9' || $C == 'C10' || $C == 'C11' ){
+                $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
+              }
               $userRole['REPORT'] = 'REPORT';
               $ses_data = [
               'org_id' => substr($userInfo['title'][0], 0, -2).'00',
