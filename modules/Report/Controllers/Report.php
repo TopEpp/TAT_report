@@ -24,6 +24,7 @@ class Report extends BaseController
 		$data['session'] = session();
 		$data['Mydate'] = $this->Mydate;
 		$date = $Main_model->getMaxDate();
+
 		// $date = date('Y-m-d');
 
 		$day = date('d');
@@ -38,9 +39,16 @@ class Report extends BaseController
 			$day = $date_explode[2];
 			$data['month'] = $date_explode[1];
 			$data['year'] = $date_explode[0];
+
+
+		}else{
+			list($year, $month, $day) = explode('-', $data['to_date']);
+			$data['month'] = $month;
+			$data['year'] = $year;
 		}
 
-		list($year, $month, $day) = explode('-', $data['to_date']);
+		
+		
 		$data['to_date_label'] = $day . '/' . $month . '/' . $year;
 
 		$date_lastyear = ($data['year'] - 1) . '-' . $data['month'] . '-' . $day;
@@ -84,9 +92,12 @@ class Report extends BaseController
 			$day = $date_explode[2];
 			$data['month'] = $date_explode[1];
 			$data['year'] = $date_explode[0];
+		}else{
+			list($year, $month, $day) = explode('-', $data['to_date']);
+			$data['month'] = $month;
+			$data['year'] = $year;
 		}
 
-		list($year, $month, $day) = explode('-', $data['to_date']);
 		$data['to_date_label'] = $day . '/' . $month . '/' . $year;
 
 		$date_lastyear = ($data['year'] - 1) . '-' . $data['month'] . '-' . $day;

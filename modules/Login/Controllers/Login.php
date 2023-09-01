@@ -168,7 +168,7 @@ class Login extends BaseController{
           //   || $userInfo['samaccountname'][0] == 'natchapol.phro'
           //   || $C == 'C9' || $C == 'C10' || $C == 'C11'
           //   ){
-          if(!empty($userInfo['samaccountname'][0]) && $userPermission['DASHBOARD']  && ( $C == 'C9' || $C == 'C10' || $C == 'C11') ){
+          if(!empty($userInfo['samaccountname'][0]) && $userPermission['DASHBOARD']  || ( $C == 'C9' || $C == 'C10' || $C == 'C11') ){
               if( $C == 'C9' || $C == 'C10' || $C == 'C11' ){
                 $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
               }
