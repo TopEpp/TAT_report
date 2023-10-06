@@ -37,8 +37,8 @@ class Report extends BaseController
 			$date_explode = explode('-', $date);
 
 			$day = $date_explode[2];
-			$data['month'] = $date_explode[1];
-			$data['year'] = $date_explode[0];
+			$data['month'] = $month = $date_explode[1];
+			$data['year'] = $year = $date_explode[0];
 
 
 		}else{
@@ -90,8 +90,8 @@ class Report extends BaseController
 			$date_explode = explode('-', $date);
 
 			$day = $date_explode[2];
-			$data['month'] = $date_explode[1];
-			$data['year'] = $date_explode[0];
+			$data['month'] = $month = $date_explode[1];
+			$data['year'] = $year = $date_explode[0];
 		}else{
 			list($year, $month, $day) = explode('-', $data['to_date']);
 			$data['month'] = $month;
