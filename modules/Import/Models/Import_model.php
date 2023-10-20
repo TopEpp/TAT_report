@@ -649,9 +649,9 @@ class Import_model extends Model
 				      	$port = $builder->get()->getRowArray();
 				      	if(!empty($port['PORT_ID'])){
 				      		$port_id[$col_id] = $port['PORT_ID'];
-				      		// echo $col_id.' == '.$port['PORT_ID'].' == ';
+				      		echo $col_id.' == '.$port['PORT_ID'].' == ';
 				      	}
-				      	// echo $col.'<br>';
+				      	echo $col.'<br>';
 	    			}
 	    			
 	    		}
@@ -800,6 +800,7 @@ class Import_model extends Model
 	    				$builder = $this->db->table('MD_PORT');
 			      		$builder->select('PORT_ID');
 				      	$builder->where('PORT_NAME_FULL', trim($col));
+				      	$builder->where('PORT_MONTHLY',1);
 				      	$port = $builder->get()->getRowArray();
 				      	if(!empty($port['PORT_ID'])){
 				      		$port_id[$col_id] = $port['PORT_ID'];
@@ -817,6 +818,7 @@ class Import_model extends Model
 	    				
 	    				$builder = $this->db->table('MD_PORT_POINT');
 			      		$builder->select('*');
+			      		$builder->where('POINT_MONTHLY',1);
 				      	$builder->where('POINT_NAME', trim($col));
 				      	$port = $builder->get()->getRowArray();
 				      	if(!empty($port['POINT_ID'])){
@@ -1217,7 +1219,9 @@ class Import_model extends Model
 	function getPortMonthly($port_type=''){
 		$builder = $this->db->table('MD_PORT');
   		$builder->select('MD_PORT.PORT_ID,MD_PORT.PORT_NAME_FULL,PORT_ORDER_MONTHLY');
-      	$builder->join('REPORT_RAW_MONTHLY','REPORT_RAW_MONTHLY.PORT_ID = MD_PORT.PORT_ID');
+      	$builder->join('REPORT_RAW_MONTHLY','REPORT_RAW_MONTHLY.PORT_ID = MD_PORT.PORT_ID','LEFT');
+      	$builder->where('MD_PORT.PORT_NAME_FULL is not null');
+      	$builder->where('PORT_MONTHLY',1);
       	$builder->groupBy('MD_PORT.PORT_ID,MD_PORT.PORT_NAME_FULL,PORT_ORDER_MONTHLY');
       	if($port_type){
       		$builder->whereIn("MD_PORT.PORT_ID",$port_type);

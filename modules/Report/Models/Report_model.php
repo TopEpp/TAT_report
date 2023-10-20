@@ -18,6 +18,7 @@ class Report_model extends Model
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
 	    $builder->where("TO_CHAR( {$this->table}.REPORT_DATE, 'YYYY-MM-DD') = ",$date);
+	    $builder->where('PORT_DAILY',1);
 	    $builder->groupBy("{$this->table}.COUNTRY_ID,MD_COUNTRY.COUNTRY_NAME_TH, MD_COUNTRY.COUNTRY_NAME_EN ");
 	    $builder->orderBy("NUM DESC");
 	    $data = $builder->get()->getResultArray();
@@ -31,6 +32,7 @@ class Report_model extends Model
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
 	    $builder->where("TO_CHAR( {$this->table}.REPORT_DATE, 'YYYY-MM-DD') = ",$date);
+	    $builder->where('PORT_DAILY',1);
 	    $builder->groupBy("{$this->table}.COUNTRY_ID,MD_COUNTRY.COUNTRY_NAME_TH, MD_COUNTRY.COUNTRY_NAME_EN ");
 	    $builder->orderBy("NUM DESC");
 	    $data = $builder->get()->getResultArray();
@@ -49,6 +51,7 @@ class Report_model extends Model
 	    // $builder->where("TO_CHAR( {$this->table}.REPORT_DATE, 'MM') <= ",$month);
 	    // $builder->where("TO_CHAR( {$this->table}.REPORT_DATE, 'YYYY') = ",$year);
 	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$date_start}','dd/mm/yyyy') AND TO_DATE('{$date_end}','dd/mm/yyyy') ");
+	    $builder->where('PORT_DAILY',1);
 	    $builder->groupBy("{$this->table}.COUNTRY_ID,MD_COUNTRY.COUNTRY_NAME_TH, MD_COUNTRY.COUNTRY_NAME_EN ");
 	    $builder->orderBy("NUM DESC");
 	    $data = $builder->get()->getResultArray();
@@ -63,6 +66,7 @@ class Report_model extends Model
 	   
 	    $builder->join($this->table,"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID AND TO_CHAR( {$this->table}.REPORT_DATE, 'YYYY-MM-DD') = '{$date}' ",'LEFT');
 	    $builder->where('MD_PORT.PORT_CATEGORY_ID',1);
+	    $builder->where('PORT_DAILY',1);
 	    $builder->groupBy("MD_PORT.PORT_ID, MD_PORT.PORT_NAME, MD_PORT.PORT_TYPE, MD_PORT.PORT_LATLONG ");
 	    $builder->orderBy("NUM DESC,PORT_NAME");
 	    $data = $builder->get()->getResultArray();
@@ -79,6 +83,7 @@ class Report_model extends Model
 	    $builder->join($this->table,"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID");
 	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$date_start}','dd/mm/yyyy') AND TO_DATE('{$date_end}','dd/mm/yyyy') ");
 	    $builder->where('MD_PORT.PORT_CATEGORY_ID',1);
+	    $builder->where('PORT_DAILY',1);
 	    $builder->groupBy("MD_PORT.PORT_ID, MD_PORT.PORT_NAME,MD_PORT.PORT_TYPE , MD_PORT.PORT_LATLONG ");
 	    $builder->orderBy("NUM DESC,PORT_NAME");
 	    $data = $builder->get()->getResultArray();
@@ -92,6 +97,7 @@ class Report_model extends Model
 	    $builder->select("{$this->table}.OFFICE_ID, TO_CHAR({$this->table}.REPORT_DATE,'YYYY-MM-DD') AS REPORT_DATE, SUM({$this->table}.SUM) AS NUM ");
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
 	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$date_start}','dd/mm/yyyy') AND TO_DATE('{$date_end}','dd/mm/yyyy') ");
+	    $builder->where('PORT_DAILY',1);
 	    $builder->groupBy("{$this->table}.REPORT_DATE,{$this->table}.OFFICE_ID");
 	    $builder->orderBy("REPORT_DATE");
 	    $data = $builder->get()->getResultArray();
@@ -108,6 +114,7 @@ class Report_model extends Model
 	    $builder->select("{$this->table}.COUNTRY_ID, TO_CHAR({$this->table}.REPORT_DATE,'YYYY-MM-DD') AS REPORT_DATE, SUM({$this->table}.SUM) AS NUM ");
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
 	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$date_start}','dd/mm/yyyy') AND TO_DATE('{$date_end}','dd/mm/yyyy') ");
+	    $builder->where('PORT_DAILY',1);
 	    $builder->groupBy("{$this->table}.REPORT_DATE,{$this->table}.COUNTRY_ID");
 	    $builder->orderBy("REPORT_DATE");
 	    $data = $builder->get()->getResultArray();
@@ -125,6 +132,7 @@ class Report_model extends Model
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID  ");
 	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$date_start}','dd/mm/yyyy') AND TO_DATE('{$date_end}','dd/mm/yyyy') ");
+	    $builder->where('PORT_DAILY',1);
 	    $builder->groupBy("MD_COUNTRY.COUNTRY_NAME_EN,{$this->table}.COUNTRY_ID");
 	    $builder->orderBy("COUNTRY_NAME_EN");
 	    $data = $builder->get()->getResultArray();
@@ -141,6 +149,7 @@ class Report_model extends Model
 	    if($country_type=='standard'){
 	    	// $builder->where('MD_COUNTRY.IS_STANDARD','Y');
 	    }	
+	    $builder->where('PORT_DAILY',1);
 	    $builder->groupBy("{$this->table}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_EN ");
 	    $builder->orderBy("COUNTRY_NAME_EN");
 	    // $builder->orderBy("NUM DESC");
@@ -162,6 +171,7 @@ class Report_model extends Model
 	    if($country_type=='standard'){
 	    	// $builder->where('MD_COUNTRY.IS_STANDARD','Y');
 	    }	
+	    $builder->where('PORT_DAILY',1);
 	    $builder->groupBy("{$this->table}.COUNTRY_ID, MD_PORT.PORT_ID, {$this->table}.REPORT_DATE,MD_COUNTRY.COUNTRY_NAME_EN ");
 	    $builder->orderBy("COUNTRY_NAME_EN");
 	    // $builder->orderBy("NUM DESC");
@@ -182,6 +192,7 @@ class Report_model extends Model
 	    if($country_type=='standard'){
 	    	// $builder->where('MD_COUNTRY.IS_STANDARD','Y');
 	    }	
+	    $builder->where('PORT_DAILY',1);
 	    $builder->groupBy("{$this->table}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_EN ");
 	    $builder->orderBy("COUNTRY_NAME_EN");
 	    // $builder->orderBy("NUM DESC");
@@ -197,6 +208,7 @@ class Report_model extends Model
 		$builder = $this->db->table('MD_PORT');
 		$builder->select('*');
 		$builder->where('PORT_CATEGORY_ID',1);
+		$builder->where('PORT_DAILY',1);
 		$builder->whereIn("PORT_ID",$port_type);
 		$builder->orderBy('PORT_TYPE_ID,PORT_NAME');
 		$res = $builder->get()->getResultArray();
@@ -208,6 +220,7 @@ class Report_model extends Model
 		$builder = $this->db->table('MD_PORT');
 		$builder->select('*');
 		$builder->where('PORT_CATEGORY_ID',1);
+		$builder->where('PORT_DAILY',1);
 		$builder->orderBy('PORT_NAME');
 		$res = $builder->get()->getResultArray();
 	    foreach($res as $r){
@@ -274,6 +287,7 @@ class Report_model extends Model
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
 	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$start_date}','dd-mm-yyyy') AND TO_DATE('{$end_date}','dd-mm-yyyy') ");	
+	    $builder->where('PORT_DAILY',1);
 	    $builder->groupBy("{$this->table}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_EN,MARKET_TYPE ");
 	    $builder->orderBy("NUM DESC");
 	    $res = $builder->get()->getResultArray();
@@ -288,8 +302,9 @@ class Report_model extends Model
 		$data = array();
 		$builder = $this->db->table('MD_PORT');
 		$builder->select('MD_PORT.PORT_ID,MD_PORT.PORT_NAME_FULL,PORT_ORDER_MONTHLY,MD_PORT.PORT_TYPE_ID');
-		$builder->join('REPORT_RAW_MONTHLY','REPORT_RAW_MONTHLY.PORT_ID = MD_PORT.PORT_ID');
-		$builder->where('PORT_CATEGORY_ID',1);
+		$builder->join('REPORT_RAW_MONTHLY','REPORT_RAW_MONTHLY.PORT_ID = MD_PORT.PORT_ID','LEFT');
+		$builder->where('PORT_MONTHLY',1);
+		$builder->where('MD_PORT.PORT_NAME_FULL is not null');
 		$builder->orderby('PORT_ORDER_MONTHLY');
 		$builder->groupBy('MD_PORT.PORT_ID,MD_PORT.PORT_NAME_FULL,PORT_ORDER_MONTHLY,MD_PORT.PORT_TYPE_ID');
 		$res = $builder->get()->getResultArray();
