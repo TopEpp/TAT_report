@@ -22,7 +22,7 @@ class Main extends BaseController
 
 		// http_redirect(base_url('main/daily'));
 
-		return redirect()->to('main/daily'); 
+		return redirect()->to('main/daily');
 	}
 
 	public function daily()
@@ -388,11 +388,11 @@ class Main extends BaseController
 			'default_font_size' => 10,
 			'mode' => 'utf-8',
 			'format' => 'A4',
-			'margin_top' => 3,
+			'margin_top' => 0,
 			'margin_bottom' => 0,
 			'margin_left' => 2,
 			'margin_right' => 2,
-			'margin_header' => 2, // 30mm not pixel
+			'margin_header' => 0, // 30mm not pixel
 			'margin_footer' => 0, // 10mm
 			'orientation' => 'L', // L แนวนอน P แนวตั้งง
 		]);
@@ -420,7 +420,7 @@ class Main extends BaseController
 		$uploaddir = $uploaddir[0];
 		$uploadpath = 'public/uploads/main/';
 		$uploadfile = $uploaddir . $uploadpath;
-		
+
 		$img = $_POST['imgBase64'];
 		$img = str_replace('data:image/png;base64,', '', $img);
 		$img = str_replace(' ', '+', $img);
