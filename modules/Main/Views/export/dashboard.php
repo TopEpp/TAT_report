@@ -59,8 +59,8 @@
 	}
 
 	#resultsTable {
-		height: 370px;
-		width: 355px;
+		height: 485px;
+		width: 240px;
 		background: #73A0E0;
 		overflow: hidden;
 		border-radius: 25px !important;
@@ -79,8 +79,8 @@
 	}
 
 	#resultsTableMarket1 {
-		height: 190px;
-		width: 330px;
+		height: 200px;
+		width: 215px;
 		background: #73A0E0;
 		overflow: hidden;
 		border-radius: 25px !important;
@@ -88,8 +88,8 @@
 	}
 
 	#resultsTableMarket2 {
-		height: 190px;
-		width: 330px;
+		height: 200px;
+		width: 215px;
 		background: #DDC354;
 		overflow: hidden;
 		border-radius: 25px !important;
@@ -107,8 +107,8 @@
 	}
 
 	#resultsTable2 {
-		width: 355px;
-		height: 370px;
+		height: 485px;
+		width: 240px;
 		background: #DDC354;
 		overflow: hidden;
 		border-radius: 25px !important;
@@ -117,16 +117,17 @@
 
 	#resultsTable4 {
 		height: 35px;
-		width: 355px;
+		width: 200px;
 		background: #73A0E0;
 		overflow: hidden;
 		border-radius: 28px !important;
-		margin: auto auto;
+		margin: 0px auto;
+
 	}
 
 	#resultsTable5 {
 		height: 35px;
-		width: 355px;
+		width: 200px;
 		background: #DDC354;
 		overflow: hidden;
 		border-radius: 28px !important;
@@ -134,7 +135,7 @@
 	}
 
 	.backgroundColorBox1 {
-		background-color: 73A0E0;
+		background-color: #73A0E0;
 		border-bottom-left-radius: 18px;
 		border-bottom-right-radius: 18px;
 	}
@@ -152,8 +153,8 @@
 
 <body>
 	<div class="col12">
-		<div class="col6" style="padding-left: 0px; padding-right: 0px; ">
-			<div class="row">
+		<div class="col6" style="padding-left: 0px; margin-right: 10px; ">
+			<div class="row" style="margin-right: 30px; margin-left: 30px;">
 				<div class="col12 backgroundColorBox1">
 					<div style="padding-left: 40px; padding-right: 40px; padding-top: 10px; padding-bottom: 0px;">
 						<table style="width: 100%;padding-bottom: 9px;">
@@ -168,163 +169,161 @@
 										<h3 style="margin: 0px; line-height: normal; font-size: 30px; font-weight:bold; color: #E8D023;">
 											วันที่ <?php echo $Mydate->date_eng2thai($to_date, 543) ?>
 										</h3>
-										<p style="font-size: 14px; margin: 0px; padding-top: 10px; padding-bottom: 10px;">
-											ที่มา สำนักงานตรวจคนเข้าเมือง | จัดทำโดย ด้านดิจิทัล วิจัย เเละพัฒนา
-										</p>
+
 									</td>
 								</tr>
 							</thead>
 						</table>
+						<div style="font-size: 13px; color: white; margin: 0px; padding-top: 6px; padding-bottom: 6px;">
+							ที่มา สำนักงานตรวจคนเข้าเมือง | จัดทำโดย ด้านดิจิทัล วิจัย เเละพัฒนา
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col6" style="padding-right: 25px;">
-				<div style="margin-bottom: 10px;">
-					<table class="table">
-						<tbody style="line-height: 1.5em;">
-							<tr style="text-align:center; border: 0;">
-								<td class="colorText" style="padding: 20px 0px 0px 0px; font-size: 15px; text-align: center; font-weight: bold;">
-									จำนวนนักท่องเที่ยว
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<div id="resultsTable4">
-						<table style="width: 100%;">
-							<tbody>
-								<tr style="border: 0;padding: 0px 0px;">
-									<td style="text-align: center;padding: 5px ; font-size: 25px;font-weight: bold; color: white; line-height: 22px;">
-										<?php echo number_format($SumDateData); ?> คน
+
+				<div class="col12" style="padding-right:0px; ">
+					<div style="margin-bottom: 10px;">
+						<table class="table" style="width: 100%;">
+							<tbody style="">
+								<tr style="text-align:center; border: 0;">
+									<td class="colorText" style="padding: 10px 0px 0px 0px; font-size: 15px; text-align: center; font-weight: bold;width: 50%;">
+										จำนวนนักท่องเที่ยว
+									</td>
+									<td class="colorText" style="padding: 10px 0px 0px 0px; font-size: 15px; text-align: center; font-weight: bold;">
+										สะสม
+										<?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
 									</td>
 								</tr>
 							</tbody>
 						</table>
-					</div>
-				</div>
-			</div>
-			<div class="col6" style="padding-left: 20px;">
-				<div id="">
-					<table class="table">
-						<tbody style="line-height: 1.5em;">
-							<tr style="text-align:center; border: 0;">
-								<td class="colorText" style="padding: 20px 0px 0px 0px; font-size: 15px; text-align: center; font-weight: bold;">
-									สะสม
-									<?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<div id="resultsTable5">
-						<table style="width: 100%;">
-							<tbody>
-								<tr style="border: 0;padding: 0px 0px;">
-									<td class="colorText" style="text-align: center;padding: 5px ; font-size: 25px;font-weight: bold;  line-height: 22px;">
-										<?php echo number_format($SumMonthData); ?> คน
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-			<div class="col12">
-				<table style="width: 100%; margin-top: 8px; padding: 0px;">
-					<tbody>
-						<tr style="padding: 0px 50px;">
-							<td class="colorText" style="text-align: center;font-size: 18px;  padding-left: 50px; width: 50%;font-weight: bold;">
-								จำนวนนักท่องเที่ยว จำแนกรายสัญชาติ 10 อันดับแรก
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<div class="col6" style="padding-right: 20px;">
-					<table style="width: 100%;">
-						<tbody>
-							<tr>
-								<td colspan="3" style="padding-bottom: 6px; text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;">
-									<?php echo $Mydate->date_eng2thai($to_date, 543) ?>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<div id="resultsTable" style=" flex-direction: row; ">
-
-						<?php $c = 0;
-						foreach ($SumNatDateData as $v) {
-							$c++;
-							$flag = base_url('public/img/logotat.png');
-
-							if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
-								$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
-							}
-						?>
-							<div style="border: 0; padding-bottom: 0px; ">
-								<div id="" style="padding-left: 10px; padding-right: 10px; ">
+						<div class="col6">
+							<div id="resultsTable4">
+								<div>
 									<table style="width: 100%;">
-										<tr style="border: 0;">
-											<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-												<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
-											</td>
-											<td style="text-align: left; padding: 1px 15px;color: white; font-size: 16px;font-weight: bold; width: 55%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-												<?php echo $v['COUNTRY_NAME_EN'] ?>
-												<br>
-												<?php echo number_format($v['NUM']); ?> คน
-											</td>
-											<td style="border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-											</td>
-										</tr>
+										<tbody>
+											<tr style="border: 0;padding: 0px 0px;">
+												<td class="colorText" style="text-align: center;padding: 5px 10px ; font-size: 25px;font-weight: bold;width: 100%;">
+													<?php echo number_format($SumDateData); ?> คน
+												</td>
+											</tr>
+
+										</tbody>
 									</table>
 								</div>
 							</div>
-						<?php if ($c == 10) break;
-						} ?>
-					</div>
-				</div>
-				<div class="col6" style="padding-left: 20px;">
-					<table style="width: 100%;">
-						<tbody>
-							<tr>
-								<td colspan="3" style="padding-bottom: 6px; text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;">
-									สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<div id="resultsTable2" style=" flex-direction: row; ">
-						<?php $c = 0;
-						foreach ($SumNatMonthData as $v) {
-							$c++;
-							$flag = base_url('public/img/logotat.png');
-
-							if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
-								$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
-							}
-						?>
-							<div style="border: 0; padding-bottom: 0px; ">
-								<div id="" style="padding-left: 10px; padding-right: 10px; ">
+						</div>
+						<div class="col6">
+							<div id="resultsTable5">
+								<div>
 									<table style="width: 100%;">
-										<tr style="border: 0;">
-											<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-												<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
-											</td>
-											<td style="text-align: left; padding: 1px 15px;color: white; font-size: 16px;font-weight: bold; width: 55%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-												<?php echo $v['COUNTRY_NAME_EN'] ?>
-												<br>
-												<?php echo number_format($v['NUM']); ?> คน
-											</td>
-											<td style="border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-											</td>
-										</tr>
+										<tbody>
+											<tr style="border: 0;padding: 0px 0px;">
+												<td class="colorText" style="text-align: center;padding: 5px 10px ; font-size: 25px;font-weight: bold;width: 100%;">
+													<?php echo number_format($SumMonthData); ?> คน
+												</td>
+											</tr>
+
+										</tbody>
 									</table>
 								</div>
 							</div>
-						<?php if ($c == 10) break;
-						} ?>
+						</div>
+						<div class="col12" style="">
+							<table style="width: 100%; margin-top: 8px; padding: 0px;">
+								<tbody>
+									<tr style="padding: 0px 0px;">
+										<td class="colorText" style="text-align: center;font-size: 18px;width: 100%;font-weight: bold;">
+											จำนวนนักท่องเที่ยว จำแนกรายสัญชาติ 10 อันดับแรก
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="col12" style="">
+								<table style="width: 100%;">
+									<tbody>
+										<tr>
+											<td style="padding-bottom: 6px; text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;width: 50%;">
+												<?php echo $Mydate->date_eng2thai($to_date, 543) ?>
+											</td>
+											<td style="padding-bottom: 6px; text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;">
+												สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="col6">
+									<div id="resultsTable" style=" flex-direction: row; ">
+										<?php $c = 0;
+										foreach ($SumNatDateData as $v) {
+											$c++;
+											$flag = base_url('public/img/logotat.png');
+
+											if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
+												$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
+											}
+										?>
+											<div style="border: 0; padding-bottom: 0px; ">
+												<div id="" style="padding-left: 10px; padding-right: 10px; ">
+													<table style="width: 100%;">
+														<tr style="border: 0;">
+															<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+																<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
+															</td>
+															<td style="text-align: left; padding: 4px 15px;color: white; font-size: 16px;font-weight: bold; width: 55%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
+																<?php echo $v['COUNTRY_NAME_EN'] ?>
+																<br>
+																<?php echo number_format($v['NUM']); ?> คน
+															</td>
+															<td style="border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+															</td>
+														</tr>
+													</table>
+												</div>
+											</div>
+										<?php if ($c == 10) break;
+										} ?>
+									</div>
+								</div>
+								<div class="col6" style="padding-left: 0px;">
+									<div id="resultsTable2" style=" flex-direction: row; ">
+										<?php $c = 0;
+										foreach ($SumNatMonthData as $v) {
+											$c++;
+											$flag = base_url('public/img/logotat.png');
+
+											if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
+												$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
+											}
+										?>
+											<div style="border: 0; padding-bottom: 0px; ">
+												<div id="" style="padding-left: 10px; padding-right: 10px; ">
+													<table style="width: 100%;">
+														<tr style="border: 0;">
+															<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+																<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
+															</td>
+															<td style="text-align: left; padding: 4px 15px;color: white; font-size: 16px;font-weight: bold; width: 70%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
+																<?php echo $v['COUNTRY_NAME_EN'] ?>
+																<br>
+																<?php echo number_format($v['NUM']); ?> คน
+															</td>
+															<td style="border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+															</td>
+														</tr>
+													</table>
+												</div>
+											</div>
+										<?php if ($c == 10) break;
+										} ?>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
-		<div class="col6" style="padding-left: 50px;">
+		<div class="col6" style="margin-left: 20px;">
 			<table style="width: 100%;padding-bottom: 25px;">
 				<thead>
 					<tr>
@@ -334,7 +333,6 @@
 						<td style="width: 5%; text-align: center;margin: auto 0px;">
 							<img src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="" style="width: 100px;">
 						</td>
-
 					</tr>
 				</thead>
 			</table>
@@ -360,16 +358,15 @@
 								<div id="">
 									<table style="width: 100%;">
 										<tr style="border: 0;">
-											<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+											<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
 											</td>
-											<td style="text-align: left; padding: 1px 15px;color: #193666; font-size: 14px;font-weight: bold; width: 55%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+											<td style="text-align: left; padding: 4px 15px;color: #193666; font-size: 14px;font-weight: bold; width: 70%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<?php echo $v['COUNTRY_NAME_EN'] ?>
 												<br>
 												<?php echo number_format($v['NUM']); ?> คน
 											</td>
-											<td style="font-size: 14px; color: #193666; font-weight: bold; width: 30%; text-align: left;border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-
+											<td style="font-size: 14px; color: #193666; font-weight: bold; width: 15%; text-align: left;border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 											</td>
 										</tr>
 									</table>
@@ -397,16 +394,15 @@
 								<div id="">
 									<table style="width: 100%;">
 										<tr style="border: 0;">
-											<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+											<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
 											</td>
-											<td style="text-align: left; padding: 1px 15px;color: #193666; font-size: 14px;font-weight: bold; width: 55%;border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+											<td style="text-align: left; padding: 4px 15px;color: #193666; font-size: 14px;font-weight: bold; width: 70%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<?php echo $v['COUNTRY_NAME_EN'] ?>
 												<br>
 												<?php echo number_format($v['NUM']); ?> คน
 											</td>
-											<td style="font-size: 14px; color: #193666; font-weight: bold; width: 30%; text-align: left;border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-
+											<td style="font-size: 14px; color: #193666; font-weight: bold; width: 15%; text-align: left;border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 											</td>
 										</tr>
 									</table>
@@ -417,7 +413,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col12" style="padding-top: 2px;">
+			<div class="col12" style="padding-top:5px;">
 				<table style="width: 100%;">
 					<tbody>
 						<tr style="border: 0;">
@@ -447,16 +443,15 @@
 								<div id="">
 									<table style="width: 100%;">
 										<tr style="border: 0;">
-											<td style="width: 15%;border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+											<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
 											</td>
-											<td style="text-align: left; padding: 1px 15px;color: #193666; font-size: 14px;font-weight: bold; width: 55%;border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+											<td style="text-align: left; padding: 4px 15px;color: #193666; font-size: 14px;font-weight: bold; width: 70%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<?php echo $v['COUNTRY_NAME_EN'] ?>
 												<br>
 												<?php echo number_format($v['NUM']); ?> คน
 											</td>
-											<td style="font-size: 14px; color: #193666; font-weight: bold; width: 30%; text-align: left;border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-
+											<td style="font-size: 14px; color: #193666; font-weight: bold; width: 15%; text-align: left;border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 											</td>
 										</tr>
 									</table>
@@ -485,16 +480,15 @@
 								<div id="">
 									<table style="width: 100%;">
 										<tr style="border: 0;">
-											<td style="width: 15%;border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+											<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
 											</td>
-											<td style="text-align: left; padding: 1px 15px;color: #193666; font-size: 14px;font-weight: bold; width: 55%;border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+											<td style="text-align: left; padding: 4px 15px;color: #193666; font-size: 14px;font-weight: bold; width: 70%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<?php echo $v['COUNTRY_NAME_EN'] ?>
 												<br>
 												<?php echo number_format($v['NUM']); ?> คน
 											</td>
-											<td style="font-size: 14px; color: #193666; font-weight: bold; width: 30%; text-align: left;border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-
+											<td style="font-size: 14px; color: #193666; font-weight: bold; width: 15%; text-align: left;border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 											</td>
 										</tr>
 									</table>
@@ -505,22 +499,13 @@
 					</div>
 				</div>
 			</div>
-			<div style="position: absolute; top: 360px; left: 37.5%; rotate: 270deg;">
-				<p style="margin: 0px;font-size: 20px; color: red;font-weight: bold;">
-					ใช้เฉพาะภายใน ททท. เท่านั้น ¦ Internal Use Only
-				</p>
-			</div>
-			<div style="position: absolute; top: 680px; right: 45px; width: 43%;">
-				<p style="font-weight: bold;margin-left:20px; padding-top:5px; color: #fff; font-size:12.2px; color: #163868;">หมายเหตุ : ข้อมูลรายสัญชาติตัดข้อมูลผู้อพยพ, หน่วยงานพิเศษ UN , ไม่มีสัญชาติ ออก ทั้งนี้ ตั้งแต่ 1 ม.ค. 66 ได้กำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศเพิ่มเติม (สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ)</p>
-			</div>
 
+			<div style="position: absolute; top: 680px; right: 45px; width:100%;">
+				<p style="font-weight: bold; padding-top:5px; color: #fff; font-size:12.2px; color: #163868;">หมายเหตุ:ข้อมูลรายสัญชาติตัดข้อมูลผู้อพยพ,หน่วยงานพิเศษUN,ไม่มีสัญชาติออกทั้งนี้ตั้งแต่ 1 ม.ค. 66 ได้กำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศเพิ่มเติม (สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ)</p>
+			</div>
 		</div>
-
 	</div>
-
-
-
-
-
-
+	<div style="position: absolute;top: 23%; left: 49%;rotate:-90;color: red; font-size: 20px;">
+		ใช้เฉพาะภายใน ททท. เท่านั้น ¦ Internal Use Only
+	</div>
 </body>

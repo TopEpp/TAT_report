@@ -300,8 +300,8 @@ class Main extends BaseController
 
 		// return view('Modules\Main\Views\export\dashboard', $data);
 
-		// $this->export_pdf('Modules\Main\Views\export\dashboard', $data);
-		return view('Modules\Main\Views\export\dashboard', $data);
+		$this->export_pdf('Modules\Main\Views\export\dashboard', $data);
+		// return view('Modules\Main\Views\export\dashboard', $data);
 	}
 
 	public function export_dashboard_v1()
