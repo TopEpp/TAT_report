@@ -61,7 +61,7 @@
 
 	#resultsTable {
 		height: 485px;
-		width: 240px;
+		width: 255px;
 		background: #73A0E0;
 		overflow: hidden;
 		border-radius: 25px !important;
@@ -81,7 +81,7 @@
 
 	#resultsTableMarket1 {
 		height: 230px;
-		width: 215px;
+		width: 240px;
 		background: #73A0E0;
 		overflow: hidden;
 		border-radius: 25px !important;
@@ -90,7 +90,7 @@
 
 	#resultsTableMarket2 {
 		height: 230px;
-		width: 215px;
+		width: 240px;
 		background: #DDC354;
 		overflow: hidden;
 		border-radius: 25px !important;
@@ -109,7 +109,7 @@
 
 	#resultsTable2 {
 		height: 485px;
-		width: 240px;
+		width: 255px;
 		background: #DDC354;
 		overflow: hidden;
 		border-radius: 25px !important;
@@ -118,7 +118,7 @@
 
 	#resultsTable4 {
 		height: 35px;
-		width: 250px;
+		width: 260px;
 		background: #73A0E0;
 		overflow: hidden;
 		border-radius: 28px !important;
@@ -128,7 +128,7 @@
 
 	#resultsTable5 {
 		height: 35px;
-		width: 250px;
+		width: 260px;
 		background: #DDC354;
 		overflow: hidden;
 		border-radius: 28px !important;
@@ -155,7 +155,7 @@
 <body>
 	<div class="col12">
 		<div class="col6" style="padding-left: 0px; margin-right: 10px; ">
-			<div class="row" style="margin-right: 20px; margin-left: 20px;">
+			<div class="row" style="margin-right: 10px; margin-left: 10px;">
 				<div class="col12 backgroundColorBox1">
 					<div style="padding-left: 40px; padding-right: 40px; padding-top: 10px; padding-bottom: 0px;">
 						<table style="width: 100%;padding-bottom: 9px;">
@@ -180,7 +180,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="col12" style="padding-right:0px; ">
 					<div style="margin-bottom: 10px;">
 						<table class="table" style="width: 100%;">
@@ -232,7 +231,7 @@
 							<table style="width: 100%; margin-top: 8px; padding: 0px;">
 								<tbody>
 									<tr style="padding: 0px 0px;">
-										<td class="colorText" style="text-align: center;font-size: 18px;width: 100%;font-weight: bold;">
+										<td class="colorText" style="text-align: center;font-size: 17px;width: 100%;font-weight: bold;">
 											จำนวนนักท่องเที่ยว จำแนกรายสัญชาติ 10 อันดับแรก
 										</td>
 									</tr>
@@ -269,7 +268,7 @@
 															<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 																<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
 															</td>
-															<td style="text-align: left; padding: 6.2px 15px;color: white; font-size: 16px;font-weight: bold; width: 75%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
+															<td style="text-align: left; padding: 5.8px 15px;color: white; font-size: 16px;font-weight: bold; width: 75%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 																<?php echo $v['COUNTRY_NAME_EN'] ?>
 																<br>
 																<?php echo number_format($v['NUM']); ?> คน
@@ -303,7 +302,7 @@
 															<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 																<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
 															</td>
-															<td class="colorText" style="text-align: left; padding: 6.2px 15px; font-size: 16px;font-weight: bold; width: 75%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
+															<td class="colorText" style="text-align: left; padding: 5.8px 15px; font-size: 16px;font-weight: bold; width: 75%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 																<?php echo $v['COUNTRY_NAME_EN'] ?>
 																<br>
 																<?php echo number_format($v['NUM']); ?> คน
@@ -331,7 +330,7 @@
 				<thead>
 					<tr>
 						<td style="width: 5%;text-align: center;">
-							<img src="<?php echo base_url('public/img/amezingThai.png') ?>" alt="" style="width: 100px; padding-left: 35px;height: 35px;">
+							<img src="<?php echo base_url('public/img/amezingThai.png') ?>" alt="" style="width: 100px; padding-left: 35px;height: 34px;">
 						</td>
 						<td style="width: 5%; text-align: center;margin: auto 0px;">
 							<img src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="" style="width: 100px;height:34px ;">
@@ -340,7 +339,7 @@
 				</thead>
 			</table>
 			<div style="">
-				<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_daily.png') ?>" style="width:100%;height:150px;">
+				<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_daily.png') ?>" style="width:100%;height:140px;">
 			</div>
 
 			<div class="col12" style="padding-top:0px; ">
@@ -348,7 +347,7 @@
 					<tbody>
 						<tr style="border: 0;">
 							<td colspan="3" style="text-align: center;padding: 0px 0px; margin: auto 0px;">
-								<div id="" class="colorTextLeft" style="padding-top: 0px;padding-bottom: 0px; margin: 0px;font-weight:bold; font-size: 18px; ">จำนวนนักท่องเที่ยว ตลาดระยะใกล้ 5 อันดับแรก</div>
+								<div id="" class="colorTextLeft" style="padding-top: 0px;padding-bottom: 0px; margin: 0px;font-weight:bold; font-size: 17px; ">จำนวนนักท่องเที่ยว ตลาดระยะใกล้ 5 อันดับแรก</div>
 							</td>
 						</tr>
 					</tbody>
@@ -358,7 +357,7 @@
 
 				<div class="col6">
 					<p class="colorTextLeft" style="font-size: 15px;text-align: center;margin:0px; font-weight: bold;"><?php echo $Mydate->date_eng2thai($to_date, 543) ?></p>
-					<div id="resultsTableMarket2" style=" flex-direction: row; padding: 0px 10px;">
+					<div id="resultsTableMarket2" style=" flex-direction: row; padding: 0px 5px;">
 						<?php $c = 0;
 						foreach ($SumMarketDate['Short'] as $v) {
 							$c++;
@@ -393,7 +392,7 @@
 				<div class="col6">
 					<p class="colorTextLeft" style="font-size: 15px;text-align: center;margin:0px; font-weight: bold;">สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></p>
 
-					<div id="resultsTableMarket2" style=" flex-direction: row; padding: 0px 10px;">
+					<div id="resultsTableMarket2" style=" flex-direction: row; padding: 0px 5px;">
 
 						<?php $c = 0;
 						foreach ($SumMarketMonth['Short'] as $v) {
@@ -427,12 +426,12 @@
 					</div>
 				</div>
 			</div>
-			<div class="col12" style="padding-top:0px; ">
+			<div class="col12" style="padding-top:3px; ">
 				<table style="width: 100%;">
 					<tbody>
 						<tr style="border: 0;">
 							<td colspan="3" style="text-align: center;padding: 0px 0px; margin: auto 0px;">
-								<div id="" class="" style="padding-top: 0px;padding-bottom: 0px; margin: 0px;font-weight:bold; font-size: 18px; color: #CC409E;">จำนวนนักท่องเที่ยว ตลาดระยะไกล 5 อันดับแรก</div>
+								<div id="" class="" style="padding-top: 0px;padding-bottom: 0px; margin: 0px;font-weight:bold; font-size: 17px; color: #CC409E;">จำนวนนักท่องเที่ยว ตลาดระยะไกล 5 อันดับแรก</div>
 							</td>
 						</tr>
 					</tbody>
@@ -442,7 +441,7 @@
 				<div class="col6">
 					<p class="" style="font-size: 15px;text-align: center;margin:0px; font-weight: bold; color: #CC409E;"><?php echo $Mydate->date_eng2thai($to_date, 543) ?></p>
 
-					<div id="resultsTableMarket1" style=" flex-direction: row; padding: 0px 15px;">
+					<div id="resultsTableMarket1" style=" flex-direction: row; padding: 0px 5px;">
 
 						<?php $c = 0;
 						foreach ($SumMarketDate['Long'] as $v) {
@@ -522,7 +521,7 @@
 			</div>
 		</div>
 	</div>
-	<div style="position: absolute;top: 23%; left: 48.5%;rotate:-90;color: red; font-size: 20px;">
+	<div style="position: absolute;top: 23%; left: 49.2%;rotate:-90;color: red; font-size: 20px;">
 		ใช้เฉพาะภายใน ททท. เท่านั้น ¦ Internal Use Only
 	</div>
 </body>

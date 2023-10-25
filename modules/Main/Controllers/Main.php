@@ -300,6 +300,9 @@ class Main extends BaseController
 
 		// return view('Modules\Main\Views\export\dashboard', $data);
 
+		// echo '<pre>';
+		// print_r($data);
+		// die();
 		$this->export_pdf('Modules\Main\Views\export\dashboard', $data);
 		// return view('Modules\Main\Views\export\dashboard', $data);
 	}
@@ -373,7 +376,6 @@ class Main extends BaseController
 		// $data['api_code'] = $this->Api_Code;
 
 		// return view('Modules\Main\Views\export\dashboard', $data);
-
 		$this->export_pdf('Modules\Main\Views\export\dashboard_v1', $data);
 	}
 
