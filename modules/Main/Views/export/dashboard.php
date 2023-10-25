@@ -330,10 +330,10 @@
 				<thead>
 					<tr>
 						<td style="width: 5%;text-align: center;">
-							<img src="<?php echo base_url('public/img/amezingThai.png') ?>" alt="" style="width: 100px; padding-left: 35px;height: 34px;">
+							<img src="<?php echo base_url('public/img/amezingThai.png') ?>" alt="" style="width: 70px; padding-left: 35px;height: 34px;">
 						</td>
 						<td style="width: 5%; text-align: center;margin: auto 0px;">
-							<img src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="" style="width: 100px;height:34px ;">
+							<img src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="" style="width: 80px;height:34px ;">
 						</td>
 					</tr>
 				</thead>
