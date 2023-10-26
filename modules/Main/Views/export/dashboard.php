@@ -152,6 +152,43 @@
 	@media (max-width: 576px) {}
 </style>
 
+<?php
+
+$numberSumNatDay = $numberMarketDay = array();
+$i = 1;
+foreach ($SumNatDateData_past as $v) {
+
+	if ($v['NUM'] == 0) {
+		$numberSumNatDay[$v['COUNTRY_ID']] = '';
+	} else {
+		$numberSumNatDay[$v['COUNTRY_ID']] = $i++;
+	}
+}
+
+$i = 1;
+foreach ($SumMarketDate_past['Short'] as $v) {
+
+	if ($v['NUM'] == 0) {
+		$numberMarketDay['Short'][$v['COUNTRY_ID']] = '';
+	} else {
+		$numberMarketDay['Short'][$v['COUNTRY_ID']] = $i++;
+	}
+}
+$i = 1;
+foreach ($SumMarketDate_past['Long'] as $v) {
+
+	if ($v['NUM'] == 0) {
+		$numberMarketDay['Long'][$v['COUNTRY_ID']] = '';
+	} else {
+		$numberMarketDay['Long'][$v['COUNTRY_ID']] = $i++;
+	}
+}
+
+// echo '<pre>';
+// print_r($SumMarketDate_past);
+// print_r($numberMarketDay);
+// print_r($numberSumNatDay);
+?>
 <body>
 	<div class="col12">
 		<div class="col6" style="padding-left: 0px; margin-right: 10px; ">
@@ -252,7 +289,7 @@
 								</table>
 								<div class="col6">
 									<div id="resultsTable" style=" flex-direction: row; ">
-										<?php $c = 0;
+										<?php $c = 0; $i = 1;
 										foreach ($SumNatDateData as $v) {
 											$c++;
 											$flag = base_url('public/img/logotat.png');
@@ -260,6 +297,17 @@
 											if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
 												$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
 											}
+											$icon = '';
+											if (!empty($numberSumNatDay[$v['COUNTRY_ID']])) {
+												if ($i == $numberSumNatDay[$v['COUNTRY_ID']]) {
+													$icon = '';
+												} else if ($i < $numberSumNatDay[$v['COUNTRY_ID']]) {
+													$icon = '<img src="'.base_url('public/img/arrowup1.png') .'" alt="">';
+												} else if ($i > $numberSumNatDay[$v['COUNTRY_ID']]) {
+													$icon = '<img src="'.base_url('public/img/arrowdown1.png') .'" alt="">';
+												}
+											}
+											$i++;
 										?>
 											<div style="border: 0; padding-bottom: 0px; ">
 												<div id="" style="padding-left: 10px; padding-right: 10px; ">
@@ -274,7 +322,7 @@
 																<?php echo number_format($v['NUM']); ?> คน
 															</td>
 															<td style="border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;text-align: center;">
-																<img src="<?php echo base_url('public/img/arrowup1.png') ?>" alt="">
+																<?php echo $icon;?>
 															</td>
 														</tr>
 													</table>
@@ -308,7 +356,7 @@
 																<?php echo number_format($v['NUM']); ?> คน
 															</td>
 															<td style="border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;text-align: center;">
-																<img src="<?php echo base_url('public/img/arrowup1.png') ?>" alt="">
+																<!-- <img src="<?php echo base_url('public/img/arrowup1.png') ?>" alt=""> -->
 															</td>
 														</tr>
 													</table>
@@ -339,7 +387,7 @@
 				</thead>
 			</table>
 			<div style="">
-				<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_daily.png') ?>" style="width:100%;height:140px;">
+				<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_daily_year.png') ?>" style="width:100%;height:140px;">
 			</div>
 
 			<div class="col12" style="padding-top:0px; ">
@@ -347,7 +395,7 @@
 					<tbody>
 						<tr style="border: 0;">
 							<td colspan="3" style="text-align: center;padding: 0px 0px; margin: auto 0px;">
-								<div id="" class="colorTextLeft" style="padding-top: 0px;padding-bottom: 0px; margin: 0px;font-weight:bold; font-size: 17px; ">จำนวนนักท่องเที่ยว ตลาดระยะใกล้ 5 อันดับแรก</div>
+								<div id="" class="colorTextLeft" style="padding-top: 0px;padding-bottom: 0px; margin: 0px;font-weight:bold; font-size: 16px; ">จำนวนนักท่องเที่ยว ตลาดระยะใกล้ 5 อันดับแรก</div>
 							</td>
 						</tr>
 					</tbody>
@@ -356,9 +404,9 @@
 			<div>
 
 				<div class="col6">
-					<p class="colorTextLeft" style="font-size: 15px;text-align: center;margin:0px; font-weight: bold;"><?php echo $Mydate->date_eng2thai($to_date, 543) ?></p>
-					<div id="resultsTableMarket2" style=" flex-direction: row; padding: 0px 5px;">
-						<?php $c = 0;
+					<p class="colorTextLeft" style="font-size: 13px;text-align: center;margin:0px; font-weight: bold;"><?php echo $Mydate->date_eng2thai($to_date, 543) ?></p>
+					<div id="resultsTableMarket1" style=" flex-direction: row; padding: 0px 5px;">
+						<?php $c = 0; $i=1;
 						foreach ($SumMarketDate['Short'] as $v) {
 							$c++;
 							$flag = base_url('public/img/logotat.png');
@@ -366,6 +414,18 @@
 							if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
 								$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
 							}
+
+							$icon = '';
+							if (!empty($numberMarketDay['Short'][$v['COUNTRY_ID']])) {
+								if ($i == $numberMarketDay['Short'][$v['COUNTRY_ID']]) {
+									$icon = '';
+								} else if ($i < $numberMarketDay['Short'][$v['COUNTRY_ID']]) {
+									$icon = '<img src="'.base_url('public/img/arrowup1.png') .'" alt="">';
+								} else if ($i > $numberMarketDay['Short'][$v['COUNTRY_ID']]) {
+									$icon = '<img src="'.base_url('public/img/arrowdown1.png') .'" alt="">';
+								}
+							}
+							$i++;
 						?>
 							<div style="border: 0; ">
 								<table style="width: 100%;">
@@ -373,13 +433,13 @@
 										<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 											<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 37px; ">
 										</td>
-										<td style="text-align: left; padding: 4.2px 0px;color: #193666; font-size: 18px;font-weight: bold; width: 80%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+										<td style="text-align: left; padding: 4.2px 0px;color: white; font-size: 18px;font-weight: bold; width: 80%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 											<?php echo $v['COUNTRY_NAME_EN'] ?>
 											<br>
 											<?php echo number_format($v['NUM']); ?> คน
 										</td>
 										<td style="font-size: 14px; color: #193666; font-weight: bold; width: 10%; text-align: center;border-bottom:<?php echo $c == 10 ? '' : '1px solid white' ?>;">
-											<img src="<?php echo base_url('public/img/arrowup1.png') ?>" alt="">
+											<?php echo $icon?>
 										</td>
 									</tr>
 								</table>
@@ -390,7 +450,7 @@
 					</div>
 				</div>
 				<div class="col6">
-					<p class="colorTextLeft" style="font-size: 15px;text-align: center;margin:0px; font-weight: bold;">สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></p>
+					<p class="colorTextLeft" style="font-size: 13px;text-align: center;margin:0px; font-weight: bold;">สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></p>
 
 					<div id="resultsTableMarket2" style=" flex-direction: row; padding: 0px 5px;">
 
@@ -415,7 +475,7 @@
 											<?php echo number_format($v['NUM']); ?> คน
 										</td>
 										<td style="font-size: 14px; color: #193666; font-weight: bold; width: 10%; text-align: center;border-bottom:<?php echo $c == 10 ? '' : '1px solid white' ?>;">
-											<img src="<?php echo base_url('public/img/arrowup1.png') ?>" alt="">
+											<!-- <img src="<?php echo base_url('public/img/arrowup1.png') ?>" alt=""> -->
 										</td>
 									</tr>
 								</table>
@@ -431,7 +491,7 @@
 					<tbody>
 						<tr style="border: 0;">
 							<td colspan="3" style="text-align: center;padding: 0px 0px; margin: auto 0px;">
-								<div id="" class="" style="padding-top: 0px;padding-bottom: 0px; margin: 0px;font-weight:bold; font-size: 17px; color: #CC409E;">จำนวนนักท่องเที่ยว ตลาดระยะไกล 5 อันดับแรก</div>
+								<div id="" class="" style="padding-top: 0px;padding-bottom: 0px; margin: 0px;font-weight:bold; font-size: 16px; color: #CC409E;">จำนวนนักท่องเที่ยว ตลาดระยะไกล 5 อันดับแรก</div>
 							</td>
 						</tr>
 					</tbody>
@@ -439,11 +499,11 @@
 			</div>
 			<div>
 				<div class="col6">
-					<p class="" style="font-size: 15px;text-align: center;margin:0px; font-weight: bold; color: #CC409E;"><?php echo $Mydate->date_eng2thai($to_date, 543) ?></p>
+					<p class="" style="font-size: 13px;text-align: center;margin:0px; font-weight: bold; color: #CC409E;"><?php echo $Mydate->date_eng2thai($to_date, 543) ?></p>
 
 					<div id="resultsTableMarket1" style=" flex-direction: row; padding: 0px 5px;">
 
-						<?php $c = 0;
+						<?php $c = 0;$i=1;
 						foreach ($SumMarketDate['Long'] as $v) {
 							$c++;
 							$flag = base_url('public/img/logotat.png');
@@ -451,6 +511,17 @@
 							if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
 								$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
 							}
+							$icon = '';
+							if (!empty($numberMarketDay['Long'][$v['COUNTRY_ID']])) {
+								if ($i == $numberMarketDay['Long'][$v['COUNTRY_ID']]) {
+									$icon = '';
+								} else if ($i < $numberMarketDay['Long'][$v['COUNTRY_ID']]) {
+									$icon = '<img src="'.base_url('public/img/arrowup1.png') .'" alt="">';
+								} else if ($i > $numberMarketDay['Long'][$v['COUNTRY_ID']]) {
+									$icon = '<img src="'.base_url('public/img/arrowdown1.png') .'" alt="">';
+								}
+							}
+							$i++;
 						?>
 							<div style="border: 0; ">
 								<table style="width: 100%;">
@@ -464,7 +535,7 @@
 											<?php echo number_format($v['NUM']); ?> คน
 										</td>
 										<td style="font-size: 14px; color: #193666; font-weight: bold; width: 10%; text-align: center;border-bottom:<?php echo $c == 10 ? '' : '1px solid white' ?>;">
-											<img src="<?php echo base_url('public/img/arrowup1.png') ?>" alt="">
+											<?php echo $icon?>
 										</td>
 									</tr>
 								</table>
@@ -474,7 +545,7 @@
 					</div>
 				</div>
 				<div class="col6">
-					<p class="" style="font-size: 15px;text-align: center;margin:0px; font-weight: bold; color: #CC409E;">สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></p>
+					<p class="" style="font-size: 13px;text-align: center;margin:0px; font-weight: bold; color: #CC409E;">สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></p>
 
 
 					<div id="resultsTableMarket2" style=" flex-direction: row; padding: 0px 5px;">
@@ -502,7 +573,7 @@
 												<?php echo number_format($v['NUM']); ?> คน
 											</td>
 											<td style="font-size: 14px; color: #193666; font-weight: bold; width: 10%; text-align: center;border-bottom:<?php echo $c == 10 ? '' : '1px solid white' ?>;">
-												<img src="<?php echo base_url('public/img/arrowup1.png') ?>" alt="">
+												<!-- <img src="<?php echo base_url('public/img/arrowup1.png') ?>" alt=""> -->
 											</td>
 										</tr>
 									</table>
@@ -515,7 +586,7 @@
 			</div>
 
 			<div style="position: absolute; top: 680px; right: 45px; width:100%;">
-				<p style="font-weight: bold; padding-top:2px; color: #fff; font-size:8px; color: #163868;">
+				<p style="font-weight: bold; padding-top:2px; color: #fff; font-size:7px; color: #163868;">
 					หมายเหตุ : <br>
 							  1. ข้อมูลจำแนกรายสัญชาติ (Nationality) ที่มีการกำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศ (สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
 							  2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass

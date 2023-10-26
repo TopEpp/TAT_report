@@ -146,6 +146,11 @@
 			<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard?start_date=' . $start_date . '&end_date=' . $end_date); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
 				<i class="fa-solid fa-file-pdf"></i> PDF
 			</button>
+			<?php if($session->get('username')=='admin'){?>
+			<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard_v2?start_date=' . $start_date . '&end_date=' . $end_date); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
+				<i class="fa-solid fa-file-pdf"></i> PDF New!
+			</button>
+			<?php }?>
 		</div>
 	</div>
 </div>
@@ -947,7 +952,17 @@
 	</div>
 </div>
 
-
+<div class="text-center" id="htmltoimage_chart_daily_year" style="height:220px; padding:15px; display: none;">
+	<canvas id="chart_main_year" height="220" style="height:220px !important"></canvas>
+</div>
+<?php  $chart_label_year = $chart_current_year = $chart_pre_year = array();
+$shortmonth = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
+for ($i=1; $i <= 12; $i++) { 
+	$chart_label_year[] = $shortmonth[$i];
+	$chart_current_year[] = @$SumChartDataYear['current'][$i] ? @$SumChartDataYear['current'][$i] : null;
+	$chart_pre_year[] = @$SumChartDataYear['past'][$i] ? @$SumChartDataYear['past'][$i] : null;
+}
+?>
 
 <?php $this->endSection() ?>
 <?= $this->section("scripts") ?>
@@ -961,9 +976,14 @@
 	var chart_label = <?php echo json_encode($chart_label); ?>;
 	var chart_current = <?php echo json_encode($chart_current); ?>;
 	var chart_pre = <?php echo json_encode($chart_pre); ?>;
+
+	var chart_label_year = <?php echo json_encode($chart_label_year); ?>;
+	var chart_current_year = <?php echo json_encode($chart_current_year); ?>;
+	var chart_pre_year = <?php echo json_encode($chart_pre_year); ?>;
+
 	var dataRegionMap = <?php echo json_encode($dataRegionMap); ?>;
 
-	console.log(dataRegionMap);
+	// console.log(dataRegionMap);
 	// import zoomPlugin from 'chartjs-plugin-zoom';
 	$(function() {
 		initMap();
@@ -998,6 +1018,40 @@
 		const chart_main = new Chart(ctx, {
 			type: 'line',
 			data: data_chart,
+			options: {
+				responsive: true,
+				interaction: {
+					mode: 'index',
+					intersect: false,
+				},
+				stacked: false,
+			},
+			options: {
+				maintainAspectRatio: false,
+			}
+		});
+
+
+		const ctx2 = document.getElementById('chart_main_year');
+		const data_chart_year = {
+			labels: chart_label_year,
+			datasets: [{
+					label: '<?php echo date('Y') + 543 ?>',
+					data: chart_current_year,
+					borderColor: '#57DACC',
+					backgroundColor: '#57DACC',
+				},
+				{
+					label: '<?php echo date('Y') + 542 ?>',
+					data: chart_pre_year,
+					borderColor: '#FACE74',
+					backgroundColor: '#FACE74',
+				}
+			]
+		};
+		const chart_main_year = new Chart(ctx2, {
+			type: 'line',
+			data: data_chart_year,
 			options: {
 				responsive: true,
 				interaction: {
@@ -1141,7 +1195,15 @@
 
 	function SaveImg2ExportPdf(url2SaveImg, url2DowloadReport) {
 		$('.btn-download').hide();
-		const chart_array = ["chart_daily"];
+		$('#htmltoimage_chart_daily_year').show();
+		setTimeout(function(){ saveImg(url2SaveImg, url2DowloadReport); }, 1000);
+		setTimeout(function(){ $('#htmltoimage_chart_daily_year').hide(); }, 6000);
+		
+	}
+
+	function saveImg(url2SaveImg, url2DowloadReport){
+		$('.btn-download').hide();
+		const chart_array = ["chart_daily","chart_daily_year"];
 		var count_canvas = 0;
 		$.each(chart_array, function(key, value) {
 			var container = document.getElementById("htmltoimage_" + value);

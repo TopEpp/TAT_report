@@ -51,6 +51,7 @@ $routes->group('main', ['namespace' => '\Modules\Main\Controllers', 'filter' => 
     $routes->get('daily', 'Main::daily');
     $routes->get('update_country', 'Main::update_country');
     $routes->get('export_dashboard', 'Main::export_dashboard');
+    $routes->get('export_dashboard_v2', 'Main::export_dashboard_v2');
     $routes->post('saveImg2Report', 'Main::saveImg2Report');
 
     $routes->get('monthly', 'Main::monthly');

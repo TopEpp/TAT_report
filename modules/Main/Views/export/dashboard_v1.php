@@ -1,6 +1,10 @@
 <?php include_once("export_css.php"); ?>
 
 <style type="text/css">
+	body {
+     background-color: #003466; 
+  }
+  
 	#CartItem {
 		display: flex !important;
 		flex-direction: row !important;

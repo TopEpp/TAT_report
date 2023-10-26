@@ -151,6 +151,36 @@ class Main_model extends Model
 		return $data_chart;
 	}
 
+	function getSumChartYear($year)
+	{
+		$data_chart = array();
+		$builder = $this->db->table($this->table);
+		$builder->select(" TO_CHAR({$this->table}.REPORT_DATE,'MM') AS REPORT_MONTH, SUM({$this->table}.SUM) AS NUM ");
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
+		$builder->where('PORT_DAILY',1);
+		$builder->where("TO_CHAR( {$this->table}.REPORT_DATE, 'YYYY') = ", $year);
+		$builder->groupBy("TO_CHAR({$this->table}.REPORT_DATE,'MM') ");
+		$builder->orderBy("REPORT_MONTH");
+		$data = $builder->get()->getResultArray();
+		foreach ($data as $d) {
+			$data_chart['current'][$d['REPORT_MONTH']*1] = $d['NUM'];
+		}
+
+		$builder = $this->db->table($this->table);
+		$builder->select(" TO_CHAR({$this->table}.REPORT_DATE,'MM') AS REPORT_MONTH, SUM({$this->table}.SUM) AS NUM ");
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
+		$builder->where('PORT_DAILY',1);
+		$builder->where("TO_CHAR( {$this->table}.REPORT_DATE, 'YYYY') = ", ($year-1));
+		$builder->groupBy("TO_CHAR({$this->table}.REPORT_DATE,'MM') ");
+		$builder->orderBy("REPORT_MONTH");
+		$data = $builder->get()->getResultArray();
+		foreach ($data as $d) {
+			$data_chart['past'][$d['REPORT_MONTH']*1] = $d['NUM'];
+		}
+
+		return $data_chart;
+	}
+
 	function getSumRegionDate($date)
 	{
 		$data = array();

@@ -1246,6 +1246,7 @@ class Import_model extends Model
   		if($point_type){
       		$builder->whereIn("POINT_ID",$point_type);
       	}
+      	$builder->where('POINT_MONTHLY',1);
       	$query = $builder->get()->getResultArray();
       	foreach($query as $row){
       		$data[$row['PORT_ID']][$row['POINT_ID']] = $row;
