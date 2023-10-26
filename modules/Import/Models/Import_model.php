@@ -34,6 +34,7 @@ class Import_model extends Model
 					$builder_PORT = $this->db->table('MD_PORT');
 					$builder_PORT->select('PORT_ID');
 					$builder_PORT->where('PORT_NAME',$row[4]);
+					$builder_PORT->where('PORT_DAILY',1);
 					$PORT = $builder_PORT->get()->getRowArray();
 					if(!empty($PORT['PORT_ID'])){
 						$temp_PORT[$row[4]] = $PORT['PORT_ID'];
@@ -1210,7 +1211,12 @@ class Import_model extends Model
         		$point = $row['POINT_ID'];
         	}
         	$data[$row['COUNTRY_ID']]['COUNTRY_NAME_EN'] = $row['COUNTRY_NAME_EN'];
-        	$data[$row['COUNTRY_ID']]['NUM'][$row['PORT_ID']][$point] = $row['NUM'];
+        	if($data[$row['COUNTRY_ID']]['NUM'][$row['PORT_ID']][$point]){
+        		$data[$row['COUNTRY_ID']]['NUM'][$row['PORT_ID']][$point] += $row['NUM'];
+        	}else{
+        		$data[$row['COUNTRY_ID']]['NUM'][$row['PORT_ID']][$point] = $row['NUM'];
+        	}
+        	
         }
 
         return $data;
