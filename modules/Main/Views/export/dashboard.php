@@ -60,7 +60,7 @@
 	}
 
 	#resultsTable {
-		height: 485px;
+		height: 470px;
 		width: 255px;
 		background: #73A0E0;
 		overflow: hidden;
@@ -108,7 +108,7 @@
 	}
 
 	#resultsTable2 {
-		height: 485px;
+		height: 470px;
 		width: 255px;
 		background: #DDC354;
 		overflow: hidden;
@@ -189,6 +189,7 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 // print_r($numberMarketDay);
 // print_r($numberSumNatDay);
 ?>
+
 <body>
 	<div class="col12">
 		<div class="col6" style="padding-left: 0px; margin-right: 10px; ">
@@ -281,7 +282,7 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 											<td style="padding-bottom: 6px; text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;width: 50%;">
 												<?php echo $Mydate->date_eng2thai($to_date, 543) ?>
 											</td>
-											<td style="padding-bottom: 6px; text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 15px;">
+											<td style="padding-bottom: 6px; text-align: center;padding-top: 8px;color: #193666;font-weight: bold;font-size: 16px;">
 												สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
 											</td>
 										</tr>
@@ -289,7 +290,8 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 								</table>
 								<div class="col6">
 									<div id="resultsTable" style=" flex-direction: row; ">
-										<?php $c = 0; $i = 1;
+										<?php $c = 0;
+										$i = 1;
 										foreach ($SumNatDateData as $v) {
 											$c++;
 											$flag = base_url('public/img/logotat.png');
@@ -302,9 +304,9 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 												if ($i == $numberSumNatDay[$v['COUNTRY_ID']]) {
 													$icon = '';
 												} else if ($i < $numberSumNatDay[$v['COUNTRY_ID']]) {
-													$icon = '<img src="'.base_url('public/img/arrowup1.png') .'" alt="">';
+													$icon = '<img src="' . base_url('public/img/arrowup1.png') . '" alt="">';
 												} else if ($i > $numberSumNatDay[$v['COUNTRY_ID']]) {
-													$icon = '<img src="'.base_url('public/img/arrowdown1.png') .'" alt="">';
+													$icon = '<img src="' . base_url('public/img/arrowdown1.png') . '" alt="">';
 												}
 											}
 											$i++;
@@ -313,16 +315,16 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 												<div id="" style="padding-left: 10px; padding-right: 10px; ">
 													<table style="width: 100%;">
 														<tr style="">
-															<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+															<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 																<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
 															</td>
-															<td style="text-align: left; padding: 5.8px 15px;color: white; font-size: 16px;font-weight: bold; width: 75%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
+															<td style="text-align: left; padding: 5.8px 16.5px;color: white; font-size: 16.5px;font-weight: bold; width: 80%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 																<?php echo $v['COUNTRY_NAME_EN'] ?>
 																<br>
 																<?php echo number_format($v['NUM']); ?> คน
 															</td>
-															<td style="border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;text-align: center;">
-																<?php echo $icon;?>
+															<td style="width:10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;text-align: center;">
+																<?php echo $icon; ?>
 															</td>
 														</tr>
 													</table>
@@ -347,15 +349,15 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 												<div id="" style="padding-left: 10px; padding-right: 10px; ">
 													<table style="width: 100%;">
 														<tr style="">
-															<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+															<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 																<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 34px; ">
 															</td>
-															<td class="colorText" style="text-align: left; padding: 5.8px 15px; font-size: 16px;font-weight: bold; width: 75%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
+															<td class="colorText" style="text-align: left; padding: 5.8px 15px; font-size: 16.5px;font-weight: bold; width: 80%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 																<?php echo $v['COUNTRY_NAME_EN'] ?>
 																<br>
 																<?php echo number_format($v['NUM']); ?> คน
 															</td>
-															<td style="border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;text-align: center;">
+															<td style="border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;text-align: center; width: 10%;">
 																<!-- <img src="<?php echo base_url('public/img/arrowup1.png') ?>" alt=""> -->
 															</td>
 														</tr>
@@ -406,7 +408,8 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 				<div class="col6">
 					<p class="colorTextLeft" style="font-size: 13px;text-align: center;margin:0px; font-weight: bold;"><?php echo $Mydate->date_eng2thai($to_date, 543) ?></p>
 					<div id="resultsTableMarket1" style=" flex-direction: row; padding: 0px 5px;">
-						<?php $c = 0; $i=1;
+						<?php $c = 0;
+						$i = 1;
 						foreach ($SumMarketDate['Short'] as $v) {
 							$c++;
 							$flag = base_url('public/img/logotat.png');
@@ -420,9 +423,9 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 								if ($i == $numberMarketDay['Short'][$v['COUNTRY_ID']]) {
 									$icon = '';
 								} else if ($i < $numberMarketDay['Short'][$v['COUNTRY_ID']]) {
-									$icon = '<img src="'.base_url('public/img/arrowup1.png') .'" alt="">';
+									$icon = '<img src="' . base_url('public/img/arrowup1.png') . '" alt="">';
 								} else if ($i > $numberMarketDay['Short'][$v['COUNTRY_ID']]) {
-									$icon = '<img src="'.base_url('public/img/arrowdown1.png') .'" alt="">';
+									$icon = '<img src="' . base_url('public/img/arrowdown1.png') . '" alt="">';
 								}
 							}
 							$i++;
@@ -433,13 +436,13 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 										<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 											<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 37px; ">
 										</td>
-										<td style="text-align: left; padding: 4.2px 0px;color: white; font-size: 18px;font-weight: bold; width: 80%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+										<td style="text-align: left; padding: 5.5px 0px;color: white; font-size: 16.5px;font-weight: bold; width: 80%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 											<?php echo $v['COUNTRY_NAME_EN'] ?>
 											<br>
 											<?php echo number_format($v['NUM']); ?> คน
 										</td>
 										<td style="font-size: 14px; color: #193666; font-weight: bold; width: 10%; text-align: center;border-bottom:<?php echo $c == 10 ? '' : '1px solid white' ?>;">
-											<?php echo $icon?>
+											<?php echo $icon ?>
 										</td>
 									</tr>
 								</table>
@@ -469,7 +472,7 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 										<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 											<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 37px; ">
 										</td>
-										<td style="text-align: left; padding: 4.2px 0px;color: #193666; font-size: 18px;font-weight: bold; width: 80%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+										<td style="text-align: left; padding: 5.5px 0px;color: #193666; font-size: 16.5px;font-weight: bold; width: 80%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 											<?php echo $v['COUNTRY_NAME_EN'] ?>
 											<br>
 											<?php echo number_format($v['NUM']); ?> คน
@@ -503,7 +506,8 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 
 					<div id="resultsTableMarket1" style=" flex-direction: row; padding: 0px 5px;">
 
-						<?php $c = 0;$i=1;
+						<?php $c = 0;
+						$i = 1;
 						foreach ($SumMarketDate['Long'] as $v) {
 							$c++;
 							$flag = base_url('public/img/logotat.png');
@@ -516,9 +520,9 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 								if ($i == $numberMarketDay['Long'][$v['COUNTRY_ID']]) {
 									$icon = '';
 								} else if ($i < $numberMarketDay['Long'][$v['COUNTRY_ID']]) {
-									$icon = '<img src="'.base_url('public/img/arrowup1.png') .'" alt="">';
+									$icon = '<img src="' . base_url('public/img/arrowup1.png') . '" alt="">';
 								} else if ($i > $numberMarketDay['Long'][$v['COUNTRY_ID']]) {
-									$icon = '<img src="'.base_url('public/img/arrowdown1.png') .'" alt="">';
+									$icon = '<img src="' . base_url('public/img/arrowdown1.png') . '" alt="">';
 								}
 							}
 							$i++;
@@ -529,13 +533,13 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 										<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 											<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 37px; ">
 										</td>
-										<td style="text-align: left; padding: 4.2px 0px;color: white; font-size: 18px;font-weight: bold; width: 80%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+										<td style="text-align: left; padding: 5.5px 0px;color: white; font-size: 16.5px;font-weight: bold; width: 80%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 											<?php echo $v['COUNTRY_NAME_EN'] ?>
 											<br>
 											<?php echo number_format($v['NUM']); ?> คน
 										</td>
 										<td style="font-size: 14px; color: #193666; font-weight: bold; width: 10%; text-align: center;border-bottom:<?php echo $c == 10 ? '' : '1px solid white' ?>;">
-											<?php echo $icon?>
+											<?php echo $icon ?>
 										</td>
 									</tr>
 								</table>
@@ -567,7 +571,7 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 											<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 37px; ">
 											</td>
-											<td style="text-align: left; padding: 4.2px 0px;color: #193666; font-size: 18px;font-weight: bold; width: 80%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+											<td style="text-align: left; padding: 5.5px 0px;color: #193666; font-size: 16.5px;font-weight: bold; width: 80%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<?php echo $v['COUNTRY_NAME_EN'] ?>
 												<br>
 												<?php echo number_format($v['NUM']); ?> คน
@@ -588,8 +592,8 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 			<div style="position: absolute; top: 680px; right: 45px; width:100%;">
 				<p style="font-weight: bold; padding-top:2px; color: #fff; font-size:7px; color: #163868;">
 					หมายเหตุ : <br>
-							  1. ข้อมูลจำแนกรายสัญชาติ (Nationality) ที่มีการกำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศ (สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
-							  2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass
+					1. ข้อมูลจำแนกรายสัญชาติ (Nationality) ที่มีการกำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศ (สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
+					2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass
 				</p>
 			</div>
 		</div>
