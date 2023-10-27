@@ -88,6 +88,7 @@ class Login extends BaseController{
 
         $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1);
         $ses_data = [
+        'user_id' => $userInfo['USER_ID'],
         'org_id' => $userInfo['USER_ORG_ID'],
         'username' => $userInfo['USER_NAME'],
         'name' =>  $userInfo['USER_NAME_TH'],
@@ -174,6 +175,7 @@ class Login extends BaseController{
               }
               $userRole['REPORT'] = 'REPORT';
               $ses_data = [
+              'user_id' => $userInfo['title'],
               'org_id' => substr($userInfo['title'][0], 0, -2).'00',
               'username' => $userInfo['samaccountname'][0],
               'name' =>  $userInfo['cn'][0],
