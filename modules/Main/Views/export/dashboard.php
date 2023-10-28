@@ -421,20 +421,16 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 			</div>
 		</div>
 		<div class="col6" style="margin-left: 20px;">
-			<table style="width: 100%;padding-bottom: 0px;">
-				<thead>
-					<tr>
-						<td style="width: 5%;text-align: center;">
-							<img src="<?php echo base_url('public/img/amezingThai.png') ?>" alt="" style="width: 70px; padding-left: 35px;height: 34px;">
-						</td>
-						<td style="width: 5%; text-align: center;margin: auto 0px;">
-							<img src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="" style="width: 80px;height:34px ;">
-						</td>
-					</tr>
-				</thead>
-			</table>
+			<div class="row" style="margin: 0px;padding-top: 10px;padding-bottom: 10px;">
+				<div class="col6" style="text-align: right;">
+					<img src="<?php echo base_url('public/img/amezingThai.png') ?>" alt="" style=" margin-right: 10px;height: 50px;">
+				</div>
+				<div class="col6">
+					<img src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="" style="height:50px ;margin-left: 10px;">
+				</div>
+			</div>
 			<div style="">
-				<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_daily_year.png') ?>" style="width:100%;height:130px;">
+				<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_daily_year.png') ?>" style="width:100%;height:100px;">
 			</div>
 			<div class="col12" style="padding-top:0px; ">
 				<table style="width: 100%;">
@@ -629,8 +625,8 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 				</div>
 			</div>
 
-			<div style="position: absolute; top: 680px; right: 45px; width:100%;">
-				<p style="font-weight: bold; padding-top:2px; color: #fff; font-size:10px; color: #163868;">
+			<div style="position: absolute; top: 700px; right: 45px; width:100%;">
+				<p style="line-height: 15px;font-weight: bold; padding-top:2px; color: #fff; font-size:10px; color: #163868;">
 					หมายเหตุ : <br>
 					1. ข้อมูลจำแนกรายสัญชาติ (Nationality) ที่มีการกำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศ (สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
 					2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass
@@ -638,7 +634,10 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 			</div>
 		</div>
 	</div>
-	<div style="position: absolute;top: 23%; left: 49.2%;rotate:-90;color: red; font-size: 20px;">
-		<span style="font-size:10px;color: #163868;"><?php echo date('d/m/Y H:i:s|') . $session->get('user_id'); ?></span> ใช้เฉพาะภายใน ททท. เท่านั้น ¦ Internal Use Only
+	<div style="font-weight: bold;position: absolute;top: 20%; left: 49.2%;rotate:-90;color: red; font-size: 20px;">
+		ใช้เฉพาะภายใน ททท. เท่านั้น ¦ Internal Use Only
+	</div>
+	<div style="position: absolute;top: 97%; left: 5%;color: red; font-size: 20px;">
+		<p style="opacity: 0.3;font-size:10px;color: #a1afc2;"><?php echo date('d/m/Y H:i:s|') . $session->get('user_id'); ?></p>
 	</div>
 </body>
