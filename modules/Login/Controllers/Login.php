@@ -137,6 +137,7 @@ class Login extends BaseController{
         $response = false;
       }else{
           $userInfo = $this->get_entry_system_attrs($username,$ad,$dn);
+          // echo '<pre>'; print_r($userInfo); exit();
           
           $C = explode(',', $userInfo['memberof'][1]);
           $C = explode('=', $C[0]);
@@ -144,31 +145,6 @@ class Login extends BaseController{
           
           $userPermission = $this->getPermissionAD($userInfo['title'][0],$userInfo['samaccountname'][0],$C);
 
-          // echo '<pre>';
-          // print_r($userPermission);
-          // exit;
-          // if(!empty($userInfo['samaccountname'][0])
-          //    && ( $userInfo['title'][0]==410202 ||  $userInfo['title'][0]==420101 
-          //         ||  $userInfo['title'][0]==200100 
-          //         ||  $userInfo['title'][0]==300100 
-          //         ||  $userInfo['title'][0]==400100 
-          //         ||  $userInfo['title'][0]==500100
-          //         ||  $userInfo['title'][0]==600100 
-          //         ||  $userInfo['title'][0]==700100 
-          //         ||  $userInfo['title'][0]==800100 
-          //         ||  $userInfo['title'][0]==900100
-          //         ||  $userInfo['title'][0]==310302
-          //          ) 
-          //   || $userInfo['samaccountname'][0] == 'sriwan.choo'
-          //   || $userInfo['samaccountname'][0] == 'prakong.phan'
-          //   || $userInfo['samaccountname'][0] == 'nitiya.supa'
-          //   || $userInfo['samaccountname'][0] == 'phacharaporn.sawa'
-          //   || $userInfo['samaccountname'][0] == 'panjaporn.siri'
-          //   || $userInfo['samaccountname'][0] == 'titiwat.pati'
-
-          //   || $userInfo['samaccountname'][0] == 'natchapol.phro'
-          //   || $C == 'C9' || $C == 'C10' || $C == 'C11'
-          //   ){
           if(!empty($userInfo['samaccountname'][0]) && $userPermission['DASHBOARD']  || ( $C == 'C9' || $C == 'C10' || $C == 'C11') ){
               if( $C == 'C9' || $C == 'C10' || $C == 'C11' ){
                 $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
@@ -258,8 +234,6 @@ class Login extends BaseController{
   public function tat(){
     $TatAuthUsr = $this->request->getVar('TatAuthUsr');
     $AuthUrl = $this->request->getVar('AuthUrl');
-
-    
 
     $User_model = new User_model();
     $userInfo = $User_model
