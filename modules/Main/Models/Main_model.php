@@ -426,4 +426,19 @@ class Main_model extends Model
 
 		return $data;
 	}
+
+	function saveLog($type,$ip,$session){
+		$date_export = date('Y-m-d H:i:s');
+
+		$builder = $this->db->table('LOG_EXPORT_INFO');
+		$builder->set('USER_ID',$session->get('user_id'));
+		$builder->set('USERNAME',$session->get('username'));
+		$builder->set('ORG_ID',$session->get('org_id'));
+		$builder->set('DATE_EXPORT', 'to_date(' . '\'' . $date_export . '\'' . ',\'YYYY-MM-DD hh24:mi:ss\')', false);
+		$builder->set('IP_ADDRESS',$ip);
+		$builder->set('TYPE_EXPORT',$type);
+		$builder->insert();
+
+		return true;
+	}
 }

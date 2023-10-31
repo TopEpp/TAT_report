@@ -56,6 +56,8 @@ $routes->group('main', ['namespace' => '\Modules\Main\Controllers', 'filter' => 
 
     $routes->get('monthly', 'Main::monthly');
     $routes->get('monthly_period', 'Main::monthly_period');
+
+    $routes->post('saveLog', 'Main::saveLog');
     
 });
 

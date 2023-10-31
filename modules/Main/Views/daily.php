@@ -1198,6 +1198,15 @@ for ($i=1; $i <= 12; $i++) {
 		$('#htmltoimage_chart_daily_year').show();
 		setTimeout(function(){ saveImg(url2SaveImg, url2DowloadReport); }, 1000);
 		setTimeout(function(){ $('#htmltoimage_chart_daily_year').hide(); }, 6000);
+
+		$.ajax({
+	        method: "POST",
+	        url: base_url + "/main/saveLog",
+	        data: {'type':'Daily'},
+	        success: function(res) {
+	          
+	        }
+	    });
 		
 	}
 

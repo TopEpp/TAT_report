@@ -460,4 +460,13 @@ class Main extends BaseController
 
 		return $this->setResponseFormat('json')->respond($file);
 	}
+
+	function saveLog(){
+		$Model = new Main_model();
+		$session = session();
+		$type = $this->request->getPost('type');
+		$ip = $this->request->getIPAddress();
+		
+		return $Model->saveLog($type,$ip,$session);
+	}
 }
