@@ -264,5 +264,23 @@ class Setting_model extends Model
 		return $data;
 	}
 
+	function getLogInfo(){
+		$builder = $this->db->table('LOG_EXPORT_INFO');
+	    $builder->select("LOG_EXPORT_INFO.*, TO_CHAR( DATE_EXPORT, 'DD/MM/YYYY hh24:mi:ss') as EXPORT_DATE ");
+	    $builder->orderBy('REC_ID','DESC');
+	    $builder->limit(100);
+	    $data = $builder->get()->getResultArray();
+	    return $data;
+	}
+
+	function getLogLogin(){
+		$builder = $this->db->table('LOG_LOGIN');
+	    $builder->select("LOG_LOGIN.*, TO_CHAR( DATE_LOGIN, 'DD/MM/YYYY hh24:mi:ss') as LOGIN_DATE ");
+	    $builder->orderBy('REC_ID','DESC');
+	    $builder->limit(100);
+	    $data = $builder->get()->getResultArray();
+	    return $data;
+	}
+
 
 }

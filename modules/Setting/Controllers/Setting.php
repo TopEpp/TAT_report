@@ -127,6 +127,26 @@ class Setting extends BaseController{
 
 		return view('Modules\Setting\Views\permission',$data);
 	}
+
+	public function log_info()
+	{
+		$Model = new Setting_model();
+		$data['Mydate'] = $this->Mydate;
+		$data['data'] = $Model->getLogInfo();
+
+		return view('Modules\Setting\Views\log_info',$data);
+	}
+
+	public function log_login()
+	{
+		$Model = new Setting_model();
+		$data['Mydate'] = $this->Mydate;
+		$data['data'] = $Model->getLogLogin();
+
+		return view('Modules\Setting\Views\log_login',$data);
+	}
+
+
 }
 
 ?>

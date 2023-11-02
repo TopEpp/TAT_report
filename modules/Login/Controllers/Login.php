@@ -2,6 +2,7 @@
 namespace Modules\Login\Controllers;
 use App\Controllers\BaseController;
 use Modules\User\Models\User_model;
+use Modules\Main\Models\Main_model;
 use Modules\Permission\Models\Permission_model;
 use App\Libraries\Hash;
 
@@ -77,6 +78,7 @@ class Login extends BaseController{
       }
       else
       {
+
         $userId = $userInfo['USER_ID'];
         if ($userInfo['USER_PHOTO_FILE'] != '') {
           $user_img = base_url('public/uploads/user/'.$userInfo['USER_PHOTO_FILE']);
@@ -102,6 +104,10 @@ class Login extends BaseController{
         'logged_in' => TRUE
         ];
         $session->set($ses_data);
+
+        $Main = new Main_model();
+        $ip = $this->request->getIPAddress();
+        $Main->saveLogLogin('REPORT',$ip,$session);
 
         $redirect_url = $session->get('redirect_url');
         if($redirect_url){
@@ -151,7 +157,7 @@ class Login extends BaseController{
               }
               $userRole['REPORT'] = 'REPORT';
               $ses_data = [
-              'user_id' => $userInfo['title'],
+              'user_id' => $userInfo['title'][0],
               'org_id' => substr($userInfo['title'][0], 0, -2).'00',
               'username' => $userInfo['samaccountname'][0],
               'name' =>  $userInfo['cn'][0],
@@ -165,6 +171,17 @@ class Login extends BaseController{
               'logged_in' => TRUE
               ];
               $session->set($ses_data);
+
+
+
+              $Main = new Main_model();
+              $ip = $this->request->getIPAddress();
+              // echo '<pre>';
+              // echo 'ip '.$ip;
+              // print_r($ses_data);
+              // print_r($session); exit;
+
+              $Main->saveLogLogin('REPORT',$ip,$session);
 
               $msg = "Login success";
               $response = true;
@@ -277,6 +294,10 @@ class Login extends BaseController{
       'logged_in' => TRUE
       ];
       $session->set($ses_data);
+
+      $Main = new Main_model();
+      $ip = $this->request->getIPAddress();
+      $Main->saveLogLogin('REPORT',$ip,$session);
 
       return redirect()->to($AuthUrl);
     }

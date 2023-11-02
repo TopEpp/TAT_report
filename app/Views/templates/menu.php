@@ -129,6 +129,12 @@ $user_menu = $session->get('user_menu');
                 <a class="collapse-item <?php if ($method == 'permission') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('setting/permission') ?>">Permission</a>
+                <a class="collapse-item <?php if ($method == 'log_login') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('setting/log_login') ?>">Log Login</a>
+                <a class="collapse-item <?php if ($method == 'log_info') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('setting/log_info') ?>">Log Export Info</a>
             </div>
         </div>
     </li>

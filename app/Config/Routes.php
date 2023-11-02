@@ -109,7 +109,8 @@ $routes->group('setting', ['namespace' => '\Modules\Setting\Controllers'], funct
     $routes->get('updateCalReportDaily','Setting::updateCalReportDaily');
 
     $routes->get('permission','Setting::permission');
-
+    $routes->get('log_info','Setting::log_info');
+    $routes->get('log_login','Setting::log_login');
 });
 
 
