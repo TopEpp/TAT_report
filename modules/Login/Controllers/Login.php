@@ -9,9 +9,77 @@ use App\Libraries\Hash;
 class Login extends BaseController{
 
   public function index(){
-    if(session()->get('logged_in')){
-      return redirect()->to('/main');
+    // if(session()->get('logged_in')){
+    //   return redirect()->to('/main');
+    // }
+    // return view('Modules\Login\Views\index.php');
+
+    $AuthorizationHeader = $this->getAuthorizationHeader();
+
+    if(isset($AuthorizationHeader)){
+   
+      $userPrincipalName = @$AuthorizationHeader->userPrincipalName;
+      $userPrincipalName = explode('@tat', $userPrincipalName);
+      $username = @$userPrincipalName[0];
+
+      if($username){
+        return $this->authHeader($username,$AuthorizationHeader);
+
+      }else{
+        return view('Modules\Login\Views\index.php');
+      }
+      
+    }else{
+      return view('Modules\Login\Views\index.php');
     }
+  }
+
+  function getAuthorizationHeader(){
+      $headers = $token = $file = null;
+      if (isset($_SERVER['Authorization'])) {
+          $headers = trim($_SERVER["Authorization"]);
+      }
+      else if (isset($_SERVER['HTTP_AUTHORIZATION'])) { //Nginx or fast CGI
+          $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
+      } elseif (function_exists('apache_request_headers')) {
+          $requestHeaders = apache_request_headers();
+          // Server-side fix for bug in old Android versions (a nice side-effect of this fix means we don't care about capitalization for Authorization)
+          $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
+          //print_r($requestHeaders);
+          if (isset($requestHeaders['Authorization'])) {
+              $headers = trim($requestHeaders['Authorization']);
+          }
+      }
+
+      if (isset($_SERVER['Access-Token'])) {
+          $token = trim($_SERVER["Access-Token"]);
+      }elseif (function_exists('apache_request_headers')) {
+          $requestHeaders = apache_request_headers();
+          // Server-side fix for bug in old Android versions (a nice side-effect of this fix means we don't care about capitalization for Authorization)
+          $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
+          //print_r($requestHeaders);
+          if (isset($requestHeaders['Access-Token'])) {
+              $token = trim($requestHeaders['Access-Token']);
+          }
+      }
+
+      if($token){
+        $opts = [
+            "http" => [
+                "method" => "GET",
+                "header" => "Authorization: Bearer {$token}" 
+            ]
+        ];
+
+        $context = stream_context_create($opts);
+        $file = file_get_contents('https://graph.microsoft.com/v1.0/me/?$select=id,displayName,givenName,surname,department,userType,userPrincipalName,jobTitle,employeeId', false, $context);
+
+      }
+      
+      return json_decode($file);
+  }
+
+  function page(){
     return view('Modules\Login\Views\index.php');
   }
 
@@ -245,19 +313,35 @@ class Login extends BaseController{
     $session = session();
     $session->destroy();
     // return redirect()->to('/');
-    return redirect()->to('https://marketingdb.tat.or.th/web/guest/index');
+    // return redirect()->to('https://marketingdb.tat.or.th/web/guest/index');
+    return redirect()->to('https://time-auth.tat.or.th/oauth2/sign_out?rd=https%3A%2F%2Flogin.windows.net%2F8d7435c8-c945- 4942-80bf-c883fc3e4187%2Foauth2%2Flogout%3Fpost_logout_redirect_uri%3Dhttps%3A%2F%2Ftime-dashboard.tat.or.th');
   }
 
-  public function tat(){
-    $TatAuthUsr = $this->request->getVar('TatAuthUsr');
-    $AuthUrl = $this->request->getVar('AuthUrl');
+
+  public function welcome(){
+    $session = session();
+    $session->destroy();
+    
+    return view('Modules\Login\Views\welcome.php');
+  }
+
+  function getPermissionAD($group_id,$username,$c){
+    $User_model = new User_model();
+    $userPermission = $User_model->getPermissionAD($group_id,$username,$c);
+    return $userPermission;
+  }
+
+  public function authHeader($username,$AuthorizationHeader)
+  {
+    $session = session();
 
     $User_model = new User_model();
     $userInfo = $User_model
-                ->where('USER_NAME', $TatAuthUsr)
-                ->where('USER_ACTIVE_STATUS', 1)
-                ->first();
-    if(!empty($userInfo['USER_ID']) && $AuthUrl!=''){
+      ->where('USER_NAME', $username)
+      ->where('USER_ACTIVE_STATUS', 1)
+      ->first();
+
+    if ($userInfo ) {
 
       $userId = $userInfo['USER_ID'];
       if ($userInfo['USER_PHOTO_FILE'] != '') {
@@ -266,21 +350,12 @@ class Login extends BaseController{
         $user_img = base_url('public/img/default-profile.jpeg');
       }
       $session = session();
+      $userRole = array();
 
-      $Permission = new Permission_model();
-      $userPermission = $Permission->getPermission($userInfo['USER_PERMISSION_TYPE'],$userInfo['USER_TYPE_ORG']);
-      $userRole = $User_model->getRole($userInfo['USER_ID']);
-
-      if($userInfo['USER_PERMISSION_TYPE']==3 && $userInfo['USER_TYPE_ORG']==1){
-        $userInfo['USER_AREA_ID'] = $Permission->getAreaId($userInfo['USER_ORG_ID']);
-        $userInfo['USER_REGION_ID'] = $Permission->getAreaRegionId($userInfo['USER_ORG_ID']);
-      }
-
-      if($userInfo['USER_TYPE_ORG']==2){
-        $userInfo['USER_REGION_ID'] = $Permission->getRegionId($userInfo['USER_ORG_ID']);
-      }
+      $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1);
 
       $ses_data = [
+      'user_id' => $userInfo['USER_ID'],
       'org_id' => $userInfo['USER_ORG_ID'],
       'username' => $userInfo['USER_NAME'],
       'name' =>  $userInfo['USER_NAME_TH'],
@@ -299,21 +374,55 @@ class Login extends BaseController{
       $ip = $this->request->getIPAddress();
       $Main->saveLogLogin('REPORT',$ip,$session);
 
-      return redirect()->to($AuthUrl);
+      $url = $this->request->getVar('URL');
+      if (empty($url)) {
+        $url = base_url();
+        $redirect_url = $session->get('redirect_url');
+        if ($redirect_url) {
+          return redirect()->to($redirect_url);
+        }
+      } else {
+        return redirect()->to($url);
+      }
+
+      return redirect()->to('/main');
+    }else{
+      $C = null;
+      $userInfo['title'][0] = $AuthorizationHeader->jobTitle;
+      $userInfo['samaccountname'][0] = $username;
+      $employeeId = $AuthorizationHeader->jobTitle;
+
+      $userPermission = $this->getPermissionAD($userInfo['title'][0],$userInfo['samaccountname'][0],$C);
+      if($userPermission){
+        
+        $userRole['REPORT'] = 'REPORT';
+        $ses_data = [
+        'user_id' => $employeeId,
+        'org_id' => substr($userInfo['title'][0], 0, -2).'00',
+        'username' => $userInfo['samaccountname'][0],
+        'name' =>  $AuthorizationHeader->displayName,
+        'user_type' => 3,
+        'user_permission_type'=>1,
+        'user_area_id' => 0,
+        'user_region_id' => 0,
+        'user_img' => '',
+        'user_menu' => $userPermission,
+        'user_role' => $userRole,
+        'logged_in' => TRUE
+        ];
+        $session->set($ses_data);
+
+        $Main = new Main_model();
+        $ip = $this->request->getIPAddress();
+
+        $Main->saveLogLogin('REPORT',$ip,$session);
+        return redirect()->to('/main');
+      }else{
+        return view('Modules\Login\Views\index.php');
+      }
+
+      // return view('Modules\Login\Views\index.php');
     }
-  }
-
-  public function welcome(){
-    $session = session();
-    $session->destroy();
-    
-    return view('Modules\Login\Views\welcome.php');
-  }
-
-  function getPermissionAD($group_id,$username,$c){
-    $User_model = new User_model();
-    $userPermission = $User_model->getPermissionAD($group_id,$username,$c);
-    return $userPermission;
   }
 
 }
