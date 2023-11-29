@@ -453,6 +453,7 @@ class Main extends BaseController
 		$data = base64_decode($img);
 		// $file = UPLOAD_DIR . $_POST['imgName'] . '.png';
 		$file = $uploadfile . $_POST['imgName'] . '.png';
+		// @unlike($file);
 		$success = file_put_contents($file, $data);
 
 		// echo $file.'<br>';

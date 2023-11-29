@@ -3,7 +3,8 @@
 <!-- content -->
 <?php $this->section('content') ?>
 <?php $user_menu = $session->get('user_menu'); ?>
-
+<?php ini_set('memory_limit', '1024M'); 
+	  //ini_set('memory_limit', '-1');?>
 <style>
 	@media screen and (max-width: 600px) {
 		.table-responsive {

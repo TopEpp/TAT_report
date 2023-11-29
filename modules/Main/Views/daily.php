@@ -1006,13 +1006,14 @@ for ($i=1; $i <= 12; $i++) {
 					data: chart_current,
 					borderColor: '#57DACC',
 					backgroundColor: '#57DACC',
-				},
-				{
-					label: '<?php echo date('Y') + 542 ?>',
-					data: chart_pre,
-					borderColor: '#FACE74',
-					backgroundColor: '#FACE74',
 				}
+				// ,
+				// {
+				// 	label: '<?php echo date('Y') + 542 ?>',
+				// 	data: chart_pre,
+				// 	borderColor: '#FACE74',
+				// 	backgroundColor: '#FACE74',
+				// }
 			]
 		};
 		const chart_main = new Chart(ctx, {
@@ -1040,13 +1041,14 @@ for ($i=1; $i <= 12; $i++) {
 					data: chart_current_year,
 					borderColor: '#57DACC',
 					backgroundColor: '#57DACC',
-				},
-				{
-					label: '<?php echo date('Y') + 542 ?>',
-					data: chart_pre_year,
-					borderColor: '#FACE74',
-					backgroundColor: '#FACE74',
 				}
+				// ,
+				// {
+				// 	label: '<?php echo date('Y') + 542 ?>',
+				// 	data: chart_pre_year,
+				// 	borderColor: '#FACE74',
+				// 	backgroundColor: '#FACE74',
+				// }
 			]
 		};
 		const chart_main_year = new Chart(ctx2, {
