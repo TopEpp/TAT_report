@@ -161,6 +161,7 @@ class Report_model extends Model
   	}
 
   	function getPortCompareData($start_date,$end_date,$country_type,$port_type,$country_id){
+  		$data = array();
 		$builder = $this->db->table($this->table);
 	    $builder->select("{$this->table}.COUNTRY_ID, MD_PORT.PORT_ID, TO_CHAR({$this->table}.REPORT_DATE,'YYYY-MM-DD') AS REPORT_DATE , MD_COUNTRY.COUNTRY_NAME_EN , 
 	    					 SUM({$this->table}.SUM) AS NUM ");
@@ -190,6 +191,7 @@ class Report_model extends Model
   	function getCountryAllRow(){
 		$builder = $this->db->table('MD_COUNTRY');
 	    $builder->select("MD_COUNTRY.COUNTRYID AS COUNTRY_ID,  MD_COUNTRY.COUNTRY_NAME_EN ");
+	    $builder->where('MARKET_TYPE is not null');
 	    $builder->orderBy("COUNTRY_NAME_EN");
 	    $res = $builder->get()->getResultArray();
 	    foreach($res as $row){
@@ -199,6 +201,7 @@ class Report_model extends Model
   	}
 
   	function getCountryCompareRow($start_date,$end_date,$country_type,$port_type){
+  		$data = array();
 		$builder = $this->db->table($this->table);
 	    $builder->select("{$this->table}.COUNTRY_ID,  MD_COUNTRY.COUNTRY_NAME_EN ");
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");

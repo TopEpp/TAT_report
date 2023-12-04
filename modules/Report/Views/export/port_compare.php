@@ -29,7 +29,7 @@
 		</thead>
 		<tbody>
 			<?php if($country_id){ 
-					$country_name = $country_row[$country_id];
+					$country_name = $country_select[$country_id];
 					getTableCountry($data, $country_name, $country_id, $port_colunm, $period); 
 				}else{
 					genTableData($data, $region, 0, $country, $port_colunm, $period); }
