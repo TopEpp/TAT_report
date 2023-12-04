@@ -28,7 +28,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php genTableData($data, $region, 0, $country, $port_colunm, $period); ?>
+			<?php if($country_id){ 
+					$country_name = $country_row[$country_id];
+					getTableCountry($data, $country_name, $country_id, $port_colunm, $period); 
+				}else{
+					genTableData($data, $region, 0, $country, $port_colunm, $period); }
+			?>
 		</tbody>
 		<?php if ($export_type == 'excel') { ?>
 			<tr style="border:0px">
@@ -42,6 +47,20 @@
 	</table>
 <?php } ?>
 <?php
+
+function getTableCountry($data, $country_name, $country_id,$port_colunm,$period){
+
+	echo '<tr class="TR-Parent">';
+	echo '<td style="">'.$country_name.'</td>';
+	if (!empty($port_colunm)) {
+		foreach ($port_colunm as $p) {
+			foreach ($period as $d) {
+				echo "<td align='right'>" . @number_format(@$data[$country_id][$p['PORT_ID']][$d]['NUM']) . "</td>";
+			}
+		}
+	}
+	echo '</tr>';
+}
 
 function genTableData($data, $region, $region_id, $country, $port_colunm, $period, $level = 1)
 {

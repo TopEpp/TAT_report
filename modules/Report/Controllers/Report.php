@@ -184,6 +184,7 @@ class Report extends BaseController
 
 		$data['start_date1'] = $data['end_date1'] = $to_date; //date('d-m-Y');
 		$data['country_type'] = 'all';
+		$data['country_id'] = '';
 		$data['port_type'] = array();
 		if (!empty($_GET['start1'])) {
 			$data['start_date1'] = $_GET['start1'];
@@ -197,6 +198,9 @@ class Report extends BaseController
 		if (!empty($_GET['port_type'])) {
 			$data['port_type'] = explode(',', $_GET['port_type']);
 		}
+		if (!empty($_GET['country_id'])) {
+			$data['country_id'] = $_GET['country_id'];
+		}
 
 		if (!empty($data['port_type'])) {
 			list($day, $month, $year) = explode('-', $data['start_date1']);
@@ -209,9 +213,10 @@ class Report extends BaseController
 			$data['period'] = $data['Mydate']->date_range(date('Y-m-d', strtotime($start_period)), date('Y-m-d', strtotime($end_period)));
 			$data['port_colunm'] = $Model->getPortColunm($data['port_type']);
 			$data['country_row'] = $Model->getCountryCompareRow($data['start_date1'], $data['end_date1'], $data['country_type'], $data['port_type']);
-			$data['data'] = $Model->getPortCompareData($data['start_date1'], $data['end_date1'], $data['country_type'], $data['port_type']);
+			$data['data'] = $Model->getPortCompareData($data['start_date1'], $data['end_date1'], $data['country_type'], $data['port_type'],$data['country_id']);
 		}
 
+		$data['country_select'] = $Model->getCountryAllRow();
 		$data['region'] = $Model->getSTDRegion($data['country_type']);
 		$data['country'] = $Model->getCountryByRegion($data['country_type']);
 

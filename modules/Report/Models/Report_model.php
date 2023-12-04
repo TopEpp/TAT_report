@@ -160,7 +160,7 @@ class Report_model extends Model
 	    return $data;
   	}
 
-  	function getPortCompareData($start_date,$end_date,$country_type,$port_type){
+  	function getPortCompareData($start_date,$end_date,$country_type,$port_type,$country_id){
 		$builder = $this->db->table($this->table);
 	    $builder->select("{$this->table}.COUNTRY_ID, MD_PORT.PORT_ID, TO_CHAR({$this->table}.REPORT_DATE,'YYYY-MM-DD') AS REPORT_DATE , MD_COUNTRY.COUNTRY_NAME_EN , 
 	    					 SUM({$this->table}.SUM) AS NUM ");
@@ -171,6 +171,11 @@ class Report_model extends Model
 	    if($country_type=='standard'){
 	    	// $builder->where('MD_COUNTRY.IS_STANDARD','Y');
 	    }	
+
+	    if($country_id!==''){
+	    	$builder->where("{$this->table}.COUNTRY_ID",$country_id);
+	    }
+	    
 	    $builder->where('PORT_DAILY',1);
 	    $builder->groupBy("{$this->table}.COUNTRY_ID, MD_PORT.PORT_ID, {$this->table}.REPORT_DATE,MD_COUNTRY.COUNTRY_NAME_EN ");
 	    $builder->orderBy("COUNTRY_NAME_EN");
@@ -178,6 +183,17 @@ class Report_model extends Model
 	    $res = $builder->get()->getResultArray();
 	    foreach($res as $row){
 	    	$data[$row['COUNTRY_ID']][$row['PORT_ID']][$row['REPORT_DATE']] = $row;
+	    }
+	    return $data;
+  	}
+
+  	function getCountryAllRow(){
+		$builder = $this->db->table('MD_COUNTRY');
+	    $builder->select("MD_COUNTRY.COUNTRYID AS COUNTRY_ID,  MD_COUNTRY.COUNTRY_NAME_EN ");
+	    $builder->orderBy("COUNTRY_NAME_EN");
+	    $res = $builder->get()->getResultArray();
+	    foreach($res as $row){
+	    	$data[$row['COUNTRY_ID']] = $row['COUNTRY_NAME_EN'];
 	    }
 	    return $data;
   	}

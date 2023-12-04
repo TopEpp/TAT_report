@@ -43,10 +43,10 @@
 	</div>
 </div>
 <div class="row py-2">
-	<div class="col-md-4 col-12 mx-auto py-2 py-md-0">
+	<div class="col-md-6 col-12 mx-auto py-2 py-md-0">
 		วันที่เริ่มต้น <input type="text" name="start_date1" id="start_date1" class="form-control date_picker mx-auto" value="<?php echo $Mydate->date_thai2eng($start_date1, 543, '/') ?>">
 	</div>
-	<div class="col-md-3 col-12 py-2 py-md-0">
+	<div class="col-md-6 col-12 py-2 py-md-0">
 		วันที่สิ้นสุด <input type="text" name="end_date1" id="end_date1" class="form-control date_picker" value="<?php echo $Mydate->date_thai2eng($end_date1, 543, '/') ?>">
 	</div>
 	<div class="col-md-4 col-12 text-start py-2 py-md-0">
@@ -58,6 +58,15 @@
 			<option value="all" <?php if (@$country_type == 'all') {
 									echo "selected='selected'";
 								} ?>>All Country</option>
+		</select>
+	</div>
+	<div class="col-md-7 col-12 text-start py-2 py-md-0">
+		Country Select
+		<select class="form-control" id="country_id">
+			<option value="">Select</option>
+		<?php foreach ($country_select as $key => $value) { ?>
+			<option <?php if($country_id==$key){ echo 'selected="selected"';}?> value="<?php echo $key?>"  ><?php echo $value?></option>
+		<?php }?>
 		</select>
 	</div>
 	<div class="col-md-1 py-2 py-md-0 text-center mt-auto">
@@ -133,6 +142,11 @@
 						</tr>
 					</thead>
 					<tbody>
+						<?php 
+						if($country_id){ 
+							$country_name = $country_row[$country_id];
+							getTableCountry($data, $country_name, $country_id, $port_colunm, $period); 
+						}else{ ?>
 						<tr style="background-color:#B6E2E9">
 							<td style="font-weight: bolder;">GRAND TOTAL</td>
 							<?php
@@ -147,7 +161,9 @@
 							?>
 
 						</tr>
-						<?php genTableData($data, $region, 0, $country, $port_colunm, $period); ?>
+						<?php 
+							genTableData($data, $region, 0, $country, $port_colunm, $period);
+						} ?>
 					</tbody>
 				</table>
 			<?php } ?>
@@ -155,6 +171,20 @@
 	</div>
 </div>
 <?php
+
+function getTableCountry($data, $country_name, $country_id,$port_colunm,$period){
+
+	echo '<tr class="TR-Parent">';
+	echo '<td style="">'.$country_name.'</td>';
+	if (!empty($port_colunm)) {
+		foreach ($port_colunm as $p) {
+			foreach ($period as $d) {
+				echo "<td align='right'>" . @number_format(@$data[$country_id][$p['PORT_ID']][$d]['NUM']) . "</td>";
+			}
+		}
+	}
+	echo '</tr>';
+}
 
 function genTableData($data, $region, $region_id, $country, $port_colunm, $period, $level = 1)
 {
@@ -281,6 +311,7 @@ function getSumData($data, $region, $region_id, $country, $port_id, $day, &$sum 
 		end_date1 = date[0] + '-' + date[1] + '-' + (date[2] - 543);
 
 		var country_type = $('#country_type').val();
+		var country_id = $('#country_id').val();
 		var port_type = $("input[name='port_type[]']").map(function() {
 			if ($(this).prop('checked') == true) {
 				return $(this).val();
@@ -288,7 +319,7 @@ function getSumData($data, $region, $region_id, $country, $port_id, $day, &$sum 
 		}).get();
 		// console.log(port_type);
 
-		window.location.href = base_url + '/report/port_compare?start1=' + start_date1 + '&end1=' + end_date1 + '&country_type=' + country_type + '&port_type=' + port_type;
+		window.location.href = base_url + '/report/port_compare?start1=' + start_date1 + '&end1=' + end_date1 + '&country_type=' + country_type + '&port_type=' + port_type+ '&country_id=' + country_id;
 	}
 
 	function ShowHide(reg_id) {
@@ -307,12 +338,13 @@ function getSumData($data, $region, $region_id, $country, $port_id, $day, &$sum 
 		end_date1 = date[0] + '-' + date[1] + '-' + (date[2] - 543);
 
 		var country_type = $('#country_type').val();
+		var country_id = $('#country_id').val();
 		var port_type = $("input[name='port_type[]']").map(function() {
 			if ($(this).prop('checked') == true) {
 				return $(this).val();
 			}
 		}).get();
-		window.open(base_url + '/report/port_compare/?export_type=' + type + '&start1=' + start_date1 + '&end1=' + end_date1 + '&country_type=' + country_type + '&port_type=' + port_type);
+		window.open(base_url + '/report/port_compare/?export_type=' + type + '&start1=' + start_date1 + '&end1=' + end_date1 + '&country_type=' + country_type + '&port_type=' + port_type+ '&country_id=' + country_id);
 	}
 
 	function export_excel(){
