@@ -116,4 +116,9 @@ class Import extends BaseController
 
 		return view('Modules\Import\Views\detail', $data);
 	}
+
+	function updateCalReportDaily($year,$month,$day){
+		$Model = new Import_model();
+		$Model->updateCalReportDaily($year,$month,$day);
+	}
 }

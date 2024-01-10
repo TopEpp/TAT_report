@@ -424,16 +424,18 @@ class Import_model extends Model
 
 	function updateCalReportDaily($year,$month,$day=''){
 		$builder_delete = $this->db->table('REPORT_CAL_DAILY');
-		if($day){ $builder_delete->where("TO_CHAR( REPORT_DATE, 'DD') = ",$day); }
+		if($day){ $builder_delete->where("TO_CHAR( REPORT_DATE, 'DD') = ",intval($day)); }
 		$builder_delete->where("TO_CHAR( REPORT_DATE, 'MM') = ",intval($month));
 	    $builder_delete->where("TO_CHAR( REPORT_DATE, 'YYYY') = ",$year);
 		$builder_delete->delete();
 
 		$builder = $this->db->table('CAL_DAILY_REPORT');
-		if($day){ $builder->where("TO_CHAR( REPORT_DATE, 'DD') = ",$day); }
+		if($day){ $builder->where("TO_CHAR( REPORT_DATE, 'DD') = ",intval($day)); }
 	    $builder->where("TO_CHAR( REPORT_DATE, 'MM') = ",intval($month));
 	    $builder->where("TO_CHAR( REPORT_DATE, 'YYYY') = ",$year);
 	    $data = $builder->get()->getResultArray();
+
+	    echo '<pre>'; print_r($data);
 
 		foreach ($data as $key => $value) {
 			$builder_insert = $this->db->table('REPORT_CAL_DAILY');
@@ -1254,4 +1256,5 @@ class Import_model extends Model
 
       	return $data;
 	}
+
 }

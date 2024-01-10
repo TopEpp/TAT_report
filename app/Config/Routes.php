@@ -86,6 +86,8 @@ $routes->group('import', ['namespace' => '\Modules\Import\Controllers'], functio
 
     $routes->get('raw_monthly', 'Import::raw_monthly');
     $routes->post('import_file_raw_monthly', 'Import::import_file_raw_monthly');
+
+    $routes->get('updateCalReportDaily/(:num)/(:num)/(:num)','Import::updateCalReportDaily/$1/$2/$3');
 });
 
 $routes->group('setting', ['namespace' => '\Modules\Setting\Controllers'], function ($routes) {

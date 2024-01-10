@@ -40,7 +40,7 @@ class Main extends BaseController
 		$data['year'] = date('Y');
 		$data['month'] = $month;
 		$data['month_label'] = $this->month_th_short[(int)$month];
-		$data['start_date'] = '01-01-' . date('Y');
+		$data['start_date'] = '01-01-' . (date('Y'));
 		// $data['end_date'] = date('d-m-Y');
 		$data['country_type'] = 'all';
 
@@ -64,7 +64,18 @@ class Main extends BaseController
 		$end_date = $year . '-' . $month . '-' . $day;
 		$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
 		$data['end_date_label'] = $end_date;
+		$data['year'] = $year;
 
+		$date_now =  strtotime($start_date);
+		$date2    =  strtotime($end_date);
+
+		if ($date_now > $date2) {
+		    list($day, $month, $year) = explode('-', $data['start_date']);
+			$end_date = $year . '-' . $month . '-' . $day;
+			$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
+			$data['end_date_label'] = $end_date;
+			$data['year'] = $year;
+		}
 
 
 		$data['to_date'] = $end_date;
@@ -269,6 +280,13 @@ class Main extends BaseController
 		$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
 		$data['end_date_label'] = $end_date;
 
+		if ($date_now > $date2) {
+		    list($day, $month, $year) = explode('-', $data['start_date']);
+			$end_date = $year . '-' . $month . '-' . $day;
+			$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
+			$data['end_date_label'] = $end_date;
+			$data['year'] = $year;
+		}
 
 
 		$data['to_date'] = $end_date;

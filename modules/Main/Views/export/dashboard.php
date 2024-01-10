@@ -168,23 +168,29 @@ foreach ($SumNatDateData_past as $v) {
 }
 
 $i = 1;
-foreach ($SumMarketDate_past['Short'] as $v) {
+if(!empty($SumMarketDate_past['Short'])){
+	foreach ($SumMarketDate_past['Short'] as $v) {
 
-	if ($v['NUM'] == 0) {
-		$numberMarketDay['Short'][$v['COUNTRY_ID']] = '';
-	} else {
-		$numberMarketDay['Short'][$v['COUNTRY_ID']] = $i++;
+		if ($v['NUM'] == 0) {
+			$numberMarketDay['Short'][$v['COUNTRY_ID']] = '';
+		} else {
+			$numberMarketDay['Short'][$v['COUNTRY_ID']] = $i++;
+		}
 	}
 }
+
 $i = 1;
-foreach ($SumMarketDate_past['Long'] as $v) {
+if(!empty($SumMarketDate_past['Long'])){
+	foreach ($SumMarketDate_past['Long'] as $v) {
 
-	if ($v['NUM'] == 0) {
-		$numberMarketDay['Long'][$v['COUNTRY_ID']] = '';
-	} else {
-		$numberMarketDay['Long'][$v['COUNTRY_ID']] = $i++;
+		if ($v['NUM'] == 0) {
+			$numberMarketDay['Long'][$v['COUNTRY_ID']] = '';
+		} else {
+			$numberMarketDay['Long'][$v['COUNTRY_ID']] = $i++;
+		}
 	}
 }
+
 
 // echo '<pre>';
 // print_r($SumMarketDate_past);
@@ -449,6 +455,7 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 					<div id="resultsTableMarket1" style=" flex-direction: row; padding: 0px 5px;">
 						<?php $c = 0;
 						$i = 1;
+						if(!empty($SumMarketDate['Short'])){
 						foreach ($SumMarketDate['Short'] as $v) {
 							$c++;
 							$flag = base_url('public/img/logotat.png');
@@ -485,7 +492,7 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 
 							</div>
 						<?php if ($c == 5) break;
-						} ?>
+						} }?>
 					</div>
 				</div>
 				<div class="col6">
@@ -494,6 +501,7 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 					<div id="resultsTableMarket2" style=" flex-direction: row; padding: 0px 5px;">
 
 						<?php $c = 0;
+						if(!empty($SumMarketMonth['Short'])){
 						foreach ($SumMarketMonth['Short'] as $v) {
 							$c++;
 							$flag = base_url('public/img/logotat.png');
@@ -521,7 +529,7 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 
 							</div>
 						<?php if ($c == 5) break;
-						} ?>
+						} }?>
 					</div>
 				</div>
 			</div>
@@ -544,6 +552,7 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 
 						<?php $c = 0;
 						$i = 1;
+						if(!empty($SumMarketDate['Long'])){
 						foreach ($SumMarketDate['Long'] as $v) {
 							$c++;
 							$flag = base_url('public/img/logotat.png');
@@ -581,7 +590,7 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 								</table>
 							</div>
 						<?php if ($c == 5) break;
-						} ?>
+						} }?>
 					</div>
 				</div>
 				<div class="col6">
@@ -591,6 +600,7 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 					<div id="resultsTableMarket2" style=" flex-direction: row; padding: 0px 5px;">
 
 						<?php $c = 0;
+						if(!empty($SumMarketMonth['Long'])){
 						foreach ($SumMarketMonth['Long'] as $v) {
 							$c++;
 							$flag = base_url('public/img/logotat.png');
@@ -620,7 +630,7 @@ foreach ($SumMarketDate_past['Long'] as $v) {
 								</div>
 							</div>
 						<?php if ($c == 5) break;
-						} ?>
+						} }?>
 					</div>
 				</div>
 			</div>
