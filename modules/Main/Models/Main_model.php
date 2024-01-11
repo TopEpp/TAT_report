@@ -392,6 +392,7 @@ class Main_model extends Model
 
 	function getSumMonthlyCountryPeriod($month, $month2, $year, $limit)
 	{
+		$data = array();
 		$builder = $this->db->table($this->table_month);
 		$builder->select("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN, SUM({$this->table_month}.NUM) AS NUM ");
 		$builder->join('MD_COUNTRY', "MD_COUNTRY.COUNTRYID = {$this->table_month}.COUNTRY_ID");

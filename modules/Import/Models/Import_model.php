@@ -1198,13 +1198,20 @@ class Import_model extends Model
 	    return $text;
 	}
 
-	function getRawDataMonthly($year,$month){
+	function getRawDataMonthly($year,$month,$year2='',$month2=''){
 		$data = array();
 		$builder = $this->db->table('REPORT_RAW_MONTHLY');
 		$builder->select('REPORT_RAW_MONTHLY.*,MD_COUNTRY.COUNTRY_NAME_EN');
 		$builder->join('MD_COUNTRY','MD_COUNTRY.COUNTRYID = REPORT_RAW_MONTHLY.COUNTRY_ID');
-		$builder->where('MONTH',$month);
-        $builder->where('YEAR',$year);
+		
+        if($year2 && $month2){
+			$builder->where("( YEAR >= ".$year." and MONTH >= ".$month." ) OR ( YEAR <= ".$year2." and MONTH <= ".$month2." ) ");
+        	
+        }else{
+			$builder->where('MONTH',$month);
+        	$builder->where('YEAR',$year);
+        }
+        
         $builder->orderBy('COUNTRY_NAME_EN');
         $query = $builder->get()->getResultArray();
         foreach($query as $row){
@@ -1213,7 +1220,7 @@ class Import_model extends Model
         		$point = $row['POINT_ID'];
         	}
         	$data[$row['COUNTRY_ID']]['COUNTRY_NAME_EN'] = $row['COUNTRY_NAME_EN'];
-        	if($data[$row['COUNTRY_ID']]['NUM'][$row['PORT_ID']][$point]){
+        	if(@$data[$row['COUNTRY_ID']]['NUM'][$row['PORT_ID']][$point]){
         		$data[$row['COUNTRY_ID']]['NUM'][$row['PORT_ID']][$point] += $row['NUM'];
         	}else{
         		$data[$row['COUNTRY_ID']]['NUM'][$row['PORT_ID']][$point] = $row['NUM'];

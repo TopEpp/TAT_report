@@ -19,6 +19,7 @@
               <th>ชื่อด่าน</th>
               <th>ประเภทด่าน</th>
               <th>ประเภท</th>
+              <th>ข้อมูลตัวคูณ</th>
               <th></th>
             </tr>
           </thead>
@@ -28,6 +29,7 @@
                 <td><?php echo $d['PORT_NAME'] ?> <?php if ($port_ratio[$d['PORT_ID']] > 0) { ?> <a onclick="openDetail('<?php echo $d['PORT_ID'] ?>','<?php echo $d['PORT_NAME'] ?>')"><i class="fa fa-certificate" style="color:orange; cursor: pointer;"></i></a> <?php } ?></td>
                 <td><?php echo $d['PORT_TYPE'] ?></td>
                 <td><?php echo $d['PORT_CATEGORY'] ?></td>
+                <td align="center"><?php if ($port_ratio[$d['PORT_ID']] > 0) { ?> <a onclick="openDetail('<?php echo $d['PORT_ID'] ?>','<?php echo $d['PORT_NAME'] ?>')"><i class="fa fa-certificate" style="color:orange; cursor: pointer;"></i></a> <?php } ?></td>
                 <td align="center">
                   <!-- <a href="#" class="btn btn-primary" onclick="editPort('<?php echo $d['PORT_ID'] ?>')"><i class="fa fa-pencil"></i></a> -->
                   <a href="#" class="btn btn-primary" onclick="editPortRatio('<?php echo $d['PORT_ID'] ?>','<?php echo $d['PORT_NAME'] ?>')"><i class="fa fa-cog"></i></a>

@@ -364,14 +364,18 @@ class Report extends BaseController
 		$data['month_label'] = $this->month_th;
 		$data['year'] = date('Y');
 		$data['month'] = date('m');
+		$data['year2'] = date('Y');
+		$data['month2'] = date('m');
 		$data['port_type'] = array();
 		$data['point_type'] = array();
 		$data['country_type'] = 'all';
 		if (!empty($_GET['m'])) {
 			$data['month'] = $_GET['m'];
+			$data['month2'] = $_GET['m2'];
 		}
 		if (!empty($_GET['y'])) {
 			$data['year'] = $_GET['y']-543;
+			$data['year2'] = $_GET['y2']-543;
 		}
 		if (!empty($_GET['country_type'])) {
 			$data['country_type'] = $_GET['country_type'];
@@ -388,7 +392,7 @@ class Report extends BaseController
 		$data['port_colunm'] = $Model_import->getPortMonthly($data['port_type']);
 		$data['point_select'] = $Model_import->getPointMonthly();
 		$data['point'] = $Model_import->getPointMonthly($data['point_type']);
-		$data['data'] = $Model_import->getRawDataMonthly($data['year'],$data['month']);
+		$data['data'] = $Model_import->getRawDataMonthly($data['year'],$data['month'],$data['year2'],$data['month2']);
 		$data['region'] = $Model->getSTDRegion($data['country_type']);
 		$data['country'] = $Model->getCountryByRegion($data['country_type']);
 

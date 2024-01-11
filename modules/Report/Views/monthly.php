@@ -48,7 +48,7 @@
 
 <div class="row py-2">
 	<div class="col-md-4 col-12 mx-auto py-2 py-md-0">
-		เดือน 
+		เดือน เริ่มต้น
 		<select class="form-control" id="m" name="m" >
 		<?php foreach($month_label as $m_id=>$name){ $sel = ''; if($month==$m_id){  $sel='selected="selected"';  }?>
 			<option value="<?php echo $m_id?>" <?php echo $sel;?> ><?php echo $name?></option>
@@ -56,7 +56,7 @@
 		</select>
 	</div>
 	<div class="col-md-3 col-12 py-2 py-md-0">
-		ปี 
+		ปี เริ่มต้น
 		<select class="form-control" id="y" name="y"  >
 		<?php for($i=date('Y');$i >= date('Y')-5;$i--){ $sel = ''; if($year==$i){  $sel='selected="selected"';  }?>
 			<option value="<?php echo $i+543?>" <?php echo $sel;?> ><?php echo $i+543?></option>
@@ -77,8 +77,30 @@
 	<div class="col-md-1 py-2 py-md-0 text-center mt-auto">
 		<div class="btn btn-primary" onclick="ChangeFilter()">ตกลง</div>
 	</div>
-
 </div>
+
+<div class="row py-2">
+	<div class="col-md-4 col-12 mx-auto py-2 py-md-0">
+		เดือน สิ้นสุด
+		<select class="form-control" id="m2" name="m2" >
+		<?php foreach($month_label as $m_id=>$name){ $sel = ''; if($month2==$m_id){  $sel='selected="selected"';  }?>
+			<option value="<?php echo $m_id?>" <?php echo $sel;?> ><?php echo $name?></option>
+		<?php } ?>
+		</select>
+	</div>
+	<div class="col-md-3 col-12 py-2 py-md-0">
+		ปี สิ้นสุด
+		<select class="form-control" id="y2" name="y2"  >
+		<?php for($i=date('Y');$i >= date('Y')-5;$i--){ $sel = ''; if($year2==$i){  $sel='selected="selected"';  }?>
+			<option value="<?php echo $i+543?>" <?php echo $sel;?> ><?php echo $i+543?></option>
+		<?php }?>
+		</select>
+	</div>
+	<div class="col-md-4 col-12 text-start py-2 py-md-0"></div>
+	<div class="col-md-1 py-2 py-md-0 text-center mt-auto"></div>
+</div>
+
+
 <div class="row">
 	<div class="col-md-12 col-12 py-2 py-md-0">
 		<label>
@@ -345,6 +367,8 @@ function getSumData($data, $region, $region_id, $country, $port_id, $point_id, &
 	function ChangeFilter(){
 		var year = $('#y').val();
 		var month = $('#m').val();
+		var year2 = $('#y2').val();
+		var month2 = $('#m2').val();
 		var country_type = $('#country_type').val();
 		var port_type = $("input[name='port_type[]']").map(function() {
 			if ($(this).prop('checked') == true) {
@@ -358,12 +382,14 @@ function getSumData($data, $region, $region_id, $country, $port_id, $point_id, &
 			}
 		}).get();
 
-		window.location.href = base_url + '/report/monthly?m=' + month+'&y='+year+'&country_type='+country_type+'&port_type='+port_type+'&point_type='+point_type;
+		window.location.href = base_url + '/report/monthly?m=' + month+'&y='+year+'&m2=' + month2+'&y2='+year2+'&country_type='+country_type+'&port_type='+port_type+'&point_type='+point_type;
 	}
 
 	function export_report(type){
 		var year = $('#y').val();
 		var month = $('#m').val();
+		var year2 = $('#y2').val();
+		var month2 = $('#m2').val();
 		var country_type = $('#country_type').val();
 		var port_type = $("input[name='port_type[]']").map(function() {
 			if ($(this).prop('checked') == true) {
@@ -377,7 +403,7 @@ function getSumData($data, $region, $region_id, $country, $port_id, $point_id, &
 			}
 		}).get();
 
-		window.open (base_url + '/report/monthly?m=' + month+'&y='+year+'&country_type='+country_type+'&port_type='+port_type+'&point_type='+point_type+'&export_type='+type);
+		window.open (base_url + '/report/monthly?m=' + month+'&y='+year+'&m2=' + month2+'&y2='+year2+'&country_type='+country_type+'&port_type='+port_type+'&point_type='+point_type+'&export_type='+type);
 	}
 
 </script>
