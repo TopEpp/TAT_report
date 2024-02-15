@@ -435,7 +435,7 @@ class Import_model extends Model
 	    $builder->where("TO_CHAR( REPORT_DATE, 'YYYY') = ",$year);
 	    $data = $builder->get()->getResultArray();
 
-	    echo '<pre>'; print_r($data);
+	    // echo '<pre>'; print_r($data);
 
 		foreach ($data as $key => $value) {
 			$builder_insert = $this->db->table('REPORT_CAL_DAILY');
@@ -1205,7 +1205,7 @@ class Import_model extends Model
 		$builder->join('MD_COUNTRY','MD_COUNTRY.COUNTRYID = REPORT_RAW_MONTHLY.COUNTRY_ID');
 		
         if($year2 && $month2){
-			$builder->where("( YEAR >= ".$year." and MONTH >= ".$month." ) OR ( YEAR <= ".$year2." and MONTH <= ".$month2." ) ");
+			$builder->where("( YEAR >= ".$year." and MONTH >= ".$month." ) AND ( YEAR <= ".$year2." and MONTH <= ".$month2." ) ");
         	
         }else{
 			$builder->where('MONTH',$month);

@@ -104,8 +104,84 @@ class Login extends BaseController{
             $url = base_url();
           }
           return redirect()->to($url);
+      }else{
+        $session = session();
+
+        $username = $this->request->getVar('user_name');
+        $password = $this->request->getVar('password');
+
+        $pastAuthUsr = $this->request->getVar('pastAuthUsr');
+        $pastAuthPwd = $this->request->getVar('pastAuthPwd');
+        if($pastAuthUsr){
+            $username = $pastAuthUsr;
+            $password = $pastAuthPwd;
+        }
+
+        $User_model = new User_model();
+        $userInfo = $User_model
+                    ->where('USER_NAME', $username)
+                    ->where('USER_ACTIVE_STATUS', 1)
+                    ->first();
+
+        // echo '<pre>'; print_r($userInfo); exit;
+          if(empty($userInfo['USER_PASSWORD'])){
+            
+            return redirect()->to('welcome');
+          }
+
+
+          $checkPassword = Hash::check($password, $userInfo['USER_PASSWORD']);
+          if(!$checkPassword)
+          {
+            return redirect()->to('welcome');
+          }
+          else
+          {
+
+            $userId = $userInfo['USER_ID'];
+            if ($userInfo['USER_PHOTO_FILE'] != '') {
+              $user_img = base_url('public/uploads/user/'.$userInfo['USER_PHOTO_FILE']);
+            }else{
+              $user_img = base_url('public/img/default-profile.jpeg');
+            }
+            $session = session();
+            $userRole = array();
+
+            if($userInfo['USER_PERMISSION_TYPE']==2){
+              $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
+            }else{
+              $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1);
+            }
+            
+            $ses_data = [
+            'user_id' => $userInfo['USER_ID'],
+            'org_id' => $userInfo['USER_ORG_ID'],
+            'username' => $userInfo['USER_NAME'],
+            'name' =>  $userInfo['USER_NAME_TH'],
+            'user_type' => $userInfo['USER_TYPE_ORG'],
+            'user_permission_type'=>$userInfo['USER_PERMISSION_TYPE'],
+            'user_area_id' => $userInfo['USER_AREA_ID'],
+            'user_region_id' => $userInfo['USER_REGION_ID'],
+            'user_img' => $user_img,
+            'user_menu' => $userPermission,
+            'user_role' => $userRole,
+            'logged_in' => TRUE
+            ];
+            $session->set($ses_data);
+
+            $Main = new Main_model();
+            $ip = $this->request->getIPAddress();
+            $Main->saveLogLogin('REPORT',$ip,$session);
+
+            $redirect_url = $session->get('redirect_url');
+            if($redirect_url){
+              return redirect()->to($redirect_url);
+            }
+            return redirect()->to('/main');
+          }
       }
     }
+      
 
     return redirect()->to('welcome');
   }
@@ -156,7 +232,12 @@ class Login extends BaseController{
         $session = session();
         $userRole = array();
 
-        $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1);
+        if($userInfo['USER_PERMISSION_TYPE']==2){
+          $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
+        }else{
+          $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1);
+        }
+        
         $ses_data = [
         'user_id' => $userInfo['USER_ID'],
         'org_id' => $userInfo['USER_ORG_ID'],

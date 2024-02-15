@@ -276,24 +276,24 @@
 			</thead>
 			<tbody>
 				<?php
-				$asia = @$SumRegionDateData[13] + @$SumRegionDateData[15] + @$SumRegionDateData[38] + @$SumRegionDateData[23];
-				$asia_past = @$SumRegionDateData_past[13] + @$SumRegionDateData_past[15] + @$SumRegionDateData_past[38] + @$SumRegionDateData_past[23];
+				$asia = @$SumRegionDateData[13] + @$SumRegionDateData[15] + @$SumRegionDateData[38] + @$SumRegionDateData[23]+ @$SumRegionDateData[39];
+				$asia_past = @$SumRegionDateData_past[13] + @$SumRegionDateData_past[15] + @$SumRegionDateData_past[38] + @$SumRegionDateData_past[23]+ @$SumRegionDateData_past[39];
 				$diff_asia = $asia >0 ? number_format( ($asia - $asia_past) / $asia * 100, 2).'%': '-';
 
 				$asean = @$SumRegionDateData[13];
 				$asean_past = @$SumRegionDateData_past[13];
 				$diff_asean = $asean >0 ? number_format( ($asean - $asean_past) / $asean * 100, 2).'%': '-';
 
-				$north_east_asia = @$SumRegionDateData[15] + @$SumRegionDateData[38];
-				$north_east_asia_past = @$SumRegionDateData_past[15] + @$SumRegionDateData_past[38];
+				$north_east_asia = @$SumRegionDateData[15] ;
+				$north_east_asia_past = @$SumRegionDateData_past[15] ;
 				$diff_north_east_asia = $north_east_asia >0 ? number_format( ($north_east_asia - $north_east_asia_past) / $north_east_asia * 100, 2).'%': '-';
 
-				$south_asia = @$SumRegionDateData[23];
-				$south_asia_past = @$SumRegionDateData_past[23];
+				$south_asia = @$SumRegionDateData[23]+@$SumRegionDateData[39];
+				$south_asia_past = @$SumRegionDateData_past[23]+@$SumRegionDateData_past[39];
 				$diff_south_asia = $south_asia >0 ? number_format( ($south_asia - $south_asia_past) / $south_asia * 100, 2).'%': '-';
 
-				$eu = @$SumRegionDateData[2] + @$SumRegionDateData[44];
-				$eu_past = @$SumRegionDateData_past[2] + @$SumRegionDateData_past[44];
+				$eu = @$SumRegionDateData[2] + @$SumRegionDateData[44]+ @$SumRegionDateData[36]+ @$SumRegionDateData[37];
+				$eu_past = @$SumRegionDateData_past[2] + @$SumRegionDateData_past[44]+ @$SumRegionDateData_past[36]+ @$SumRegionDateData_past[37];
 				$diff_eu = $eu >0 ? number_format( ($eu - $eu_past) / $eu * 100, 2).'%': '-';
 
 				$east_eu = @$SumRegionDateData[37] + @$SumRegionDateData[36];
@@ -308,8 +308,8 @@
 				$oceania_past = @$SumRegionDateData_past[5] + @$SumRegionDateData_past[46];
 				$diff_oceania = $oceania >0 ? number_format( ($oceania - $oceania_past) / $oceania * 100, 2).'%': '-';
 
-				$middle_east = @$SumRegionDateData[20];
-				$middle_east_past = @$SumRegionDateData_past[20];
+				$middle_east = @$SumRegionDateData[20]+@$SumRegionDateData[47];
+				$middle_east_past = @$SumRegionDateData_past[20]+@$SumRegionDateData_past[47];
 				$diff_middle_east = $middle_east >0 ? number_format( ($middle_east - $middle_east_past) / $middle_east * 100, 2).'%': '-';
 
 				$africa = @$SumRegionDateData[6] + @$SumRegionDateData[40];

@@ -31,10 +31,12 @@
 		</td>
 	</tr>
 	<tr>
-		<td>เดือน  <?php foreach($month_label as $m_id=>$name){ $sel = ''; if($month==$m_id){  echo $name;  } } ?></td>
+		<td>เริ่มต้น เดือน  <?php foreach($month_label as $m_id=>$name){ $sel = ''; if($month==$m_id){  echo $name;  } } ?></td>
+		<td>สิ้นสุด เดือน  <?php foreach($month_label as $m_id=>$name){ $sel = ''; if($month2==$m_id){  echo $name;  } } ?></td>
 	</tr>
 	<tr>
 		<td>ปี  <?php for($i=date('Y');$i >= date('Y')-5;$i--){ $sel = ''; if($year==$i){ echo $i+543; } }?></td>
+		<td>ปี  <?php for($i=date('Y');$i >= date('Y')-5;$i--){ $sel = ''; if($year2==$i){ echo $i+543; } }?></td>
 	</tr>
 </table>
 
