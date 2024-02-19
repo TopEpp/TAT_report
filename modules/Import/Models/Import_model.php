@@ -1264,4 +1264,17 @@ class Import_model extends Model
       	return $data;
 	}
 
+	function checkRatioPort($year,$month){
+		$builder = $this->db->table('MD_PORT_RATIO');
+		$builder->select('*');
+		$builder->where('MONTH',$month);
+		$builder->where('YEAR',$year);
+		$data = $builder->get()->getRowArray();
+		if(empty($data['PORT_ID'])){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
 }

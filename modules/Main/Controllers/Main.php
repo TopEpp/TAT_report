@@ -5,6 +5,7 @@ namespace Modules\Main\Controllers;
 use App\Controllers\BaseController;
 use Modules\Main\Models\Main_model;
 use Modules\Report\Models\Report_model;
+use Modules\Setting\Models\Setting_model;
 use CodeIgniter\API\ResponseTrait;
 
 class Main extends BaseController
@@ -21,7 +22,6 @@ class Main extends BaseController
 		// return view("Modules\Main\Views\index", $data);
 
 		// http_redirect(base_url('main/daily'));
-
 		return redirect()->to('main/daily');
 	}
 
@@ -29,6 +29,10 @@ class Main extends BaseController
 	{
 		$Model = new Main_model();
 		$Report_model = new Report_model();
+
+		$Setting_model = new Setting_model();
+		$Setting_model->updateVisaRatioMonth(date('Y'),date('m'));
+
 		$data['session'] = session();
 		$ses_data = ['report_type' => 'daily'];
 		$data['session']->set($ses_data);

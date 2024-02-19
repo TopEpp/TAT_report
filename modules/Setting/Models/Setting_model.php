@@ -217,34 +217,41 @@ class Setting_model extends Model
 
 	function updateVisaRatioMonth($year,$m){
 		set_time_limit(1000);
-		$builder = $this->db->table('MD_VISA');
+		$builder = $this->db->table('MD_VISA_RATIO');
 		$builder->select('VISA_ID');
-		$builder->where('VISA_TYPE_ID',1);
-		$builder->where('IS_DELETED',1);
-		$data = $builder->get()->getResultArray();
-		foreach ($data as $key => $value) {
-			$builder_co = $this->db->table('MD_COUNTRY');
-			$builder_co->select('COUNTRYID');
-			$builder_co->where('MARKET_TYPE IS NOT NULL');
-			$co = $builder_co->get()->getResultArray();
-			foreach ($co as $c) {
+		$builder->where('YEAR',$year);
+		$builder->where('MONTH',$m);
+		$data = $builder->get()->getRowArray();
+		if(empty($data['VISA_ID'])){
+			$builder = $this->db->table('MD_VISA');
+			$builder->select('VISA_ID');
+			$builder->where('VISA_TYPE_ID',1);
+			$builder->where('IS_DELETED',1);
+			$data = $builder->get()->getResultArray();
+			foreach ($data as $key => $value) {
+				$builder_co = $this->db->table('MD_COUNTRY');
+				$builder_co->select('COUNTRYID');
+				$builder_co->where('MARKET_TYPE IS NOT NULL');
+				$co = $builder_co->get()->getResultArray();
+				foreach ($co as $c) {
 
-				$builder_delete = $this->db->table('MD_VISA_RATIO');
-				$builder_delete->where('YEAR',$year);
-				$builder_delete->where('MONTH',$m);
-				$builder_delete->where('VISA_ID',$value['VISA_ID']);
-				$builder_delete->where('COUNTRY_ID',$c['COUNTRYID']);
-				$builder_delete->delete();
+					$builder_delete = $this->db->table('MD_VISA_RATIO');
+					$builder_delete->where('YEAR',$year);
+					$builder_delete->where('MONTH',$m);
+					$builder_delete->where('VISA_ID',$value['VISA_ID']);
+					$builder_delete->where('COUNTRY_ID',$c['COUNTRYID']);
+					$builder_delete->delete();
 
-				$builder_insert = $this->db->table('MD_VISA_RATIO');
-				$builder_insert->set('YEAR',$year);
-				$builder_insert->set('MONTH',$m);
-				$builder_insert->set('RATIO',1);
-				$builder_insert->set('VISA_ID',$value['VISA_ID']);
-				$builder_insert->set('COUNTRY_ID',$c['COUNTRYID']);
-				$builder_insert->insert();
+					$builder_insert = $this->db->table('MD_VISA_RATIO');
+					$builder_insert->set('YEAR',$year);
+					$builder_insert->set('MONTH',$m);
+					$builder_insert->set('RATIO',1);
+					$builder_insert->set('VISA_ID',$value['VISA_ID']);
+					$builder_insert->set('COUNTRY_ID',$c['COUNTRYID']);
+					$builder_insert->insert();
+					
 				
-			
+				}
 			}
 		}
 	}

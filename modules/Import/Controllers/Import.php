@@ -33,6 +33,11 @@ class Import extends BaseController
 		// $Model->clearDataDaily();
 		$data['data'] = $Model->getRawData($data['date']);
 
+		$data['check_ratio_port'] = true;
+		if(date('d')>=2){
+			$data['check_ratio_port'] = $Model->checkRatioPort(date('Y'),date('m'));
+		}
+		
 		return view('Modules\Import\Views\index', $data);
 	}
 

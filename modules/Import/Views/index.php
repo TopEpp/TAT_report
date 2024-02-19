@@ -2,6 +2,7 @@
 
 <!-- content -->
 <?php $this->section('content') ?>
+
 <div class="row">
 	<div class="col-md-12">
 		<div class="card">
@@ -87,6 +88,8 @@
 		</div>
 	</div>
 </div>
+
+
 <?php $this->endSection() ?>
 
 <?= $this->section("scripts") ?>
@@ -123,6 +126,13 @@
 			window.location.href = base_url + '/import?d=' + report_date;
 		});
 
+		<?php if(!$check_ratio_port){ ?>
+		Swal.fire({
+		  title: "ท่านยังไม่ได้จัดการสัดส่วนด่าน",
+		  text: "กรุณาจัดการสัดส่วนของด่าน",
+		  icon: "warning"
+		});
+		<?php }?>
 
 	});
 </script>
