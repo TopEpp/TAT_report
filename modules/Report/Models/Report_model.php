@@ -44,6 +44,14 @@ class Report_model extends Model
 		$date_start = '01/01/'.$year;
 		$date_end = $day.'/'.$month.'/'.$year;
 		$builder = $this->db->table($this->table);
+
+
+		list($day, $month, $year) = explode('/', $date_end);
+		if(!checkdate($month, $day, $year)){
+			$date_end = ($day-1).'/'.$month.'/'.$year;
+		}
+
+
 	    $builder->select("{$this->table}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_TH, MD_COUNTRY.COUNTRY_NAME_EN , SUM({$this->table}.SUM) AS NUM ");
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
@@ -77,6 +85,12 @@ class Report_model extends Model
 	function getPortMonthData($day,$month,$year){
 		$date_start = '01/01/'.$year;
 		$date_end = $day.'/'.$month.'/'.$year;
+
+		list($day, $month, $year) = explode('/', $date_end);
+		if(!checkdate($month, $day, $year)){
+			$date_end = ($day-1).'/'.$month.'/'.$year;
+		}
+
 	    $builder = $this->db->table('MD_PORT');
 	    $builder->select("MD_PORT.PORT_ID, MD_PORT.PORT_NAME , MD_PORT.PORT_TYPE , MD_PORT.PORT_LATLONG,
 	    					CASE WHEN SUM({$this->table}.SUM ) IS NOT NULL THEN  SUM({$this->table}.SUM ) ELSE 0 END AS NUM ");

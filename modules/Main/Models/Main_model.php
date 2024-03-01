@@ -51,12 +51,6 @@ class Main_model extends Model
 
 	function getSumMonth($start_date, $end_date)
 	{
-		// if(var_dump(validateDate($end_date))){
-		// 	echo 'valid';
-		// }else{
-		// 	echo 'invalid';
-		// }
-
 		list($year, $month, $day) = explode('-', $start_date);
 		if(!checkdate($month, $day, $year)){
 			$start_date = $year.'-'.$month.'-'.($day-1);
@@ -66,8 +60,6 @@ class Main_model extends Model
 		if(!checkdate($month, $day, $year)){
 			$end_date = $year.'-'.$month.'-'.($day-1);
 		}
-
-		// exit;
 
 		$data = array();
 		$builder = $this->db->table($this->table);

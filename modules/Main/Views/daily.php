@@ -952,7 +952,7 @@
 	</div>
 </div>
 
-<div class="modal fade" id="modal_noti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="modal_noti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -970,7 +970,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 
 
 
@@ -1008,7 +1008,7 @@ for ($i=1; $i <= 12; $i++) {
 	// console.log(dataRegionMap);
 	// import zoomPlugin from 'chartjs-plugin-zoom';
 	$(function() {
-		$('#modal_noti').modal('show');
+		// $('#modal_noti').modal('show');
 
 		initMap();
 		addMarker(dataRegionMap);
