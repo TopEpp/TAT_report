@@ -952,6 +952,28 @@
 	</div>
 </div>
 
+<div class="modal fade" id="modal_noti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div>
+					<span style="font-weight:bold; font-size:1.2em">ประกาศ</span><br>
+				</div>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				ข้อมูลในระบบสถิตินักท่องเที่ยวรายวัน Updated ถึงวันที่ 26 ก.พ. 2567 เนื่องจาก สำนักงานตรวจคนเข้าเมือง (สตม.) ปิดระบบฐานข้อมูล <br>จึงไม่สามารถนำส่งข้อมูลรายวันมาให้หน่วยงานที่เกี่ยวข้องได้ <br>ตั้งแต่วันที่  27 ก.พ. 2567 
+				<br><br>
+				จึงเรียนมาเพื่อโปรดทราบ
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
 <div class="text-center" id="htmltoimage_chart_daily_year" style="height:220px; padding:15px; display: none;">
 	<canvas id="chart_main_year" height="220" style="height:220px !important"></canvas>
 </div>
@@ -986,6 +1008,8 @@ for ($i=1; $i <= 12; $i++) {
 	// console.log(dataRegionMap);
 	// import zoomPlugin from 'chartjs-plugin-zoom';
 	$(function() {
+		$('#modal_noti').modal('show');
+
 		initMap();
 		addMarker(dataRegionMap);
 

@@ -43,8 +43,32 @@ class Main_model extends Model
 		return $data['NUM'];
 	}
 
+	function validateDate($date, $format = 'Y-m-d'){
+	    $d = DateTime::createFromFormat($format, $date);
+	    // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
+	    return $d && $d->format($format) === $date;
+	}
+
 	function getSumMonth($start_date, $end_date)
 	{
+		// if(var_dump(validateDate($end_date))){
+		// 	echo 'valid';
+		// }else{
+		// 	echo 'invalid';
+		// }
+
+		list($year, $month, $day) = explode('-', $start_date);
+		if(!checkdate($month, $day, $year)){
+			$start_date = $year.'-'.$month.'-'.($day-1);
+		}
+
+		list($year, $month, $day) = explode('-', $end_date);
+		if(!checkdate($month, $day, $year)){
+			$end_date = $year.'-'.$month.'-'.($day-1);
+		}
+
+		// exit;
+
 		$data = array();
 		$builder = $this->db->table($this->table);
 		$builder->select("SUM({$this->table}.SUM) AS NUM");
@@ -136,6 +160,12 @@ class Main_model extends Model
 
 		list($year, $month, $day) = explode('-', $to_date);
 		$to_date_past = ($year - 1) . '-' . $month . '-' . $day;
+
+		list($year, $month, $day) = explode('-', $to_date_past);
+		if(!checkdate($month, $day, $year)){
+			$to_date_past = $year.'-'.$month.'-'.($day-1);
+		}
+
 		$builder = $this->db->table($this->table);
 		$builder->select(" TO_CHAR({$this->table}.REPORT_DATE,'YYYY-MM-DD') AS REPORT_DATE, SUM({$this->table}.SUM) AS NUM ");
 		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
@@ -457,4 +487,6 @@ class Main_model extends Model
 
 		return true;
 	}
+
+	
 }
