@@ -25,7 +25,7 @@ $user_menu = $session->get('user_menu');
     <div class="row" style="margin-bottom: 5px;">
         <div class="col-md-12" style="text-align:center; ">
             <div class="sidebar-brand-icon ">
-                <a href="<?php echo base_url(); ?>"><img src="<?php echo base_url('public/img/tat.png'); ?>" alt="" width="100px"></a>
+                <a href="<?php echo base_url('main/daily'); ?>"><img src="<?php echo base_url('public/img/tat.png'); ?>" alt="" width="100px"></a>
             </div>
         </div>
     </div>

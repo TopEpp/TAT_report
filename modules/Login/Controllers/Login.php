@@ -187,9 +187,7 @@ class Login extends BaseController{
   }
 
   function auth2(){
-
     $session = session();
-
     $username = $this->request->getVar('user_name');
     $password = $this->request->getVar('password');
 
@@ -198,6 +196,12 @@ class Login extends BaseController{
     if($pastAuthUsr){
         $username = $pastAuthUsr;
         $password = $pastAuthPwd;
+    }
+
+    if (function_exists('ldap_connect')) {
+      if($this->loginAD($username,$password)){
+          return redirect()->to('/main');
+      }
     }
 
     $User_model = new User_model();
@@ -298,11 +302,11 @@ class Login extends BaseController{
           $C = explode('=', $C[0]);
           $C = $C[1];
           
-          $userPermission = $this->getPermissionAD($userInfo['title'][0],$userInfo['samaccountname'][0],$C);
 
-          if(!empty($userInfo['samaccountname'][0]) && $userPermission['DASHBOARD']  || ( $C == 'C9' || $C == 'C10' || $C == 'C11') ){
-              if( $C == 'C9' || $C == 'C10' || $C == 'C11' ){
-                $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
+          if(!empty($userInfo['samaccountname'][0])  || ( $C == 'C9' || $C == 'C10' || $C == 'C11') ){
+              $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
+              if($userInfo['title'][0]==410202 || $userInfo['title'][0] == 420101){
+                $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'SETTING'=>1,'IMPORT'=>1);
               }
               $userRole['REPORT'] = 'REPORT';
               $ses_data = [
@@ -323,11 +327,11 @@ class Login extends BaseController{
 
 
 
+
               $Main = new Main_model();
               $ip = $this->request->getIPAddress();
               // echo '<pre>';
-              // echo 'ip '.$ip;
-              // print_r($ses_data);
+              // print_r($userInfo);
               // print_r($session); exit;
 
               $Main->saveLogLogin('REPORT',$ip,$session);

@@ -317,6 +317,7 @@ class Setting_model extends Model
 	function getLogLogin(){
 		$builder = $this->db->table('LOG_LOGIN');
 	    $builder->select("LOG_LOGIN.*, TO_CHAR( DATE_LOGIN, 'DD/MM/YYYY hh24:mi:ss') as LOGIN_DATE ");
+	    $builder->where('LOG_TYPE','REPORT');
 	    $builder->orderBy('REC_ID','DESC');
 	    $builder->limit(100);
 	    $data = $builder->get()->getResultArray();
