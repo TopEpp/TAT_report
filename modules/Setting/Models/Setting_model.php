@@ -324,5 +324,55 @@ class Setting_model extends Model
 	    return $data;
 	}
 
+	function genRaio($year,$month){
+		$builder = $this->db->table('MD_VISA_RATIO');
+		$builder->select('RATIO_ID');
+		$builder->where('YEAR',$year);
+		$builder->where('MONTH',$month);
+		$data = $builder->get()->getRowArray();
+		if(empty($data['RATIO_ID'])){
+			$builder_temp = $this->db->table('MD_VISA_RATIO');
+			$builder_temp->select('*');
+			$builder_temp->where('YEAR',$year);
+			$builder_temp->where('MONTH',($month-1));
+			$data_temp = $builder_temp->get()->getResultArray();
+			foreach ($data_temp as $key => $value) {
+
+				$builder_insert = $this->db->table('MD_VISA_RATIO');
+				$builder_insert->set('YEAR',$year);
+				$builder_insert->set('MONTH',$month);
+				$builder_insert->set('RATIO',$value['RATIO']);
+				$builder_insert->set('VISA_ID',$value['VISA_ID']);
+				$builder_insert->set('COUNTRY_ID',$value['COUNTRY_ID']);
+				$builder_insert->insert();
+			}
+		}
+
+		$builder = $this->db->table('MD_PORT_RATIO');
+		$builder->select('RATIO');
+		$builder->where('YEAR',$year);
+		$builder->where('MONTH',$month);
+		$data = $builder->get()->getRowArray();
+		if(empty($data['RATIO'])){
+			$builder_temp = $this->db->table('MD_PORT_RATIO');
+			$builder_temp->select('*');
+			$builder_temp->where('YEAR',$year);
+			$builder_temp->where('MONTH',($month-1));
+			$data_temp = $builder_temp->get()->getResultArray();
+			foreach ($data_temp as $key => $value) {
+
+				$builder = $this->db->table('MD_PORT_RATIO');
+				$builder->set('PORT_ID',$value['PORT_ID']);
+				$builder->set('YEAR',$year);
+				$builder->set('MONTH',$month);
+				$builder->set('RATIO',$value['RATIO']);
+				$builder->set('VISA_ID',$value['VISA_ID']);
+				$builder->set('COUNTRY_ID',$value['COUNTRY_ID']);
+				$builder->insert();
+			}
+		}
+
+	}
+
 
 }

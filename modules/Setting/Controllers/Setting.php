@@ -146,7 +146,12 @@ class Setting extends BaseController{
 		return view('Modules\Setting\Views\log_login',$data);
 	}
 
-
+	function genRaio(){
+		$Model = new Setting_model();
+		$year = date('Y');
+		$month = date('m');
+		$data = $Model->genRaio($year,$month);
+	}
 }
 
 ?>

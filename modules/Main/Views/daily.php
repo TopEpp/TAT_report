@@ -147,7 +147,7 @@
 				<i class="fa-solid fa-file-pdf"></i> PDF
 			</button> -->
 			
-			<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard_v2?start_date=' . $start_date . '&end_date=' . $end_date); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
+			<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard_view?start_date=' . $start_date . '&end_date=' . $end_date); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
 				<i class="fa-solid fa-file-pdf"></i> PDF
 			</button>
 			
@@ -796,6 +796,7 @@
 					<?php $json_nat = array();
 					$c = 0;
 					foreach ($SumNatDateData as $v) {
+						if($v['NUM']>0){
 						$c++;
 						$flag = base_url('public/img/logotat.png');
 
@@ -814,7 +815,7 @@
 								<?php echo number_format($v['NUM']); ?>
 							</div>
 						</div>
-					<?php } ?>
+					<?php } }?>
 				</div>
 			</div>
 		</div>
@@ -838,6 +839,7 @@
 					<?php $json_nat_month = array();
 					$c = 0;
 					foreach ($SumNatMonthData as $v) {
+						if($v['NUM']>0){
 						$c++;
 						$flag = base_url('public/img/logotat.png');
 
@@ -856,7 +858,7 @@
 								<?php echo number_format($v['NUM']); ?>
 							</div>
 						</div>
-					<?php  } ?>
+					<?php  }} ?>
 				</div>
 			</div>
 		</div>

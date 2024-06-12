@@ -52,6 +52,7 @@ $routes->group('main', ['namespace' => '\Modules\Main\Controllers', 'filter' => 
     $routes->get('update_country', 'Main::update_country');
     $routes->get('export_dashboard', 'Main::export_dashboard');
     $routes->get('export_dashboard_v2', 'Main::export_dashboard_v2');
+    $routes->get('export_dashboard_view', 'Main::export_dashboard_view');
     $routes->post('saveImg2Report', 'Main::saveImg2Report');
 
     $routes->get('monthly', 'Main::monthly');
@@ -113,6 +114,8 @@ $routes->group('setting', ['namespace' => '\Modules\Setting\Controllers'], funct
     $routes->get('permission','Setting::permission');
     $routes->get('log_info','Setting::log_info');
     $routes->get('log_login','Setting::log_login');
+
+    $routes->get('genRaio','Setting::genRaio');
 });
 
 

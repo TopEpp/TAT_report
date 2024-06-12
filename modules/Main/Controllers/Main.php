@@ -19,6 +19,10 @@ class Main extends BaseController
 		$ses_data = ['report_type' => 'none'];
 		$data['session']->set($ses_data);
 		$data['Mydate'] = $this->Mydate;
+		$Setting_model = new Setting_model();
+		$year = date('Y');
+		$month = date('m');
+		$Setting_model->genRaio($year,$month);
 		// return view("Modules\Main\Views\index", $data);
 
 		// http_redirect(base_url('main/daily'));
@@ -436,6 +440,81 @@ class Main extends BaseController
 		// die();
 		// return view('Modules\Main\Views\export\dashboard', $data);
 		$this->export_pdf2('Modules\Main\Views\export\dashboard', $data);
+		
+	}
+
+	public function export_dashboard_view()
+	{
+		$Model = new Main_model();
+		$Report_model = new Report_model();
+		$data['session'] = session();
+		$ses_data = ['report_type' => 'daily'];
+		$data['session']->set($ses_data);
+
+		$data['Mydate'] = $this->Mydate;
+		// $date = date('Y-m-d');
+		$month = date('m');
+
+		$data['year'] = date('Y');
+		$data['month'] = $month;
+		$data['month_label'] = $this->month_th_short[(int)$month];
+		$data['start_date'] = '01-01-' . date('Y');
+		// $data['end_date'] = date('d-m-Y');
+		$data['country_type'] = 'all';
+
+		$end_date = $Model->getMaxDate();
+		list($year, $month, $day) = explode('-', $end_date);
+		$data['end_date'] = $day . '-' . $month . '-' . $year;
+
+		if (!empty($_GET['start_date'])) {
+			$data['start_date'] = $_GET['start_date'];
+		}
+		if (!empty($_GET['end_date'])) {
+			$data['end_date'] = $_GET['end_date'];
+		}
+
+		list($day, $month, $year) = explode('-', $data['start_date']);
+		$start_date = $year . '-' . $month . '-' . $day;
+		$start_date_past = ($year - 1) . '-' . $month . '-' . $day;
+		$data['start_date_label'] = $start_date;
+
+		list($day, $month, $year) = explode('-', $data['end_date']);
+		$end_date = $year . '-' . $month . '-' . $day;
+		$day_past = $day-1;
+		if($day_past<=0){
+			$day_past = 1;
+			$month_past = $month-1;
+			if($month_past<=0){
+				$month_past = 12;
+			}
+			$a_date = $year . '-' . $month_past . '-' . $day_past;
+			$end_date_past = date("Y-m-t", strtotime($a_date));
+		}else{
+			$end_date_past = $year . '-' . $month . '-' . $day_past;
+		}
+		
+		list($year ,$month,$day) = explode('-', $end_date_past);
+		$data['end_date_past'] = $day.'-'.$month.'-'.$year;
+
+		$data['end_date_label'] = $end_date;
+
+		$data['to_date'] = $end_date;
+		$prev_date = date('Y-m-d', strtotime($end_date . ' -15 day'));
+		$data['period'] = $data['Mydate']->date_range($prev_date, $end_date);
+
+		$data['SumDateData'] = $Model->getSumDate($end_date);
+		$data['SumMonthData'] = $Model->getSumMonth($start_date, $end_date);
+		$data['SumNatDateData'] = $Model->getSumNatDate($end_date);
+		$data['SumNatDateData_past'] = $Model->getSumNatDate($end_date_past);
+		$data['SumNatMonthData'] = $Model->getSumNatMonth($start_date, $end_date);
+
+		$data['SumMarketDate'] = $Report_model->getMarketData($data['end_date'], $data['end_date']);
+		$data['SumMarketDate_past'] = $Report_model->getMarketData($data['end_date_past'], $data['end_date_past']);
+		$data['SumMarketMonth'] = $Report_model->getMarketData($data['start_date'], $data['end_date']);
+		$data['country_market'] = $Report_model->getCountryByMarket();
+		
+
+		return view('Modules\Main\Views\export\dashboard_view', $data);
 		
 	}
 
