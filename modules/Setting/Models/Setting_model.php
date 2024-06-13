@@ -331,10 +331,17 @@ class Setting_model extends Model
 		$builder->where('MONTH',$month);
 		$data = $builder->get()->getRowArray();
 		if(empty($data['RATIO_ID'])){
+			$yearx = $year;
+			$monthx = $month-1;
+			if(($month-1)==0){
+				$monthx = 12;
+				$yearx = $year-1;
+			}
+
 			$builder_temp = $this->db->table('MD_VISA_RATIO');
 			$builder_temp->select('*');
-			$builder_temp->where('YEAR',$year);
-			$builder_temp->where('MONTH',($month-1));
+			$builder_temp->where('YEAR',$yearx);
+			$builder_temp->where('MONTH',$monthx);
 			$data_temp = $builder_temp->get()->getResultArray();
 			foreach ($data_temp as $key => $value) {
 
@@ -354,10 +361,17 @@ class Setting_model extends Model
 		$builder->where('MONTH',$month);
 		$data = $builder->get()->getRowArray();
 		if(empty($data['RATIO'])){
+			$yearx = $year;
+			$monthx = $month-1;
+			if(($month-1)==0){
+				$monthx = 12;
+				$yearx = $year-1;
+			}
+
 			$builder_temp = $this->db->table('MD_PORT_RATIO');
 			$builder_temp->select('*');
-			$builder_temp->where('YEAR',$year);
-			$builder_temp->where('MONTH',($month-1));
+			$builder_temp->where('YEAR',$yearx);
+			$builder_temp->where('MONTH',$monthx-1);
 			$data_temp = $builder_temp->get()->getResultArray();
 			foreach ($data_temp as $key => $value) {
 
