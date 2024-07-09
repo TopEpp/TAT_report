@@ -552,15 +552,32 @@ class Main extends BaseController
 		$img = str_replace('data:image/png;base64,', '', $img);
 		$img = str_replace(' ', '+', $img);
 		$data = base64_decode($img);
-		// $file = UPLOAD_DIR . $_POST['imgName'] . '.png';
 		$file = $uploadfile . $_POST['imgName'] . '.png';
 		// @unlike($file);
 		$success = file_put_contents($file, $data);
-
-		// echo $file.'<br>';
-		// print_r($success);
+		$this->convPNGtoJPG($file,$_POST['imgName']);
 
 		return $this->setResponseFormat('json')->respond($file);
+	}
+
+	function convPNGtoJPG($filePath,$file_name)
+	{
+		$uploaddir = ROOTPATH;
+		$uploaddir = explode('system', $uploaddir);
+		$uploaddir = $uploaddir[0];
+		$uploadpath = 'public/uploads/main/';
+		$uploadfile = $uploaddir . $uploadpath;
+		$file = $uploadfile . $file_name;
+
+		$image = imagecreatefrompng($filePath);
+		$bg = imagecreatetruecolor(imagesx($image), imagesy($image));
+		imagefill($bg, 0, 0, imagecolorallocate($bg, 255, 255, 255));
+		imagealphablending($bg, TRUE);
+		imagecopy($bg, $image, 0, 0, 0, 0, imagesx($image), imagesy($image));
+		imagedestroy($image);
+		$quality = 50; // 0 = worst / smaller file, 100 = better / bigger file 
+		imagejpeg($bg, $file . ".jpg", $quality);
+		imagedestroy($bg);
 	}
 
 	function saveLog(){
@@ -570,5 +587,164 @@ class Main extends BaseController
 		$ip = $this->request->getIPAddress();
 		
 		return $Model->saveLog($type,$ip,$session);
+	}
+
+
+	function departure(){
+		$Model = new Main_model();
+		$Report_model = new Report_model();
+		$Setting_model = new Setting_model();
+
+		$data['session'] = session();
+		$ses_data = ['report_type' => 'daily'];
+		$data['session']->set($ses_data);
+
+		$data['Mydate'] = $this->Mydate;
+		$month = date('m');
+
+		$data['year'] = date('Y');
+		$data['month'] = $month;
+		$data['month_label'] = $this->month_th_short[(int)$month];
+		$data['start_date'] = '01-01-' . (date('Y'));
+		$data['country_type'] = 'all';
+
+		$end_date = $Model->getMaxDate();
+		list($year, $month, $day) = explode('-', $end_date);
+		$data['end_date'] = $day . '-' . $month . '-' . $year;
+
+		if (!empty($_GET['start_date'])) {
+			$data['start_date'] = $_GET['start_date'];
+		}
+		if (!empty($_GET['end_date'])) {
+			$data['end_date'] = $_GET['end_date'];
+		}
+
+		list($day, $month, $year) = explode('-', $data['start_date']);
+		$start_date = $year . '-' . $month . '-' . $day;
+		$start_date_past = ($year - 1) . '-' . $month . '-' . $day;
+		$data['start_date_label'] = $start_date;
+
+		list($day, $month, $year) = explode('-', $data['end_date']);
+		$end_date = $year . '-' . $month . '-' . $day;
+		$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
+		$data['end_date_label'] = $end_date;
+		$data['year'] = $year;
+
+		$date_now =  strtotime($start_date);
+		$date2    =  strtotime($end_date);
+
+		if ($date_now > $date2) {
+		    list($day, $month, $year) = explode('-', $data['start_date']);
+			$end_date = $year . '-' . $month . '-' . $day;
+			$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
+			$data['end_date_label'] = $end_date;
+			$data['year'] = $year;
+		}
+
+
+		$data['to_date'] = $end_date;
+		$prev_date = date('Y-m-d', strtotime($end_date . ' -15 day'));
+		$data['period'] = $data['Mydate']->date_range($prev_date, $end_date);
+
+		// $data['SumDateData'] = $Model->getSumOutDate($end_date);
+		// $data['SumMonthData'] = $Model->getSumOutMonth($start_date, $end_date);
+		// $data['SumDateData_past'] = $Model->getSumOutDate($end_date_past);
+		// $data['SumMonthData_past'] = $Model->getSumOutMonth($start_date_past, $end_date_past);
+		
+		$data['DataChartDate'] = $Model->getOuterChartDate($data['year']);
+		$data['SumChartData'] = $Model->getSumOutChart($end_date);
+		$data['SumChartDataYear'] = $Model->getSumOutChartYear($data['year']);
+
+		// $data['SumChartData_Air'] = $Model->getSumOutChart($end_date,'ด่านอากาศ');
+		$data['SumChartDataYear_Air'] = $Model->getSumOutChartYear($data['year'],'ด่านอากาศ');
+
+		$data['SumPort'] = $Model->getSumOutSumPort($data['year']);
+
+		return view("Modules\Main\Views\departure", $data);
+	}
+
+	function country(){
+		$Model = new Main_model();
+		$Report_model = new Report_model();
+		$Setting_model = new Setting_model();
+		// $Setting_model->updateVisaRatioMonth(date('Y'),date('m'));
+		$data['session'] = session();
+		$ses_data = ['report_type' => 'daily'];
+		$data['session']->set($ses_data);
+
+		$data['Mydate'] = $this->Mydate;
+		// $date = date('Y-m-d');
+		$month = date('m');
+		$data['country_id'] = 154; //CHina
+		$data['year'] = date('Y');
+		$data['month'] = $month;
+		$data['month_label'] = $this->month_th_short[(int)$month];
+		$data['start_date'] = '01-01-' . (date('Y'));
+		// $data['end_date'] = date('d-m-Y');
+		$data['country_type'] = 'all';
+
+		$end_date = $Model->getMaxDate();
+		list($year, $month, $day) = explode('-', $end_date);
+		$data['end_date'] = $day . '-' . $month . '-' . $year;
+
+		if (!empty($_GET['start_date'])) {
+			$data['start_date'] = $_GET['start_date'];
+		}
+		if (!empty($_GET['end_date'])) {
+			$data['end_date'] = $_GET['end_date'];
+		}
+		if (!empty($_GET['country_id'])) {
+			$data['country_id'] = $_GET['country_id'];
+		}
+
+		list($day, $month, $year) = explode('-', $data['start_date']);
+		$start_date = $year . '-' . $month . '-' . $day;
+		$start_date_past = ($year - 1) . '-' . $month . '-' . $day;
+		$data['start_date_label'] = $start_date;
+		$data['start_date_label_past'] = $start_date_past;
+
+		list($day, $month, $year) = explode('-', $data['end_date']);
+		$end_date = $year . '-' . $month . '-' . $day;
+		$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
+		$data['end_date_label'] = $end_date;
+		$data['end_date_label_past'] = $end_date_past;
+		$data['year'] = $year;
+
+		$date_now =  strtotime($start_date);
+		$date2    =  strtotime($end_date);
+
+		if ($date_now > $date2) {
+		    list($day, $month, $year) = explode('-', $data['start_date']);
+			$end_date = $year . '-' . $month . '-' . $day;
+			$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
+			$data['end_date_label'] = $end_date;
+			$data['year'] = $year;
+		}
+
+		$prev_date = date('Y-m-d', strtotime($end_date . ' -7 day'));
+		$data['prev_date'] = $prev_date;
+		$data['period'] = $data['Mydate']->date_range($prev_date, $end_date);
+		$data['country'] = $Report_model->getCountryAllRow();
+
+		list($year, $month, $day) = explode('-', $prev_date);
+		$prev_date_past = ($year - 1) . '-' . $month . '-' . $day;
+		$data['prev_date_past'] = $prev_date_past;
+
+		list($year, $month, $day) = explode('-', $end_date);
+		$data['to_date_past'] = ($year - 1) . '-' . $month . '-' . $day;
+		
+
+
+		$data['SumDateData'] = $Model->getSumDate($end_date,$data['country_id']);
+		$data['SumMonthData'] = $Model->getSumMonth($start_date, $end_date,$data['country_id']);
+		$data['SumDateData_past'] = $Model->getSumDate($end_date_past,$data['country_id']);
+		$data['SumMonthData_past'] = $Model->getSumMonth($start_date_past, $end_date_past,$data['country_id']);
+		$data['SumWeekData'] = $Model->getSumMonth($prev_date, $end_date,$data['country_id']);
+		$data['SumWeekData_past'] = $Model->getSumMonth($prev_date_past, $end_date_past,$data['country_id']);
+
+		$data['SumPortType'] = $Model->getSumPortType($prev_date_past, $end_date_past,$data['country_id']);
+		$data['DataChart'] = $Model->getSumChartCountry($end_date,$data['country_id']);
+
+		return view("Modules\Main\Views\country", $data);
 	}
 }

@@ -469,4 +469,28 @@ class Report extends BaseController
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 	}
+
+	function departure(){
+		$Model = new Report_model();
+		$data['session'] = session();
+		$data['Mydate'] = $this->Mydate;
+		$data['month_label'] = $this->month_en_short;
+		$data['year'] = date('Y');
+		if (!empty($_GET['year'])) {
+			$data['year'] = $_GET['year'];
+		}
+
+		$data['select_year'] = $Model->getSelectYear();
+
+		$data['data'] = $Model->getDepartureDaily($data['year']);
+		$data['export_type'] = @$_GET['export_type'];
+		if (@$_GET['export_type'] == 'excel') {
+			$this->export_excel('outer.xlsx', 'Modules\Report\Views\export\departure', $data);
+		} else if (@$_GET['export_type'] == 'pdf') {
+			$this->export_pdf('Modules\Report\Views\export\departure', $data);
+		} else {
+			return view('Modules\Report\Views\departure', $data);
+		}
+
+	}
 }

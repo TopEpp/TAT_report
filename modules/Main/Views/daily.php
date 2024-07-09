@@ -63,6 +63,10 @@
 		text-align: left;
 	}
 
+	.rounded-circle {
+	    border-radius: 50% !important;
+	}
+
 	@media (max-width: 576px) {
 		.headerColumn {
 			text-align: center;

@@ -19,6 +19,11 @@
 		left: 557px;
 	}
 
+	.col1 {
+		width: 10%;
+		float: left;
+	}
+
 	.col4 {
 		width: 20%;
 		float: left;
@@ -35,6 +40,11 @@
 		width: 50%;
 		float: left;
 		/* padding-top: 1%; */
+	}
+
+	.col11 {
+		width: 90%;
+		float: left;
 	}
 
 	.col12 {
@@ -151,6 +161,22 @@
 		color: #049B97;
 	}
 
+	.btn{
+		cursor: pointer;
+	}
+
+	.btn_Color {
+	    background-color: #3eabae;
+	    color: white;
+	    width: 100%;
+	}
+
+	.btn-danger {
+	    color: #fff;
+	    background-color: #e74a3b;
+	    border-color: #e74a3b;
+	}
+
 	@media (max-width: 576px) {}
 </style>
 
@@ -199,8 +225,11 @@ if(!empty($SumMarketDate_past['Long'])){
 ?>
 
 <body>
-	<div class="col-md-1 col-12 my-auto text-center">
-			<button type="button" onclick="SaveImg2ExportImg('<?php echo base_url('main/saveImg2Report'); ?>')" class="btn btn-info SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
+	<div class="col11">
+		<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/logotat.png') ?>">
+	</div>
+	<div class="col1">
+			<button type="button" onclick="SaveImg2ExportImg('<?php echo base_url('main/saveImg2Report'); ?>')" class="btn btn_Color SetWidthbtnExport" style="width: 100%; border-radius: 1em; margin-bottom: 5px;">
 				<i class="fa-solid fa-file-pdf"></i> JPG
 			</button>
 			
@@ -719,7 +748,7 @@ if(!empty($SumMarketDate_past['Long'])){
 
 
 				var dataURL = link.href;
-				var imgUrl = base_url+"/public/uploads/main/<?php echo $to_date; ?>" + value + ".png";
+				var imgUrl = base_url+"/public/uploads/main/<?php echo $to_date; ?>" + value + ".jpg";
 				$.post(url2SaveImg, {
 					imgBase64: dataURL,
 					imgName: "<?php echo $to_date; ?>" + value 

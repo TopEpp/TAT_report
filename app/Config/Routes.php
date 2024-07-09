@@ -58,6 +58,9 @@ $routes->group('main', ['namespace' => '\Modules\Main\Controllers', 'filter' => 
     $routes->get('monthly', 'Main::monthly');
     $routes->get('monthly_period', 'Main::monthly_period');
 
+    $routes->get('departure', 'Main::departure');
+    $routes->get('country', 'Main::country');
+
     $routes->post('saveLog', 'Main::saveLog');
     
 });
@@ -76,6 +79,7 @@ $routes->group('report', ['namespace' => '\Modules\Report\Controllers'], functio
     $routes->get('export_port', 'Report::export_port');
 
     $routes->get('monthly', 'Report::monthly');
+    $routes->get('departure', 'Report::departure');
 });
 
 $routes->group('import', ['namespace' => '\Modules\Import\Controllers'], function ($routes) {

@@ -9,6 +9,7 @@ use App\Libraries\Hash;
 class Report_model extends Model
 {
 	protected $table = 'REPORT_CAL_DAILY';//CAL_SUM_DATA_REPORT
+	protected $table_out = 'REPORT_RAW_DATA';
   	protected $primaryKey = 'REC_ID';
   	protected $allowedFields = [];
 
@@ -346,5 +347,40 @@ class Report_model extends Model
 	    }
 
 	    return $data;
+	}
+
+	function getDepartureDaily($year){
+		$data = array();
+		$builder = $this->db->table($this->table_out);
+		$builder->select(" TO_CHAR({$this->table_out}.REPORT_DATE,'DD-MM-YYYY') AS REPORT_DATE,
+						   SUM({$this->table_out}.NUM) AS NUM ");
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
+		$builder->where('PORT_DAILY',1);
+		$builder->where("TO_CHAR( {$this->table_out}.REPORT_DATE, 'YYYY') = ", $year);
+		$builder->where('DIRECTION','ขาออก');
+		$builder->where('VISA_ID',16);
+		$builder->where('COUNTRY_ID',147);
+		$builder->groupBy("TO_CHAR({$this->table_out}.REPORT_DATE,'DD-MM-YYYY') ");
+		$builder->orderBy("REPORT_DATE");
+		$res = $builder->get()->getResultArray();
+		foreach ($res as $d) {
+			$data[$d['REPORT_DATE']] = $d['NUM'];
+		}
+
+		return $data;
+	}
+
+	function getSelectYear(){
+		$data = array();
+		$builder = $this->db->table($this->table_out);
+		$builder->select(" TO_CHAR({$this->table_out}.REPORT_DATE,'YYYY') AS REPORT_YEAR");
+		$builder->groupBy("TO_CHAR({$this->table_out}.REPORT_DATE,'YYYY') ");
+		$builder->orderBy("REPORT_YEAR");
+		$res = $builder->get()->getResultArray();
+		foreach ($res as $d) {
+			$data[] = $d['REPORT_YEAR'];
+		}
+
+		return $data;
 	}
 }
