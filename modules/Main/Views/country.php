@@ -203,12 +203,12 @@
 						</div>
 						<div class="card_info">
 							<div class="row">
-								<div class="col-md-8">ด่านอากาศ : <?php echo number_format($SumPortType[1]['NUM']);?> คน</div>
-								<div class="col-md-4" style="text-align:right;"><?php echo number_format($SumPortType[1]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2); ?>%</div>
+								<div class="col-md-9">ด่านอากาศ : <?php echo number_format($SumPortType[1]['NUM']);?> คน</div>
+								<div class="col-md-3" style="text-align:right; padding-left:0"><?php echo number_format($SumPortType[1]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2); ?>%</div>
 							</div>
 							<div class="row">
-								<div class="col-md-8">ด่านบก : <?php echo number_format($SumPortType[0]['NUM']);?> คน</div>
-								<div class="col-md-4" style="text-align:right;"><?php echo number_format($SumPortType[0]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2); ?>%</div>
+								<div class="col-md-9">ด่านบก : <?php echo number_format($SumPortType[0]['NUM']);?> คน</div>
+								<div class="col-md-3" style="text-align:right; padding-left:0"><?php echo number_format($SumPortType[0]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2); ?>%</div>
 							</div>
 							
 						</div>
@@ -228,10 +228,17 @@
 						</div>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-md-12">
+						หมายเหตุ : ข้อมูลสัญชาติ (Nationality) ที่ไม่นับรวมข้อมูลผู้อพยพ , หน่วยงานพิเศษ UN , ไม่มีสัญชาติ <br>
+						WOW หมายถึงอัตราการเปลี่ยนแปลงเทียบกับสัญปดาห์ก่อนหน้า
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
 <?php 
 
 function convertArrayToHighchartsFormat($array,$end_date_label) {
