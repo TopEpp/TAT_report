@@ -404,7 +404,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 					</div>
 				</div>
 
-				<div class="col-lg-6 px-3">
+				<div class="col-lg-6">
 					<div class="row">
 						<div class="col-lg-12 text-center mt-2">
 							<img src="<?php echo base_url('public/img/amezingThai.png') ?>" alt="" style=" margin-right: 10px;height: 50px;">
