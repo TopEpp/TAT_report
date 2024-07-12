@@ -358,8 +358,7 @@ class Report_model extends Model
 		$builder->where('PORT_DAILY',1);
 		$builder->where("TO_CHAR( {$this->table_out}.REPORT_DATE, 'YYYY') = ", $year);
 		$builder->where('DIRECTION','ขาออก');
-		// $builder->where('VISA_ID',16);
-		$builder->where('VISA_ID <>',1);
+		$builder->where('VISA_ID',16);
 		$builder->where('COUNTRY_ID',147);
 		$builder->groupBy("TO_CHAR({$this->table_out}.REPORT_DATE,'DD-MM-YYYY') ");
 		$builder->orderBy("REPORT_DATE");
