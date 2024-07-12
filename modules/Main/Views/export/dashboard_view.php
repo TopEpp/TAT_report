@@ -256,7 +256,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 						<div class="col-lg-11 pr-0">
 							<div class="mx-3 backgroundColorBox1">
 								<div style="padding-left: 40px; padding-right: 40px;">
-									<p style="margin: 0px; font-weight:bold; line-height: normal; font-size: 30px;">
+									<p style="margin: 0px; font-weight:bold; line-height: normal; font-size: 30px; color: white;">
 										สถิตินักท่องเที่ยวระหว่างประเทศ
 										<br>
 										ที่เดินทางเข้าประเทศไทย
@@ -390,13 +390,13 @@ if (!empty($SumMarketDate_past['Long'])) {
 										</div>
 									</div>
 								</div>
-								<div class="col-lg-12 text-center mt-3">
+								<div class="col-lg-12 text-start mt-3 mx-3">
 									<p class="m-0" style="opacity: 0.3;font-size:10px;color: #a1afc2;"><?php echo date('d/m/Y H:i:s:') . $session->get('org_id');; ?></p>
 								</div>
 							</div>
 						</div>
 						<div class="col-lg-1 my-auto text-center p-0">
-							<div class="mt-1" style="position: absolute;left: -160px;top: 0px;width: max-content;height: 20px;font-size:12px;color:#333;transform: rotate(270deg);color: red;font-size: 19px;">
+							<div class="mt-1" style="position: absolute;left: -220px;top: 0px;width: max-content;height: 20px;font-size:12px;color:#333;transform: rotate(270deg);color: red;font-size: 25px;">
 								ใช้เฉพาะภายใน ททท. เท่านั้น ¦ Internal Use Only
 							</div>
 						</div>
@@ -656,12 +656,9 @@ if (!empty($SumMarketDate_past['Long'])) {
 				}, function(data, status) {
 					count_canvas++;
 					console.log(imgUrl);
-
-
 					if (count_canvas == chart_array.length) {
 						window.open(imgUrl);
 					}
-
 				});
 			});
 
