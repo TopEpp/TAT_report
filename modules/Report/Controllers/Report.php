@@ -485,7 +485,7 @@ class Report extends BaseController
 		$data['data'] = $Model->getDepartureDaily($data['year']);
 		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
-			$this->export_excel('outer.xlsx', 'Modules\Report\Views\export\departure', $data);
+			$this->export_excel('departure.xlsx', 'Modules\Report\Views\export\departure', $data);
 		} else if (@$_GET['export_type'] == 'pdf') {
 			$this->export_pdf('Modules\Report\Views\export\departure', $data);
 		} else {
