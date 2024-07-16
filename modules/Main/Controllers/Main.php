@@ -630,6 +630,13 @@ class Main extends BaseController
 		$data['end_date_label'] = $end_date;
 		$data['year'] = $year;
 
+		$data['check_noti_month'] = false;
+		$data['check_noti_month_label'] = '';
+		if($day< cal_days_in_month(CAL_GREGORIAN, $month, $year) ){
+			$data['check_noti_month'] = $month*1;
+			$data['check_noti_month_label'] = '* หมายเหตุ : ข้อมูลถึงวันที่ '.$this->Mydate->date_eng2thai($end_date, 543, 'S', 'S');
+		}
+
 		$date_now =  strtotime($start_date);
 		$date2    =  strtotime($end_date);
 

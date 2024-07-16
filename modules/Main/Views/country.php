@@ -224,7 +224,7 @@
 						<div style="text-align:right;width: 100%;"><img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 40px;"></div>
 						<div class="text-center" id="htmltoimage_chart" style="padding:5px;">
 
-							<div id="chart_main" style="height:280px !important"></div>
+							<div id="chart_main" style="height:300px !important"></div>
 						</div>
 					</div>
 				</div>
