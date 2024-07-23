@@ -118,7 +118,7 @@
 </style>
 <div class="py-2" style="">
 	<div class="row">
-		<div class="col-md-3 col-12 headerColumn my-auto">
+		<div class="col-md-2 col-12 headerColumn my-auto">
 			<div class="my-auto" style="font-size: 15px;">
 
 			</div>
@@ -126,7 +126,7 @@
 		<div class="col-md-2 col-12 my-auto text-center py-2">
 			เลือกช่วงเวลา
 		</div>
-		<div class="col-md-3 col-12 my-auto ">
+		<div class="col-md-4 col-12 my-auto ">
 			<div class="row" style="margin-top: 0px;">
 				<div class="col-md-6 col-6 SetAlignInputleft1">
 					<input type="text" name="start_date" id="start_date" class="SetwidthInput1 form-control date_picker" style="display: inline;" value="" placeholder="from">
@@ -136,25 +136,20 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3 my-auto SetSpaceBtn">
+		<div class="col-md-4 my-auto SetSpaceBtn">
 			<div class="row" style="margin-top: 0px;">
-				<div class="col-md-6 col-6 SetAlingBtn1">
+				<div class="col-md-4 col-4 SetAlingBtn1">
 					<div class="btn btn_Color" onclick="ChangeFilter()">ตกลง</div>
 				</div>
-				<div class="col-md-6 col-6 SetAlingBtn2">
+				<div class="col-md-4 col-4 SetAlingBtn2">
 					<div class="btn btn_Color" onclick="ClearFilter()">ล้างค่า</div>
 				</div>
+				<div class="col-md-4 col-4 SetAlingBtn2">
+					<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard_view?start_date=' . $start_date . '&end_date=' . $end_date); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
+					<i class="fa-solid fa-download"></i> Export
+				</button>
+				</div>
 			</div>
-		</div>
-		<div class="col-md-1 col-12 my-auto text-center">
-			<!-- <button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard?start_date=' . $start_date . '&end_date=' . $end_date); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
-				<i class="fa-solid fa-file-pdf"></i> PDF
-			</button> -->
-			
-			<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard_view?start_date=' . $start_date . '&end_date=' . $end_date); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
-				<i class="fa-solid fa-file-pdf"></i> PDF
-			</button>
-			
 		</div>
 	</div>
 </div>
