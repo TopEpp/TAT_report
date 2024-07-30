@@ -451,7 +451,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 										?>
 												<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 													<div class="text-center" style="padding: 6px 16.5px;">
-														<img class="img-profile rounded-circle" src="<?php echo $$number_icon ?>" style="height: 32px; ">
+														<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 													</div>
 													<div style="text-align: left; padding: 6.4px 16.5px;color: white; font-size: 15.5px;font-weight: bold; width: 90%;">
 														<?php echo $v['COUNTRY_NAME_EN'] ?>
