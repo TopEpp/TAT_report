@@ -107,7 +107,12 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1)
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
-			echo '<tr style="background: rgba(97, 190, 201, 1);" id="TR-' . $re['MD_STD_REG_ID'] . '" >';
+			if($re['IS_OTHERS']=='N'){
+				echo '<tr style="background: rgba(97, 190, 201, 1);" id="TR-' . $re['MD_STD_REG_ID'] . '" >';
+			}else{
+				echo '<tr id="TR-' . $re['MD_STD_REG_ID'] . '" >';
+			}
+			
 			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
 			foreach ($period as $d) {
 				echo "<td align='right'>" . number_format(@$dataSum[$d]) . "</td>";

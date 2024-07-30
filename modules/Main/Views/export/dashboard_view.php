@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="<?php echo base_url('public/css/bootstrap.css') ?>">
+<link href="<?php echo base_url('public/vendor/fontawesome-free/css/all.css') ?>" rel="stylesheet" type="text/css">
 
 <style>
 	#CartItem {
@@ -235,12 +236,12 @@ if (!empty($SumMarketDate_past['Long'])) {
 <body>
 	<div class="row" style="margin: 0px;">
 		<div class="col-lg-1 col-12 text-center text-md-right">
-			<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/logotat.png') ?>">
+			<img class="img-profile " src="<?php echo base_url('public/img/tat.png') ?>" width="100px">
 		</div>
 		<div class="col-lg-11 col-12  my-md-auto text-center text-md-right my-3">
 			<div>
-				<button type="button" onclick="SaveImg2ExportImg('<?php echo base_url('main/saveImg2Report'); ?>')" class="btn btn-success">
-					<i class="fa-solid fa-file-pdf"></i> JPG
+				<button type="button" onclick="SaveImg2ExportImg('<?php echo base_url('main/saveImg2Report'); ?>')" class="btn btn-info">
+					<i class="fa-solid fa-file-image"></i> JPG
 				</button>
 				<button type="button" onclick="window.open('<?php echo base_url('main/export_dashboard_v2?start_date=' . $start_date . '&end_date=' . $end_date); ?>')" class="btn btn-danger SetWidthbtnExport shadow-1">
 					<i class="fa-solid fa-file-pdf"></i> PDF
@@ -255,8 +256,8 @@ if (!empty($SumMarketDate_past['Long'])) {
 					<div class="row">
 						<div class="col-lg-11 pr-0">
 							<div class="mx-3 backgroundColorBox1">
-								<div style="padding-left: 40px; padding-right: 40px;">
-									<p style="margin: 0px; font-weight:bold; line-height: normal; font-size: 30px; color: white;">
+								<div style="padding-left: 40px; padding-right: 40px; padding-top:3px">
+									<p style="margin: 0px; font-weight:bold; line-height: normal; font-size: 30px;">
 										สถิตินักท่องเที่ยวระหว่างประเทศ
 										<br>
 										ที่เดินทางเข้าประเทศไทย
@@ -264,7 +265,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 									<h3 style="margin: 0px; line-height: normal; font-size: 30px; font-weight:bold; color: #E8D023;">
 										วันที่ <?php echo $Mydate->date_eng2thai($to_date, 543) ?>
 									</h3>
-									<div style="font-size: 13px; color: white; margin: 0px; padding-top: 6px; padding-bottom: 6px;">
+									<div style="font-size: 13px; color: white; margin: 0px; padding-top: 6px; padding-bottom: 3px;">
 										ที่มา สำนักงานตรวจคนเข้าเมือง | จัดทำโดย ด้านดิจิทัล วิจัย เเละพัฒนา
 									</div>
 								</div>

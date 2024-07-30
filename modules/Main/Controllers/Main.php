@@ -630,6 +630,13 @@ class Main extends BaseController
 		$data['end_date_label'] = $end_date;
 		$data['year'] = $year;
 
+		$data['check_noti_month'] = false;
+		$data['check_noti_month_label'] = '';
+		if($day< cal_days_in_month(CAL_GREGORIAN, $month, $year) ){
+			$data['check_noti_month'] = $month*1;
+			$data['check_noti_month_label'] = '* หมายเหตุ : ข้อมูลถึงวันที่ '.$this->Mydate->date_eng2thai($end_date, 543, 'S', 'S');
+		}
+
 		$date_now =  strtotime($start_date);
 		$date2    =  strtotime($end_date);
 
@@ -732,7 +739,10 @@ class Main extends BaseController
 
 		list($year, $month, $day) = explode('-', $end_date);
 		$data['to_date_past'] = ($year - 1) . '-' . $month . '-' . $day;
-		
+
+
+		$prev_date_week = date('Y-m-d', strtotime($prev_date . ' -7 day'));
+		$end_date_week = date('Y-m-d', strtotime($end_date . ' -7 day'));
 
 
 		$data['SumDateData'] = $Model->getSumDate($end_date,$data['country_id']);
@@ -740,9 +750,9 @@ class Main extends BaseController
 		$data['SumDateData_past'] = $Model->getSumDate($end_date_past,$data['country_id']);
 		$data['SumMonthData_past'] = $Model->getSumMonth($start_date_past, $end_date_past,$data['country_id']);
 		$data['SumWeekData'] = $Model->getSumMonth($prev_date, $end_date,$data['country_id']);
-		$data['SumWeekData_past'] = $Model->getSumMonth($prev_date_past, $end_date_past,$data['country_id']);
+		$data['SumWeekData_past'] = $Model->getSumMonth($prev_date_week, $end_date_week,$data['country_id']);
 
-		$data['SumPortType'] = $Model->getSumPortType($prev_date_past, $end_date_past,$data['country_id']);
+		$data['SumPortType'] = $Model->getSumPortType($start_date, $end_date,$data['country_id']);
 		$data['DataChart'] = $Model->getSumChartCountry($end_date,$data['country_id']);
 
 		return view("Modules\Main\Views\country", $data);

@@ -133,9 +133,10 @@
 				</div>
 			</div>
 			<div class="card-body">
-				<div class="text-center" id="htmltoimage_chart_daily" style="height:270px; padding:15px;">
-					 <div id="container" style="height:250px"></div>
+				<div class="text-center" id="htmltoimage_chart_daily" style="height:320px; padding:15px;">
+					 <div id="container" style="height:300px"></div>
 				</div>
+				<hr>
 				<div style="overflow: auto;">
 					<!-- <div style="text-align:center;">
 						ภาพรวมคนไทยเดินทางออกนอกราชอาณาจักรไทย : รายเดือน
@@ -144,34 +145,34 @@
 					<table class="table table-striped table-bordered">
 						<tr>
 							<th style="text-align: center;">ปี</th>
-						<?php   for ($i=1; $i <= 12; $i++) { ?>
-							<th style="text-align: center;"><?php echo $shortmonth[$i];?></th>
+						<?php   for ($i=1; $i <= 12; $i++) {  ?>
+							<th style="text-align: center;"><?php echo $shortmonth[$i]; if($check_noti_month==$i){ echo ' *';} ?></th>
 						<?php } ?>
 							<th style="text-align: center;">รวม</th>
 						</tr>
 						<tr>
 							<td align="center" style="background-color: #3cacae;"><?php echo $year-1?></td>
-						<?php for ($i=1; $i <= 12; $i++) { @$sum_past +=$SumChartDataYear['past'][$i]; ?>
+						<?php for ($i=0; $i <= 11; $i++) { @$sum_past +=$SumChartDataYear['past'][$i]; ?>
 							<td align="right" style="background-color: #3cacae;"><?php echo @number_format($SumChartDataYear['past'][$i])?></td>
 						<?php } ?>
 							<td align="right" style="background-color: #3cacae;"><?php echo number_format($sum_past)?></td>
 						</tr>
 						<tr>
 							<td align="center"><?php echo $year?></td>
-						<?php for ($i=1; $i <= 12; $i++) { @$sum_current +=$SumChartDataYear['current'][$i]; ?>
+						<?php for ($i=0; $i <= 11; $i++) { @$sum_current +=$SumChartDataYear['current'][$i]; ?>
 							<td align="right" ><?php echo !empty(number_format(@$SumChartDataYear['current'][$i]))?@number_format($SumChartDataYear['current'][$i]):'';?></td>
 						<?php } ?>
 							<td align="right" ><?php echo number_format($sum_current)?></td>
 						</tr>
 						<tr>
-							<td>+/- (%)</td>
-							<?php for ($i=1; $i <= 12; $i++) { $percent = '';
+							<td align="center">+/- (%)</td>
+							<?php for ($i=0; $i <= 11; $i++) { $percent = '';
 							if(!empty($SumChartDataYear['current'][$i])){
 								$percent = number_format(($SumChartDataYear['current'][$i]-$SumChartDataYear['past'][$i])  / $SumChartDataYear['past'][$i]  * 100, 2);
 							}
 
 							 ?>
-								<td align="center"><?php  echo $percent!=''?number_format($percent,2):$percent;?></td>
+								<td align="right"><?php  echo $percent!=''?number_format($percent,2):$percent;?></td>
 							<?php } ?>
 						</tr>
 						<tr>
@@ -179,8 +180,8 @@
 						</tr>
 						<tr>
 							<td align="center" style="background-color: #3cacae;"><?php echo $year-1?></td>
-						<?php $sum_days_past =0; for ($i=1; $i <= 12; $i++) { 
-							$days = cal_days_in_month(CAL_GREGORIAN, $i, $year-1);
+						<?php $sum_days_past =0; for ($i=0; $i <= 11; $i++) { 
+							$days = cal_days_in_month(CAL_GREGORIAN, $i+1, $year-1);
 							$sum_days_past += $days;
 							@$sum_past_day +=$SumChartDataYear['past'][$i]; 
 							 ?>
@@ -190,8 +191,8 @@
 						</tr>
 						<tr>
 							<td align="center"><?php echo $year?></td>
-						<?php $sum_days=0; for ($i=1; $i <= 12; $i++) { 
-							$days = cal_days_in_month(CAL_GREGORIAN, $i, $year);
+						<?php $sum_days=0; for ($i=0; $i <= 11; $i++) { 
+							$days = cal_days_in_month(CAL_GREGORIAN, $i+1, $year);
 							if(!empty($SumChartDataYear['current'][$i])){
 								$sum_days += $days;
 							}
@@ -201,6 +202,7 @@
 							<td align="right" ><?php echo number_format($sum_current_day/$sum_days)?></td>
 						</tr>
 					</table>
+					<?php echo $check_noti_month_label;?>
 				</div>
 			</div>
 		</div>
@@ -212,7 +214,7 @@
 		<div class="card">
 			<div class="card-body">
 				
-						<div id="container3" style="height:300px"></div>
+						<div id="container3" style="height:320px"></div>
 						<?php 
 						$num_port1 = $SumPort['SUM_TYPE']['ด่านอากาศ'];
 						$num_port2 = $SumPort['SUM_TYPE']['ด่านบก'];
@@ -230,13 +232,16 @@
 			<div class="card-body">
 				
 				
-						<div id="container4" style="height:300px"></div>
+						<div id="container4" style="height:320px"></div>
 						<!-- TOP 10 ด่านที่คนไทยเดินทางออกนอกราชอาณาจักรไทย (คน) <br> -->
 						<!-- ท่าอากาศยานสุวรรณภูมิและดอนเมือง : <?php echo number_format($SumPort['SUM_PORT'][49]['NUM']+$SumPort['SUM_PORT'][41]['NUM'])?><br> -->
 						
 						<?php $data_chart_port[] =  $SumPort['SUM_PORT'][49]['NUM']+$SumPort['SUM_PORT'][41]['NUM'];
 							  $cate_chart_port[] = 'ท่าอากาศยานสุวรรณภูมิและดอนเมือง';
-							$i=0; foreach($SumPort['SUM_PORT'] as $port ){
+							$i=0; 
+							$minValueHeat = PHP_INT_MAX;
+							$maxValueHeat = PHP_INT_MIN;
+							foreach($SumPort['SUM_PORT'] as $port ){
 							if($port['PORT_ID']!= 49 && $port['PORT_ID']!=41){
 								// echo $port['PORT_NAME'].':'.number_format($port['NUM']).'<br>';
 								$data_chart_port[] = $port['NUM'];
@@ -244,10 +249,26 @@
 							}
 
 							$i++;
-							if($i>10){
-								break;
-							}
+							// if($i>10){
+							// 	break;
+							// }
 							
+							$data_chart_heat[] = array(
+						        "name" => $port["PORT_NAME"],
+						        "value" => (int)$port["NUM"],
+						        "colorValue" => $i++
+    						);
+
+    						// if ($port["NUM"] < $minValueHeat) {
+						    //     $minValueHeat = $port["NUM"];
+						    // }
+
+						    // if ($port["NUM"] > $maxValueHeat) {
+						    //     $maxValueHeat = $port["NUM"];
+						    // }
+
+						    $maxValueHeat = $i;
+
 							// print_r($data_chart_port);
 						} ?>
 			</div>
@@ -261,13 +282,10 @@
 		<div class="card">
 			<div class="card-header">สถิติคนไทยเดินทางออกนอกราชอาณาจักรทาง<u>ท่าอากาศยาน</u> </div>
 			<div class="card-body">
-				<div class="text-center" id="htmltoimage_chart_daily" style="height:220px; padding:15px;">
+				<div class="text-center" id="htmltoimage_chart_daily" style="height:240px; padding:15px;">
 					<div id="container5" style="height:220px"></div>
 				</div>
-				<div style="overflow: auto;">
-					<div style="text-align:center;">
-						สถิติคนไทยเดินทางออกนอกราชอาณาจักรไทย
-					</div>
+				<div>
 					<table class="table table-striped table-bordered">
 						<tr>
 							<th style="text-align: center;">ปี</th>
@@ -275,33 +293,33 @@
 						
 						for ($i=1; $i <= 12; $i++) { 
 						?>
-							<th style="text-align: center;"><?php echo $shortmonth[$i];?></th>
+							<th style="text-align: center;"><?php echo $shortmonth[$i]; if($check_noti_month==$i){ echo ' *';}?></th>
 						<?php } ?>
 							<th style="text-align: center;">รวม</th>
 						</tr>
 						<tr>
 							<td align="center" style="background-color: #3cacae;"><?php echo $year-1?></td>
-						<?php for ($i=1; $i <= 12; $i++) { @$sum_past +=$SumChartDataYear_Air['past'][$i]; ?>
+						<?php for ($i=0; $i <= 11; $i++) { @$sum_past +=$SumChartDataYear_Air['past'][$i]; ?>
 							<td align="right" style="background-color: #3cacae;"><?php echo @number_format($SumChartDataYear_Air['past'][$i])?></td>
 						<?php } ?>
 							<td align="right" style="background-color: #3cacae;"><?php echo number_format($sum_past)?></td>
 						</tr>
 						<tr>
 							<td align="center"><?php echo $year?></td>
-						<?php for ($i=1; $i <= 12; $i++) { @$sum_current +=$SumChartDataYear_Air['current'][$i]; ?>
+						<?php for ($i=0; $i <= 11; $i++) { @$sum_current +=$SumChartDataYear_Air['current'][$i]; ?>
 							<td align="right" ><?php echo !empty($SumChartDataYear_Air['current'][$i])?@number_format($SumChartDataYear_Air['current'][$i]):'';?></td>
 						<?php } ?>
 							<td align="right" ><?php echo number_format($sum_current)?></td>
 						</tr>
 						<tr>
-							<td>+/- (%)</td>
-							<?php for ($i=1; $i <= 12; $i++) { $percent = '';
+							<td align="center">+/- (%)</td>
+							<?php for ($i=0; $i <= 11; $i++) { $percent = '';
 							if(!empty($SumChartDataYear_Air['current'][$i])){
 								$percent = number_format(($SumChartDataYear_Air['current'][$i]-$SumChartDataYear_Air['past'][$i])  / $SumChartDataYear_Air['past'][$i]  * 100, 2);
 							}
 
 							 ?>
-								<td align="center"><?php  echo $percent!=''?number_format($percent,2):$percent;?></td>
+								<td align="right"><?php  echo $percent!=''?number_format($percent,2):$percent;?></td>
 							<?php } ?>
 						</tr>
 						<tr>
@@ -309,8 +327,8 @@
 						</tr>
 						<tr>
 							<td align="center" style="background-color: #3cacae;"><?php echo $year-1?></td>
-						<?php $sum_past_day = $sum_days_past =0; for ($i=1; $i <= 12; $i++) { 
-							$days = cal_days_in_month(CAL_GREGORIAN, $i, $year-1);
+						<?php $sum_past_day = $sum_days_past =0; for ($i=0; $i <= 11; $i++) { 
+							$days = cal_days_in_month(CAL_GREGORIAN, $i+1, $year-1);
 							$sum_days_past += $days;
 							@$sum_past_day +=$SumChartDataYear_Air['past'][$i]; 
 							 ?>
@@ -320,8 +338,8 @@
 						</tr>
 						<tr>
 							<td align="center"><?php echo $year?></td>
-						<?php $sum_current_day =$sum_days=0; for ($i=1; $i <= 12; $i++) { 
-							$days = cal_days_in_month(CAL_GREGORIAN, $i, $year);
+						<?php $sum_current_day =$sum_days=0; for ($i=0; $i <= 11; $i++) { 
+							$days = cal_days_in_month(CAL_GREGORIAN, $i+1, $year);
 							if(!empty($SumChartDataYear_Air['current'][$i])){
 								$sum_days += $days;
 							}
@@ -335,7 +353,7 @@
 						</tr>
 						<tr>
 							<td align="center" style="background-color: #3cacae;"><?php echo $year-1?></td>
-						<?php $sum_past = $sum_past_air = 0; for ($i=1; $i <= 12; $i++) { 
+						<?php $sum_past = $sum_past_air = 0; for ($i=0; $i <= 11; $i++) { 
 							$percent = '';
 							$sum_past += @$SumChartDataYear['past'][$i];
 							$sum_past_air += @$SumChartDataYear_Air['past'][$i];
@@ -349,7 +367,7 @@
 						</tr>
 						<tr>
 							<td align="center"><?php echo $year?></td>
-						<?php $sum = $sum_air = 0; for ($i=1; $i <= 12; $i++) { 
+						<?php $sum = $sum_air = 0; for ($i=0; $i <= 11; $i++) { 
 							$percent = '';
 							$sum += @$SumChartDataYear['current'][$i];
 							$sum_air += @$SumChartDataYear_Air['current'][$i];
@@ -362,6 +380,7 @@
 							<td align="right" ><?php echo number_format($sum_air/$sum*100,2)?></td>
 						</tr>
 					</table>
+					<?php echo $check_noti_month_label;?>
 				</div>
 			</div>
 		</div>
@@ -396,6 +415,9 @@ $portCate = json_encode($cate_chart_port);
 
 $currentData_air = json_encode(array_values($SumChartDataYear_Air['current']));
 $pastData_air = json_encode(array_values($SumChartDataYear_Air['past']));
+
+$dataHeat = json_encode($data_chart_heat, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+// echo '<pre>'; print_r($dataHeat); echo '</pre>';
 ?>
 
 <?php $this->endSection() ?>
@@ -406,6 +428,10 @@ $pastData_air = json_encode(array_values($SumChartDataYear_Air['past']));
 <script src="<?php echo base_url('public/js/highcharts/highcharts.js')?>"></script>
 <!-- <script src="https://code.highcharts.com/modules/data.js"></script> -->
 <!-- <script src="https://code.highcharts.com/modules/series-label.js"></script> -->
+
+<script src="<?php echo base_url('public/js/highcharts/modules/heatmap.js')?> "></script>
+<script src="<?php echo base_url('public/js/highcharts/modules/treemap.js')?> "></script>
+
 <script src="<?php echo base_url('public/js/highcharts/modules/exporting.js')?> "></script>
 <script src="<?php echo base_url('public/js/highcharts/modules/export-data.js')?> "></script>
 <script src="<?php echo base_url('public/js/highcharts/modules/accessibility.js')?> "></script>
@@ -435,19 +461,30 @@ $pastData_air = json_encode(array_values($SumChartDataYear_Air['past']));
 	        type: 'datetime',
 	        min: Date.UTC(<?php echo $year ?>, 0, 1), // January 1st of the current year
 	        max: Date.UTC(<?php echo $year ?>, 11, 31), // December 31st of the current year
-	        tickInterval: 30 * 24 * 3600 * 1000,// one month
+	        tickInterval: 30 * 24 * 3600 * 1000, // one month
 	        dateTimeLabelFormats: {
-	            month: '%b %Y', // Display as "Jan 2023"
+	            month: '%b', // Display as "Jan 2023"
 	            year: '%Y'
 	        }
 	    },
 	    yAxis: {
 	        title: {
 	            text: ''
+	        },
+	        labels: {
+	            formatter: function () {
+	                return Highcharts.numberFormat(this.value, 0, '.', ',');
+	            }
+	        }
+	    },
+	    tooltip: {
+	        pointFormatter: function() {
+	            return '<span style="color:' + this.color + '">\u25CF</span> ' +
+	                this.series.name + ': <b>' + Highcharts.numberFormat(this.y, 0, '.', ',') + '</b><br/>';
 	        }
 	    },
 	    legend: {
-	        enabled: false
+	        enabled: true
 	    },
 	    plotOptions: {
 	        area: {
@@ -519,6 +556,7 @@ $pastData_air = json_encode(array_values($SumChartDataYear_Air['past']));
 	        }
 	    }]
 	});
+
 
 
     var currentData = <?php echo str_replace('"', '', $currentData); ?>;
@@ -635,61 +673,108 @@ $pastData_air = json_encode(array_values($SumChartDataYear_Air['past']));
 	var chartData = <?php echo str_replace('"', '', $portData); ?>;
 	var portCate = <?php echo $portCate;?>
         
-    Highcharts.chart('container4', {
-	    chart: {
-	        type: 'bar'
-	    },
-	    title: {
-	        text: 'TOP 10 ค่านที่คนไทยเดินทางออกนอกราชอาณาจักรไทย (คน)',
-	        align: 'center'
-	    },
-	    xAxis: {
-	        categories: portCate,
-	        title: {
-	            text: null
-	        },
-	        gridLineWidth: 1,
-	        lineWidth: 0
-	    },
-	    yAxis: {
-	        visible: false, // Hides the y-axis and its line
-	        title: {
-	            text: null // Hides the y-axis title
-	        },
-	        labels: {
-	            enabled: false // Hides the y-axis labels
-	        },
-	        gridLineWidth: 0 // Removes the grid lines on the y-axis
-	    },
-	    tooltip: {
-	        formatter: function() {
-	            return '<b>' + this.x + '</b><br/>' +
-	                'จำนวน: ' + Highcharts.numberFormat(this.y, 0, '.', ',') + ' คน';
-	        }
-	    },
-	    plotOptions: {
-	        bar: {
-	            borderRadius: '50%',
-	            dataLabels: {
-	                enabled: true,
-	                formatter: function() {
-	                    return Highcharts.numberFormat(this.y, 0, '.', ',');
-	                }
-	            },
-	            groupPadding: 0.1,
-	            borderWidth: 0 // Hides the line between bars
-	        }
+    // Highcharts.chart('container4', {
+	//     chart: {
+	//         type: 'bar'
+	//     },
+	//     title: {
+	//         text: 'TOP 10 ค่านที่คนไทยเดินทางออกนอกราชอาณาจักรไทย (คน)',
+	//         align: 'center'
+	//     },
+	//     xAxis: {
+	//         categories: portCate,
+	//         title: {
+	//             text: null
+	//         },
+	//         gridLineWidth: 1,
+	//         lineWidth: 0
+	//     },
+	//     yAxis: {
+	//         visible: false, // Hides the y-axis and its line
+	//         title: {
+	//             text: null // Hides the y-axis title
+	//         },
+	//         labels: {
+	//             enabled: false // Hides the y-axis labels
+	//         },
+	//         gridLineWidth: 0 // Removes the grid lines on the y-axis
+	//     },
+	//     tooltip: {
+	//         formatter: function() {
+	//             return '<b>' + this.x + '</b><br/>' +
+	//                 'จำนวน: ' + Highcharts.numberFormat(this.y, 0, '.', ',') + ' คน';
+	//         }
+	//     },
+	//     plotOptions: {
+	//         bar: {
+	//             borderRadius: '50%',
+	//             dataLabels: {
+	//                 enabled: true,
+	//                 formatter: function() {
+	//                     return Highcharts.numberFormat(this.y, 0, '.', ',');
+	//                 }
+	//             },
+	//             groupPadding: 0.1,
+	//             borderWidth: 0 // Hides the line between bars
+	//         }
+	//     },
+	//     credits: {
+	//         enabled: false
+	//     },
+	//     legend: {
+	//         enabled: false
+	//     },
+	//     series: [{
+	//         name: '',
+	//         data: chartData
+	//     }]
+	// });
+
+	Highcharts.chart('container4', {
+	    colorAxis: {
+	        min: 1,
+	        max: <?php echo $maxValueHeat;?>, 
+	        stops: [
+	            [0, Highcharts.getOptions().colors[0]],
+	            [0.1, '#7abeff'], 
+	            [0.4, '#d3eeff'], 
+	            [1,'#FFFFFF' ] 
+	        ]
 	    },
 	    credits: {
 	        enabled: false
 	    },
-	    legend: {
-	        enabled: false
-	    },
 	    series: [{
-	        name: '',
-	        data: chartData
-	    }]
+	        type: 'treemap',
+	        layoutAlgorithm: 'squarified',
+	        clip: true,
+	        dataLabels: {
+	            enabled: true,
+	            formatter: function() {
+	                var total = this.series.data.reduce(function(sum, point) {
+	                    return sum + point.value;
+	                }, 0);
+	                var percentage = (this.point.value / total * 100).toFixed(2) + '%';
+	                return this.point.name + '<br/>' + percentage;
+	            },
+	            style: {
+	                fontSize: '12px',
+	                fontWeight: 'bold'
+	            }
+	        },
+	        data: <?php echo $dataHeat;?>
+	    }],
+	    title: {
+	        text: 'ค่านที่คนไทยเดินทางออกนอกราชอาณาจักรไทย (คน)'
+	    },
+	    legend: {
+	        enabled: false // ซ่อน legend
+	    },
+	    tooltip: {
+	        pointFormatter: function() {
+	            return '<b>' + this.name + '</b>: ' + Highcharts.numberFormat(this.value, 0, '.', ',') + ' คน';
+	        }
+	    }
 	});
 
 

@@ -52,6 +52,10 @@
 	table.dataTable {
 		margin-top: 0px !important;
 	}
+
+	.ColorTableBody tbody tr:nth-of-type(odd) {
+		background: rgba(214, 239, 242, 1);
+	}
 </style>
 <div class="row">
 	<div class="col-md-6 col-12" style="font-size: 1.4em;">
@@ -195,7 +199,11 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
-			echo '<tr style="background-color:#B6E2E9" id="TR-' . $re['MD_STD_REG_ID'] . '" >';
+			if($re['IS_OTHERS']=='N'){
+				echo '<tr style="background-color:#B6E2E9" id="TR-' . $re['MD_STD_REG_ID'] . '" >';
+			}else{
+				echo '<tr style="" id="TR-' . $re['MD_STD_REG_ID'] . '" >';
+			}
 			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
 			echo '<td align="right" >' . number_format($sum1) . '</td>';
 			echo '<td align="right">' . number_format($sum2) . '</td>';
@@ -223,17 +231,22 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 
 					echo '<tr class="TR-Parent-' . $re['MD_STD_REG_ID'] . '">';
 
-					if ($idx % 2 == 0) {
-						echo '<td style="background: #D6EFF2; padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
-						echo '<td align="right" style="background: #D6EFF2;">' . number_format(@$num1) . '</td>';
-						echo '<td align="right" style="background: #D6EFF2;">' . number_format(@$num2) . '</td>';
-						echo '<td align="right" style="background: #D6EFF2;">' . $compare . '</td>';
-					} else {
-						echo '<td style="background:white; padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
-						echo '<td align="right" style="background: white;">' . number_format(@$num1) . '</td>';
-						echo '<td align="right" style="background: white;">' . number_format(@$num2) . '</td>';
-						echo '<td align="right" style="background: white;">' . $compare . '</td>';
-					}
+					// if ($idx % 2 == 0) {
+					// 	echo '<td style="background: #D6EFF2; padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
+					// 	echo '<td align="right" style="background: #D6EFF2;">' . number_format(@$num1) . '</td>';
+					// 	echo '<td align="right" style="background: #D6EFF2;">' . number_format(@$num2) . '</td>';
+					// 	echo '<td align="right" style="background: #D6EFF2;">' . $compare . '</td>';
+					// } else {
+					// 	echo '<td style="background:white; padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
+					// 	echo '<td align="right" style="background: white;">' . number_format(@$num1) . '</td>';
+					// 	echo '<td align="right" style="background: white;">' . number_format(@$num2) . '</td>';
+					// 	echo '<td align="right" style="background: white;">' . $compare . '</td>';
+					// }
+
+						echo '<td style=" padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
+						echo '<td align="right" style="">' . number_format(@$num1) . '</td>';
+						echo '<td align="right" style="">' . number_format(@$num2) . '</td>';
+						echo '<td align="right" style="">' . $compare . '</td>';
 
 
 
