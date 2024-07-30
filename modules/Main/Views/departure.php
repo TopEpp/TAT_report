@@ -461,7 +461,7 @@ $dataHeat = json_encode($data_chart_heat, JSON_UNESCAPED_UNICODE | JSON_PRETTY_P
 	        type: 'datetime',
 	        min: Date.UTC(<?php echo $year ?>, 0, 1), // January 1st of the current year
 	        max: Date.UTC(<?php echo $year ?>, 11, 31), // December 31st of the current year
-	        tickInterval: 30 * 24 * 3600 * 1000,// one month
+	        tickInterval: 30 * 24 * 3600 * 1000, // one month
 	        dateTimeLabelFormats: {
 	            month: '%b', // Display as "Jan 2023"
 	            year: '%Y'
@@ -470,6 +470,17 @@ $dataHeat = json_encode($data_chart_heat, JSON_UNESCAPED_UNICODE | JSON_PRETTY_P
 	    yAxis: {
 	        title: {
 	            text: ''
+	        },
+	        labels: {
+	            formatter: function () {
+	                return Highcharts.numberFormat(this.value, 0, '.', ',');
+	            }
+	        }
+	    },
+	    tooltip: {
+	        pointFormatter: function() {
+	            return '<span style="color:' + this.color + '">\u25CF</span> ' +
+	                this.series.name + ': <b>' + Highcharts.numberFormat(this.y, 0, '.', ',') + '</b><br/>';
 	        }
 	    },
 	    legend: {
@@ -545,6 +556,7 @@ $dataHeat = json_encode($data_chart_heat, JSON_UNESCAPED_UNICODE | JSON_PRETTY_P
 	        }
 	    }]
 	});
+
 
 
     var currentData = <?php echo str_replace('"', '', $currentData); ?>;
