@@ -191,11 +191,6 @@ if (!empty($SumMarketDate_past['Long'])) {
 	}
 }
 
-
-// echo '<pre>';
-// print_r($SumMarketDate_past);
-// print_r($numberMarketDay);
-// print_r($numberSumNatDay);
 ?>
 
 <body>

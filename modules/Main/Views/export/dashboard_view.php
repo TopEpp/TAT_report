@@ -310,8 +310,10 @@ if (!empty($SumMarketDate_past['Long'])) {
 											<div style="background-color: #73A0E0; border-radius: 20px;">
 												<?php $c = 0;
 												$i = 1;
+
 												foreach ($SumNatDateData as $v) {
 													$c++;
+													$number_icon = base_url('public/img/Number_icon/number_' . $c . '.png');
 													$flag = base_url('public/img/logotat.png');
 
 													if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
@@ -332,7 +334,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 
 													<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 														<div class="text-center" style="padding: 6px 16.5px;">
-															<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 40px; ">
+															<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 														</div>
 														<div style="text-align: left; padding: 6.4px 16.5px;color: white; font-size: 16.5px;font-weight: bold; width: 90%;">
 															<?php echo $v['COUNTRY_NAME_EN'] ?>
@@ -358,7 +360,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 												foreach ($SumNatMonthData as $v) {
 													$c++;
 													$flag = base_url('public/img/logotat.png');
-
+													$number_icon = base_url('public/img/Number_icon/number2_' . $c . '.png');
 													if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
 														$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
 													}
@@ -377,7 +379,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 
 													<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 														<div class="text-center" style="padding: 6px 16.5px;">
-															<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 40px; ">
+															<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 														</div>
 														<div style="text-align: left; padding: 6.4px 16.5px;color: #163868; font-size: 16.5px;font-weight: bold; width: 90%;">
 															<?php echo $v['COUNTRY_NAME_EN'] ?>
@@ -430,7 +432,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 											foreach ($SumMarketDate['Short'] as $v) {
 												$c++;
 												$flag = base_url('public/img/logotat.png');
-
+												$number_icon = base_url('public/img/Number_icon/number_' . $c . '.png');
 												if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
 													$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
 												}
@@ -449,7 +451,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 										?>
 												<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 													<div class="text-center" style="padding: 6px 16.5px;">
-														<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 40px; ">
+														<img class="img-profile rounded-circle" src="<?php echo $$number_icon ?>" style="height: 32px; ">
 													</div>
 													<div style="text-align: left; padding: 6.4px 16.5px;color: white; font-size: 15.5px;font-weight: bold; width: 90%;">
 														<?php echo $v['COUNTRY_NAME_EN'] ?>
@@ -473,14 +475,14 @@ if (!empty($SumMarketDate_past['Long'])) {
 											foreach ($SumMarketMonth['Short'] as $v) {
 												$c++;
 												$flag = base_url('public/img/logotat.png');
-
+												$number_icon = base_url('public/img/Number_icon/number2_' . $c . '.png');
 												if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
 													$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
 												}
 										?>
 												<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 													<div class="text-center" style="padding: 6px 16.5px;">
-														<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 40px; ">
+														<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 													</div>
 													<div style="text-align: left; padding: 6.4px 16.5px;color: #163868; font-size: 15.5px;font-weight: bold; width: 90%;">
 														<?php echo $v['COUNTRY_NAME_EN'] ?>
@@ -511,7 +513,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 											foreach ($SumMarketDate['Long'] as $v) {
 												$c++;
 												$flag = base_url('public/img/logotat.png');
-
+												$number_icon = base_url('public/img/Number_icon/number_' . $c . '.png');
 												if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
 													$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
 												}
@@ -529,7 +531,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 										?>
 												<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 													<div class="text-center" style="padding: 6px 16.5px;">
-														<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 40px; ">
+														<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 													</div>
 													<div style="text-align: left; padding: 6.4px 16.5px;color: white; font-size: 15.5px;font-weight: bold; width: 90%;">
 														<?php echo $v['COUNTRY_NAME_EN'] ?>
@@ -553,14 +555,14 @@ if (!empty($SumMarketDate_past['Long'])) {
 											foreach ($SumMarketMonth['Long'] as $v) {
 												$c++;
 												$flag = base_url('public/img/logotat.png');
-
+												$number_icon = base_url('public/img/Number_icon/number2_' . $c . '.png');
 												if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
 													$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
 												}
 										?>
 												<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 													<div class="text-center" style="padding: 6px 16.5px;">
-														<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 40px; ">
+														<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 													</div>
 													<div style="text-align: left; padding: 6.4px 16.5px;color: #163868; font-size: 15.5px;font-weight: bold; width: 90%;">
 														<?php echo $v['COUNTRY_NAME_EN'] ?>
