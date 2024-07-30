@@ -352,7 +352,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 																	<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 																		<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 34px; ">
 																	</td>
-																	<td style="text-align: left; padding: 6.4px 16.5px;color: white; font-size: 16.5px;font-weight: bold; width: 90%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
+																	<td style="text-align: left; padding: 6.4px 16.5px;color: white; font-size: 15.5px;font-weight: bold; width: 90%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 																		<?php echo $v['COUNTRY_NAME_EN'] ?>
 																		<br>
 																		<?php echo number_format($v['NUM']); ?> คน
@@ -403,7 +403,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 																	<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 																		<img class="img-profile rounded-circle" src="<?php echo $number_icon2 ?>" style="height: 34px; ">
 																	</td>
-																	<td class="colorText" style="text-align: left; padding: 6.4px 15px; font-size: 16.5px;font-weight: bold; width: 90%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
+																	<td class="colorText" style="text-align: left; padding: 6.4px 15px; font-size: 15.5px;font-weight: bold; width: 90%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 																		<?php echo $v['COUNTRY_NAME_EN'] ?>
 																		<br>
 																		<?php echo number_format($v['NUM']); ?> คน
@@ -483,7 +483,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 											<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<img class="img-profile rounded-circle" src="<?php echo $number_icon2_1 ?>" style="height: 34px; ">
 											</td>
-											<td style="text-align: left; padding: 4.8px 15px;color: white; font-size: 16.5px;font-weight: bold; width: 90%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+											<td style="text-align: left; padding: 4.8px 15px;color: white; font-size: 15.5px;font-weight: bold; width: 90%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<?php echo $v['COUNTRY_NAME_EN'] ?>
 												<br>
 												<?php echo number_format($v['NUM']); ?> คน
@@ -519,7 +519,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 											<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<img class="img-profile rounded-circle" src="<?php echo $number_icon2_2 ?>" style="height: 34px; ">
 											</td>
-											<td style="text-align: left; padding: 4.8px 15px;color: #193666; font-size: 16.5px;font-weight: bold; width: 90%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+											<td style="text-align: left; padding: 4.8px 15px;color: #193666; font-size: 15.5px;font-weight: bold; width: 90%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<?php echo $v['COUNTRY_NAME_EN'] ?>
 												<br>
 												<?php echo number_format($v['NUM']); ?> คน
@@ -582,7 +582,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 											<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<img class="img-profile rounded-circle" src="<?php echo $number_icon3_1 ?>" style="height: 34px; ">
 											</td>
-											<td style="text-align: left; padding: 4.8px 15px;color: white; font-size: 16.5px;font-weight: bold; width: 90%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+											<td style="text-align: left; padding: 4.8px 15px;color: white; font-size: 15.5px;font-weight: bold; width: 90%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<?php echo $v['COUNTRY_NAME_EN'] ?>
 												<br>
 												<?php echo number_format($v['NUM']); ?> คน
@@ -622,7 +622,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 												<td style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 													<img class="img-profile rounded-circle" src="<?php echo $number_icon3_2 ?>" style="height: 34px; ">
 												</td>
-												<td style="text-align: left; padding: 4.8px 15px;color: #193666; font-size: 16.5px;font-weight: bold; width: 90%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+												<td style="text-align: left; padding: 4.8px 15px;color: #193666; font-size: 15.5px;font-weight: bold; width: 90%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 													<?php echo $v['COUNTRY_NAME_EN'] ?>
 													<br>
 													<?php echo number_format($v['NUM']); ?> คน
