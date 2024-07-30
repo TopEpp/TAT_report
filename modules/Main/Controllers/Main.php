@@ -22,7 +22,7 @@ class Main extends BaseController
 		$Setting_model = new Setting_model();
 		$year = date('Y');
 		$month = date('m');
-		$Setting_model->genRaio($year,$month);
+		$Setting_model->genRaio($year, $month);
 		// return view("Modules\Main\Views\index", $data);
 
 		// http_redirect(base_url('main/daily'));
@@ -35,7 +35,7 @@ class Main extends BaseController
 		$Report_model = new Report_model();
 
 		$Setting_model = new Setting_model();
-		$Setting_model->updateVisaRatioMonth(date('Y'),date('m'));
+		$Setting_model->updateVisaRatioMonth(date('Y'), date('m'));
 
 		$data['session'] = session();
 		$ses_data = ['report_type' => 'daily'];
@@ -78,7 +78,7 @@ class Main extends BaseController
 		$date2    =  strtotime($end_date);
 
 		if ($date_now > $date2) {
-		    list($day, $month, $year) = explode('-', $data['start_date']);
+			list($day, $month, $year) = explode('-', $data['start_date']);
 			$end_date = $year . '-' . $month . '-' . $day;
 			$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
 			$data['end_date_label'] = $end_date;
@@ -246,7 +246,7 @@ class Main extends BaseController
 
 	################## EXPORT ##################
 
-	
+
 
 	public function export_dashboard()
 	{
@@ -289,7 +289,7 @@ class Main extends BaseController
 		$data['end_date_label'] = $end_date;
 
 		if ($date_now > $date2) {
-		    list($day, $month, $year) = explode('-', $data['start_date']);
+			list($day, $month, $year) = explode('-', $data['start_date']);
 			$end_date = $year . '-' . $month . '-' . $day;
 			$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
 			$data['end_date_label'] = $end_date;
@@ -400,21 +400,21 @@ class Main extends BaseController
 
 		list($day, $month, $year) = explode('-', $data['end_date']);
 		$end_date = $year . '-' . $month . '-' . $day;
-		$day_past = $day-1;
-		if($day_past<=0){
+		$day_past = $day - 1;
+		if ($day_past <= 0) {
 			$day_past = 1;
-			$month_past = $month-1;
-			if($month_past<=0){
+			$month_past = $month - 1;
+			if ($month_past <= 0) {
 				$month_past = 12;
 			}
 			$a_date = $year . '-' . $month_past . '-' . $day_past;
 			$end_date_past = date("Y-m-t", strtotime($a_date));
-		}else{
+		} else {
 			$end_date_past = $year . '-' . $month . '-' . $day_past;
 		}
-		
-		list($year ,$month,$day) = explode('-', $end_date_past);
-		$data['end_date_past'] = $day.'-'.$month.'-'.$year;
+
+		list($year, $month, $day) = explode('-', $end_date_past);
+		$data['end_date_past'] = $day . '-' . $month . '-' . $year;
 
 		$data['end_date_label'] = $end_date;
 
@@ -432,7 +432,7 @@ class Main extends BaseController
 		$data['SumMarketDate_past'] = $Report_model->getMarketData($data['end_date_past'], $data['end_date_past']);
 		$data['SumMarketMonth'] = $Report_model->getMarketData($data['start_date'], $data['end_date']);
 		$data['country_market'] = $Report_model->getCountryByMarket();
-		
+
 
 		// echo '<pre>';
 		// print_r($data['SumMarketDate']);
@@ -440,7 +440,6 @@ class Main extends BaseController
 		// die();
 		// return view('Modules\Main\Views\export\dashboard', $data);
 		$this->export_pdf2('Modules\Main\Views\export\dashboard', $data);
-		
 	}
 
 	public function export_dashboard_view()
@@ -480,21 +479,21 @@ class Main extends BaseController
 
 		list($day, $month, $year) = explode('-', $data['end_date']);
 		$end_date = $year . '-' . $month . '-' . $day;
-		$day_past = $day-1;
-		if($day_past<=0){
+		$day_past = $day - 1;
+		if ($day_past <= 0) {
 			$day_past = 1;
-			$month_past = $month-1;
-			if($month_past<=0){
+			$month_past = $month - 1;
+			if ($month_past <= 0) {
 				$month_past = 12;
 			}
 			$a_date = $year . '-' . $month_past . '-' . $day_past;
 			$end_date_past = date("Y-m-t", strtotime($a_date));
-		}else{
+		} else {
 			$end_date_past = $year . '-' . $month . '-' . $day_past;
 		}
-		
-		list($year ,$month,$day) = explode('-', $end_date_past);
-		$data['end_date_past'] = $day.'-'.$month.'-'.$year;
+
+		list($year, $month, $day) = explode('-', $end_date_past);
+		$data['end_date_past'] = $day . '-' . $month . '-' . $year;
 
 		$data['end_date_label'] = $end_date;
 
@@ -512,10 +511,9 @@ class Main extends BaseController
 		$data['SumMarketDate_past'] = $Report_model->getMarketData($data['end_date_past'], $data['end_date_past']);
 		$data['SumMarketMonth'] = $Report_model->getMarketData($data['start_date'], $data['end_date']);
 		$data['country_market'] = $Report_model->getCountryByMarket();
-		
+
 
 		return view('Modules\Main\Views\export\dashboard_view', $data);
-		
 	}
 
 	function export_pdf2($view, $data, $orientation = 'P')
@@ -555,12 +553,12 @@ class Main extends BaseController
 		$file = $uploadfile . $_POST['imgName'] . '.png';
 		// @unlike($file);
 		$success = file_put_contents($file, $data);
-		$this->convPNGtoJPG($file,$_POST['imgName']);
+		$this->convPNGtoJPG($file, $_POST['imgName']);
 
 		return $this->setResponseFormat('json')->respond($file);
 	}
 
-	function convPNGtoJPG($filePath,$file_name)
+	function convPNGtoJPG($filePath, $file_name)
 	{
 		$uploaddir = ROOTPATH;
 		$uploaddir = explode('system', $uploaddir);
@@ -580,17 +578,19 @@ class Main extends BaseController
 		imagedestroy($bg);
 	}
 
-	function saveLog(){
+	function saveLog()
+	{
 		$Model = new Main_model();
 		$session = session();
 		$type = $this->request->getPost('type');
 		$ip = $this->request->getIPAddress();
-		
-		return $Model->saveLog($type,$ip,$session);
+
+		return $Model->saveLog($type, $ip, $session);
 	}
 
 
-	function departure(){
+	function departure()
+	{
 		$Model = new Main_model();
 		$Report_model = new Report_model();
 		$Setting_model = new Setting_model();
@@ -632,16 +632,16 @@ class Main extends BaseController
 
 		$data['check_noti_month'] = false;
 		$data['check_noti_month_label'] = '';
-		if($day< cal_days_in_month(CAL_GREGORIAN, $month, $year) ){
-			$data['check_noti_month'] = $month*1;
-			$data['check_noti_month_label'] = '* หมายเหตุ : ข้อมูลถึงวันที่ '.$this->Mydate->date_eng2thai($end_date, 543, 'S', 'S');
+		if ($day < cal_days_in_month(CAL_GREGORIAN, $month, $year)) {
+			$data['check_noti_month'] = $month * 1;
+			$data['check_noti_month_label'] = '* หมายเหตุ : ข้อมูลถึงวันที่ ' . $this->Mydate->date_eng2thai($end_date, 543, 'S', 'S');
 		}
 
 		$date_now =  strtotime($start_date);
 		$date2    =  strtotime($end_date);
 
 		if ($date_now > $date2) {
-		    list($day, $month, $year) = explode('-', $data['start_date']);
+			list($day, $month, $year) = explode('-', $data['start_date']);
 			$end_date = $year . '-' . $month . '-' . $day;
 			$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
 			$data['end_date_label'] = $end_date;
@@ -657,20 +657,21 @@ class Main extends BaseController
 		// $data['SumMonthData'] = $Model->getSumOutMonth($start_date, $end_date);
 		// $data['SumDateData_past'] = $Model->getSumOutDate($end_date_past);
 		// $data['SumMonthData_past'] = $Model->getSumOutMonth($start_date_past, $end_date_past);
-		
+
 		$data['DataChartDate'] = $Model->getOuterChartDate($data['year']);
 		$data['SumChartData'] = $Model->getSumOutChart($end_date);
 		$data['SumChartDataYear'] = $Model->getSumOutChartYear($data['year']);
 
 		// $data['SumChartData_Air'] = $Model->getSumOutChart($end_date,'ด่านอากาศ');
-		$data['SumChartDataYear_Air'] = $Model->getSumOutChartYear($data['year'],'ด่านอากาศ');
+		$data['SumChartDataYear_Air'] = $Model->getSumOutChartYear($data['year'], 'ด่านอากาศ');
 
 		$data['SumPort'] = $Model->getSumOutSumPort($data['year']);
 
 		return view("Modules\Main\Views\departure", $data);
 	}
 
-	function country(){
+	function country()
+	{
 		$Model = new Main_model();
 		$Report_model = new Report_model();
 		$Setting_model = new Setting_model();
@@ -721,7 +722,7 @@ class Main extends BaseController
 		$date2    =  strtotime($end_date);
 
 		if ($date_now > $date2) {
-		    list($day, $month, $year) = explode('-', $data['start_date']);
+			list($day, $month, $year) = explode('-', $data['start_date']);
 			$end_date = $year . '-' . $month . '-' . $day;
 			$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
 			$data['end_date_label'] = $end_date;
@@ -745,15 +746,15 @@ class Main extends BaseController
 		$end_date_week = date('Y-m-d', strtotime($end_date . ' -7 day'));
 
 
-		$data['SumDateData'] = $Model->getSumDate($end_date,$data['country_id']);
-		$data['SumMonthData'] = $Model->getSumMonth($start_date, $end_date,$data['country_id']);
-		$data['SumDateData_past'] = $Model->getSumDate($end_date_past,$data['country_id']);
-		$data['SumMonthData_past'] = $Model->getSumMonth($start_date_past, $end_date_past,$data['country_id']);
-		$data['SumWeekData'] = $Model->getSumMonth($prev_date, $end_date,$data['country_id']);
-		$data['SumWeekData_past'] = $Model->getSumMonth($prev_date_week, $end_date_week,$data['country_id']);
+		$data['SumDateData'] = $Model->getSumDate($end_date, $data['country_id']);
+		$data['SumMonthData'] = $Model->getSumMonth($start_date, $end_date, $data['country_id']);
+		$data['SumDateData_past'] = $Model->getSumDate($end_date_past, $data['country_id']);
+		$data['SumMonthData_past'] = $Model->getSumMonth($start_date_past, $end_date_past, $data['country_id']);
+		$data['SumWeekData'] = $Model->getSumMonth($prev_date, $end_date, $data['country_id']);
+		$data['SumWeekData_past'] = $Model->getSumMonth($prev_date_week, $end_date_week, $data['country_id']);
 
-		$data['SumPortType'] = $Model->getSumPortType($start_date, $end_date,$data['country_id']);
-		$data['DataChart'] = $Model->getSumChartCountry($end_date,$data['country_id']);
+		$data['SumPortType'] = $Model->getSumPortType($start_date, $end_date, $data['country_id']);
+		$data['DataChart'] = $Model->getSumChartCountry($end_date, $data['country_id']);
 
 		return view("Modules\Main\Views\country", $data);
 	}
