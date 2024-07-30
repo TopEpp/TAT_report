@@ -344,7 +344,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 															<table style="width: 100%;">
 																<tr style="">
 																	<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-																		<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 28px; ">
+																		<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 24px; ">
 																	</td>
 																	<td style="text-align: left; padding: 6.4px 16.5px;color: white; font-size: 16.5px;font-weight: bold; width: 85%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 																		<?php echo $v['COUNTRY_NAME_EN'] ?>
@@ -395,7 +395,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 															<table style="width: 100%;">
 																<tr style="">
 																	<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-																		<img class="img-profile rounded-circle" src="<?php echo $number_icon2 ?>" style="height: 28px; ">
+																		<img class="img-profile rounded-circle" src="<?php echo $number_icon2 ?>" style="height: 24px; ">
 																	</td>
 																	<td class="colorText" style="text-align: left; padding: 6.4px 15px; font-size: 16.5px;font-weight: bold; width: 85%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 																		<?php echo $v['COUNTRY_NAME_EN'] ?>
@@ -476,7 +476,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 									<table style="width: 100%;">
 										<tr>
 											<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-												<img class="img-profile rounded-circle" src="<?php echo $number_icon2_1 ?>" style="height: 28px; ">
+												<img class="img-profile rounded-circle" src="<?php echo $number_icon2_1 ?>" style="height: 24px; ">
 											</td>
 											<td style="text-align: left; padding: 4.8px 15px;color: white; font-size: 16.5px;font-weight: bold; width: 85%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<?php echo $v['COUNTRY_NAME_EN'] ?>
@@ -512,7 +512,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 									<table style="width: 100%;">
 										<tr>
 											<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-												<img class="img-profile rounded-circle" src="<?php echo $number_icon2_2 ?>" style="height: 28px; ">
+												<img class="img-profile rounded-circle" src="<?php echo $number_icon2_2 ?>" style="height: 24px; ">
 											</td>
 											<td style="text-align: left; padding: 4.8px 15px;color: #193666; font-size: 16.5px;font-weight: bold; width: 85%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<?php echo $v['COUNTRY_NAME_EN'] ?>
@@ -576,7 +576,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 									<table style="width: 100%;">
 										<tr>
 											<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-												<img class="img-profile rounded-circle" src="<?php echo $number_icon3_1 ?>" style="height: 28px; ">
+												<img class="img-profile rounded-circle" src="<?php echo $number_icon3_1 ?>" style="height: 24px; ">
 											</td>
 											<td style="text-align: left; padding: 4.8px 15px;color: white; font-size: 16.5px;font-weight: bold; width: 85%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<?php echo $v['COUNTRY_NAME_EN'] ?>
@@ -617,7 +617,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 										<table style="width: 100%;">
 											<tr>
 												<td style="width: 15%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-													<img class="img-profile rounded-circle" src="<?php echo $number_icon3_2 ?>" style="height: 28px; ">
+													<img class="img-profile rounded-circle" src="<?php echo $number_icon3_2 ?>" style="height: 24px; ">
 												</td>
 												<td style="text-align: left; padding: 4.8px 15px;color: #193666; font-size: 16.5px;font-weight: bold; width: 85%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
 													<?php echo $v['COUNTRY_NAME_EN'] ?>
