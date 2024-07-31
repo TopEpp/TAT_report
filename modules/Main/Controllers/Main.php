@@ -553,6 +553,25 @@ class Main extends BaseController
 		$file = $uploadfile . $_POST['imgName'] . '.png';
 		// @unlike($file);
 		$success = file_put_contents($file, $data);
+
+		return $this->setResponseFormat('json')->respond($file);
+	}
+
+	function saveImg2ReportJPG()
+	{
+		$uploaddir = ROOTPATH;
+		$uploaddir = explode('system', $uploaddir);
+		$uploaddir = $uploaddir[0];
+		$uploadpath = 'public/uploads/main/';
+		$uploadfile = $uploaddir . $uploadpath;
+
+		$img = $_POST['imgBase64'];
+		$img = str_replace('data:image/png;base64,', '', $img);
+		$img = str_replace(' ', '+', $img);
+		$data = base64_decode($img);
+		$file = $uploadfile . $_POST['imgName'] . '.png';
+		// @unlike($file);
+		$success = file_put_contents($file, $data);
 		$this->convPNGtoJPG($file, $_POST['imgName']);
 
 		return $this->setResponseFormat('json')->respond($file);

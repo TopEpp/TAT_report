@@ -54,6 +54,7 @@ $routes->group('main', ['namespace' => '\Modules\Main\Controllers', 'filter' => 
     $routes->get('export_dashboard_v2', 'Main::export_dashboard_v2');
     $routes->get('export_dashboard_view', 'Main::export_dashboard_view');
     $routes->post('saveImg2Report', 'Main::saveImg2Report');
+    $routes->post('saveImg2ReportJPG', 'Main::saveImg2ReportJPG');
 
     $routes->get('monthly', 'Main::monthly');
     $routes->get('monthly_period', 'Main::monthly_period');
