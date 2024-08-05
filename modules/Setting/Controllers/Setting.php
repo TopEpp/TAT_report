@@ -25,6 +25,13 @@ class Setting extends BaseController{
 	public function port(){
 		$data['session'] = session();
 		$Model = new Setting_model();
+
+		### Gen Ratio ###
+		$year = date('Y');
+		$month = date('m');
+		$Setting_model->genRaio($year, $month);
+		### ### ### ### ###
+
 		$data['country'] = $Model->getCountry();
 		$data['data'] = $Model->getPort();
 		foreach($data['data'] as $port){
@@ -38,6 +45,13 @@ class Setting extends BaseController{
 	public function visa(){
 		$data['session'] = session();
 		$Model = new Setting_model();
+
+		### Gen Ratio ###
+		$year = date('Y');
+		$month = date('m');
+		$Setting_model->genRaio($year, $month);
+		### ### ### ### ###
+		
 		$data['country'] = $Model->getCountry();
 		$data['data'] = $Model->getVisa();
 		foreach($data['data'] as $visa){
