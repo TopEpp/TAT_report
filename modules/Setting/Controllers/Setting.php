@@ -29,7 +29,7 @@ class Setting extends BaseController{
 		### Gen Ratio ###
 		$year = date('Y');
 		$month = date('m');
-		$Setting_model->genRaio($year, $month);
+		$Model->genRaio($year, $month);
 		### ### ### ### ###
 
 		$data['country'] = $Model->getCountry();
@@ -49,7 +49,7 @@ class Setting extends BaseController{
 		### Gen Ratio ###
 		$year = date('Y');
 		$month = date('m');
-		$Setting_model->genRaio($year, $month);
+		$Model->genRaio($year, $month);
 		### ### ### ### ###
 		
 		$data['country'] = $Model->getCountry();
