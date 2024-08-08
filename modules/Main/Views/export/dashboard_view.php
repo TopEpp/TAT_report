@@ -237,6 +237,10 @@ body {
 		transform: rotate(90deg);
 	}
 
+	.d-flex {
+		line-height: 1.2em;
+	}
+
 	@media (max-width: 576px) {}
 </style>
 
@@ -284,7 +288,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 // print_r($numberSumNatDay);
 ?>
 
-<body>
+<body style="width:1150px; height: 680px;margin: auto;">
 	<div class="row" style="margin: 0px;">
 		<div class="col-lg-1 col-12 text-center text-md-right">
 			<img class="img-profile " src="<?php echo base_url('public/img/tat.png') ?>" width="100px">
@@ -311,7 +315,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 						<div class="col-lg-11 pr-0">
 							<div class="mx-3 backgroundColorBox1">
 								<div style="padding-left: 40px; padding-right: 40px; padding-top:3px">
-									<p style="margin: 0px; font-weight:bold; line-height: normal; font-size: 30px; color: white;">
+									<p style="margin: 0px; font-weight:bold; line-height: 1.2em; font-size: 30px; color: white;">
 										สถิตินักท่องเที่ยวระหว่างประเทศ
 										<br>
 										ที่เดินทางเข้าประเทศไทย
@@ -387,10 +391,10 @@ if (!empty($SumMarketDate_past['Long'])) {
 												?>
 
 													<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
-														<div class="text-center" style="padding: 6px 16.5px;">
+														<div class="text-center" style="padding: 3px 5px;">
 															<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 														</div>
-														<div style="text-align: left; padding: 6.4px 16.5px;color: white; font-size: 16.5px;font-weight: bold; width: 90%;">
+														<div style="text-align: left; padding: 6.4px 10px;color: white; font-size: 16.5px;font-weight: bold; width: 90%;">
 															<?php echo $v['COUNTRY_NAME_EN'] ?>
 															<br>
 															<?php echo number_format($v['NUM']); ?> คน
@@ -432,10 +436,10 @@ if (!empty($SumMarketDate_past['Long'])) {
 												?>
 
 													<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
-														<div class="text-center" style="padding: 6px 16.5px;">
+														<div class="text-center" style="padding: 3px 5px;">
 															<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 														</div>
-														<div style="text-align: left; padding: 6.4px 16.5px;color: #163868; font-size: 16.5px;font-weight: bold; width: 90%;">
+														<div style="text-align: left; padding: 6.4px 10px;color: #163868; font-size: 16.5px;font-weight: bold; width: 90%;">
 															<?php echo $v['COUNTRY_NAME_EN'] ?>
 															<br>
 															<?php echo number_format($v['NUM']); ?> คน
@@ -447,13 +451,13 @@ if (!empty($SumMarketDate_past['Long'])) {
 										</div>
 									</div>
 								</div>
-								<div class="col-lg-12 text-center mt-3">
-									<p class="m-0" style="opacity: 0.3;font-size:10px;color: #a1afc2;"><?php echo date('d/m/Y H:i:s:') . $session->get('org_id');; ?></p>
+								<div class="col-lg-12">
+									<p class="m-0" style="opacity: 0.5;font-size:10px;color: #a1afc2;padding: 5px;"><?php echo date('d/m/Y H:i:s:') . $session->get('org_id');; ?></p>
 								</div>
 							</div>
 						</div>
 						<div class="col-lg-1 my-auto text-center p-0">
-							<div class="mt-1" style="position: absolute;left: -160px;top: 0px;width: max-content;height: 20px;font-size:12px;color:#333;transform: rotate(270deg);color: red;font-size: 19px;">
+							<div class="mt-1" style="position: absolute;left: -180px;top: -50px;width: max-content;height: 20px;font-size:12px;color:#333;transform: rotate(270deg);color: red;font-size: 19px;">
 								ใช้เฉพาะภายใน ททท. เท่านั้น ¦ Internal Use Only
 							</div>
 						</div>
@@ -464,11 +468,11 @@ if (!empty($SumMarketDate_past['Long'])) {
 				<div class="col-lg-6">
 					<div class="row">
 						<div class="col-lg-12 text-center mt-2">
-							<img src="<?php echo base_url('public/img/amezingThai.png') ?>" alt="" style=" margin-right: 10px;height: 50px;">
-							<img src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="" style="height:50px ;margin-left: 10px;">
+							<img src="<?php echo base_url('public/img/amezingThai.png') ?>" alt="" style=" margin-right: 10px;height: 40px;">
+							<img src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="" style="height:40px ;margin-left: 10px;">
 						</div>
 						<div class="col-lg-12">
-							<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_daily_year.png') ?>" style="width:100%;height:160px;">
+							<img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_daily_year.png') ?>" style="width:100%;height:120px;">
 						</div>
 						<div class="col-lg-12 text-center colorTextLeft" style="font-weight:bold; font-size: 16px; ">
 							จำนวนนักท่องเที่ยว ตลาดระยะใกล้ 5 อันดับแรก
@@ -504,10 +508,10 @@ if (!empty($SumMarketDate_past['Long'])) {
 												$i++;
 										?>
 												<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
-													<div class="text-center" style="padding: 6px 16.5px;">
+													<div class="text-center" style="padding: 3px 5px;">
 														<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 													</div>
-													<div style="text-align: left; padding: 6.4px 16.5px;color: white; font-size: 15.5px;font-weight: bold; width: 90%;">
+													<div style="text-align: left; padding: 5px 10px;color: white; font-size: 15.5px;font-weight: bold; width: 90%;">
 														<?php echo $v['COUNTRY_NAME_EN'] ?>
 														<br>
 														<?php echo number_format($v['NUM']); ?> คน
@@ -535,10 +539,10 @@ if (!empty($SumMarketDate_past['Long'])) {
 												}
 										?>
 												<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
-													<div class="text-center" style="padding: 6px 16.5px;">
+													<div class="text-center" style="padding: 3px 5px;">
 														<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 													</div>
-													<div style="text-align: left; padding: 6.4px 16.5px;color: #163868; font-size: 15.5px;font-weight: bold; width: 90%;">
+													<div style="text-align: left; padding: 5px 10px;color: #163868; font-size: 15.5px;font-weight: bold; width: 90%;">
 														<?php echo $v['COUNTRY_NAME_EN'] ?>
 														<br>
 														<?php echo number_format($v['NUM']); ?> คน
@@ -584,10 +588,10 @@ if (!empty($SumMarketDate_past['Long'])) {
 												$i++;
 										?>
 												<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
-													<div class="text-center" style="padding: 6px 16.5px;">
+													<div class="text-center" style="padding: 3px 5px;">
 														<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 													</div>
-													<div style="text-align: left; padding: 6.4px 16.5px;color: white; font-size: 15.5px;font-weight: bold; width: 90%;">
+													<div style="text-align: left; padding: 5px 10px;color: white; font-size: 15.5px;font-weight: bold; width: 90%;">
 														<?php echo $v['COUNTRY_NAME_EN'] ?>
 														<br>
 														<?php echo number_format($v['NUM']); ?> คน
@@ -615,10 +619,10 @@ if (!empty($SumMarketDate_past['Long'])) {
 												}
 										?>
 												<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
-													<div class="text-center" style="padding: 6px 16.5px;">
+													<div class="text-center" style="padding: 3px 5px;">
 														<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 													</div>
-													<div style="text-align: left; padding: 6.4px 16.5px;color: #163868; font-size: 15.5px;font-weight: bold; width: 90%;">
+													<div style="text-align: left; padding: 5px 10px;color: #163868; font-size: 15.5px;font-weight: bold; width: 90%;">
 														<?php echo $v['COUNTRY_NAME_EN'] ?>
 														<br>
 														<?php echo number_format($v['NUM']); ?> คน
@@ -631,10 +635,10 @@ if (!empty($SumMarketDate_past['Long'])) {
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-12 " style="font-weight: bold; color: #fff; font-size:10px; color: #163868;">
+						<div class="col-lg-12 " style="font-weight: bold; color: #fff; font-size:10px; color: #163868; padding: 0;">
 							หมายเหตุ : <br>
-							1. ข้อมูลจำแนกรายสัญชาติ (Nationality) ที่มีการกำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศ (สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
-							2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass
+							1. ข้อมูลจำแนกรายสัญชาติ (Nationality) ที่มีการกำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศ <br>(สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
+							2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 <br>เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass
 						</div>
 					</div>
 				</div>

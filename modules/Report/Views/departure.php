@@ -36,10 +36,10 @@
 </style>
 
 <div class="row">
-	<div class="col-md-5 text-center text-md-left" style="font-size: 1.4em;">
+	<div class="col-md-3 text-center text-md-left" style="font-size: 1.2em;">
 		สถิติคนไทยเดินทางออกรายวัน
 	</div>
-	<div class="col-md-1 text-center text-md-right" style="font-size: 1.4em;">
+	<div class="col-md-1 text-center text-md-right" style="font-size: 1.2em;">
 		ปี
 	</div>
 	<div class="col-md-2 text-center">
@@ -49,7 +49,17 @@
 			<?php } ?>
 		</select>
 	</div>
-	<div class="col-md-4 col-12 py-2" style="text-align: right;">
+	<div class="col-md-1 text-center text-md-right" style="font-size: 1.2em;">
+		ด่าน
+	</div>
+	<div class="col-md-2 text-center">
+		<select class="form-control" id="select_port_type" onchange="ChangeDate()">
+			<option value="">ทั้งหมด</option>
+			<option value="ด่านบก" <?php if($port_type=='ด่านบก'){ echo 'selected="selected"';} ?> >ด่านบก</option>
+			<option value="ด่านอากาศ" <?php if($port_type=='ด่านอากาศ'){ echo 'selected="selected"';} ?> >ด่านอากาศ</option>
+		</select>
+	</div>
+	<div class="col-md-3 col-12 py-2" style="text-align: right;">
 		<a target="_blank" onclick="export_report('excel')" class="btn btn-success" style="width : 70px">
 			<i class="fa-solid fa-file-excel"></i> Excel
 		</a>
@@ -57,10 +67,6 @@
 			<i class="fa-solid fa-file-pdf"></i> PDF
 		</a>
 	</div>
-	<div class="col-md-12 text-center py-2" >
-		
-	</div>
-
 </div>
 
 <div class="row">
@@ -165,12 +171,13 @@ function isWeekend($date) {
 	
 	function ChangeDate() {
 		var year = $('#select_year').val();
-		window.location.href = base_url + '/report/departure?year=' + year ;
+		var port_type = $('#select_port_type').val();
+		window.location.href = base_url + '/report/departure?year=' + year+'&port_type='+port_type ;
 	}
 
 	function export_report(type) {
 		var year = $('#select_year').val();
-		window.open(base_url + '/report/departure/?export_type=' + type + '&year=' + year );
+		window.open(base_url + '/report/departure/?export_type=' + type + '&year=' + year+'&port_type='+port_type );
 	}
 </script>
 <?= $this->endSection() ?>

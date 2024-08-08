@@ -349,7 +349,7 @@ class Report_model extends Model
 	    return $data;
 	}
 
-	function getDepartureDaily($year){
+	function getDepartureDaily($year,$port_type=''){
 		$data = array();
 		$builder = $this->db->table($this->table_out);
 		$builder->select(" TO_CHAR({$this->table_out}.REPORT_DATE,'DD-MM-YYYY') AS REPORT_DATE,
@@ -360,6 +360,9 @@ class Report_model extends Model
 		$builder->where('DIRECTION','ขาออก');
 		$builder->where('VISA_ID',16);
 		$builder->where('COUNTRY_ID',147);
+		if($port_type){
+			$builder->where('MD_PORT.PORT_TYPE',$port_type);
+		}
 		$builder->groupBy("TO_CHAR({$this->table_out}.REPORT_DATE,'DD-MM-YYYY') ");
 		$builder->orderBy("REPORT_DATE");
 		$res = $builder->get()->getResultArray();
