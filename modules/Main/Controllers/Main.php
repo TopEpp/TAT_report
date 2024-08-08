@@ -570,7 +570,12 @@ class Main extends BaseController
 		$img = str_replace(' ', '+', $img);
 		$data = base64_decode($img);
 		$file = $uploadfile . $_POST['imgName'] . '.png';
-		// @unlike($file);
+
+		// Remove the old image file if it exists
+	    if (file_exists($file)) {
+	        unlink($file);
+	    }
+
 		$success = file_put_contents($file, $data);
 		$this->convPNGtoJPG($file, $_POST['imgName']);
 
@@ -585,6 +590,12 @@ class Main extends BaseController
 		$uploadpath = 'public/uploads/main/';
 		$uploadfile = $uploaddir . $uploadpath;
 		$file = $uploadfile . $file_name;
+		$jpgFile = $file . ".jpg";
+
+	    // Remove the old JPG image file if it exists
+	    if (file_exists($jpgFile)) {
+	        unlink($jpgFile);
+	    }
 
 		$image = imagecreatefrompng($filePath);
 		$bg = imagecreatetruecolor(imagesx($image), imagesy($image));
@@ -592,7 +603,7 @@ class Main extends BaseController
 		imagealphablending($bg, TRUE);
 		imagecopy($bg, $image, 0, 0, 0, 0, imagesx($image), imagesy($image));
 		imagedestroy($image);
-		$quality = 50; // 0 = worst / smaller file, 100 = better / bigger file 
+		$quality = 100; // 0 = worst / smaller file, 100 = better / bigger file 
 		imagejpeg($bg, $file . ".jpg", $quality);
 		imagedestroy($bg);
 	}

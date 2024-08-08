@@ -313,7 +313,7 @@
 					?>
 						<div class="row" style="margin-bottom:4px;">
 							<div class="col-md-3 col-3 my-auto" style="padding:0px">
-								<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 100%;">
+								<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 50px;">
 							</div>
 							<div class="col-md-9 col-9" style="padding-top: 15px;font-weight:bold;">
 								<span style="font-weight:bold; font-size: 0.9em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
@@ -356,7 +356,7 @@
 						<div class="row" style="margin-bottom:4px;">
 							<div class="col-md-3 col-3 my-auto" style="padding:0px">
 								<!-- <img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 100%;"> -->
-								<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 100%;">
+								<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 50px;">
 							</div>
 							<div class="col-md-9 col-9" style="padding-top: 15px;font-weight:bold;">
 								<span style="font-weight:bold; font-size: 0.9em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
@@ -397,11 +397,11 @@
 							<div class="col-md-3 col-3 my-auto" style="padding:0px">
 								<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
 								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan-02.png') ?>" style="width: 100%;">
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan-02.png') ?>" style="width: 50px;">
 								<?php
 								} else {
 								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="width: 100%;">
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="width: 50px;">
 								<?php
 								}
 								?>
@@ -443,11 +443,11 @@
 							<div class="col-md-3 col-3 my-auto" style="padding:0px">
 								<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
 								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan-02.png') ?>" style="width: 100%;">
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan-02.png') ?>" style="width: 50px;">
 								<?php
 								} else {
 								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="width: 100%;">
+									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="width: 50px;">
 								<?php
 								}
 								?>
