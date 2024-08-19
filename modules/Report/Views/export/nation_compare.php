@@ -41,10 +41,20 @@ $end_date2 = $day . '-' . $month . '-' . $year;
 				$dataSum = getSumData($data1, $data2, $region, 0, $country);
 				$sum1 = $dataSum['sum1'];
 				$sum2 = $dataSum['sum2'];
-				if ($sum2 > 0) {
-					$sum_diff = $sum2 - $sum1;
-					if ($sum1 > 0) {
-						$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
+				// if ($sum2 > 0) {
+				// 	$sum_diff = $sum2 - $sum1;
+				// 	if ($sum1 > 0) {
+				// 		$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
+				// 	}
+				// 	if ($sum_diff < 0) {
+				// 		$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
+				// 	}
+				// }
+
+				if ($sum1 > 0) {
+					$sum_diff = $sum1 - $sum2;
+					if ($sum2 > 0) {
+						$sum_compare = number_format($sum_diff / $sum2 * 100, 2) . '';
 					}
 					if ($sum_diff < 0) {
 						$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
@@ -88,10 +98,20 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 			$sum1 = $dataSum['sum1'];
 			$sum2 = $dataSum['sum2'];
 
-			if ($sum2 > 0) {
-				$sum_diff = $sum2 - $sum1;
-				if ($sum1 > 0) {
-					$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
+			// if ($sum2 > 0) {
+			// 	$sum_diff = $sum2 - $sum1;
+			// 	if ($sum1 > 0) {
+			// 		$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
+			// 	}
+			// 	if ($sum_diff < 0) {
+			// 		$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
+			// 	}
+			// }
+
+			if ($sum1 > 0) {
+				$sum_diff = $sum1 - $sum2;
+				if ($sum2 > 0) {
+					$sum_compare = number_format($sum_diff / $sum2 * 100, 2) . '';
 				}
 				if ($sum_diff < 0) {
 					$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
@@ -117,10 +137,20 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 					$compare = '-';
 					$num1 = @$data1[$co['COUNTRYID']]['NUM'];
 					$num2 = @$data2[$co['COUNTRYID']]['NUM'];
-					if ($num2 > 0) {
-						$diff = $num2 - $num1;
-						if ($num1 > 0) {
-							$compare = number_format($diff / $num1 * 100, 2) . '';
+					// if ($num2 > 0) {
+					// 	$diff = $num2 - $num1;
+					// 	if ($num1 > 0) {
+					// 		$compare = number_format($diff / $num1 * 100, 2) . '';
+					// 	}
+					// 	if ($diff < 0) {
+					// 		$compare = "<span style='color:red'>{$compare} </span>";
+					// 	}
+					// }
+
+					if ($num1 > 0) {
+						$diff = $num1 - $num2;
+						if ($num2 > 0) {
+							$compare = number_format($diff / $num2 * 100, 2) . '';
 						}
 						if ($diff < 0) {
 							$compare = "<span style='color:red'>{$compare} </span>";

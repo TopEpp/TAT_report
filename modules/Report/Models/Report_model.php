@@ -123,6 +123,26 @@ class Report_model extends Model
 	    return $data_daily;
 	}
 
+	function getPortMonthly($year,$m_start,$m_end){
+		$data_daily = array();
+		$builder = $this->db->table($this->table);
+	    $builder->select("{$this->table}.OFFICE_ID, TO_CHAR({$this->table}.REPORT_DATE,'MM') AS REPORT_MONTH, SUM({$this->table}.SUM) AS NUM ");
+	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
+	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$m_start}','mm') AND TO_DATE('{$m_end}','mm') ");
+	    $builder->where("TO_CHAR(REPORT_DATE,'yyyy') ",$year);
+	    $builder->where('PORT_DAILY',1);
+	    $builder->groupBy("TO_CHAR({$this->table}.REPORT_DATE,'MM'),{$this->table}.OFFICE_ID");
+	    $builder->orderBy("REPORT_MONTH");
+	    // echo $builder->getCompiledSelect();
+
+	    $data = $builder->get()->getResultArray();
+	    foreach($data as $d){
+	    	$data_daily[$d['OFFICE_ID']][$d['REPORT_MONTH']*1] = $d['NUM'];
+	    }
+
+	    return $data_daily;
+	}
+
 	function getNatDaily($date_start,$date_end){
 		$data_daily = array();
 		$builder = $this->db->table($this->table);

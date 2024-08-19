@@ -74,6 +74,7 @@ $routes->group('report', ['namespace' => '\Modules\Report\Controllers'], functio
     $routes->get('port_compare', 'Report::port_compare');
     $routes->get('nation_daily', 'Report::nation_daily');
     $routes->get('port_daily', 'Report::port_daily');
+    $routes->get('port_monthly', 'Report::port_monthly');
     $routes->get('market', 'Report::market');
 
     $routes->get('export_nation', 'Report::export_nation');

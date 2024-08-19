@@ -43,21 +43,27 @@
 	<div class="col-md-12 text-center py-2" style="font-size: 1.4em;">
 		รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทยรายวัน จำแนกรายสัญชาติ
 	</div>
-	<!-- <div class="col-md-12" >
-		วันที่เริ่มต้น <input type="text" name="report_data1" id="report_data1" class="form-control date_picker" style="width: 200px;display: inline;" value="<?php echo $Mydate->date_thai2eng($date_start, 543, '/') ?>"> 
-		วันที่สิ้นสุด <input type="text" name="report_data2" id="report_data2" class="form-control date_picker" style="width: 200px;display: inline;" value="<?php echo $Mydate->date_thai2eng($date_end, 543, '/') ?>">
-		<div class="btn btn-primary" onclick="ChangeDate()">ตกลง</div>
-	</div> -->
 </div>
 
 <div class="d-flex justify-content-center py-2 pb-3 flex-column flex-md-row">
-	<div class="d-flex align-items-center mx-md-2 mx-auto">
-		วันที่เริ่มต้น <input type="text" name="report_data1" id="report_data1" class="form-control date_picker ml-2" style="width: 200px;display: inline;" value="<?php echo $Mydate->date_thai2eng($date_start, 543, '/') ?>">
+	<div class="col-md-4 col-12 text-left py-2 py-md-0">
+		ช่วงเวลาที่ 2 วันที่เริ่มต้น <input type="text" name="report_data1" id="report_data1" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($date_start, 543, '/') ?>">
 	</div>
-	<div class="d-flex align-items-center mx-md-2 mx-auto my-2 my-md-none">
-		วันที่สิ้นสุด <input type="text" name="report_data2" id="report_data2" class="form-control date_picker ml-2" style="width: 200px;display: inline;" value="<?php echo $Mydate->date_thai2eng($date_end, 543, '/') ?>">
+	<div class="col-md-4 col-12 text-left py-2 py-md-0">
+		วันที่สิ้นสุด <input type="text" name="report_data2" id="report_data2" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($date_end, 543, '/') ?>">
 	</div>
-	<div class="align-items-center mx-md-2 mx-auto my-auto ">
+	<div class="col-md-3 col-12">
+		Country List
+		<select class="form-control" id="country_type">
+			<option value="standard" <?php if (@$country_type == 'standard') {
+											echo "selected='selected'";
+										} ?>>Standard</option>
+			<option value="all" <?php if (@$country_type == 'all') {
+									echo "selected='selected'";
+								} ?>>All Country</option>
+		</select>
+	</div>
+	<div class="col-md-1 col-12 text-center py-2 py-md-0 mt-auto">
 		<div class="btn btn-primary" onclick="ChangeDate()">ตกลง</div>
 	</div>
 </div>
@@ -184,7 +190,9 @@ function getSumData($data, $region, $region_id, $country, $period, &$sum = array
 		date = date.split('/');
 		report_date2 = (date[2] - 543) + '-' + date[1] + '-' + date[0];
 
-		window.location.href = base_url + '/report/nation_daily?d1=' + report_date1 + '&d2=' + report_date2;
+		var country_type = $('#country_type').val();
+
+		window.location.href = base_url + '/report/nation_daily?d1=' + report_date1 + '&d2=' + report_date2+'&country_type='+country_type;
 	}
 
 	function export_report(type) {
@@ -196,7 +204,9 @@ function getSumData($data, $region, $region_id, $country, $period, &$sum = array
 		date = date.split('/');
 		report_date2 = (date[2] - 543) + '-' + date[1] + '-' + date[0];
 
-		window.open(base_url + '/report/nation_daily/?export_type=' + type + '&d1=' + report_date1 + '&d2=' + report_date2);
+		var country_type = $('#country_type').val();
+
+		window.open(base_url + '/report/nation_daily/?export_type=' + type + '&d1=' + report_date1 + '&d2=' + report_date2+'&country_type='+country_type);
 	}
 
 	function ShowHide(reg_id) {

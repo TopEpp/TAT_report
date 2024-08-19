@@ -678,7 +678,7 @@ $dataHeat = json_encode($data_chart_heat, JSON_UNESCAPED_UNICODE | JSON_PRETTY_P
 	//         type: 'bar'
 	//     },
 	//     title: {
-	//         text: 'TOP 10 ค่านที่คนไทยเดินทางออกนอกราชอาณาจักรไทย (คน)',
+	//         text: 'TOP 10 ด่านที่คนไทยเดินทางออกนอกราชอาณาจักรไทย (คน)',
 	//         align: 'center'
 	//     },
 	//     xAxis: {
@@ -765,7 +765,7 @@ $dataHeat = json_encode($data_chart_heat, JSON_UNESCAPED_UNICODE | JSON_PRETTY_P
 	        data: <?php echo $dataHeat;?>
 	    }],
 	    title: {
-	        text: 'ค่านที่คนไทยเดินทางออกนอกราชอาณาจักรไทย (คน)'
+	        text: 'ด่านที่คนไทยเดินทางออกนอกราชอาณาจักรไทย (คน)'
 	    },
 	    legend: {
 	        enabled: false // ซ่อน legend

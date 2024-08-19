@@ -273,6 +273,7 @@ class Report extends BaseController
 		$date = $Main_model->getMaxDate();
 		$data['to_date'] = $date;
 		$data['Mydate'] = $this->Mydate;
+		$data['country_type'] = 'all';
 
 		if (empty($_GET['d1']) && empty($_GET['d2'])) {
 			list($year, $month, $day) = explode('-', $date);
@@ -283,6 +284,10 @@ class Report extends BaseController
 			$date_start = $day . '/' . $month . '/' . $year;
 			list($year, $month, $day) = explode('-', $_GET['d2']);
 			$date_end = $day . '/' . $month . '/' . $year;
+		}
+
+		if (!empty($_GET['country_type'])) {
+			$data['country_type'] = $_GET['country_type'];
 		}
 
 		$data['date_start'] = $date_start;
@@ -299,6 +304,9 @@ class Report extends BaseController
 
 		$data['region'] = $Model->getSTDRegion('standard');
 		$data['country'] = $Model->getCountryByRegion('standard');
+
+		$data['region'] = $Model->getSTDRegion($data['country_type']);
+		$data['country'] = $Model->getCountryByRegion($data['country_type']);
 
 		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
@@ -349,6 +357,37 @@ class Report extends BaseController
 			$this->export_pdf('Modules\Report\Views\export\port_daily', $data, 'L');
 		} else {
 			return view('Modules\Report\Views\port_daily', $data);
+		}
+	}
+
+	public function port_monthly()
+	{
+		$Model = new Report_model();
+		$Main_model = new Main_model();
+		$Setting_model = new Setting_model();
+		$date = $Main_model->getMaxDate();
+		$data['to_date'] = $date;
+		$data['session'] = session();
+		$data['Mydate'] = $this->Mydate;
+		$data['year'] = date('Y');
+		$data['m_start'] = 1; $data['m_end'] = 12;
+		$data['month_label'] = $this->month_en;
+		$m_start = $data['m_start']; $m_end = $data['m_end'];
+		for($m_start;$m_start<$m_end;$m_start++){
+			$data['period'][$m_start] = $data['month_label'][$m_start];
+		}
+		
+		$data['data'] = $Model->getPortMonthly($data['year'],$data['m_start'], $data['m_end']);
+		$data['port'] = $Model->getPortGroupType();
+
+
+		$data['export_type'] = @$_GET['export_type'];
+		if (@$_GET['export_type'] == 'excel') {
+			$this->export_excel('port_monthly.xlsx', 'Modules\Report\Views\export\port_monthly', $data);
+		} else if (@$_GET['export_type'] == 'pdf') {
+			$this->export_pdf('Modules\Report\Views\export\port_monthly', $data, 'L');
+		} else {
+			return view('Modules\Report\Views\port_monthly', $data);
 		}
 	}
 
