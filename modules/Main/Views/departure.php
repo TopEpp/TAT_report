@@ -126,14 +126,14 @@
 					<div class="col-md-1 col-12 my-auto text-center"></div>
 					<div class="col-md-10 col-12 my-auto text-center">สถิติคนไทยเดินทางออกนอกราชอาณาจักรในภาพรวม</div>
 					<div class="col-md-1 col-12 my-auto text-center" style="font-size:0.6em !important; ">
-						<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard_view?start_date=' . $start_date . '&end_date=' . $end_date); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
+						<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_departure?export=pdf&start_date=' . $start_date . '&end_date=' . $end_date); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
 							<i class="fa-solid fa-file-pdf"></i> PDF
 						</button>
 					</div>
 				</div>
 			</div>
 			<div class="card-body">
-				<div class="text-center" id="htmltoimage_chart_daily" style="height:320px; padding:15px;">
+				<div class="text-center" id="htmltoimage_chart_departure1" style="height:320px; padding:15px;">
 					 <div id="container" style="height:300px"></div>
 				</div>
 				<hr>
@@ -141,7 +141,9 @@
 					<!-- <div style="text-align:center;">
 						ภาพรวมคนไทยเดินทางออกนอกราชอาณาจักรไทย : รายเดือน
 					</div> -->
-					<div id="container2" style="height:220px"></div>
+					<div class="text-center" id="htmltoimage_chart_departure2">
+						<div id="container2" style="height:220px"></div>
+					</div>
 					<table class="table table-striped table-bordered">
 						<tr>
 							<th style="text-align: center;">ปี</th>
@@ -213,8 +215,9 @@
 	<div class="col-md-4">
 		<div class="card">
 			<div class="card-body">
-				
+					<div class="text-center" id="htmltoimage_chart_departure3">
 						<div id="container3" style="height:320px"></div>
+					</div>
 						<?php 
 						$num_port1 = $SumPort['SUM_TYPE']['ด่านอากาศ'];
 						$num_port2 = $SumPort['SUM_TYPE']['ด่านบก'];
@@ -231,8 +234,9 @@
 		<div class="card">
 			<div class="card-body">
 				
-				
+					<div class="text-center" id="htmltoimage_chart_departure4">
 						<div id="container4" style="height:320px"></div>
+					</div>
 						<!-- TOP 10 ด่านที่คนไทยเดินทางออกนอกราชอาณาจักรไทย (คน) <br> -->
 						<!-- ท่าอากาศยานสุวรรณภูมิและดอนเมือง : <?php echo number_format($SumPort['SUM_PORT'][49]['NUM']+$SumPort['SUM_PORT'][41]['NUM'])?><br> -->
 						
@@ -282,7 +286,7 @@
 		<div class="card">
 			<div class="card-header">สถิติคนไทยเดินทางออกนอกราชอาณาจักรทาง<u>ท่าอากาศยาน</u> </div>
 			<div class="card-body">
-				<div class="text-center" id="htmltoimage_chart_daily" style="height:240px; padding:15px;">
+				<div class="text-center" id="htmltoimage_chart_departure5" style="height:240px; padding:15px;">
 					<div id="container5" style="height:220px"></div>
 				</div>
 				<div>
@@ -849,9 +853,7 @@ $dataHeat = json_encode($data_chart_heat, JSON_UNESCAPED_UNICODE | JSON_PRETTY_P
 
 	function SaveImg2ExportPdf(url2SaveImg, url2DowloadReport) {
 		$('.btn-download').hide();
-		$('#htmltoimage_chart_daily_year').show();
 		setTimeout(function(){ saveImg(url2SaveImg, url2DowloadReport); }, 1000);
-		setTimeout(function(){ $('#htmltoimage_chart_daily_year').hide(); }, 6000);
 
 		$.ajax({
 	        method: "POST",
@@ -866,10 +868,10 @@ $dataHeat = json_encode($data_chart_heat, JSON_UNESCAPED_UNICODE | JSON_PRETTY_P
 
 	function saveImg(url2SaveImg, url2DowloadReport){
 		$('.btn-download').hide();
-		const chart_array = ["chart_daily","chart_daily_year"];
+		const chart_array = ["departure1","departure2","departure3","departure4","departure5"];
 		var count_canvas = 0;
 		$.each(chart_array, function(key, value) {
-			var container = document.getElementById("htmltoimage_" + value);
+			var container = document.getElementById("htmltoimage_chart_" + value);
 			html2canvas(container, {
 				allowTaint: true
 			}).then(function(canvas) {

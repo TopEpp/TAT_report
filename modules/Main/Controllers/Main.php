@@ -700,6 +700,93 @@ class Main extends BaseController
 		return view("Modules\Main\Views\departure", $data);
 	}
 
+	function export_departure()
+	{
+		$Model = new Main_model();
+		$Report_model = new Report_model();
+		$Setting_model = new Setting_model();
+
+		$data['session'] = session();
+		$ses_data = ['report_type' => 'daily'];
+		$data['session']->set($ses_data);
+
+		$data['Mydate'] = $this->Mydate;
+		$month = date('m');
+
+		$data['year'] = date('Y');
+		$data['month'] = $month;
+		$data['month_label'] = $this->month_th_short[(int)$month];
+		$data['start_date'] = '01-01-' . (date('Y'));
+		$data['country_type'] = 'all';
+
+		$end_date = $Model->getMaxDate();
+		list($year, $month, $day) = explode('-', $end_date);
+		$data['end_date'] = $day . '-' . $month . '-' . $year;
+
+		if (!empty($_GET['start_date'])) {
+			$data['start_date'] = $_GET['start_date'];
+		}
+		if (!empty($_GET['end_date'])) {
+			$data['end_date'] = $_GET['end_date'];
+		}
+
+		list($day, $month, $year) = explode('-', $data['start_date']);
+		$start_date = $year . '-' . $month . '-' . $day;
+		$start_date_past = ($year - 1) . '-' . $month . '-' . $day;
+		$data['start_date_label'] = $start_date;
+
+		list($day, $month, $year) = explode('-', $data['end_date']);
+		$end_date = $year . '-' . $month . '-' . $day;
+		$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
+		$data['end_date_label'] = $end_date;
+		$data['year'] = $year;
+
+		$data['check_noti_month'] = false;
+		$data['check_noti_month_label'] = '';
+		if ($day < cal_days_in_month(CAL_GREGORIAN, $month, $year)) {
+			$data['check_noti_month'] = $month * 1;
+			$data['check_noti_month_label'] = '* หมายเหตุ : ข้อมูลถึงวันที่ ' . $this->Mydate->date_eng2thai($end_date, 543, 'S', 'S');
+		}
+
+		$date_now =  strtotime($start_date);
+		$date2    =  strtotime($end_date);
+
+		if ($date_now > $date2) {
+			list($day, $month, $year) = explode('-', $data['start_date']);
+			$end_date = $year . '-' . $month . '-' . $day;
+			$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
+			$data['end_date_label'] = $end_date;
+			$data['year'] = $year;
+		}
+
+
+		$data['to_date'] = $end_date;
+		$prev_date = date('Y-m-d', strtotime($end_date . ' -15 day'));
+		$data['period'] = $data['Mydate']->date_range($prev_date, $end_date);
+
+		// $data['SumDateData'] = $Model->getSumOutDate($end_date);
+		// $data['SumMonthData'] = $Model->getSumOutMonth($start_date, $end_date);
+		// $data['SumDateData_past'] = $Model->getSumOutDate($end_date_past);
+		// $data['SumMonthData_past'] = $Model->getSumOutMonth($start_date_past, $end_date_past);
+
+		$data['DataChartDate'] = $Model->getOuterChartDate($data['year']);
+		$data['SumChartData'] = $Model->getSumOutChart($end_date);
+		$data['SumChartDataYear'] = $Model->getSumOutChartYear($data['year']);
+
+		// $data['SumChartData_Air'] = $Model->getSumOutChart($end_date,'ด่านอากาศ');
+		$data['SumChartDataYear_Air'] = $Model->getSumOutChartYear($data['year'], 'ด่านอากาศ');
+
+		$data['SumPort'] = $Model->getSumOutSumPort($data['year']);
+
+
+		if(@$_GET['export']=='pdf'){
+			$this->export_pdf('Modules\Main\Views\export\departure', $data);
+		}else{
+			return view('Modules\Main\Views\export\departure_view', $data);
+
+		}
+	}
+
 	function country()
 	{
 		$Model = new Main_model();
@@ -787,5 +874,102 @@ class Main extends BaseController
 		$data['DataChart'] = $Model->getSumChartCountry($end_date, $data['country_id']);
 
 		return view("Modules\Main\Views\country", $data);
+	}
+
+	function export_country()
+	{
+		$Model = new Main_model();
+		$Report_model = new Report_model();
+		$Setting_model = new Setting_model();
+		// $Setting_model->updateVisaRatioMonth(date('Y'),date('m'));
+		$data['session'] = session();
+		$ses_data = ['report_type' => 'daily'];
+		$data['session']->set($ses_data);
+
+		$data['Mydate'] = $this->Mydate;
+		// $date = date('Y-m-d');
+		$month = date('m');
+		$data['country_id'] = 154; //CHina
+		$data['year'] = date('Y');
+		$data['month'] = $month;
+		$data['month_label'] = $this->month_th_short[(int)$month];
+		$data['start_date'] = '01-01-' . (date('Y'));
+		// $data['end_date'] = date('d-m-Y');
+		$data['country_type'] = 'all';
+
+		$end_date = $Model->getMaxDate();
+		list($year, $month, $day) = explode('-', $end_date);
+		$data['end_date'] = $day . '-' . $month . '-' . $year;
+
+		if (!empty($_GET['start_date'])) {
+			$data['start_date'] = $_GET['start_date'];
+		}
+		if (!empty($_GET['end_date'])) {
+			$data['end_date'] = $_GET['end_date'];
+		}
+		if (!empty($_GET['country_id'])) {
+			$data['country_id'] = $_GET['country_id'];
+		}
+
+		list($day, $month, $year) = explode('-', $data['start_date']);
+		$start_date = $year . '-' . $month . '-' . $day;
+		$start_date_past = ($year - 1) . '-' . $month . '-' . $day;
+		$data['start_date_label'] = $start_date;
+		$data['start_date_label_past'] = $start_date_past;
+
+		list($day, $month, $year) = explode('-', $data['end_date']);
+		$end_date = $year . '-' . $month . '-' . $day;
+		$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
+		$data['end_date_label'] = $end_date;
+		$data['end_date_label_past'] = $end_date_past;
+		$data['year'] = $year;
+
+		$date_now =  strtotime($start_date);
+		$date2    =  strtotime($end_date);
+
+		if ($date_now > $date2) {
+			list($day, $month, $year) = explode('-', $data['start_date']);
+			$end_date = $year . '-' . $month . '-' . $day;
+			$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
+			$data['end_date_label'] = $end_date;
+			$data['year'] = $year;
+		}
+
+		$data['to_date'] = $end_date;
+		$prev_date = date('Y-m-d', strtotime($end_date . ' -7 day'));
+		$data['prev_date'] = $prev_date;
+		$data['period'] = $data['Mydate']->date_range($prev_date, $end_date);
+		$data['country'] = $Report_model->getCountryAllRow();
+
+		list($year, $month, $day) = explode('-', $prev_date);
+		$prev_date_past = ($year - 1) . '-' . $month . '-' . $day;
+		$data['prev_date_past'] = $prev_date_past;
+
+		list($year, $month, $day) = explode('-', $end_date);
+		$data['to_date_past'] = ($year - 1) . '-' . $month . '-' . $day;
+
+
+		$prev_date_week = date('Y-m-d', strtotime($prev_date . ' -7 day'));
+		$end_date_week = date('Y-m-d', strtotime($end_date . ' -7 day'));
+
+
+		$data['SumDateData'] = $Model->getSumDate($end_date, $data['country_id']);
+		$data['SumMonthData'] = $Model->getSumMonth($start_date, $end_date, $data['country_id']);
+		$data['SumDateData_past'] = $Model->getSumDate($end_date_past, $data['country_id']);
+		$data['SumMonthData_past'] = $Model->getSumMonth($start_date_past, $end_date_past, $data['country_id']);
+		$data['SumWeekData'] = $Model->getSumMonth($prev_date, $end_date, $data['country_id']);
+		$data['SumWeekData_past'] = $Model->getSumMonth($prev_date_week, $end_date_week, $data['country_id']);
+
+		$data['SumPortType'] = $Model->getSumPortType($start_date, $end_date, $data['country_id']);
+		$data['DataChart'] = $Model->getSumChartCountry($end_date, $data['country_id']);
+
+		
+		if(@$_GET['export']=='pdf'){
+			$this->export_pdf('Modules\Main\Views\export\country', $data);
+		}else{
+			return view('Modules\Main\Views\export\country_view', $data);
+
+		}
+		
 	}
 }

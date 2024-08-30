@@ -71,9 +71,15 @@ $user_menu = $session->get('user_menu');
                 <a class="collapse-item <?php if ($method == 'nation_compare') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('report/nation_compare') ?>">รายงานเปรียบเทียบจำนวนนักท่องเที่ยวรายสัญชาติ</a>
+                <a class="collapse-item <?php if ($method == 'port_compare' || $method == 'port_compare_monthly') {
+                                            echo 'active';
+                                        } ?>" href="#">รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน (สะสม)</a>
                 <a class="collapse-item <?php if ($method == 'port_compare') {
                                             echo 'active';
-                                        } ?>" href="<?php echo base_url('report/port_compare') ?>">รายงานจำนวนนักท่องเที่ยวรายด่าน</a>
+                                        } ?>" href="<?php echo base_url('report/port_compare') ?>">- รายวัน</a>
+                <a class="collapse-item <?php if ($method == 'port_compare_monthly') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('report/port_compare_monthly') ?>">- รายเดือน</a>
                 <a class="collapse-item <?php if ($method == 'market') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('report/market') ?>">รายงานจำนวนนักท่องเที่ยวจำแนกรายรายตลาด</a>

@@ -39,15 +39,33 @@
 		</a> -->
 	</div>
 	<div class="col-md-12 text-center py-2"  style="font-size: 1.4em;">
-		รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน
+		รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน (สะสม)
 	</div>
 </div>
 <div class="row py-2">
 	<div class="col-md-2 col-12 text-start py-2 py-md-0">
-		วันที่เริ่มต้น <input type="text" name="start_date1" id="start_date1" class="form-control date_picker mx-auto" value="<?php echo $Mydate->date_thai2eng($start_date1, 543, '/') ?>">
+		ปี
+		<select class="form-control" id="year" name="year"  >
+		<?php for($i=date('Y');$i >= date('Y')-5;$i--){ $sel = ''; if($year==$i){  $sel='selected="selected"';  }?>
+			<option value="<?php echo $i?>" <?php echo $sel;?> ><?php echo $i?></option>
+		<?php }?>
+		</select>
 	</div>
 	<div class="col-md-2 col-12 text-start py-2 py-md-0">
-		วันที่สิ้นสุด <input type="text" name="end_date1" id="end_date1" class="form-control date_picker" value="<?php echo $Mydate->date_thai2eng($end_date1, 543, '/') ?>">
+		เดือนเริ่มต้น
+		<select class="form-control" id="m_start" name="m_start">
+		<?php foreach($month_label as $key=>$label){ $sel = ''; if($m_start==$key){ $sel='selected="selected"';}?>
+			<option <?php echo $sel;?> value="<?php echo $key;?>"><?php echo $label;?></option>
+		<?php } ?>
+		</select>
+	</div>
+	<div class="col-md-2 col-12 text-start py-2 py-md-0">
+		เดือนสิ้นสุด
+		<select class="form-control" id="m_end" name="m_end">
+		<?php foreach($month_label as $key=>$label){ $sel = ''; if($m_end==$key){ $sel='selected="selected"';}?>
+			<option <?php echo $sel;?> value="<?php echo $key;?>"><?php echo $label;?></option>
+		<?php } ?>
+		</select>
 	</div>
 	<div class="col-md-2 col-12 text-start py-2 py-md-0">
 		Country List
@@ -60,7 +78,7 @@
 								} ?>>All Country</option>
 		</select>
 	</div>
-	<div class="col-md-5 col-12 text-start py-2 py-md-0">
+	<div class="col-md-3 col-12 text-start py-2 py-md-0">
 		Country Select
 		<select class="form-control" id="country_id">
 			<option value="">Select</option>
@@ -134,12 +152,13 @@
 						<tr>
 							<?php if (!empty($port_colunm)) {
 								foreach ($port_colunm as $p) { ?>
-									<?php foreach ($period as $d) {
-										echo "<th>{$Mydate->date_eng2thai($d, 543, 'S', 'S')}</th>";
+									<?php foreach ($period as $month_label) {
+										echo "<th>{$month_label}</th>";
 									} ?>
 									<th>รวม</th>
 							<?php }
 							} ?>
+							
 						</tr>
 					</thead>
 					<tbody>
@@ -154,16 +173,17 @@
 							if (!empty($port_colunm)) {
 								foreach ($port_colunm as $p) {
 									$sum_port = 0;
-									foreach ($period as $d) {
+									foreach ($period as $d=>$month_label) {
 										$sum = getSumData($data, $region, 0, $country, $p['PORT_ID'], $d);
 										$sum_port += $sum;
 										echo '<td align="right">' . number_format($sum) . '</td>';
 									}
 									echo '<td align="right">' . number_format($sum_port) . '</td>';
 								}
+								
 							}
 							?>
-
+							
 						</tr>
 						<?php 
 							genTableData($data, $region, 0, $country, $port_colunm, $period);
@@ -183,20 +203,20 @@ function getTableCountry($data, $country_name, $country_id,$port_colunm,$period)
 	if (!empty($port_colunm)) {
 		foreach ($port_colunm as $p) {
 			$sum_port = 0;
-			foreach ($period as $d) {
+			foreach ($period as $d=>$month_label) {
 				echo "<td align='right'>" . @number_format(@$data[$country_id][$p['PORT_ID']][$d]['NUM']) . "</td>";
 				$sum_port += @$data[$country_id][$p['PORT_ID']][$d]['NUM'];
 			}
-			echo "<td align='right'>".number_format($sum_port)."</td>";
 		}
+		echo "<td align='right'>".number_format($sum_port)."</td>";
 	}
+	
 	echo '</tr>';
 }
 
 function genTableData($data, $region, $region_id, $country, $port_colunm, $period, $level = 1)
 {
 	$level++;
-
 	if (!empty($region[$region_id])) {
 		foreach ($region[$region_id] as $re) {
 
@@ -211,7 +231,7 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $perio
 			if (!empty($port_colunm)) {
 				foreach ($port_colunm as $p) {
 					$sum_port = 0;
-					foreach ($period as $d) {
+					foreach ($period as $d=>$month_label) {
 						$sum = getSumData($data, $region, $re['MD_STD_REG_ID'], $country, $p['PORT_ID'], $d);
 						$sum_port += $sum;
 						echo '<td align="right">' . number_format($sum) . '</td>';
@@ -219,6 +239,7 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $perio
 					echo "<td align='right'>".number_format($sum_port)."</td>";
 				}
 			}
+			
 			echo '</tr>';
 
 
@@ -231,13 +252,14 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $perio
 					if (!empty($port_colunm)) {
 						foreach ($port_colunm as $p) {
 							$sum_port = 0;
-							foreach ($period as $d) {
+							foreach ($period as $d=>$month_label) {
 								echo "<td align='right'>" . @number_format(@$data[$co['COUNTRYID']][$p['PORT_ID']][$d]['NUM']) . "</td>";
 								$sum_port +=@$data[$co['COUNTRYID']][$p['PORT_ID']][$d]['NUM'];
 							}
 							echo "<td align='right'>".number_format($sum_port)."</td>";
 						}
 					}
+					
 					echo '</tr>';
 				}
 			}
@@ -311,15 +333,9 @@ function getSumData($data, $region, $region_id, $country, $port_id, $day, &$sum 
 	});
 
 	function ChangeFilter() {
-		var date = $('#start_date1').val();
-		date = date.split('/');
-		// start_date1 = (date[2]-543)+'-'+date[1]+'-'+date[0];
-		start_date1 = date[0] + '-' + date[1] + '-' + (date[2] - 543);
-
-		var date = $('#end_date1').val();
-		date = date.split('/');
-		// end_date1 = (date[2]-543)+'-'+date[1]+'-'+date[0];
-		end_date1 = date[0] + '-' + date[1] + '-' + (date[2] - 543);
+		var m_start = $('#m_start').val();
+		var m_end = $('#m_end').val();
+		var year = $('#year').val();
 
 		var country_type = $('#country_type').val();
 		var country_id = $('#country_id').val();
@@ -330,7 +346,7 @@ function getSumData($data, $region, $region_id, $country, $port_id, $day, &$sum 
 		}).get();
 		// console.log(port_type);
 
-		window.location.href = base_url + '/report/port_compare?start1=' + start_date1 + '&end1=' + end_date1 + '&country_type=' + country_type + '&port_type=' + port_type+ '&country_id=' + country_id;
+		window.location.href = base_url + '/report/port_compare_monthly?year='+year+'&m_start=' + m_start + '&m_end=' + m_end + '&country_type=' + country_type + '&port_type=' + port_type+ '&country_id=' + country_id;
 	}
 
 	function ShowHide(reg_id) {
@@ -338,15 +354,9 @@ function getSumData($data, $region, $region_id, $country, $port_id, $day, &$sum 
 	}
 
 	function export_report(type) {
-		var date = $('#start_date1').val();
-		date = date.split('/');
-		// start_date1 = (date[2]-543)+'-'+date[1]+'-'+date[0];
-		start_date1 = date[0] + '-' + date[1] + '-' + (date[2] - 543);
-
-		var date = $('#end_date1').val();
-		date = date.split('/');
-		// end_date1 = (date[2]-543)+'-'+date[1]+'-'+date[0];
-		end_date1 = date[0] + '-' + date[1] + '-' + (date[2] - 543);
+		var m_start = $('#m_start').val();
+		var m_end = $('#m_end').val();
+		var year = $('#year').val();
 
 		var country_type = $('#country_type').val();
 		var country_id = $('#country_id').val();
@@ -355,14 +365,14 @@ function getSumData($data, $region, $region_id, $country, $port_id, $day, &$sum 
 				return $(this).val();
 			}
 		}).get();
-		window.open(base_url + '/report/port_compare/?export_type=' + type + '&start1=' + start_date1 + '&end1=' + end_date1 + '&country_type=' + country_type + '&port_type=' + port_type+ '&country_id=' + country_id);
+		window.open(base_url + '/report/port_compare_monthly/?export_type=' + type + '&year='+year+'&m_start=' + m_start + '&m_end=' + m_end + '&country_type=' + country_type + '&port_type=' + port_type+ '&country_id=' + country_id);
 	}
 
 	function export_excel(){
 		var elt = document.getElementById('table_port_compare');
 		var wb = XLSX.utils.table_to_book(elt, { sheet: "1" }); 
 
-		XLSX.writeFile(wb, "port_compare.xlsx")
+		XLSX.writeFile(wb, "port_compare_monthly.xlsx")
 	}
 </script>
 <?= $this->endSection() ?>

@@ -223,6 +223,35 @@ class Report_model extends Model
 	    return $data;
   	}
 
+  	function getPortCompareDataMonthly($year,$m_start,$m_end,$country_type,$port_type,$country_id){
+  		$data = array();
+		$builder = $this->db->table($this->table);
+	    $builder->select("{$this->table}.COUNTRY_ID, MD_PORT.PORT_ID, TO_CHAR({$this->table}.REPORT_DATE,'MM') AS REPORT_MONTH , MD_COUNTRY.COUNTRY_NAME_EN , 
+	    					 SUM({$this->table}.SUM) AS NUM ");
+	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
+	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
+	    $builder->whereIn("{$this->table}.OFFICE_ID",$port_type);
+	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$m_start}','mm') AND TO_DATE('{$m_end}','mm') ");
+	    $builder->where("TO_CHAR(REPORT_DATE,'yyyy') ",$year);
+	    if($country_type=='standard'){
+	    	// $builder->where('MD_COUNTRY.IS_STANDARD','Y');
+	    }	
+
+	    if($country_id!==''){
+	    	$builder->where("{$this->table}.COUNTRY_ID",$country_id);
+	    }
+	    
+	    $builder->where('PORT_DAILY',1);
+	    $builder->groupBy("{$this->table}.COUNTRY_ID, MD_PORT.PORT_ID, TO_CHAR({$this->table}.REPORT_DATE,'MM'),MD_COUNTRY.COUNTRY_NAME_EN ");
+	    $builder->orderBy("COUNTRY_NAME_EN");
+	    // $builder->orderBy("NUM DESC");
+	    $res = $builder->get()->getResultArray();
+	    foreach($res as $row){
+	    	$data[$row['COUNTRY_ID']][$row['PORT_ID']][$row['REPORT_MONTH']*1] = $row;
+	    }
+	    return $data;
+  	}
+
   	function getCountryAllRow(){
 		$builder = $this->db->table('MD_COUNTRY');
 	    $builder->select("MD_COUNTRY.COUNTRYID AS COUNTRY_ID,  MD_COUNTRY.COUNTRY_NAME_EN ");
@@ -243,6 +272,29 @@ class Report_model extends Model
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
 	    $builder->whereIn("{$this->table}.OFFICE_ID",$port_type);
 	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$start_date}','dd-mm-yyyy') AND TO_DATE('{$end_date}','dd-mm-yyyy') ");
+	    if($country_type=='standard'){
+	    	// $builder->where('MD_COUNTRY.IS_STANDARD','Y');
+	    }	
+	    $builder->where('PORT_DAILY',1);
+	    $builder->groupBy("{$this->table}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_EN ");
+	    $builder->orderBy("COUNTRY_NAME_EN");
+	    // $builder->orderBy("NUM DESC");
+	    $res = $builder->get()->getResultArray();
+	    foreach($res as $row){
+	    	$data[$row['COUNTRY_ID']] = $row['COUNTRY_NAME_EN'];
+	    }
+	    return $data;
+  	}
+
+  	function getCountryCompareRowMonthly($year,$m_start,$m_end,$country_type,$port_type){
+  		$data = array();
+		$builder = $this->db->table($this->table);
+	    $builder->select("{$this->table}.COUNTRY_ID,  MD_COUNTRY.COUNTRY_NAME_EN ");
+	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
+	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
+	    $builder->whereIn("{$this->table}.OFFICE_ID",$port_type);
+	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$m_start}','mm') AND TO_DATE('{$m_end}','mm') ");
+	    $builder->where("TO_CHAR(REPORT_DATE,'yyyy') ",$year);
 	    if($country_type=='standard'){
 	    	// $builder->where('MD_COUNTRY.IS_STANDARD','Y');
 	    }	

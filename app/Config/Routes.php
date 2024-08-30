@@ -61,6 +61,8 @@ $routes->group('main', ['namespace' => '\Modules\Main\Controllers', 'filter' => 
 
     $routes->get('departure', 'Main::departure');
     $routes->get('country', 'Main::country');
+    $routes->get('export_country', 'Main::export_country');
+    $routes->get('export_departure', 'Main::export_departure');
 
     $routes->post('saveLog', 'Main::saveLog');
     
@@ -72,6 +74,7 @@ $routes->group('report', ['namespace' => '\Modules\Report\Controllers'], functio
     $routes->get('port', 'Report::port');
     $routes->get('nation_compare', 'Report::nation_compare');
     $routes->get('port_compare', 'Report::port_compare');
+    $routes->get('port_compare_monthly', 'Report::port_compare_monthly');
     $routes->get('nation_daily', 'Report::nation_daily');
     $routes->get('port_daily', 'Report::port_daily');
     $routes->get('port_monthly', 'Report::port_monthly');

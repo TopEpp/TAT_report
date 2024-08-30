@@ -230,6 +230,67 @@ class Report extends BaseController
 		}
 	}
 
+	public function port_compare_monthly()
+	{
+		$Model = new Report_model();
+		$Main_model = new Main_model();
+		$data['session'] = session();
+		// $date = date('Y-m-d');
+		$date = $Main_model->getMaxDate();
+		$data['to_date'] = $date;
+		$data['Mydate'] = $this->Mydate;
+		$data['port'] = $Model->getPortGroupType();
+		$data['year'] = date('Y');
+		$data['m_start'] = 1; $data['m_end'] = 12;
+		$data['month_label'] = $this->month_en;
+		
+		$data['country_type'] = 'all';
+		$data['country_id'] = '';
+		$data['port_type'] = array();
+		if (!empty($_GET['year'])) {
+			$data['year'] = $_GET['year'];
+		}
+		if (!empty($_GET['m_start'])) {
+			$data['m_start'] = $_GET['m_start'];
+		}
+		if (!empty($_GET['m_end'])) {
+			$data['m_end'] = $_GET['m_end'];
+		}
+		if (!empty($_GET['country_type'])) {
+			$data['country_type'] = $_GET['country_type'];
+		}
+		if (!empty($_GET['port_type'])) {
+			$data['port_type'] = explode(',', $_GET['port_type']);
+		}
+		if (!empty($_GET['country_id'])) {
+			$data['country_id'] = $_GET['country_id'];
+		}
+
+		$m_start = $data['m_start']; $m_end = $data['m_end'];
+		for($m_start;$m_start<=$m_end;$m_start++){
+			$data['period'][$m_start] = $data['month_label'][$m_start];
+		}
+
+		if (!empty($data['port_type'])) {
+			$data['port_colunm'] = $Model->getPortColunm($data['port_type']);
+			$data['country_row'] = $Model->getCountryCompareRowMonthly($data['year'],$data['m_start'], $data['m_end'], $data['country_type'], $data['port_type']);
+			$data['data'] = $Model->getPortCompareDataMonthly($data['year'],$data['m_start'], $data['m_end'], $data['country_type'], $data['port_type'],$data['country_id']);
+		}
+
+		$data['country_select'] = $Model->getCountryAllRow();
+		$data['region'] = $Model->getSTDRegion($data['country_type']);
+		$data['country'] = $Model->getCountryByRegion($data['country_type']);
+
+		$data['export_type'] = @$_GET['export_type'];
+		if (@$_GET['export_type'] == 'excel') {
+			$this->export_excel('port_compare_monthly.xlsx', 'Modules\Report\Views\export\port_compare_monthly', $data);
+		} else if (@$_GET['export_type'] == 'pdf') {
+			$this->export_pdf('Modules\Report\Views\export\port_compare_monthly', $data, 'L');
+		} else {
+			return view('Modules\Report\Views\port_compare_monthly', $data);
+		}
+	}
+
 	public function market()
 	{
 		$Model = new Report_model();

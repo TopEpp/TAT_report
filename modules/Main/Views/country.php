@@ -145,17 +145,13 @@
 			<div class="btn btn_Color" onclick="ChangeFilter()">ตกลง</div>
 				
 		</div>
-		<div class="col-md-1 col-12 my-auto text-center">
-			<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_country?start_date=' . $start_date . '&end_date=' . $end_date); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
+		<div class="col-md-2 col-12 my-auto text-center" style="padding:0">
+			<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_country?export=pdf&start_date=' . $start_date . '&end_date=' . $end_date.'&country_id='.$country_id); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 40%; border-radius: 1em;">
 				<i class="fa-solid fa-file-pdf"></i> PDF
 			</button>
-		</div>
-		<div class="col-md-1 col-12 my-auto text-center">
-		
-			<button type="button" class="btn btn-primary SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
-				<i class="fa-solid fa-file-image"></i> JPG
+			<button type="button" class="btn btn-primary SetWidthbtnExport" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_country?&start_date=' . $start_date . '&end_date=' . $end_date.'&country_id='.$country_id); ?>')" style="width:50%; border-radius: 1em;">
+				<i class="fa-solid fa-file-image"></i> Images
 			</button>
-			
 		</div>
 	</div>
 </div>
@@ -222,16 +218,16 @@
 						}
 						?>
 						<div style="text-align:right;width: 100%;"><img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 40px;"></div>
-						<div class="text-center" id="htmltoimage_chart" style="padding:5px;">
+						<div class="text-center" id="htmltoimage_chart_country" style="padding:5px;">
 
-							<div id="chart_main" style="height:300px !important"></div>
+							<div id="chart_country" style="height:300px !important"></div>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						หมายเหตุ : ข้อมูลสัญชาติ (Nationality) ที่ไม่นับรวมข้อมูลผู้อพยพ , หน่วยงานพิเศษ UN , ไม่มีสัญชาติ <br>
-						WOW หมายถึงอัตราการเปลี่ยนแปลงเทียบกับสัญปดาห์ก่อนหน้า
+						WoW (Week on Week) หมายถึง อัตราการเปลี่ยนแปลงเทียบกับสัปดาห์ก่อนหน้า
 					</div>
 				</div>
 			</div>
@@ -307,7 +303,7 @@ $(function() {
 	});
 
 
-	Highcharts.chart('chart_main', {
+	Highcharts.chart('chart_country', {
 
 	    chart: {
 	        scrollablePlotArea: {
@@ -374,25 +370,22 @@ $(function() {
 
 	function SaveImg2ExportPdf(url2SaveImg, url2DowloadReport) {
 		$('.btn-download').hide();
-		$('#htmltoimage_chart_daily_year').show();
 		setTimeout(function(){ saveImg(url2SaveImg, url2DowloadReport); }, 1000);
-		setTimeout(function(){ $('#htmltoimage_chart_daily_year').hide(); }, 6000);
-
 		$.ajax({
 	        method: "POST",
 	        url: base_url + "/main/saveLog",
-	        data: {'type':'Daily'},
+	        data: {'type':'country'},
 	        success: function(res) {
 	          
 	        }
 	    });
-		
 	}
 
 	function saveImg(url2SaveImg, url2DowloadReport){
 		$('.btn-download').hide();
-		const chart_array = ["chart_daily","chart_daily_year"];
+		const chart_array = ["chart_country"];
 		var count_canvas = 0;
+		var country_select = $('#country_select').val();
 		$.each(chart_array, function(key, value) {
 			var container = document.getElementById("htmltoimage_" + value);
 			html2canvas(container, {
@@ -401,7 +394,7 @@ $(function() {
 
 				var link = document.createElement("a");
 				document.body.appendChild(link);
-				link.download = "<?php echo $end_date_label; ?>" + value + ".jpg";
+				link.download = "<?php echo $end_date_label; ?>" + value + country_select +".jpg";
 				link.href = canvas.toDataURL();
 				link.target = '_blank';
 
@@ -409,7 +402,7 @@ $(function() {
 				var dataURL = link.href;
 				$.post(url2SaveImg, {
 					imgBase64: dataURL,
-					imgName: "<?php echo $end_date_label; ?>" + value
+					imgName: "<?php echo $end_date_label; ?>" + value + country_select 
 				}, function(data, status) {
 					count_canvas++;
 					// console.log(count_canvas+' == '+chart_array.length );
