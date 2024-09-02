@@ -111,7 +111,7 @@ body {
 .thickOutlined {
     font-size: 25px;
     color: #0a1b54;
-    text-shadow: 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px#e9e8ed, 0 0 4px ##e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed;
+    text-shadow: 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px#e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed, 0 0 4px #e9e8ed;
 }
 
 #htmltoimage_info_dashboard {
@@ -134,7 +134,7 @@ body {
     box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;
     width: 100%;
 
-    height: 85px;
+    background-color: white !important;
     /* border-radius: 12px; */
 
 }
@@ -142,7 +142,7 @@ body {
 .box-shadow-2 {
     box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;
     width: 100%;
-
+    background-color: white !important;
     height: 105px;
 }
 
@@ -209,18 +209,19 @@ body {
     </div>
     <div class="row" id="htmltoimage_info_dashboard">
         <div class="col-md-12 p-0">
-            <div class="card">
+            <div class="card"
+                style="background-position: center;background-size: cover;background-image: url(<?php echo base_url('public/img/bg_report_country_2.png') ?>);background-repeat: no-repeat;">
                 <!-- <div class="card-header">  </div> -->
-                <div class="row m-0">
+                <div class="row m-0" style="opacity:1">
                     <div class="col-lg-2 text-center my-auto">
                         <img class="height-img-left" src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="">
                     </div>
                     <div class="col-lg-8 my-auto">
                         <div class="text-center my-auto">
-                            <span data-content="สถิติการท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย"
+                            <b data-content="สถิติการท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย"
                                 class="thickOutlined">
                                 สถิติการท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย
-                            </span>
+                            </b>
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
@@ -248,7 +249,7 @@ body {
                                 <div class="box-shadow">
                                     <div class="row">
                                         <div class="col-lg-12 " style="border-radius: 5%; overflow: hidden;">
-                                            <div class="row m-0" style="padding-top: 10px;">
+                                            <div class="row m-0" style="padding-top: 10px;padding-bottom: 10px;">
                                                 <div class="col-lg-12">
                                                     <div class="font-21" style="color: #1a329a;">
                                                         <b>สะสม
@@ -278,16 +279,17 @@ body {
                                                 <div class="col-lg-12">
                                                     <div class="font-21" style="color: #b49f5f;">
                                                         <b>สะสม
-                                                            <?php echo $Mydate->date_eng2thai($prev_date, 543, 'S', 'S') ?>
+                                                            <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?>
                                                             -
-                                                            <?php echo $Mydate->date_eng2thai($end_date_label, 543, 'S', 'S') ?></b>
+                                                            <?php echo $Mydate->date_eng2thai($end_date_label, 543, 'S', 'S') ?></b></b>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <div class="px-3" style="background-color: #f4d770;">
                                                         <div class="text-white text-right font-21"
                                                             style="color: black;">
-                                                            <b style="color: black;"><?php echo number_format($SumMonthData_past) ?>
+                                                            <b style="color: black;"><?php echo number_format($SumMonthData)?>
+
                                                                 คน</b>
                                                         </div>
                                                     </div>
@@ -329,8 +331,7 @@ body {
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <div class="px-3" style="background-color: #f4d770;">
-                                                        <div class="text-white text-right font-21"
-                                                            style="color: #a98f44;">
+                                                        <div class="text-right font-21" style="color: black;">
                                                             <b><?php echo number_format($SumWeekData) ?> คน</b>
                                                         </div>
                                                     </div>
@@ -342,9 +343,9 @@ body {
 									if ($SumWeekData_past > 0) {
 										$percent = number_format(($SumWeekData - $SumWeekData_past)  / $SumWeekData_past  * 100, 2);
 										if ($SumWeekData > $SumWeekData_past) {
-											echo '<span style="color:green">+' . $percent . '%</span>';
+											echo '<b style="color:green">+' . $percent . '%</b>';
 										} else {
-											echo '<span style="color:red">-' . $percent * (-1) . '%</span>';
+											echo '<b style="color:red">-' . $percent * (-1) . '%</b>';
 										}
 									} else {
 										echo '-';
@@ -358,32 +359,36 @@ body {
                                 </div>
                             </div>
                             <div class="box-1 my-2" style="">
-                                <div class="box-shadow">
+                                <div class="box-shadow" style="height: 73px;">
                                     <div class="row">
                                         <div class="col-lg-12  my-auto" style="border-radius: 5%; overflow: hidden;">
-                                            <div class="row m-0 my-auto" style="padding-top: 17px;">
+                                            <div class="row m-0 my-auto" style="padding-top: 12px;">
                                                 <div class="col-lg-8 my-auto">
                                                     <div class="font-17">
-                                                        <b>ด่านอากาศ :
+                                                        <b style="color:#36BA98">ด่านอากาศ :
                                                             <?php echo number_format($SumPortType[1]['NUM']); ?>
                                                             คน</b>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 text-center">
                                                     <div class="font-17">
-                                                        <b><?php echo number_format($SumPortType[1]['NUM'] / ($SumPortType[1]['NUM'] + $SumPortType[0]['NUM']) * 100, 2); ?>%</b>
+                                                        <b style="color:#36BA98"><?php echo
+                                                            number_format($SumPortType[1]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2);
+                                                            ?>%</b>
                                                     </div>
 
                                                 </div>
                                                 <div class="col-lg-8">
                                                     <div class="font-17">
-                                                        <b>ด่านบก : <?php echo number_format($SumPortType[0]['NUM']); ?>
+                                                        <b style="color:#1679AB">ด่านบก :
+                                                            <?php echo number_format($SumPortType[0]['NUM']); ?>
                                                             คน</b>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 text-center">
                                                     <div class="font-17">
-                                                        <b><?php echo number_format($SumPortType[1]['NUM'] / ($SumPortType[1]['NUM'] + $SumPortType[0]['NUM']) * 100, 2); ?>%</b>
+                                                        <b
+                                                            style="color:#1679AB"><?php echo number_format($SumPortType[0]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2); ?>%</b>
                                                     </div>
 
                                                 </div>
@@ -394,21 +399,24 @@ body {
                             </div>
                         </div>
                         <div class="col-lg-8 my-auto">
-                            <div class="text-right">
-                                <?php
+                            <div>
+                                <div class="text-right">
+                                    <?php
 							$flag = base_url('public/img/logotat.png');
 
 							if (!file_exists(base_url('public/img/flag/' . $country_id . '.png'))) {
 								$flag = base_url('public/img/flag/' . $country_id . '.png');
 							}
 							?>
-                                สัญชาติ <?php echo $country[$_GET['country_id']] ?><img
-                                    class="img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 70px;">
+                                    สัญชาติ <?php echo $country[$_GET['country_id']] ?>
+                                    <img class="img-profile rounded-circle" src="<?php echo $flag ?>"
+                                        style="width: 70px;">
 
-                            </div>
-                            <div id="chart_country" style="height:300px !important">
-                                <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_country' . $country_id . '.png') ?>"
-                                    style="height: 190px;">
+                                </div>
+                                <div id="chart_country" style="height:300px !important">
+                                    <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_country' . $country_id . '.png') ?>"
+                                        style="height: 250px; width: 750px;">
+                                </div>
                             </div>
                         </div>
 
