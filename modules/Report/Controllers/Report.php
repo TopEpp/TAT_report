@@ -134,6 +134,7 @@ class Report extends BaseController
 		$to_date = $day . '-' . $month . '-' . ($year);
 		$data['start_date1'] = $data['start_date2'] = $data['end_date1'] = $data['end_date2'] = $to_date; // date('d-m-Y');
 		$data['country_type'] = 'all';
+		$data['country_id'] = '';
 		if (!empty($_GET['start1'])) {
 			$data['start_date1'] = $_GET['start1'];
 		}
@@ -152,12 +153,16 @@ class Report extends BaseController
 		if (!empty($_GET['country_type'])) {
 			$data['country_type'] = $_GET['country_type'];
 		}
+		if (!empty($_GET['country_id'])) {
+			$data['country_id'] = $_GET['country_id'];
+		}
 
 		// echo '<pre>'; print_r($data); exit;
+		$data['country_select'] = $Model->getCountryAllRow();
 		$data['region'] = $Model->getSTDRegion($data['country_type']);
 		$data['country'] = $Model->getCountryByRegion($data['country_type']);
-		$data['data1'] = $Model->getNatBetweenDateData($data['start_date1'], $data['end_date1'], $data['country_type']);
-		$data['data2'] = $Model->getNatBetweenDateData($data['start_date2'], $data['end_date2'], $data['country_type']);
+		$data['data1'] = $Model->getNatBetweenDateData($data['start_date1'], $data['end_date1'], $data['country_type'],$data['country_id']);
+		$data['data2'] = $Model->getNatBetweenDateData($data['start_date2'], $data['end_date2'], $data['country_type'],$data['country_id']);
 		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
 			$this->export_excel('nation_compare.xlsx', 'Modules\Report\Views\export\nation_compare', $data);

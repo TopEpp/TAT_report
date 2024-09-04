@@ -80,8 +80,16 @@
 	<div class="col-md-4 col-12 text-left py-2 py-md-0">
 		วันที่สิ้นสุด <input type="text" name="end_date1" id="end_date1" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($end_date1, 543, '/') ?>">
 	</div>
-	<div class="col-md-2 col-2">
-
+	<div class="col-md-3 col-2">
+		Country List
+		<select class="form-control" id="country_type">
+			<option value="standard" <?php if (@$country_type == 'standard') {
+											echo "selected='selected'";
+										} ?>>Standard</option>
+			<option value="all" <?php if (@$country_type == 'all') {
+									echo "selected='selected'";
+								} ?>>All Country</option>
+		</select>
 	</div>
 
 	<div class="col-md-1 col-1">
@@ -99,15 +107,14 @@
 		
 	</div> -->
 	<div class="col-md-3 col-12">
-		Country List
-		<select class="form-control" id="country_type">
-			<option value="standard" <?php if (@$country_type == 'standard') {
-											echo "selected='selected'";
-										} ?>>Standard</option>
-			<option value="all" <?php if (@$country_type == 'all') {
-									echo "selected='selected'";
-								} ?>>All Country</option>
+		Country Select
+		<select class="form-control" id="country_id">
+			<option value="">Select</option>
+			<?php foreach ($country_select as $key => $value) { ?>
+			<option <?php if($country_id==$key){ echo 'selected="selected"';}?> value="<?php echo $key?>"  ><?php echo $value?></option>
+		<?php }?>
 		</select>
+		
 	</div>
 	<div class="col-md-1 col-12 text-center py-2 py-md-0 mt-auto">
 		<div class="btn btn-primary" onclick="ChangeFilter()">ตกลง</div>
@@ -139,6 +146,11 @@
 						</tr>
 					</thead>
 					<tbody>
+						<?php 
+						if($country_id){ 
+							$country_name = $country_select[$country_id];
+							getTableCountry($data1, $data2, $country_id,$country_name); 
+						}else{ ?>
 						<tr style="background-color:#B6E2E9">
 							<td style="font-weight: bolder;">GRAND TOTAL</td>
 							<?php
@@ -147,15 +159,6 @@
 							$dataSum = getSumData($data1, $data2, $region, 0, $country);
 							$sum1 = $dataSum['sum1'];
 							$sum2 = $dataSum['sum2'];
-							// if ($sum2 > 0) {
-							// 	$sum_diff = $sum2 - $sum1;
-							// 	if ($sum1 > 0) {
-							// 		$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
-							// 	}
-							// 	if ($sum_diff < 0) {
-							// 		$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
-							// 	}
-							// }
 
 							if ($sum1 > 0) {
 								$sum_diff = $sum1 - $sum2;
@@ -172,7 +175,7 @@
 							<td align="right"><?php echo number_format($sum2); ?></td>
 							<td align="right"><?php echo $sum_compare; ?></td>
 						</tr>
-						<?php genTableData($data1, $data2, $region, 0, $country) ?>
+						<?php genTableData($data1, $data2, $region, 0, $country); }?>
 					</tbody>
 				</table>
 			</div>
@@ -183,6 +186,28 @@
 	</div>
 </div>
 <?php
+
+function getTableCountry($data1, $data2, $country_id,$country_name){
+	$compare = '-';
+	$num1 = @$data1[$country_id]['NUM'];
+	$num2 = @$data2[$country_id]['NUM'];
+	if ($num1 > 0) {
+		$diff = $num1 - $num2;
+		if ($num2 > 0) {
+			$compare = number_format($diff / $num2 * 100, 2) . '';
+		}
+		if ($diff < 0) {
+			$compare = "<span style='color:red'>{$compare} </span>";
+		}
+	}
+
+	echo '<tr class="TR-Parent">';
+	echo '<td style="">'.$country_name.'</td>';
+	echo '<td align="right" style="">' . number_format(@$num1) . '</td>';
+	echo '<td align="right" style="">' . number_format(@$num2) . '</td>';
+	echo '<td align="right" style="">' . $compare . '</td>';
+	echo '</tr>';
+}
 
 function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 {
@@ -196,15 +221,6 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 			$sum1 = $dataSum['sum1'];
 			$sum2 = $dataSum['sum2'];
 
-			// if ($sum2 > 0) {
-			// 	$sum_diff = $sum2 - $sum1;
-			// 	if ($sum1 > 0) {
-			// 		$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
-			// 	}
-			// 	if ($sum_diff < 0) {
-			// 		$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
-			// 	}
-			// }
 
 			if ($sum1 > 0) {
 				$sum_diff = $sum1 - $sum2;
@@ -356,8 +372,9 @@ function getSumData($data1, $data2, $region, $region_id, $country, &$sum1 = 0, &
 
 		var show_type = $('#show_type').val();
 		var country_type = $('#country_type').val();
+		var country_id = $('#country_id').val();
 
-		window.location.href = base_url + '/report/nation_compare?start1=' + start_date1 + '&end1=' + end_date1 + '&start2=' + start_date2 + '&end2=' + end_date2 + '&show_type=' + show_type + '&country_type=' + country_type;
+		window.location.href = base_url + '/report/nation_compare?start1=' + start_date1 + '&end1=' + end_date1 + '&start2=' + start_date2 + '&end2=' + end_date2 + '&show_type=' + show_type + '&country_type=' + country_type+'&country_id='+country_id;
 	}
 
 	function ShowHide(reg_id) {

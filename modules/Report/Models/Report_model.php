@@ -174,7 +174,7 @@ class Report_model extends Model
 	    return $data;
 	}
 
-	function getNatBetweenDateData($start_date,$end_date,$country_type){
+	function getNatBetweenDateData($start_date,$end_date,$country_type,$country_id){
 		$data = array();
 		$builder = $this->db->table($this->table);
 	    $builder->select("{$this->table}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_EN, SUM({$this->table}.SUM) AS NUM ");
@@ -184,6 +184,9 @@ class Report_model extends Model
 	    if($country_type=='standard'){
 	    	// $builder->where('MD_COUNTRY.IS_STANDARD','Y');
 	    }	
+	    if($country_id!==''){
+	    	$builder->where("{$this->table}.COUNTRY_ID",$country_id);
+	    }
 	    $builder->where('PORT_DAILY',1);
 	    $builder->groupBy("{$this->table}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_EN ");
 	    $builder->orderBy("COUNTRY_NAME_EN");

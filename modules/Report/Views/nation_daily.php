@@ -47,7 +47,7 @@
 
 <div class="d-flex justify-content-center py-2 pb-3 flex-column flex-md-row">
 	<div class="col-md-4 col-12 text-left py-2 py-md-0">
-		ช่วงเวลาที่ 2 วันที่เริ่มต้น <input type="text" name="report_data1" id="report_data1" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($date_start, 543, '/') ?>">
+		วันที่เริ่มต้น <input type="text" name="report_data1" id="report_data1" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($date_start, 543, '/') ?>">
 	</div>
 	<div class="col-md-4 col-12 text-left py-2 py-md-0">
 		วันที่สิ้นสุด <input type="text" name="report_data2" id="report_data2" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($date_end, 543, '/') ?>">
