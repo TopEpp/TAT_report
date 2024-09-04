@@ -33,6 +33,11 @@ $end_date2 = $day . '-' . $month . '-' . $year;
 			</tr>
 		</thead>
 		<tbody>
+			<?php 
+			if($country_id){ 
+				$country_name = $country_select[$country_id];
+				getTableCountry($data1, $data2, $country_id,$country_name); 
+			}else{ ?>
 			<tr style="background-color:#B6E2E9">
 				<td style="font-weight: bolder; background-color:#B6E2E9;border: 1px solid black ;">GRAND TOTAL</td>
 				<?php
@@ -41,15 +46,6 @@ $end_date2 = $day . '-' . $month . '-' . $year;
 				$dataSum = getSumData($data1, $data2, $region, 0, $country);
 				$sum1 = $dataSum['sum1'];
 				$sum2 = $dataSum['sum2'];
-				// if ($sum2 > 0) {
-				// 	$sum_diff = $sum2 - $sum1;
-				// 	if ($sum1 > 0) {
-				// 		$sum_compare = number_format($sum_diff / $sum1 * 100, 2) . '';
-				// 	}
-				// 	if ($sum_diff < 0) {
-				// 		$sum_compare = "<span style='color:red'>{$sum_compare} </span>";
-				// 	}
-				// }
 
 				if ($sum1 > 0) {
 					$sum_diff = $sum1 - $sum2;
@@ -66,7 +62,7 @@ $end_date2 = $day . '-' . $month . '-' . $year;
 				<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo ($sum2); ?></td>
 				<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo $sum_compare; ?></td>
 			</tr>
-			<?php genTableData($data1, $data2, $region, 0, $country) ?>
+			<?php genTableData($data1, $data2, $region, 0, $country); } ?>
 
 			<?php if ($export_type == 'excel') { ?>
 				<tr style="border:0px">
@@ -85,6 +81,28 @@ $end_date2 = $day . '-' . $month . '-' . $year;
 </body>
 
 <?php
+
+function getTableCountry($data1, $data2, $country_id,$country_name){
+	$compare = '-';
+	$num1 = @$data1[$country_id]['NUM'];
+	$num2 = @$data2[$country_id]['NUM'];
+	if ($num1 > 0) {
+		$diff = $num1 - $num2;
+		if ($num2 > 0) {
+			$compare = number_format($diff / $num2 * 100, 2) . '';
+		}
+		if ($diff < 0) {
+			$compare = "<span style='color:red'>{$compare} </span>";
+		}
+	}
+
+	echo '<tr class="TR-Parent">';
+	echo '<td style="">'.$country_name.'</td>';
+	echo '<td align="right" style="">' . number_format(@$num1) . '</td>';
+	echo '<td align="right" style="">' . number_format(@$num2) . '</td>';
+	echo '<td align="right" style="">' . $compare . '</td>';
+	echo '</tr>';
+}
 
 function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 {
