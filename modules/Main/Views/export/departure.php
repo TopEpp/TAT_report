@@ -157,6 +157,7 @@
 
 .bg-blue {
     background-color: #163868;
+    height: 100%;
 }
 
 .header-table {
@@ -281,18 +282,22 @@ $arraycolor=['#1d3860','#dd6910' , '#2e74b4']
         <pageBreak />
         <table style="width: 100%;">
             <tr>
-                <td style="width: 20%;">
-                    <div style="margin:10px">
-                        <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'departure3.png') ?>"
-                            style="height:300px;">
+                <td style="background-color: white; text-align: center;">
+                    <div style="margin:10px" style=" text-align:center">
+                        <img src=" <?php echo base_url('public/uploads/main/' . $to_date . 'departure3.png') ?>"
+                            style="height:350px;width:500px;">
                     </div>
                 </td>
-                <td style="width: 70%;">
+
+            </tr>
+            <tr>
+                <td style="padding-top: 10px;">
                     <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'departure4.png') ?>"
-                        style="width:100%;height:300px;">
+                        style="width:100%;height:390px;">
                 </td>
             </tr>
         </table>
+        <pageBreak />
         <div class="p-3"
             style="background-color: orange; padding:0px;font-size: 20px; text-align: center;color: white; margin-top:10px;margin-bottom: 10px;">
             <b>
@@ -301,7 +306,7 @@ $arraycolor=['#1d3860','#dd6910' , '#2e74b4']
         </div>
         <div>
             <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'departure5.png') ?>"
-                style="width:100%;height:220px;">
+                style="width:100%;height:300px;">
         </div>
         <div style="background-color: white; margin-top: 9px;">
             <table class="table table-striped " border="1">
