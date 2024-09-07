@@ -344,7 +344,7 @@ class Main extends BaseController
 			'margin_right' => 2,
 			'margin_header' => 0, // 30mm not pixel
 			'margin_footer' => 0, // 10mm
-			'orientation' => 'L', // L แนวนอน P แนวตั้งง
+			'orientation' => $orientation, // L แนวนอน P แนวตั้งง
 		]);
 
 		// $footer = '<table width="100%" border=0 style="border:0px">
@@ -778,9 +778,9 @@ class Main extends BaseController
 
 		$data['SumPort'] = $Model->getSumOutSumPort($data['year']);
 
-
+		$orientation = @$_GET['orientation'];
 		if(@$_GET['export']=='pdf'){
-			$this->export_pdf('Modules\Main\Views\export\departure', $data);
+			$this->export_pdf('Modules\Main\Views\export\departure', $data , $orientation);
 		}else{
 			return view('Modules\Main\Views\export\departure_view', $data);
 
