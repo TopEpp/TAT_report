@@ -128,7 +128,7 @@
                     <div class="col-md-10 col-12 my-auto text-center">สถิติคนไทยเดินทางออกนอกราชอาณาจักรในภาพรวม</div>
                     <div class="col-md-1 col-12 my-auto text-center" style="font-size:0.6em !important; ">
                         <button type="button"
-                            onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_departure?export=pdf&$orientation=P'); ?>')"
+                            onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_departure?export=pdf'); ?>')"
                             class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
                             <i class="fa-solid fa-file-pdf"></i> PDF
                         </button>

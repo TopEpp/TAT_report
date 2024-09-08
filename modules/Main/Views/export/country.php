@@ -315,7 +315,7 @@
                     </div>
                 </div>
                 <div class="col8">
-                    <div style="margin-top: 80px;">
+                    <div style="margin-top: 90px;">
                         <div>
                             <?php 
 						$flag = base_url('public/img/logotat.png');
@@ -327,10 +327,10 @@
                             <div style="text-align:right;width: 100%;">
                                 <b style="font-size: 22px;color: #1a329a;">สัญชาติ
                                     <?php echo $country[$_GET['country_id']] ?></b> <img
-                                    class=" img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 70px;">
+                                    class=" img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 100px;">
                             </div>
-                            <div class="text-center" id="htmltoimage_chart_country" style="padding:5px;height: 300px;">
-                                <img
+                            <div class="text-center" id="htmltoimage_chart_country" style="padding:5px">
+                                <img style="height:100%"
                                     src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_country'.$country_id.'.png') ?>">
                             </div>
                         </div>

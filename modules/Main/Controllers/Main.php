@@ -329,7 +329,7 @@ class Main extends BaseController
 
 
 
-	function export_pdf($view, $data, $orientation = 'P')
+	function export_pdf($view, $data, $orientation = 'L')
 	{
 		$html = view($view, $data);
 		$this->response->setHeader('Content-Type', 'application/pdf');
@@ -344,7 +344,7 @@ class Main extends BaseController
 			'margin_right' => 2,
 			'margin_header' => 0, // 30mm not pixel
 			'margin_footer' => 0, // 10mm
-			'orientation' => $orientation, // L แนวนอน P แนวตั้งง
+			'orientation' =>'L', // L แนวนอน P แนวตั้งง
 		]);
 
 		// $footer = '<table width="100%" border=0 style="border:0px">
