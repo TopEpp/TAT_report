@@ -62,10 +62,10 @@
 		
 	</div>
 	<div class="col-md-6 col-12 py-2 py-md-0" style="text-align: right;">
-		<a target="_blank" href="<?php echo base_url('report/nation_compare/?export_type=excel&start1=' . $start_date1 . '&end1=' . $end_date1 . '&start2=' . $start_date2 . '&end2=' . $end_date2 . '&country_type=' . $country_type); ?>" class="btn btn-success" style="width : 70px">
+		<a target="_blank" href="<?php echo base_url('report/nation_compare/?export_type=excel&start1=' . $start_date1 . '&end1=' . $end_date1 . '&start2=' . $start_date2 . '&end2=' . $end_date2 . '&country_type=' . $country_type. '&country_id=' . $country_id); ?>" class="btn btn-success" style="width : 70px">
 			<i class="fa-solid fa-file-excel"></i> Excel
 		</a>
-		<a target="_blank" href="<?php echo base_url('report/nation_compare/?export_type=pdf&start1=' . $start_date1 . '&end1=' . $end_date1 . '&start2=' . $start_date2 . '&end2=' . $end_date2 . '&country_type=' . $country_type); ?>" class="btn btn-danger" style="width : 70px">
+		<a target="_blank" href="<?php echo base_url('report/nation_compare/?export_type=pdf&start1=' . $start_date1 . '&end1=' . $end_date1 . '&start2=' . $start_date2 . '&end2=' . $end_date2 . '&country_type=' . $country_type. '&country_id=' . $country_id); ?>" class="btn btn-danger" style="width : 70px">
 			<i class="fa-solid fa-file-pdf"></i> PDF
 		</a>
 	</div>
