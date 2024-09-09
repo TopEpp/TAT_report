@@ -302,7 +302,7 @@ td {
                     </div>
                     <div class="mx-2 my-2">
                         <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'departure2.png') ?>"
-                            style="width:100%;height:320px;">
+                            style="width:100%;height:240px;">
                     </div>
                     <div class="my-2 mx-2" style="background-color: white;">
                         <table class="table  mb-0 " border="1">
@@ -403,11 +403,11 @@ td {
                         <div class="row">
                             <div class="col-lg-3 pr-0">
                                 <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'departure3.png') ?>"
-                                    style="width:100%;height:220px;">
+                                    style="width:100%;height:300px;">
                             </div>
                             <div class="col-lg-9 pl-1 ">
                                 <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'departure4.png') ?>"
-                                    style="width:100%;height:220px;">
+                                    style="width:100%;height:300px;">
                             </div>
                         </div>
                     </div>
@@ -419,7 +419,7 @@ td {
                     </div>
                     <div class="text-center mx-2" id="htmltoimage_chart_departure5" style="height:230px; ">
                         <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'departure5.png') ?>"
-                            style="width:100%;height:220px;">
+                            style="width:100%;height:240px;">
                     </div>
                     <div class="mx-2" style="background-color: white;">
                         <table class="table mb-0 ">

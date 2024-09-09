@@ -124,17 +124,17 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-1 col-12 my-auto text-center"></div>
-                    <div class="col-md-10 col-12 my-auto text-center">สถิติคนไทยเดินทางออกนอกราชอาณาจักรในภาพรวม</div>
-                    <div class="col-md-1 col-12 my-auto text-center" style="font-size:0.6em !important; ">
+                    <div class="col-md-2 col-12 my-auto text-center"></div>
+                    <div class="col-md-8 col-12 my-auto text-center">สถิติคนไทยเดินทางออกนอกราชอาณาจักรในภาพรวม</div>
+                    <div class="col-md-2 col-12 my-auto text-center" style="font-size:0.6em !important; ">
                         <button type="button"
                             onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_departure?export=pdf'); ?>')"
-                            class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
+                            class="btn btn-danger SetWidthbtnExport" style="width: 60px; border-radius: 1em;">
                             <i class="fa-solid fa-file-pdf"></i> PDF
                         </button>
                         <button type="button" class="btn btn-primary SetWidthbtnExport"
                             onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_departure'); ?>')"
-                            style="width: 100%; border-radius: 1em;">
+                            style="width: 80px; border-radius: 1em;">
                             <i class="fa-solid fa-file-image"></i> Images
                         </button>
                     </div>
