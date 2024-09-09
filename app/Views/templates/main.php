@@ -180,6 +180,21 @@
 
 
         });
+        let checkToggle = false;
+        $('#sidebarToggle').click(function() {
+            if(checkToggle){
+                $('.menusideNav').css({
+                    'min-width':'30rem'
+                })
+                checkToggle = false;
+            }else{
+                $('.menusideNav').css({
+                    'min-width':'12rem'
+                })
+                checkToggle = true;
+            }
+            
+        });
 
         $(document).ajaxStart(function() {
             $('body').addClass("loading");

@@ -328,7 +328,7 @@
                                     class=" img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 100px;">
                             </div>
                             <div class="text-center" id="htmltoimage_chart_country" style="padding:5px">
-                                <img style="height:100%"
+                                <img style="height:270px;width:100%"
                                     src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_country'.$country_id.'.png') ?>">
                             </div>
                         </div>

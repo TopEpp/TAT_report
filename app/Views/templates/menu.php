@@ -18,8 +18,11 @@ $user_menu = $session->get('user_menu');
             padding: 0.75rem 0px !important;
         }
     }
+    .sidebar .nav-item .collapse .collapse-inner, .sidebar .nav-item .collapsing .collapse-inner{
+        min-width: 30rem;
+    }
 </style>
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <div class="row" style="margin-bottom: 5px;">
@@ -61,7 +64,7 @@ $user_menu = $session->get('user_menu');
             <span>Report</span>
         </a>
         <div id="collapseReport" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
+            <div class="bg-white py-2 collapse-inner rounded menusideNav">
                 <a class="collapse-item <?php if ($method == 'nation') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('report/nation') ?>">รายงานจำนวนนักท่องเที่ยวรายสัญชาติ</a>
@@ -121,7 +124,7 @@ $user_menu = $session->get('user_menu');
             <span>Setting</span>
         </a>
         <div id="collapseSetting" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
+            <div class="bg-white py-2 collapse-inner rounded menusideNav">
                 <!-- <h6 class="collapse-header">Report:</h6> -->
                 <a class="collapse-item <?php if ($method == 'country') {
                                             echo 'active';
@@ -168,7 +171,7 @@ $user_menu = $session->get('user_menu');
             <span>Report</span>
         </a>
         <div id="collapseReport" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
+            <div class="bg-white py-2 collapse-inner rounded menusideNav">
                 <a class="collapse-item <?php if ($method == 'monthly') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('report/monthly') ?>">รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทยรายเดือน</a>
@@ -185,7 +188,7 @@ $user_menu = $session->get('user_menu');
             <span>Import</span>
         </a>
         <div id="collapseImport" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
+            <div class="bg-white py-2 collapse-inner rounded menusideNav">
                 
                <!--  <a class="collapse-item <?php if ( $controller == 'import' && $method == 'monthly') {
                                             echo 'active';
