@@ -335,9 +335,11 @@
                     <div>
                         <div>
                             <div class="text-center" id="htmltoimage_chart_country" style="padding:5px;margin-top: 5px;">
-                                <div style="border-radius:14px;">
-                                    <img style="height:260px;width:100%;border-radius: 15px;"
+                                <div style="border-radius:14px; overflow: hidden; background-color: white;">
+                                    <div style="padding:5px">
+                                        <img style="height:250px;width:100%;"
                                     src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_country'.$country_id.'.png') ?>">
+                                    </div>
                                 </div>
                             </div>
                         </div>

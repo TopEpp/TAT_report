@@ -182,7 +182,7 @@ body {
 </style>
 <?php $shortmonth = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."); ?>
 
-<body style="width:1150px; margin: auto;">
+<body style="width:1100px; margin: auto;">
     <div class="row" style="margin: 0px;">
         <div class="col-lg-1 col-12 text-center text-md-right">
             <img class="img-profile " src="<?php echo base_url('public/img/tat.png') ?>" width="100px">
@@ -412,7 +412,7 @@ body {
                                             $flag = base_url('public/img/flag/' . $country_id . '.png');
                                         }
                                         ?>
-                                                สัญชาติ <?php echo $country[$_GET['country_id']] ?>
+                                                <b style="font-size: 22px;color: #1a329a;"> สัญชาติ <?php echo $country[$_GET['country_id']] ?></b>
                                                 <img class="img-profile rounded-circle" src="<?php echo $flag ?>"
                                                     style="width: 80px;">
                                     </div>
