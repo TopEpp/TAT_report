@@ -42,7 +42,7 @@ $user_menu = $session->get('user_menu');
 
     <?php if($session->get('report_type') == 'daily'){ ?>
     
-    <li class="nav-item <?php if ($controller == 'main') {
+   <!--  <li class="nav-item <?php if ($controller == 'main') {
                             echo 'active';
                         } ?>">
         <a class="nav-link <?php if ($controller == 'main' && ($method == 'daily' || $method == '')) {
@@ -52,6 +52,28 @@ $user_menu = $session->get('user_menu');
             <span>Dashboard</span>
         </a>
        
+    </li> -->
+     <li class="nav-item <?php if ($controller == 'main') {
+                            echo 'active';
+                        } ?>">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDashboard" aria-expanded="true" aria-controls="collapseDashboard">
+            <i class="fas fa-fw fa-dashboard"></i>
+            <span>Dashboard</span>
+        </a>
+        <div id="collapseDashboard" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded menusideNav">
+                <a class="collapse-item <?php if ($method == 'daily') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('main/daily') ?>">สถิตินักท่องเที่ยวรายวัน</a>
+                <a class="collapse-item <?php if ($method == 'country') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('main/country') ?>">สถิตินักท่องเที่ยวรายประเทศ</a>
+                <a class="collapse-item <?php if ($method == 'departure') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('main/departure') ?>">สถิติคนไทยเดินทางออกนอกราชอาณาจักรในภาพรวม</a>
+               
+            </div>
+        </div>
     </li>
 
     <?php if( !empty($user_menu['REPORT']) ){?>
@@ -79,10 +101,10 @@ $user_menu = $session->get('user_menu');
                                         } ?>" href="#">รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทย รายด่าน (สะสม)</a>
                 <a class="collapse-item <?php if ($method == 'port_compare') {
                                             echo 'active';
-                                        } ?>" href="<?php echo base_url('report/port_compare') ?>">- รายวัน</a>
+                                        } ?>" href="<?php echo base_url('report/port_compare') ?>"><span style="padding-left: 15px;">- รายวัน</span></a>
                 <a class="collapse-item <?php if ($method == 'port_compare_monthly') {
                                             echo 'active';
-                                        } ?>" href="<?php echo base_url('report/port_compare_monthly') ?>">- รายเดือน</a>
+                                        } ?>" href="<?php echo base_url('report/port_compare_monthly') ?>"><span style="padding-left: 15px;">- รายเดือน</span></a>
                 <a class="collapse-item <?php if ($method == 'market') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('report/market') ?>">รายงานจำนวนนักท่องเที่ยวจำแนกรายรายตลาด</a>
