@@ -285,12 +285,12 @@ $arraycolor=['#1d3860','#dd6910' , '#2e74b4']
                     <td style="width: 30%;">
                         <div style="margin:10px">
                             <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'departure3.png') ?>"
-                                style="height:330px;">
+                                style="height:300px;">
                         </div>
                     </td>
                     <td style="width: 70%;">
                         <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'departure4.png') ?>"
-                            style="width:100%;height:330px">
+                            style="width:100%;height:300px">
                     </td>
                 </tr>
             </table>
@@ -435,7 +435,7 @@ $arraycolor=['#1d3860','#dd6910' , '#2e74b4']
                     </td>
                 </tr>
             </table>
-            <div> <?php echo $check_noti_month_label; ?></div>
+            <?php echo $check_noti_month_label; ?>
         </div>
     </div>
 </div>

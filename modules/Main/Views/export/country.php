@@ -161,7 +161,7 @@
 <?php $shortmonth = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."); ?>
 
 
-<div class="row" style="padding-top: 70px;">
+<div class="row" style="padding-top: 80px;">
     <div class="col-md-12">
         <div class=""
             style="background-position: center;background-size: cover;background-image: url(<?php echo base_url('public/img/bg_report_country_2.png') ?>);background-repeat: no-repeat;">
@@ -202,7 +202,7 @@
                 <div class="col4">
                     <div style="margin: 20px; margin-left:7px; margin-top:5px; margin-bottom: 0px;">
                         <div class="card_info"
-                            style="padding: 8px;  border:none; border-radius:none; box-shadow: 1px 1px 5px 2px hsl(0, 15%, 70%); overflow: hidden;">
+                            style="padding: 8px;  border:none; border-radius:14px; box-shadow: 0px 1px 1px 2px hsl(0, 15%, 70%); overflow: hidden;">
                             <div style="margin-left: 10px; margin-right: 10px;">
                                 <b style="margin: 0px; font-size:20px;color: #1a329a;">สะสม
                                     <?php echo $Mydate->date_eng2thai($start_date_label_past, 543, 'S', 'S') ?>
@@ -217,7 +217,7 @@
                             </div>
                         </div>
                         <div class=" card_info"
-                            style="padding: 0px; border:none; border-radius:none; box-shadow: 1px 1px 5px 2px hsl(0, 15%, 70%);overflow: hidden;">
+                            style="padding: 0px; border:none; border-radius:14px; box-shadow: 0px 1px 1px 2px hsl(0, 15%, 70%);overflow: hidden;">
                             <div style="margin-left: 10px; margin-right: 10px;">
                                 <b style="margin: 0px; font-size:21px;color: #b49f5f;">
                                     สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?>
@@ -248,7 +248,7 @@
                             </div>
                         </div>
                         <div class=" card_info"
-                            style="padding: 0px; border:none; border-radius:none; box-shadow: 1px 1px 5px 2px hsl(0, 15%, 70%);overflow: hidden;">
+                            style="padding: 0px; border:none; border-radius:14px; box-shadow: 0px 1px 1px 2px hsl(0, 15%, 70%);overflow: hidden;">
                             <div style="margin-left: 10px; margin-right: 10px;">
                                 <b style="margin: 0px; line-height:none; font-size:21px;color:#a98f44 ;">
                                     <?php echo $Mydate->date_eng2thai($prev_date, 543, 'S', 'S') ?> -
@@ -276,60 +276,69 @@
 							} ?>
                             </div>
                         </div>
-                        <div class="card_info"
-                            style="height: 63px; padding: 8px; border:none; border-radius:none; box-shadow: 1px 1px 5px 2px hsl(0, 15%, 70%);overflow: hidden;">
-                            <table style="width: 100%;margin-top: 5px;">
-                                <tr>
-                                    <td>
-                                        <b style="margin: 0px; font-size:18px;color:#36BA98">
-                                            ด่านอากาศ :
-                                            <?php echo number_format($SumPortType[1]['NUM']);?> คน</b>
-                                    </td>
-                                    <td style="text-align: right;font-size:18px;color:#36BA98">
-                                        <b><?php echo number_format($SumPortType[1]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2); ?>%</b>
-                                    </td>
-                                </tr>
-                            </table>
-                            <div>
-                                <table style="width: 100%;">
-                                    <tr>
-                                        <td>
-                                            <b style=" margin: 0px; font-size:18px;color:#1679AB">
-                                                ด่านบก : <?php echo number_format($SumPortType[0]['NUM']);?>
-                                                คน
-                                            </b>
-                                        </td>
-                                        <td style="text-align: right;font-size:18px;color:#1679AB">
-                                            <b>
-                                                <?php echo number_format($SumPortType[0]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2); ?>%
-                                            </b>
-                                        </td>
-                                    </tr>
-                                </table>
-
-                            </div>
-                        </div>
+                        
 
                     </div>
                 </div>
                 <div class="col8">
-                    <div style="margin-top: 90px;">
-                        <div>
-                            <?php 
-						$flag = base_url('public/img/logotat.png');
+                    <div class="row">
+                        <div class="col6">
+                            <div class="card"
+                            style="margin-left: 15px;height: 63px; padding: 8px; border:none; border-radius:14px; box-shadow: 0px 1px 1px 2px hsl(0, 15%, 70%);overflow: hidden;width: 400px;">
+                                    <table style="width: 100%;margin-top: 5px;">
+                                        <tr>
+                                            <td>
+                                                <b style="margin: 0px; font-size:18px;color:#36BA98">
+                                                    ด่านอากาศ :
+                                                    <?php echo number_format($SumPortType[1]['NUM']);?> คน</b>
+                                            </td>
+                                            <td style="text-align: right;font-size:18px;color:#36BA98">
+                                                <b><?php echo number_format($SumPortType[1]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2); ?>%</b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td>
+                                                <b style=" margin: 0px; font-size:18px;color:#1679AB">
+                                                    ด่านบก : <?php echo number_format($SumPortType[0]['NUM']);?>
+                                                    คน
+                                                </b>
+                                            </td>
+                                            <td style="text-align: right;font-size:18px;color:#1679AB">
+                                                <b>
+                                                    <?php echo number_format($SumPortType[0]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2); ?>%
+                                                </b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                        </div>
+                        <div class="col6">
+                                <?php 
+                                    $flag = base_url('public/img/logotat.png');
 
-						if (!file_exists(base_url('public/img/flag/' . $country_id . '.png'))) {
-							$flag = base_url('public/img/flag/' . $country_id . '.png');
-						}
-						?>
-                            <div style="text-align:right;width: 100%;">
-                                <b style="font-size: 22px;color: #1a329a;">สัญชาติ
-                                    <?php echo $country[$_GET['country_id']] ?></b> <img
-                                    class=" img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 100px;">
-                            </div>
-                            <div class="text-center" id="htmltoimage_chart_country" style="padding:5px">
-                                <img style="height:270px;width:100%"
+                                    if (!file_exists(base_url('public/img/flag/' . $country_id . '.png'))) {
+                                        $flag = base_url('public/img/flag/' . $country_id . '.png');
+                                    }
+                                 ?>
+                                 <div style="text-align:right;width: 100%;margin-top: 17px; margin-right: 17px;">
+                                    <b style="font-size: 22px;color: #1a329a;">สัญชาติ
+                                        <?php echo $country[$_GET['country_id']] ?>
+                                    </b> 
+                                    <img class=" img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 80px;">
+                                </div>
+                        </div>
+                    </div>
+                   
+                    <div>
+                        <div>
+                            <div class="text-center" id="htmltoimage_chart_country" style="padding:5px;margin-top: 5px;">
+                                <div style="border-radius:14px;">
+                                    <img style="height:260px;width:100%;border-radius: 15px;"
                                     src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_country'.$country_id.'.png') ?>">
+                                </div>
                             </div>
                         </div>
                     </div>
