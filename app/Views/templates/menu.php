@@ -114,6 +114,9 @@ $user_menu = $session->get('user_menu');
                 <a class="collapse-item <?php if ($method == 'port_daily') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('report/port_daily') ?>">รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทยรายวัน จำแนกรายด่าน</a>
+                <a class="collapse-item <?php if ($method == 'departure') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('report/departure') ?>">สถิติคนไทยเดินทางออกรายวัน</a>
                
             </div>
         </div>

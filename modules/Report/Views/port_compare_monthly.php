@@ -46,16 +46,17 @@
 	<div class="col-md-2 col-12 text-start py-2 py-md-0">
 		ปี
 		<select class="form-control" id="year" name="year"  >
-		<?php for($i=date('Y');$i >= date('Y')-5;$i--){ $sel = ''; if($year==$i){  $sel='selected="selected"';  }?>
-			<option value="<?php echo $i?>" <?php echo $sel;?> ><?php echo $i?></option>
-		<?php }?>
+		<?php foreach($select_year as $y){ $sel=''; if($y==$year){ $sel='selected="selected"';} ?>
+			<option value="<?php echo $y?>" <?php echo $sel;?> ><?php echo $y?></option>
+			<?php } ?>
 		</select>
 	</div>
 	<div class="col-md-2 col-12 text-start py-2 py-md-0">
 		เดือนเริ่มต้น
 		<select class="form-control" id="m_start" name="m_start">
 		<?php foreach($month_label as $key=>$label){ $sel = ''; if($m_start==$key){ $sel='selected="selected"';}?>
-			<option <?php echo $sel;?> value="<?php echo $key;?>"><?php echo $label;?></option>
+			<?php $dis = '';if($key>$end_month){ $dis='disabled'; }?>
+			<option <?php echo $dis;?> <?php echo $sel;?> value="<?php echo $key;?>"><?php echo $label;?></option>
 		<?php } ?>
 		</select>
 	</div>
@@ -63,7 +64,8 @@
 		เดือนสิ้นสุด
 		<select class="form-control" id="m_end" name="m_end">
 		<?php foreach($month_label as $key=>$label){ $sel = ''; if($m_end==$key){ $sel='selected="selected"';}?>
-			<option <?php echo $sel;?> value="<?php echo $key;?>"><?php echo $label;?></option>
+			<?php $dis = '';if($key>$end_month){ $dis='disabled'; }?>
+			<option <?php echo $dis;?> <?php echo $sel;?> value="<?php echo $key;?>"><?php echo $label;?></option>
 		<?php } ?>
 		</select>
 	</div>
@@ -207,8 +209,9 @@ function getTableCountry($data, $country_name, $country_id,$port_colunm,$period)
 				echo "<td align='right'>" . @number_format(@$data[$country_id][$p['PORT_ID']][$d]['NUM']) . "</td>";
 				$sum_port += @$data[$country_id][$p['PORT_ID']][$d]['NUM'];
 			}
+			echo "<td align='right'>".number_format($sum_port)."</td>";
 		}
-		echo "<td align='right'>".number_format($sum_port)."</td>";
+		
 	}
 	
 	echo '</tr>';

@@ -1,26 +1,22 @@
-<?php $this->extend('templates/main') ?>
-
-<!-- content -->
-<?php $this->section('content') ?>
-<?php $user_menu = $session->get('user_menu'); ?>
+<?php include_once("export_css.php"); ?>
 <style>
-	.radiusTableport_daily thead th {
+	.radiusTableport_departure thead th {
 
 		background: rgba(55, 159, 166, 1);
-		padding: 12px;
+		padding: 10px;
 	}
 
 	.table thead th {
 		border-bottom: none;
 	}
 
-	.radiusTableport_daily {
+	.radiusTableport_departure {
 		border-radius: 1em;
 		overflow: hidden;
 
 	}
 
-	.radiusTableport_daily tbody tr:nth-of-type(odd) {
+	.radiusTableport_departure tbody tr:nth-of-type(odd) {
 		background: rgba(214, 239, 242, 1);
 	}
 
@@ -29,50 +25,38 @@
 		border-left: none
 	}
 
-	.radiusTableport_daily tfoot td {
+	.radiusTableport_departure tfoot td {
 
 		background: rgba(55, 159, 166, 1);
 	}
 </style>
+<?php
+function isWeekend($date) {
+	list($day, $month, $year) = explode('-', $date);
+	if(checkdate($month,$day,$year)){ 
+		$weekDay = date('w', strtotime($date));
+		return ($weekDay == 0 || $weekDay == 6);
+	}else{
+		return false;
+	}
+	
+}
+?>
+<table style="width:100%">
+		<tr>
+			<td colspan="5" class="headderTable" style="text-align: center;">
+				<b>สถิติคนไทยเดินทางออกรายวัน</b>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" class="headderTable">
+				<b>ปี <?php echo $year?></b>
+			</td>
+		</tr>
+	</table>
 
-<div class="row">
-	<div class="col-md-3 text-center text-md-left" style="font-size: 1.2em;">
-		สถิติคนไทยเดินทางออกรายวัน
-	</div>
-	<div class="col-md-1 text-center text-md-right" style="font-size: 1.2em;">
-		ปี
-	</div>
-	<div class="col-md-2 text-center">
-		<select class="form-control" id="select_year" onchange="ChangeDate()">
-			<?php foreach($select_year as $y){ $sel=''; if($y==$year){ $sel='selected="selected"';} ?>
-			<option value="<?php echo $y?>" <?php echo $sel;?> ><?php echo $y?></option>
-			<?php } ?>
-		</select>
-	</div>
-	<div class="col-md-1 text-center text-md-right" style="font-size: 1.2em;">
-		ด่าน
-	</div>
-	<div class="col-md-2 text-center">
-		<select class="form-control" id="select_port_type" onchange="ChangeDate()">
-			<option value="">ทั้งหมด</option>
-			<option value="ด่านบก" <?php if($port_type=='ด่านบก'){ echo 'selected="selected"';} ?> >ด่านบก</option>
-			<option value="ด่านอากาศ" <?php if($port_type=='ด่านอากาศ'){ echo 'selected="selected"';} ?> >ด่านอากาศ</option>
-		</select>
-	</div>
-	<div class="col-md-3 col-12 py-2" style="text-align: right;">
-		<a target="_blank" onclick="export_report('excel')" class="btn btn-success" style="width : 70px">
-			<i class="fa-solid fa-file-excel"></i> Excel
-		</a>
-		<a target="_blank" onclick="export_report('pdf')" class="btn btn-danger" style="width : 70px">
-			<i class="fa-solid fa-file-pdf"></i> PDF
-		</a>
-	</div>
-</div>
 
-<div class="row">
-	<div class="col-md-12 col-12">
-		<div class="table-responsive">
-			<table class="table table-bordered radiusTableport_daily">
+			<table class="table table-bordered radiusTableport_departure" style="width:100%">
 				<thead>
 					<tr>
 						<th>วันที่</th>
@@ -149,36 +133,3 @@
 					</tr>
 				</tfoot>
 			</table>
-		</div>
-	</div>
-</div>
-<?php
-function isWeekend($date) {
-	list($day, $month, $year) = explode('-', $date);
-	if(checkdate($month,$day,$year)){ 
-		$weekDay = date('w', strtotime($date));
-		return ($weekDay == 0 || $weekDay == 6);
-	}else{
-		return false;
-	}
-	
-}
-?>
-<?php $this->endSection() ?>
-
-<?= $this->section("scripts") ?>
-<script type="text/javascript">
-	
-	function ChangeDate() {
-		var year = $('#select_year').val();
-		var port_type = $('#select_port_type').val();
-		window.location.href = base_url + '/report/departure?year=' + year+'&port_type='+port_type ;
-	}
-
-	function export_report(type) {
-		var year = $('#select_year').val();
-		var port_type = $('#select_port_type').val();
-		window.open(base_url + '/report/departure/?export_type=' + type + '&year=' + year+'&port_type='+port_type );
-	}
-</script>
-<?= $this->endSection() ?>

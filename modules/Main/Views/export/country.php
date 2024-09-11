@@ -302,7 +302,7 @@
                                         <tr>
                                             <td>
                                                 <b style=" margin: 0px; font-size:18px;color:#1679AB">
-                                                    ด่านบก : <?php echo number_format($SumPortType[0]['NUM']);?>
+                                                    ไม่ใช่ด่านอากาศ : <?php echo number_format($SumPortType[0]['NUM']);?>
                                                     คน
                                                 </b>
                                             </td>

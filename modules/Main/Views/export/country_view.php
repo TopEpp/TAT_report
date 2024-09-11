@@ -187,7 +187,7 @@ body {
         <div class="col-lg-1 col-12 text-center text-md-right">
             <img class="img-profile " src="<?php echo base_url('public/img/tat.png') ?>" width="100px">
         </div>
-        <div class="col-lg-11 col-12  my-md-auto text-center text-md-right my-3">
+        <div class="col-lg-11 col-12  my-md-auto text-right text-md-right my-3">
             <div>
                 <button type="button"
                     onclick="SaveImg2ExportImg('<?php echo base_url('main/saveImg2Report'); ?>','png')"
@@ -385,7 +385,7 @@ body {
                                                         </div>
                                                         <div class="col-lg-8">
                                                             <div class="font-17">
-                                                                <b style="color:#1679AB">ด่านบก :
+                                                                <b style="color:#1679AB">ไม่ใช่ด่านอากาศ :
                                                                     <?php echo number_format($SumPortType[0]['NUM']); ?>
                                                                     คน</b>
                                                             </div>

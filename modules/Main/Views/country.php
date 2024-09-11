@@ -120,8 +120,21 @@
     border-radius: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
-    padding: 5px;
+    padding: 15px 5px 15px 5px
 }
+
+.font-19 {
+    font-size: 18px;
+}
+
+.font-21 {
+    font-size: 21px;
+}
+
+.font-17 {
+    font-size: 17px
+}
+
 </style>
 <?php $shortmonth = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."); ?>
 <div class="py-2" style="">
@@ -138,7 +151,7 @@
                 style="display: inline;" value="" placeholder="To" />
         </div>
         <div class="col-md-1 col-12 my-auto text-center py-2">
-            ประเทศ
+            สัญชาติ
         </div>
         <div class="col-md-2 col-12 my-auto ">
             <select id="country_select" class="form-control">
@@ -151,16 +164,21 @@
             <div class="btn btn_Color" onclick="ChangeFilter()">ตกลง</div>
 
         </div>
-        <div class="col-md-2 col-12 my-auto text-center" style="padding:0">
-            <button type="button"
+        <div class="col-md-2 col-12 my-auto text-right" >
+            <!-- <button type="button"
                 onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_country?export=pdf&start_date=' . $start_date . '&end_date=' . $end_date.'&country_id='.$country_id); ?>')"
                 class="btn btn-danger SetWidthbtnExport" style="width: 40%; border-radius: 1em;">
                 <i class="fa-solid fa-file-pdf"></i> PDF
-            </button>
-            <button type="button" class="btn btn-primary SetWidthbtnExport"
+            </button> -->
+            <!-- <button type="button" class="btn btn-primary SetWidthbtnExport"
                 onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_country?&start_date=' . $start_date . '&end_date=' . $end_date.'&country_id='.$country_id); ?>')"
                 style="width:50%; border-radius: 1em;">
                 <i class="fa-solid fa-file-image"></i> Images
+            </button> -->
+            <button type="button" class="btn btn-danger SetWidthbtnExport"
+                onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_country?&start_date=' . $start_date . '&end_date=' . $end_date.'&country_id='.$country_id); ?>')"
+                style="width:50%; border-radius: 1em;">
+                <i class="fa-solid fa-download"></i> Export
             </button>
         </div>
     </div>
@@ -168,84 +186,167 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
+        <div class="card" style="background-position: center;background-size: cover;background-image: url(<?php echo base_url('public/img/bg_report_country_2.png') ?>);background-repeat: no-repeat;">
             <!-- <div class="card-header">  </div> -->
             <div class="card-body" >
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="card_info">
-                            สะสม <?php echo $Mydate->date_eng2thai($start_date_label_past, 543, 'S', 'S') ?> -
-                            <?php echo $Mydate->date_eng2thai($end_date_label_past, 543, 'S', 'S') ?><br>
-                            <?php echo number_format($SumMonthData_past)?> คน
-                        </div>
-                        <div class="card_info">
-                            สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> -
-                            <?php echo $Mydate->date_eng2thai($end_date_label, 543, 'S', 'S') ?><br>
-                            <?php echo number_format($SumMonthData)?> คน<br>
-                            Change <?php
-							if ($SumMonthData_past > 0) {
-								$percent = number_format(($SumMonthData-$SumMonthData_past)  / $SumMonthData_past  * 100, 2);
-								if ($SumMonthData > $SumMonthData_past) {
-									echo '<span style="color:green">+' . $percent . '%</span>';
-								} else {
-									echo '<span style="color:red">-' . $percent*(-1) . '%</span>';
-								}
-							} else {
-								echo '-';
-							} ?>
-                        </div>
-                        <div class="card_info">
-                            <?php echo $Mydate->date_eng2thai($prev_date, 543, 'S', 'S') ?> -
-                            <?php echo $Mydate->date_eng2thai($end_date_label, 543, 'S', 'S') ?><br>
-                            <?php echo number_format($SumWeekData)?> คน<br>
-                            WoW <?php
-							if ($SumWeekData_past > 0) {
-								$percent = number_format(($SumWeekData-$SumWeekData_past)  / $SumWeekData_past  * 100, 2);
-								if ($SumWeekData > $SumWeekData_past) {
-									echo '<span style="color:green">+' . $percent . '%</span>';
-								} else {
-									echo '<span style="color:red">-' . $percent*(-1) . '%</span>';
-								}
-							} else {
-								echo '-';
-							} ?>
-                        </div>
-                        <div class="card_info">
-                            <div class="row">
-                                <div class="col-md-9">ด่านอากาศ : <?php echo number_format($SumPortType[1]['NUM']);?> คน
-                                </div>
-                                <div class="col-md-3" style="text-align:right; padding-left:0">
-                                    <?php echo number_format($SumPortType[1]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2); ?>%
+                        <div class="card_info" style="background:#FFF">
+                            <div class="col-lg-12">
+                                <div class="font-19" style="color: #1a329a;">
+                                    <b>สะสม
+                                        <?php echo $Mydate->date_eng2thai($start_date_label_past, 543, 'S', 'S') ?>
+                                        -
+                                        <?php echo $Mydate->date_eng2thai($end_date_label_past, 543, 'S', 'S') ?></b>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-9">ด่านบก : <?php echo number_format($SumPortType[0]['NUM']);?> คน
-                                </div>
-                                <div class="col-md-3" style="text-align:right; padding-left:0">
-                                    <?php echo number_format($SumPortType[0]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2); ?>%
+                            <div class="col-lg-12">
+                                <div class="px-3" style="background-color: #1a329a;">
+                                    <div class="text-white text-right font-19">
+                                        <?php echo number_format($SumMonthData_past) ?> คน
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="card_info" style="background:#FFF">
+                            <div class="col-lg-12">
+                                <div class="font-19" style="color: #b49f5f;">
+                                    <b>สะสม
+                                        <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?>
+                                        -
+                                        <?php echo $Mydate->date_eng2thai($end_date_label, 543, 'S', 'S') ?></b></b>
+                                </div>
+                            </div>
+                            <div class="col-lg-12" style="padding:5px">
+                                <div class="px-3" style="background-color: #f4d770;">
+                                    <div class="text-white text-right font-19"
+                                        style="color: black;">
+                                        <b style="color: black;"><?php echo number_format($SumMonthData)?>
 
+                                            คน</b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="px-3">
+                                    <div class="text-white text-right font-21"
+                                        style="color: #f4d770;">
+                                        <b class="font-19" style="color: #344996;">Change</b> <?php
+                    if ($SumMonthData_past > 0) {
+                        $percent = number_format(($SumMonthData - $SumMonthData_past)  / $SumMonthData_past  * 100, 2);
+                        if ($SumMonthData > $SumMonthData_past) {
+                            echo '<span style="color:green">+' . $percent . '%</span>';
+                        } else {
+                            echo '<span style="color:red">-' . $percent * (-1) . '%</span>';
+                        }
+                    } else {
+                        echo '-';
+                    } ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <div class="card_info"  style="background:#FFF; margin-top:20px ;">
+                            <div class="col-lg-12">
+                                <div class="font-19" style="color: #a98f44;">
+                                    <b> <?php echo $Mydate->date_eng2thai($prev_date, 543, 'S', 'S') ?>
+                                        -
+                                        <?php echo $Mydate->date_eng2thai($end_date_label, 543, 'S', 'S') ?></b>
+                                </div>
+                            </div>
+                            <div class="col-lg-12" style="padding:5px">
+                                <div class="px-3" style="background-color: #f4d770;">
+                                    <div class="text-right font-19" style="color: black;">
+                                        <b><?php echo number_format($SumWeekData) ?> คน</b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="px-3">
+                                    <div class="text-white text-right font-19">
+                                        <b class="font-19" style="color: #344996;">WoW</b> <?php
+                if ($SumWeekData_past > 0) {
+                    $percent = number_format(($SumWeekData - $SumWeekData_past)  / $SumWeekData_past  * 100, 2);
+                    if ($SumWeekData > $SumWeekData_past) {
+                        echo '<b style="color:green">+' . $percent . '%</b>';
+                    } else {
+                        echo '<b style="color:red">-' . $percent * (-1) . '%</b>';
+                    }
+                } else {
+                    echo '-';
+                } ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="col-md-9">
-                        <?php 
-						$flag = base_url('public/img/logotat.png');
+                        <div class="row" style="margin-top:0">
+                                <div class="col-lg-6">
+                                    <div class="card_info"  style="background:#FFF">
+                                        <div class="box-shadow" style=" border-radius: 15px;">
+                                            <div class="row">
+                                                <div class="col-lg-12  my-auto" style=" overflow: hidden;">
+                                                    <div class="row m-0 my-auto" style="">
+                                                        <div class="col-lg-8 my-auto">
+                                                            <div class="font-17">
+                                                                <b style="color:#36BA98">ด่านอากาศ :
+                                                                    <?php echo number_format($SumPortType[1]['NUM']); ?>
+                                                                    คน</b>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 text-center">
+                                                            <div class="font-17">
+                                                                <b style="color:#36BA98"><?php echo
+                                                                    number_format($SumPortType[1]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2);
+                                                                    ?>%</b>
+                                                            </div>
 
-						if (!file_exists(base_url('public/img/flag/' . $country_id . '.png'))) {
-							$flag = base_url('public/img/flag/' . $country_id . '.png');
-						}
-						?>
-                        <div style="text-align:right;width: 100%;"><img class="img-profile rounded-circle"
-                                src="<?php echo $flag ?>" style="width: 40px;"></div>
-                        <div class="text-center" id="htmltoimage_chart_country" style="padding:5px;">
+                                                        </div>
+                                                        <div class="col-lg-8">
+                                                            <div class="font-17">
+                                                                <b style="color:#1679AB">ไม่ใช่ด่านอากาศ :
+                                                                    <?php echo number_format($SumPortType[0]['NUM']); ?>
+                                                                    คน</b>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 text-center">
+                                                            <div class="font-17">
+                                                                <b
+                                                                    style="color:#1679AB"><?php echo number_format($SumPortType[0]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2); ?>%</b>
+                                                            </div>
 
-                            <div id="chart_country" style="height:300px !important"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6" >
+                                    <div class="text-right" style="padding-top:20px;">
+                                    <?php
+                                        $flag = base_url('public/img/logotat.png');
+
+                                        if (!file_exists(base_url('public/img/flag/' . $country_id . '.png'))) {
+                                            $flag = base_url('public/img/flag/' . $country_id . '.png');
+                                        }
+                                        ?>
+                                                <b style="font-size: 22px;color: #1a329a;"> สัญชาติ <?php echo $country[$country_id] ?></b>
+                                                <img class="img-profile rounded-circle" src="<?php echo $flag ?>"
+                                                    style="width: 80px;">
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="text-center" id="htmltoimage_chart_country" style="padding:5px; background: #FFF; border-radius: 15px;">
+
+                            <div id="chart_country" style="height:270px !important"></div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12" style="background-color: #0a1b54;color: white">
                         หมายเหตุ : ข้อมูลสัญชาติ (Nationality) ที่ไม่นับรวมข้อมูลผู้อพยพ , หน่วยงานพิเศษ UN ,
                         ไม่มีสัญชาติ <br>
                         WoW (Week on Week) หมายถึง อัตราการเปลี่ยนแปลงเทียบกับสัปดาห์ก่อนหน้า

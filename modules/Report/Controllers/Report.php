@@ -252,6 +252,11 @@ class Report extends BaseController
 		$data['country_type'] = 'all';
 		$data['country_id'] = '';
 		$data['port_type'] = array();
+
+		$end_date = $Main_model->getMaxDate();
+		list($year, $month, $day) = explode('-', $end_date);
+		$data['end_month'] = $month;
+
 		if (!empty($_GET['year'])) {
 			$data['year'] = $_GET['year'];
 		}
@@ -260,6 +265,8 @@ class Report extends BaseController
 		}
 		if (!empty($_GET['m_end'])) {
 			$data['m_end'] = $_GET['m_end'];
+		}else{
+			$data['m_end'] = $data['end_month'];
 		}
 		if (!empty($_GET['country_type'])) {
 			$data['country_type'] = $_GET['country_type'];
@@ -285,6 +292,8 @@ class Report extends BaseController
 		$data['country_select'] = $Model->getCountryAllRow();
 		$data['region'] = $Model->getSTDRegion($data['country_type']);
 		$data['country'] = $Model->getCountryByRegion($data['country_type']);
+		$data['select_year'] = $Model->getSelectYear();
+
 
 		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
@@ -593,7 +602,7 @@ class Report extends BaseController
 		if (@$_GET['export_type'] == 'excel') {
 			$this->export_excel('departure.xlsx', 'Modules\Report\Views\export\departure', $data);
 		} else if (@$_GET['export_type'] == 'pdf') {
-			$this->export_pdf('Modules\Report\Views\export\departure', $data);
+			$this->export_pdf('Modules\Report\Views\export\departure', $data,'L');
 		} else {
 			return view('Modules\Report\Views\departure', $data);
 		}
