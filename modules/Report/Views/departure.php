@@ -36,9 +36,14 @@
 </style>
 
 <div class="row">
-	<div class="col-md-3 text-center text-md-left" style="font-size: 1.2em;">
+	<div class="col-md-12 text-center text-md-center" style="font-size: 1.2em;">
 		สถิติคนไทยเดินทางออกรายวัน
 	</div>
+	
+	
+</div>
+<div class="row">
+	<div class="col-md-1 text-center"> </div>
 	<div class="col-md-1 text-center text-md-right" style="font-size: 1.2em;">
 		ปี
 	</div>
@@ -55,11 +60,24 @@
 	<div class="col-md-2 text-center">
 		<select class="form-control" id="select_port_type" onchange="ChangeDate()">
 			<option value="">ทั้งหมด</option>
-			<option value="ด่านบก" <?php if($port_type=='ด่านบก'){ echo 'selected="selected"';} ?> >ด่านบก</option>
+			<option value="ด่านบก" <?php if($port_type=='ด่านบก'){ echo 'selected="selected"';} ?> >ไม่ใช่ด่านอากาศ</option>
 			<option value="ด่านอากาศ" <?php if($port_type=='ด่านอากาศ'){ echo 'selected="selected"';} ?> >ด่านอากาศ</option>
 		</select>
 	</div>
-	<div class="col-md-3 col-12 py-2" style="text-align: right;">
+	<div class="col-md-2 text-center">
+		<select class="form-control" id="select_port_id" onchange="ChangeDate()">
+			<option value="">ทั้งหมด</option>
+			<?php if($port_type=='' || $port_type=='ด่านบก'){?>
+			<?php foreach($select_port[1] as $p_id=>$port){ $sel=''; if($p_id==$port_id){ $sel='selected="selected"';}  ?>
+				<option value="<?php echo $p_id?>" <?php echo $sel;?> ><?php echo $port?></option>
+			<?php }}?>
+			<?php if($port_type=='' || $port_type=='ด่านอากาศ'){?>
+			<?php foreach($select_port[2] as $p_id=>$port){ $sel=''; if($p_id==$port_id){ $sel='selected="selected"';}  ?>
+				<option value="<?php echo $p_id?>" <?php echo $sel;?> ><?php echo $port?></option>
+			<?php }}?>
+		</select>
+	</div>
+	<div class="col-md-2 col-12" style="text-align: right;">
 		<a target="_blank" onclick="export_report('excel')" class="btn btn-success" style="width : 70px">
 			<i class="fa-solid fa-file-excel"></i> Excel
 		</a>
@@ -172,13 +190,15 @@ function isWeekend($date) {
 	function ChangeDate() {
 		var year = $('#select_year').val();
 		var port_type = $('#select_port_type').val();
-		window.location.href = base_url + '/report/departure?year=' + year+'&port_type='+port_type ;
+		var port_id = $('#select_port_id').val();
+		window.location.href = base_url + '/report/departure?year=' + year+'&port_type='+port_type+'&port_id='+port_id ;
 	}
 
 	function export_report(type) {
 		var year = $('#select_year').val();
 		var port_type = $('#select_port_type').val();
-		window.open(base_url + '/report/departure/?export_type=' + type + '&year=' + year+'&port_type='+port_type );
+		var port_id = $('#select_port_id').val();
+		window.open(base_url + '/report/departure/?export_type=' + type + '&year=' + year+'&port_type='+port_type+'&port_id='+port_id );
 	}
 </script>
 <?= $this->endSection() ?>

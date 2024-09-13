@@ -559,9 +559,9 @@ class Main_model extends Model
 		$data_chart = array();
 		$builder = $this->db->table($this->table_out);
 		$builder->select(" TO_CHAR({$this->table_out}.REPORT_DATE,'YYYY-MM-DD') AS REPORT_DATE, SUM({$this->table_out}.NUM) AS NUM ");
-		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID  ");
 		$builder->where("REPORT_DATE BETWEEN TO_DATE('{$to_date}','YYYY-MM-DD')-15 AND TO_DATE('{$to_date}','YYYY-MM-DD') ");
-		$builder->where('PORT_DAILY',1);
+		// $builder->where('PORT_DAILY',1);
 		$builder->where('DIRECTION','ขาออก');
 		$builder->where('VISA_ID',16);
 		$builder->where('COUNTRY_ID',147);
@@ -585,9 +585,9 @@ class Main_model extends Model
 
 		$builder = $this->db->table($this->table_out);
 		$builder->select(" TO_CHAR({$this->table_out}.REPORT_DATE,'YYYY-MM-DD') AS REPORT_DATE, SUM({$this->table_out}.NUM) AS NUM ");
-		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID ");
 		$builder->where("REPORT_DATE BETWEEN TO_DATE('{$to_date_past}','YYYY-MM-DD')-15 AND TO_DATE('{$to_date_past}','YYYY-MM-DD') ");
-		$builder->where('PORT_DAILY',1);
+		// $builder->where('PORT_DAILY',1);
 		$builder->where('DIRECTION','ขาออก');
 		$builder->where('VISA_ID',16);
 		$builder->where('COUNTRY_ID',147);
@@ -609,8 +609,8 @@ class Main_model extends Model
 		$data_chart = array();
 		$builder = $this->db->table($this->table_out);
 		$builder->select(" TO_CHAR({$this->table_out}.REPORT_DATE,'MM') AS REPORT_MONTH, SUM({$this->table_out}.NUM) AS NUM ");
-		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
-		$builder->where('PORT_DAILY',1);
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID  ");
+		// $builder->where('PORT_DAILY',1);
 		$builder->where("TO_CHAR( {$this->table_out}.REPORT_DATE, 'YYYY') = ", $year);
 		$builder->where('DIRECTION','ขาออก');
 		$builder->where('VISA_ID',16);
@@ -627,8 +627,8 @@ class Main_model extends Model
 
 		$builder = $this->db->table($this->table_out);
 		$builder->select(" TO_CHAR({$this->table_out}.REPORT_DATE,'MM') AS REPORT_MONTH, SUM({$this->table_out}.NUM) AS NUM ");
-		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
-		$builder->where('PORT_DAILY',1);
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID  ");
+		// $builder->where('PORT_DAILY',1);
 		$builder->where("TO_CHAR( {$this->table_out}.REPORT_DATE, 'YYYY') = ", ($year-1));
 		$builder->where('DIRECTION','ขาออก');
 		$builder->where('VISA_ID',16);
@@ -709,8 +709,7 @@ class Main_model extends Model
 		    (CAST(ROUND(({$this->table_out}.REPORT_DATE - DATE '1970-01-01') * 86400000) AS NUMBER)) AS DATE_GROUP, 
 		    SUM({$this->table_out}.NUM) AS NUM
 		");
-		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID AND PORT_CATEGORY_ID = 1");
-		$builder->where('PORT_DAILY', 1);
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID ");
 		$builder->where("TO_CHAR({$this->table_out}.REPORT_DATE, 'YYYY') =", $year);
 		$builder->where('DIRECTION','ขาออก');
 		$builder->where('VISA_ID',16);
@@ -727,8 +726,7 @@ class Main_model extends Model
 		    (CAST(ROUND(({$this->table_out}.REPORT_DATE - DATE '1970-01-01') * 86400000) AS NUMBER)) AS DATE_GROUP, 
 		    SUM({$this->table_out}.NUM) AS NUM
 		");
-		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID AND PORT_CATEGORY_ID = 1");
-		$builder->where('PORT_DAILY', 1);
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID ");
 		$builder->where('PORT_TYPE', 'ด่านอากาศ');
 		$builder->where("TO_CHAR({$this->table_out}.REPORT_DATE, 'YYYY') =", $year);
 		$builder->where('DIRECTION','ขาออก');
@@ -746,8 +744,7 @@ class Main_model extends Model
 		    (CAST(ROUND((ADD_MONTHS({$this->table_out}.REPORT_DATE, +12) - DATE '1970-01-01') * 86400000) AS NUMBER)) AS DATE_GROUP, 
 		    SUM({$this->table_out}.NUM) AS NUM
 		");
-		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID AND PORT_CATEGORY_ID = 1");
-		$builder->where('PORT_DAILY', 1);
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID ");
 		$builder->where("TO_CHAR({$this->table_out}.REPORT_DATE, 'YYYY') = ", $year-1);
 		$builder->where('DIRECTION','ขาออก');
 		$builder->where('VISA_ID',16);

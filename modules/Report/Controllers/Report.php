@@ -590,14 +590,18 @@ class Report extends BaseController
 		$data['Mydate'] = $this->Mydate;
 		$data['month_label'] = $this->month_en_short;
 		$data['year'] = date('Y');
+		$data['port_id'] = '';
 		$data['port_type'] = @$_GET['port_type'];
 		if (!empty($_GET['year'])) {
 			$data['year'] = $_GET['year'];
 		}
+		if (!empty($_GET['port_id'])) {
+			$data['port_id'] = $_GET['port_id'];
+		}
 
 		$data['select_year'] = $Model->getSelectYear();
-
-		$data['data'] = $Model->getDepartureDaily($data['year'],$data['port_type']);
+		$data['select_port'] = $Model->getSelectPortAll();
+		$data['data'] = $Model->getDepartureDaily($data['year'],$data['port_type'],$data['port_id']);
 		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
 			$this->export_excel('departure.xlsx', 'Modules\Report\Views\export\departure', $data);

@@ -424,19 +424,22 @@ class Report_model extends Model
 	    return $data;
 	}
 
-	function getDepartureDaily($year,$port_type=''){
+	function getDepartureDaily($year,$port_type='',$port_id=''){
 		$data = array();
 		$builder = $this->db->table($this->table_out);
 		$builder->select(" TO_CHAR({$this->table_out}.REPORT_DATE,'DD-MM-YYYY') AS REPORT_DATE,
 						   SUM({$this->table_out}.NUM) AS NUM ");
-		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
-		$builder->where('PORT_DAILY',1);
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table_out}.OFFICE_ID");
+		// $builder->where('PORT_DAILY',1);
 		$builder->where("TO_CHAR( {$this->table_out}.REPORT_DATE, 'YYYY') = ", $year);
 		$builder->where('DIRECTION','ขาออก');
 		$builder->where('VISA_ID',16);
 		$builder->where('COUNTRY_ID',147);
 		if($port_type){
 			$builder->where('MD_PORT.PORT_TYPE',$port_type);
+		}
+		if($port_id){
+			$builder->where("MD_PORT.PORT_ID",$port_id);
 		}
 		$builder->groupBy("TO_CHAR({$this->table_out}.REPORT_DATE,'DD-MM-YYYY') ");
 		$builder->orderBy("REPORT_DATE");
@@ -457,6 +460,19 @@ class Report_model extends Model
 		$res = $builder->get()->getResultArray();
 		foreach ($res as $d) {
 			$data[] = $d['REPORT_YEAR'];
+		}
+
+		return $data;
+	}
+
+	function getSelectPortAll(){
+		$data = array();
+		$builder = $this->db->table('MD_PORT');
+		$builder->select("*");
+		$builder->orderBy('PORT_ORDER,PORT_NAME');
+		$res = $builder->get()->getResultArray();
+		foreach ($res as $d) {
+			$data[$d['PORT_TYPE_ID']][$d['PORT_ID']] = $d['PORT_NAME'];
 		}
 
 		return $data;
