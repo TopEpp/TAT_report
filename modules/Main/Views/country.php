@@ -446,6 +446,16 @@ $(function() {
             tickWidth: 0,
             gridLineWidth: 1,
             gridLineDashStyle: 'Dash',
+            labels: {
+            formatter: function() {
+                    var date = new Date(this.value);
+                    var day = Highcharts.dateFormat('%A', this.value); // get the day of the week
+                    if (day === 'Monday') {
+                        return Highcharts.dateFormat('%d/%m', this.value) + ' (Monday)';
+                    }
+                    return Highcharts.dateFormat('%d/%m', this.value); // default format
+                }
+            }
         },
 
         yAxis: [{ // left y axis

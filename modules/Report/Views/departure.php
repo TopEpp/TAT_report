@@ -36,36 +36,45 @@
 </style>
 
 <div class="row">
-	<div class="col-md-12 text-center text-md-center" style="font-size: 1.2em;">
+	<div class="col-md-3 col-12" style="text-align: right;"></div>
+	<div class="col-md-6 text-center text-md-center" style="font-size: 1.2em;">
 		สถิติคนไทยเดินทางออกรายวัน
 	</div>
-	
+	<div class="col-md-3 col-12" style="text-align: right;">
+		<a target="_blank" onclick="export_report('excel')" class="btn btn-success" style="width : 70px">
+			<i class="fa-solid fa-file-excel"></i> Excel
+		</a>
+		<a target="_blank" onclick="export_report('pdf')" class="btn btn-danger" style="width : 70px">
+			<i class="fa-solid fa-file-pdf"></i> PDF
+		</a>
+	</div>
 	
 </div>
 <div class="row">
-	<div class="col-md-1 text-center"> </div>
-	<div class="col-md-1 text-center text-md-right" style="font-size: 1.2em;">
+	<div class="col-md-3 text-center"> </div>
+	<div class="col-md-2 text-center text-md-right" style="font-size: 1.2em;">
 		ปี
 	</div>
 	<div class="col-md-2 text-center">
-		<select class="form-control" id="select_year" onchange="ChangeDate()">
+		<select class="form-control" id="select_year" onchange="ChangeFilter()">
 			<?php foreach($select_year as $y){ $sel=''; if($y==$year){ $sel='selected="selected"';} ?>
 			<option value="<?php echo $y?>" <?php echo $sel;?> ><?php echo $y?></option>
 			<?php } ?>
 		</select>
 	</div>
-	<div class="col-md-1 text-center text-md-right" style="font-size: 1.2em;">
+	<div class="col-md-2 text-center"> </div>
+	<!-- <div class="col-md-1 text-center text-md-right" style="font-size: 1.2em;">
 		ด่าน
 	</div>
 	<div class="col-md-2 text-center">
-		<select class="form-control" id="select_port_type" onchange="ChangeDate()">
+		<select class="form-control" id="select_port_type" onchange="ChangeFilter()">
 			<option value="">ทั้งหมด</option>
 			<option value="ด่านบก" <?php if($port_type=='ด่านบก'){ echo 'selected="selected"';} ?> >ไม่ใช่ด่านอากาศ</option>
 			<option value="ด่านอากาศ" <?php if($port_type=='ด่านอากาศ'){ echo 'selected="selected"';} ?> >ด่านอากาศ</option>
 		</select>
 	</div>
 	<div class="col-md-2 text-center">
-		<select class="form-control" id="select_port_id" onchange="ChangeDate()">
+		<select class="form-control" id="select_port_id" onchange="ChangeFilter()">
 			<option value="">ทั้งหมด</option>
 			<?php if($port_type=='' || $port_type=='ด่านบก'){?>
 			<?php foreach($select_port[1] as $p_id=>$port){ $sel=''; if($p_id==$port_id){ $sel='selected="selected"';}  ?>
@@ -76,15 +85,54 @@
 				<option value="<?php echo $p_id?>" <?php echo $sel;?> ><?php echo $port?></option>
 			<?php }}?>
 		</select>
+	</div> -->
+	
+</div>
+<div class="row">
+	<div class="col-md-8 py-2 py-md-0">
+		<label>
+			<input type="checkbox" name="port_all" id="port_all">
+			<b> ด่านทั้งหมด</b>
+		</label>
 	</div>
-	<div class="col-md-2 col-12" style="text-align: right;">
-		<a target="_blank" onclick="export_report('excel')" class="btn btn-success" style="width : 70px">
-			<i class="fa-solid fa-file-excel"></i> Excel
-		</a>
-		<a target="_blank" onclick="export_report('pdf')" class="btn btn-danger" style="width : 70px">
-			<i class="fa-solid fa-file-pdf"></i> PDF
-		</a>
+	<div class="col-md-4  py-2 py-md-0" style="text-align:right;">
+		<div class="btn btn-primary" onclick="showHidePort()">แสดง/ซ่อนด่าน</div>
+		<div class="btn btn-primary" onclick="ChangeFilter()">ตกลง</div>
 	</div>
+</div>
+<div class="row">
+	<div class="col-md-6 col-12 py-2 py-md-0 border-right  border-secondary">
+		<div class="row">
+			<div class="col-md-12">
+				<label>
+					<input type="checkbox" name="port_type_1" id="port_type_1" class="port_checkbox">
+					<b> ไม่ใช่ด่านอากาศ</b>
+				</label>
+			</div>
+			<?php foreach ($select_port[1] as $p_id=>$port) { ?>
+				<div class="col-md-6 col-12 div_port_checkbox">
+					<label style="font-weight:normal;"><input type="checkbox" name="port_type[]" id="port_type" class="port_1 port_checkbox" value="<?php echo $p_id ?>" <?php if (in_array($p_id, $port_type)) {
+																																														echo "checked='checked'";
+																																													} ?>> <?php echo $port ?></label>
+				</div>
+			<?php } ?>
+		</div>
+	</div>
+	<div class="col-md-6 col-12  py-2 py-md-0">
+		<div class="row">
+			<div class="col-md-12">
+				<label><input type="checkbox" name="port_type_2" id="port_type_2" class="port_checkbox"> <b> ด่านอากาศ</b></label>
+			</div>
+			<?php foreach ($select_port[2] as $p_id=>$port) { ?>
+				<div class="col-md-6 col-12 div_port_checkbox">
+					<label style="font-weight:normal;"><input type="checkbox" name="port_type[]" id="port_type" class="port_2 port_checkbox" value="<?php echo $p_id ?>" <?php if (in_array($p_id, $port_type)) {
+																																														echo "checked='checked'";
+																																													} ?>> <?php echo $port ?></label>
+				</div>
+			<?php } ?>
+		</div>
+	</div>
+	
 </div>
 
 <div class="row">
@@ -186,19 +234,58 @@ function isWeekend($date) {
 
 <?= $this->section("scripts") ?>
 <script type="text/javascript">
-	
-	function ChangeDate() {
+	$(document).ready(function() {
+		$('.div_port_checkbox').hide();
+
+		$('#port_all').click(function() {
+			if ($(this).prop('checked') == true) {
+				$('.port_checkbox').prop('checked', true);
+			} else {
+				$('.port_checkbox').prop('checked', false);
+			}
+		});
+
+		$('#port_type_1').click(function() {
+			if ($(this).prop('checked') == true) {
+				$('.port_1').prop('checked', true);
+			} else {
+				$('.port_1').prop('checked', false);
+			}
+		});
+
+		$('#port_type_2').click(function() {
+			if ($(this).prop('checked') == true) {
+				$('.port_2').prop('checked', true);
+			} else {
+				$('.port_2').prop('checked', false);
+			}
+		});
+	});
+
+	function ChangeFilter() {
 		var year = $('#select_year').val();
-		var port_type = $('#select_port_type').val();
-		var port_id = $('#select_port_id').val();
-		window.location.href = base_url + '/report/departure?year=' + year+'&port_type='+port_type+'&port_id='+port_id ;
+		var port_type = $("input[name='port_type[]']").map(function() {
+			if ($(this).prop('checked') == true) {
+				return $(this).val();
+			}
+		}).get();
+
+		window.location.href = base_url + '/report/departure?year=' + year+'&port_type='+port_type ;
 	}
 
 	function export_report(type) {
 		var year = $('#select_year').val();
-		var port_type = $('#select_port_type').val();
-		var port_id = $('#select_port_id').val();
-		window.open(base_url + '/report/departure/?export_type=' + type + '&year=' + year+'&port_type='+port_type+'&port_id='+port_id );
+		var port_type = $("input[name='port_type[]']").map(function() {
+			if ($(this).prop('checked') == true) {
+				return $(this).val();
+			}
+		}).get();
+
+		window.open(base_url + '/report/departure/?export_type=' + type + '&year=' + year+'&port_type='+port_type );
+	}
+
+	function showHidePort(){
+		$('.div_port_checkbox').toggle();
 	}
 </script>
 <?= $this->endSection() ?>
