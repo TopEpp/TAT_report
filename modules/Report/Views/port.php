@@ -199,7 +199,7 @@ foreach ($data_month_lastyear as $v) {
 				</tbody>
 			</table>
 		</div>
-		<span style="font-size:0.8em">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</span>
+		<!-- <span style="font-size:0.8em">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</span> -->
 	</div>
 	<div class="col-md-6 col-12 py-2">
 		<div style="text-align:center;" class="py-2 pt-4">
@@ -244,7 +244,7 @@ foreach ($data_month_lastyear as $v) {
 				</tbody>
 			</table>
 		</div>
-		<span style="font-size:0.8em">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</span>
+		<!-- <span style="font-size:0.8em">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</span> -->
 	</div>
 </div>
 <?php $this->endSection() ?>

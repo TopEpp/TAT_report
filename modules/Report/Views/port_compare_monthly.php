@@ -55,7 +55,7 @@
 		เดือนเริ่มต้น
 		<select class="form-control" id="m_start" name="m_start">
 		<?php foreach($month_label as $key=>$label){ $sel = ''; if($m_start==$key){ $sel='selected="selected"';}?>
-			<?php $dis = '';if($key>$end_month){ $dis='disabled'; }?>
+			<?php $dis = ''; //if($key>$end_month){ $dis='disabled'; }?>
 			<option <?php echo $dis;?> <?php echo $sel;?> value="<?php echo $key;?>"><?php echo $label;?></option>
 		<?php } ?>
 		</select>
@@ -64,7 +64,7 @@
 		เดือนสิ้นสุด
 		<select class="form-control" id="m_end" name="m_end">
 		<?php foreach($month_label as $key=>$label){ $sel = ''; if($m_end==$key){ $sel='selected="selected"';}?>
-			<?php $dis = '';if($key>$end_month){ $dis='disabled'; }?>
+			<?php $dis = ''; //if($key>$end_month){ $dis='disabled'; }?>
 			<option <?php echo $dis;?> <?php echo $sel;?> value="<?php echo $key;?>"><?php echo $label;?></option>
 		<?php } ?>
 		</select>
@@ -378,4 +378,40 @@ function getSumData($data, $region, $region_id, $country, $port_id, $day, &$sum 
 		XLSX.writeFile(wb, "port_compare_monthly.xlsx")
 	}
 </script>
+<script>
+document.getElementById('year').addEventListener('change', function() {
+    const selectedYear = parseInt(this.value);
+    const currentYear = new Date().getFullYear();
+
+    // ถ้าปีที่เลือกเก่ากว่าปีปัจจุบัน
+    if (selectedYear < currentYear) {
+        enableAllOptions('m_start');
+        enableAllOptions('m_end');
+    } else {
+        disableOptionsBasedOnEndMonth('m_start');
+        disableOptionsBasedOnEndMonth('m_end');
+    }
+});
+
+// ฟังก์ชันเปิดใช้งานทุกตัวเลือกใน select
+function enableAllOptions(selectId) {
+    const selectElement = document.getElementById(selectId);
+    for (let i = 0; i < selectElement.options.length; i++) {
+        selectElement.options[i].disabled = false;
+    }
+}
+
+// ฟังก์ชันปิดการใช้งานตัวเลือกที่มากกว่า end_month
+function disableOptionsBasedOnEndMonth(selectId) {
+    const selectElement = document.getElementById(selectId);
+    const endMonth = parseInt(<?php echo $end_month; ?>); // จาก PHP
+    for (let i = 0; i < selectElement.options.length; i++) {
+        const optionValue = parseInt(selectElement.options[i].value);
+        if (optionValue > endMonth) {
+            selectElement.options[i].disabled = true;
+        }
+    }
+}
+</script>
+
 <?= $this->endSection() ?>

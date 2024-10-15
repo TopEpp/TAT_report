@@ -312,6 +312,7 @@
                     <div id="container5" style="height:220px"></div>
                 </div>
                 <div>
+                    <?php $sum_past=$sum_current=0;?>
                     <table class="table table-striped table-bordered">
                         <tr>
                             <th style="text-align: center;">ปี</th>

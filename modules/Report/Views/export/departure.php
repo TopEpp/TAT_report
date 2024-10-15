@@ -43,17 +43,47 @@ function isWeekend($date) {
 }
 ?>
 <table style="width:100%">
-		<tr>
-			<td colspan="5" class="headderTable" style="text-align: center;">
-				<b>สถิติคนไทยเดินทางออกรายวัน</b>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="5" class="headderTable">
-				<b>ปี <?php echo $year?></b>
-			</td>
-		</tr>
-	</table>
+	<tr>
+		<td colspan="13" class="headderTable" style="text-align: center;">
+			<b>สถิติคนไทยเดินทางออกนอกประเทศ รายวัน</b> <b>ปี <?php echo $year?></b>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="13">
+			<?php 
+			if(count($port_type)==count($select_port[1])+count($select_port[2])){
+				echo 'ด่านทั้งหมด';
+			}else{
+				if(!empty($port_type)){ echo 'ด่าน : ';}
+
+				$port_label1 = $port_label2 = '';
+				$count_port1=$count_sel_port1=$count_port2=$count_sel_port2=0;
+				foreach ($select_port[1] as $p_id=>$port) { 
+					$count_port1++;
+					if (in_array($p_id, $port_type)) { $count_sel_port1++; $port_label1 .= $port.', ';}
+				}
+				foreach ($select_port[2] as $p_id=>$port) { 
+					$count_port2++;
+					if (in_array($p_id, $port_type)) { $count_sel_port2++; $port_label2 .= $port.', ';}
+				}
+
+				if($count_port2==$count_sel_port2){
+					$port_label2 =  'ด่านอากาศทั้งหมด , ';
+				}
+
+				if($count_port1==$count_sel_port1){
+					$port_label1 = 'ไม่ใช่ด่านอากาศทั้งหมด';
+				}
+
+				$label = $port_label2.$port_label1;
+				echo substr($label, 0,-2);
+
+				
+			}
+			?>
+		</td>
+	</tr>
+</table>
 
 
 			<table class="table table-bordered radiusTableport_departure" style="width:100%">

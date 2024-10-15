@@ -1,4 +1,8 @@
-<?php $session = session(); ?>
+<?php $session = session();
+$request = \Config\Services::request();
+$controller =  $request->uri->getSegment(1);
+$method =  $request->uri->getSegment(2);
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,7 +75,7 @@
                     </button>
 
                     <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 " style="width:100%; text-align: center;">
-                        <span style="font-size:1.8em; ">สถิตินักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย</span>
+                        <?php if ($method != 'departure') { ?><span style="font-size:1.8em; ">สถิตินักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย</span><?php } ?>
                     </div>
 
                     <!-- Topbar Navbar -->
@@ -108,10 +112,11 @@
                     <?php if(!empty($Mydate)){?>
                     <div class="row" style="padding:10px; font-size:0.85em" >
                         <div class="col-md-8 col-6">
+                            <?php if ($method != 'departure') { ?>
                             หมายเหตุ : <br>
                             1. ข้อมูลจำแนกรายสัญชาติ (Nationality) ที่มีการกำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศ <br>(สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
                             2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass
-                        
+                            <?php } ?>
                         </div>
                         <div class="col-md-4 col-6" style="text-align: right;">
                             ข้อมูล ณ วันที่ <?php echo $Mydate->date_eng2thai(date('Y-m-d'), 543) ?> <br>

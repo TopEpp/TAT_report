@@ -234,7 +234,7 @@ class Report_model extends Model
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
 	    $builder->whereIn("{$this->table}.OFFICE_ID",$port_type);
-	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$m_start}','mm') AND TO_DATE('{$m_end}','mm') ");
+	    // $builder->where("REPORT_DATE BETWEEN TO_DATE('{$m_start}','mm') AND TO_DATE('{$m_end}','mm') ");
 	    $builder->where("TO_CHAR(REPORT_DATE,'yyyy') ",$year);
 	    if($country_type=='standard'){
 	    	// $builder->where('MD_COUNTRY.IS_STANDARD','Y');
@@ -296,7 +296,7 @@ class Report_model extends Model
 	    $builder->join('MD_COUNTRY',"MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
 	    $builder->join('MD_PORT',"MD_PORT.PORT_ID = {$this->table}.OFFICE_ID  AND PORT_CATEGORY_ID = 1");
 	    $builder->whereIn("{$this->table}.OFFICE_ID",$port_type);
-	    $builder->where("REPORT_DATE BETWEEN TO_DATE('{$m_start}','mm') AND TO_DATE('{$m_end}','mm') ");
+	    // $builder->where("REPORT_DATE BETWEEN TO_DATE('{$m_start}','mm') AND TO_DATE('{$m_end}','mm') ");
 	    $builder->where("TO_CHAR(REPORT_DATE,'yyyy') ",$year);
 	    if($country_type=='standard'){
 	    	// $builder->where('MD_COUNTRY.IS_STANDARD','Y');

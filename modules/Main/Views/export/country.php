@@ -112,7 +112,7 @@
 .card_info {
     border-radius: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #fff;
     background-color: white;
 }
 
@@ -181,12 +181,12 @@
                             <table style="width: 100%;">
                                 <tr>
                                     <td>
-                                        <div class="text-center" style="color: #4f70b4;">
+                                        <div class="text-center" style="color: #4f70b4; font-size: 18px;">
                                             <b>ที่มา : สำนักงานตรวจคนเข้าเมือง</b>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="text-center" style="color:#4f70b4">
+                                        <div class="text-center" style="color:#4f70b4; font-size: 18px;">
                                             <b>จัดทำโดย ด้านดิจิทัล วิจัยและพัฒนา</b>
                                         </div>
                                     </td>
@@ -250,8 +250,8 @@
                         <div class=" card_info"
                             style="padding: 0px; border:none; border-radius:14px; box-shadow: 0px 1px 1px 2px hsl(0, 15%, 70%);overflow: hidden;">
                             <div style="margin-left: 10px; margin-right: 10px;">
-                                <b style="margin: 0px; line-height:none; font-size:21px;color:#a98f44 ;">
-                                    <?php echo $Mydate->date_eng2thai($prev_date, 543, 'S', 'S') ?> -
+                                <b style="margin: 0px; line-height:none; font-size:18px;color:#a98f44 ;">
+                                    สะสมรายสัปดาห์ <?php echo $Mydate->date_eng2thai($prev_date, 543, 'S', 'S') ?> -
                                     <?php echo $Mydate->date_eng2thai($end_date_label, 543, 'S', 'S') ?></b>
                             </div>
                             <div
@@ -348,10 +348,12 @@
             </div>
         </div>
         <div class="col12">
-            <div style="background-color: #0a1b54;padding: 10px; color: white; font-size: 17px;">
-                หมายเหตุ : ข้อมูลสัญชาติ (Nationality) ที่ไม่นับรวมข้อมูลผู้อพยพ , หน่วยงานพิเศษ UN ,
-                ไม่มีสัญชาติ <br>
-                WoW (Week on Week) หมายถึง อัตราการเปลี่ยนแปลงเทียบกับสัปดาห์ก่อนหน้า
+            <div style="background-color: #0a1b54;padding: 5px; color: white; font-size: 11px;">
+                หมายเหตุ :<br>1. ข้อมูลจำแนกรายสัญชาติ (Nationality) ที่มีการกำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศ
+(สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
+2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass<br>
+                        
+                3. WoW (Week on Week) หมายถึง อัตราการเปลี่ยนแปลงเทียบกับสัปดาห์ก่อนหน้า
             </div>
         </div>
     </div>

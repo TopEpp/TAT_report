@@ -846,7 +846,7 @@ class Main extends BaseController
 			$data['year'] = $year;
 		}
 
-		$prev_date = date('Y-m-d', strtotime($end_date . ' -7 day'));
+		$prev_date = date('Y-m-d', strtotime($end_date . ' -6 day'));
 		$data['prev_date'] = $prev_date;
 		$data['period'] = $data['Mydate']->date_range($prev_date, $end_date);
 		$data['country'] = $Report_model->getCountryAllRow();
@@ -859,8 +859,8 @@ class Main extends BaseController
 		$data['to_date_past'] = ($year - 1) . '-' . $month . '-' . $day;
 
 
-		$prev_date_week = date('Y-m-d', strtotime($prev_date . ' -7 day'));
-		$end_date_week = date('Y-m-d', strtotime($end_date . ' -7 day'));
+		$prev_date_week = date('Y-m-d', strtotime($prev_date . ' -6 day'));
+		$end_date_week = date('Y-m-d', strtotime($end_date . ' -6 day'));
 
 
 		$data['SumDateData'] = $Model->getSumDate($end_date, $data['country_id']);
@@ -936,7 +936,7 @@ class Main extends BaseController
 		}
 
 		$data['to_date'] = $end_date;
-		$prev_date = date('Y-m-d', strtotime($end_date . ' -7 day'));
+		$prev_date = date('Y-m-d', strtotime($end_date . ' -6 day'));
 		$data['prev_date'] = $prev_date;
 		$data['period'] = $data['Mydate']->date_range($prev_date, $end_date);
 		$data['country'] = $Report_model->getCountryAllRow();
@@ -949,8 +949,8 @@ class Main extends BaseController
 		$data['to_date_past'] = ($year - 1) . '-' . $month . '-' . $day;
 
 
-		$prev_date_week = date('Y-m-d', strtotime($prev_date . ' -7 day'));
-		$end_date_week = date('Y-m-d', strtotime($end_date . ' -7 day'));
+		$prev_date_week = date('Y-m-d', strtotime($prev_date . ' -6 day'));
+		$end_date_week = date('Y-m-d', strtotime($end_date . ' -6 day'));
 
 
 		$data['SumDateData'] = $Model->getSumDate($end_date, $data['country_id']);

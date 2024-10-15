@@ -53,7 +53,7 @@ $user_menu = $session->get('user_menu');
         </a>
        
     </li> -->
-     <li class="nav-item <?php if ($controller == 'main') {
+     <li class="nav-item <?php if ($controller == 'main' && $method!='departure' ) {
                             echo 'active';
                         } ?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDashboard" aria-expanded="true" aria-controls="collapseDashboard">
@@ -68,9 +68,9 @@ $user_menu = $session->get('user_menu');
                 <a class="collapse-item <?php if ($method == 'country') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('main/country') ?>">สถิตินักท่องเที่ยวรายประเทศ</a>
-                <a class="collapse-item <?php if ($method == 'departure') {
+               <!--  <a class="collapse-item <?php if ($method == 'departure') {
                                             echo 'active';
-                                        } ?>" href="<?php echo base_url('main/departure') ?>">สถิติคนไทยเดินทางออกนอกราชอาณาจักรในภาพรวม</a>
+                                        } ?>" href="<?php echo base_url('main/departure') ?>">สถิติคนไทยเดินทางออกนอกราชอาณาจักรในภาพรวม</a> -->
                
             </div>
         </div>
@@ -78,7 +78,7 @@ $user_menu = $session->get('user_menu');
 
     <?php if( !empty($user_menu['REPORT']) ){?>
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item <?php if ($controller == 'report') {
+    <li class="nav-item <?php if ($controller == 'report' && $method!='departure') {
                             echo 'active';
                         } ?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
@@ -114,9 +114,32 @@ $user_menu = $session->get('user_menu');
                 <a class="collapse-item <?php if ($method == 'port_daily') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('report/port_daily') ?>">รายงานจำนวนนักท่องเที่ยวที่เดินทางเข้าประเทศไทยรายวัน จำแนกรายด่าน</a>
-                <a class="collapse-item <?php if ($method == 'departure') {
+                <!-- <a class="collapse-item <?php if ($method == 'departure') {
                                             echo 'active';
-                                        } ?>" href="<?php echo base_url('report/departure') ?>">สถิติคนไทยเดินทางออกรายวัน</a>
+                                        } ?>" href="<?php echo base_url('report/departure') ?>">สถิติคนไทยเดินทางออกนอกประเทศ รายวัน</a> -->
+               
+            </div>
+        </div>
+    </li>
+    <?php }?>
+    <?php if( !empty($user_menu['DEPARTURE']) ){?>
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item <?php if ($method=='departure') {
+                            echo 'active';
+                        } ?>">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportDeparture" aria-expanded="true" aria-controls="collapseReportDeparture">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Thai Outgoing Report </span>
+        </a>
+        <div id="collapseReportDeparture" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded menusideNav">
+
+                <a class="collapse-item <?php if ($method == 'departure' && $controller == 'main') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('main/departure') ?>">สถิติคนไทยเดินทางออกนอกราชอาณาจักรในภาพรวม</a>
+                <a class="collapse-item <?php if ($method == 'departure' && $controller == 'report') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('report/departure') ?>">สถิติคนไทยเดินทางออกนอกประเทศ รายวัน</a>
                
             </div>
         </div>

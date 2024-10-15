@@ -37,8 +37,18 @@
 
 <div class="row">
 	<div class="col-md-3 col-12" style="text-align: right;"></div>
-	<div class="col-md-6 text-center text-md-center" style="font-size: 1.2em;">
-		สถิติคนไทยเดินทางออกรายวัน
+	<div class="col-md-4 text-right " style="font-size: 1.2em;">
+		สถิติคนไทยเดินทางออกนอกประเทศ รายวัน
+	</div>
+	<div class="col-md-1 text-right " style="font-size: 1.2em;">
+		ปี
+	</div>
+	<div class="col-md-1 text-center">
+		<select class="form-control" id="select_year" onchange="ChangeFilter()">
+			<?php foreach($select_year as $y){ $sel=''; if($y==$year){ $sel='selected="selected"';} ?>
+			<option value="<?php echo $y?>" <?php echo $sel;?> ><?php echo $y?></option>
+			<?php } ?>
+		</select>
 	</div>
 	<div class="col-md-3 col-12" style="text-align: right;">
 		<a target="_blank" onclick="export_report('excel')" class="btn btn-success" style="width : 70px">
@@ -51,43 +61,43 @@
 	
 </div>
 <div class="row">
-	<div class="col-md-3 text-center"> </div>
-	<div class="col-md-2 text-center text-md-right" style="font-size: 1.2em;">
-		ปี
-	</div>
-	<div class="col-md-2 text-center">
-		<select class="form-control" id="select_year" onchange="ChangeFilter()">
-			<?php foreach($select_year as $y){ $sel=''; if($y==$year){ $sel='selected="selected"';} ?>
-			<option value="<?php echo $y?>" <?php echo $sel;?> ><?php echo $y?></option>
-			<?php } ?>
-		</select>
-	</div>
-	<div class="col-md-2 text-center"> </div>
-	<!-- <div class="col-md-1 text-center text-md-right" style="font-size: 1.2em;">
-		ด่าน
-	</div>
-	<div class="col-md-2 text-center">
-		<select class="form-control" id="select_port_type" onchange="ChangeFilter()">
-			<option value="">ทั้งหมด</option>
-			<option value="ด่านบก" <?php if($port_type=='ด่านบก'){ echo 'selected="selected"';} ?> >ไม่ใช่ด่านอากาศ</option>
-			<option value="ด่านอากาศ" <?php if($port_type=='ด่านอากาศ'){ echo 'selected="selected"';} ?> >ด่านอากาศ</option>
-		</select>
-	</div>
-	<div class="col-md-2 text-center">
-		<select class="form-control" id="select_port_id" onchange="ChangeFilter()">
-			<option value="">ทั้งหมด</option>
-			<?php if($port_type=='' || $port_type=='ด่านบก'){?>
-			<?php foreach($select_port[1] as $p_id=>$port){ $sel=''; if($p_id==$port_id){ $sel='selected="selected"';}  ?>
-				<option value="<?php echo $p_id?>" <?php echo $sel;?> ><?php echo $port?></option>
-			<?php }}?>
-			<?php if($port_type=='' || $port_type=='ด่านอากาศ'){?>
-			<?php foreach($select_port[2] as $p_id=>$port){ $sel=''; if($p_id==$port_id){ $sel='selected="selected"';}  ?>
-				<option value="<?php echo $p_id?>" <?php echo $sel;?> ><?php echo $port?></option>
-			<?php }}?>
-		</select>
-	</div> -->
+	<div class="col-md-12" style="text-align:center;">
+	<?php 
+	// echo count($port_type).' | '.count($select_port[1]).' | '.count($select_port[2]);
+	if(count($port_type)==count($select_port[1])+count($select_port[2])){
+		echo 'ด่านทั้งหมด';
+	}else{
+		if(!empty($port_type)){ echo 'ด่าน : ';}
+
+		$port_label1 = $port_label2 = '';
+		$count_port1=$count_sel_port1=$count_port2=$count_sel_port2=0;
+		foreach ($select_port[1] as $p_id=>$port) { 
+			$count_port1++;
+			if (in_array($p_id, $port_type)) { $count_sel_port1++; $port_label1 .= $port.', ';}
+		}
+		foreach ($select_port[2] as $p_id=>$port) { 
+			$count_port2++;
+			if (in_array($p_id, $port_type)) { $count_sel_port2++; $port_label2 .= $port.', ';}
+		}
+
+		if($count_port2==$count_sel_port2){
+			$port_label2 =  'ด่านอากาศทั้งหมด , ';
+		}
+
+		if($count_port1==$count_sel_port1){
+			$port_label1 = 'ไม่ใช่ด่านอากาศทั้งหมด';
+		}
+
+		$label = $port_label2.$port_label1;
+		echo substr($label, 0,-2);
+
+		
+	}
 	
+	?>
+	</div>
 </div>
+
 <div class="row">
 	<div class="col-md-8 py-2 py-md-0">
 		<label>
@@ -101,6 +111,20 @@
 	</div>
 </div>
 <div class="row">
+	<div class="col-md-6 col-12  py-2 py-md-0">
+		<div class="row">
+			<div class="col-md-12">
+				<label><input type="checkbox" name="port_type_2" id="port_type_2" class="port_checkbox"> <b> ด่านอากาศ</b></label>
+			</div>
+			<?php foreach ($select_port[2] as $p_id=>$port) { ?>
+				<div class="col-md-6 col-12 div_port_checkbox">
+					<label style="font-weight:normal;"><input type="checkbox" name="port_type[]" id="port_type" class="port_2 port_checkbox" value="<?php echo $p_id ?>" <?php if (in_array($p_id, $port_type)) {
+																																														echo "checked='checked'";
+																																													} ?>> <?php echo $port ?></label>
+				</div>
+			<?php } ?>
+		</div>
+	</div>
 	<div class="col-md-6 col-12 py-2 py-md-0 border-right  border-secondary">
 		<div class="row">
 			<div class="col-md-12">
@@ -118,20 +142,7 @@
 			<?php } ?>
 		</div>
 	</div>
-	<div class="col-md-6 col-12  py-2 py-md-0">
-		<div class="row">
-			<div class="col-md-12">
-				<label><input type="checkbox" name="port_type_2" id="port_type_2" class="port_checkbox"> <b> ด่านอากาศ</b></label>
-			</div>
-			<?php foreach ($select_port[2] as $p_id=>$port) { ?>
-				<div class="col-md-6 col-12 div_port_checkbox">
-					<label style="font-weight:normal;"><input type="checkbox" name="port_type[]" id="port_type" class="port_2 port_checkbox" value="<?php echo $p_id ?>" <?php if (in_array($p_id, $port_type)) {
-																																														echo "checked='checked'";
-																																													} ?>> <?php echo $port ?></label>
-				</div>
-			<?php } ?>
-		</div>
-	</div>
+	
 	
 </div>
 

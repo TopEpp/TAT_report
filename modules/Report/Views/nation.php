@@ -179,13 +179,13 @@ foreach ($data_month_lastyear as $v) {
 						<td align="center"></td>
 						<td> Other </td>
 						<td style="text-align:right;"> <?php echo number_format($sum_other); ?> </td>
-						<td style="text-align:right;"> <?php echo number_format($sum_other / $sumMonth * 100, 2); ?></td>
+						<td style="text-align:right;"> <?php echo number_format($sum_other / $sumDay * 100, 2); ?></td>
 					</tr>
 				</tfoot>
 			<?php } ?>
 			</table>
 		</div>
-		<span style="font-size:0.8em">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</span>
+		<!-- <span style="font-size:0.8em">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</span> -->
 	</div>
 	<div class="col-md-6 pb-3 col-12">
 		<div class="pt-4 py-2" style="text-align:center; font-size:15px">

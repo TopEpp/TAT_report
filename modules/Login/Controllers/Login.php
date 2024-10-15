@@ -150,7 +150,7 @@ class Login extends BaseController{
             if($userInfo['USER_PERMISSION_TYPE']==2){
               $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
             }else{
-              $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1);
+              $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1,'DEPARTURE'=>1);
             }
             
             $ses_data = [
@@ -239,7 +239,7 @@ class Login extends BaseController{
         if($userInfo['USER_PERMISSION_TYPE']==2){
           $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
         }else{
-          $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1);
+          $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1,'DEPARTURE'=>1);
         }
         
         $ses_data = [
@@ -306,7 +306,7 @@ class Login extends BaseController{
           if(!empty($userInfo['samaccountname'][0])  || ( $C == 'C9' || $C == 'C10' || $C == 'C11') ){
               $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
               if($userInfo['title'][0]==410202 || $userInfo['title'][0] == 420101){
-                $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'SETTING'=>1,'IMPORT'=>1);
+                $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'SETTING'=>1,'IMPORT'=>1,'DEPARTURE'=>1);
               }
               $userRole['REPORT'] = 'REPORT';
               $ses_data = [
@@ -437,7 +437,7 @@ class Login extends BaseController{
       $session = session();
       $userRole = array();
 
-      $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1);
+      $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1,'DEPARTURE'=>1);
 
       $ses_data = [
       'user_id' => $userInfo['USER_ID'],

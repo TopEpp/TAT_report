@@ -119,7 +119,7 @@
 .card_info {
     border-radius: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #fff;
     padding: 15px 5px 15px 5px
 }
 
@@ -249,7 +249,7 @@
                         <div class="card_info"  style="background:#FFF; margin-top:20px ;">
                             <div class="col-lg-12">
                                 <div class="font-19" style="color: #a98f44;">
-                                    <b> <?php echo $Mydate->date_eng2thai($prev_date, 543, 'S', 'S') ?>
+                                    <b> สะสมรายสัปดาห์ <br><?php echo $Mydate->date_eng2thai($prev_date, 543, 'S', 'S') ?>
                                         -
                                         <?php echo $Mydate->date_eng2thai($end_date_label, 543, 'S', 'S') ?></b>
                                 </div>
@@ -341,15 +341,16 @@
                             </div>
                         <div class="text-center" id="htmltoimage_chart_country" style="padding:5px; background: #FFF; border-radius: 15px;">
 
-                            <div id="chart_country" style="height:270px !important"></div>
+                            <div id="chart_country" style="height:285px !important"></div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12" style="background-color: #0a1b54;color: white">
-                        หมายเหตุ : ข้อมูลสัญชาติ (Nationality) ที่ไม่นับรวมข้อมูลผู้อพยพ , หน่วยงานพิเศษ UN ,
-                        ไม่มีสัญชาติ <br>
-                        WoW (Week on Week) หมายถึง อัตราการเปลี่ยนแปลงเทียบกับสัปดาห์ก่อนหน้า
+                    <div class="col-md-12" style="background-color: #0a1b54;color: white; font-size: 11px;">
+                        หมายเหตุ : <br>1. ข้อมูลจำแนกรายสัญชาติ (Nationality) ที่มีการกำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศ
+(สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
+2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass<br>
+                        3. WoW (Week on Week) หมายถึง อัตราการเปลี่ยนแปลงเทียบกับสัปดาห์ก่อนหน้า
                     </div>
                 </div>
             </div>
@@ -430,8 +431,12 @@ $(function() {
             scrollablePlotArea: {
                 minWidth: 700
             },
-            backgroundColor: 'rgba(0,0,0,0)'
+            backgroundColor: 'rgba(0,0,0,0)',
+            style: {
+                fontFamily: 'TATSana-Chon'
+            }
         },
+        
         credits: {
             enabled: false
         },

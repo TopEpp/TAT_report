@@ -90,7 +90,7 @@ foreach ($data_month_lastyear as $v) {
 
 			<?php } ?>
 			<tr style="border:0px">
-				<td colspan="5">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td>
+				<!-- <td colspan="5">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td> -->
 			</tr>
 			<?php if ($export_type == 'excel') { ?>
 				<tr style="border:0px">
@@ -154,7 +154,7 @@ foreach ($data_month_lastyear as $v) {
 					</tr>
 				<?php } ?>
 				<tr style="border:0px">
-					<td colspan="5">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td>
+					<!-- <td colspan="5">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td> -->
 				</tr>
 				<?php if ($export_type == 'excel') { ?>
 					<tr style="border:0px">

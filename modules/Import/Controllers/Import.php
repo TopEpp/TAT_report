@@ -8,6 +8,7 @@ use CodeIgniter\API\ResponseTrait;
 use App\Libraries\SimpleXLSX;
 use App\Libraries\Mydate;
 use Modules\Main\Models\Main_model;
+use Modules\Setting\Models\Setting_model;
 
 class Import extends BaseController
 {
@@ -19,6 +20,20 @@ class Import extends BaseController
 		$data = array();
 		$Model = new Import_model();
 		$Main_model = new Main_model();
+		$Setting_model = new Setting_model();
+		$year = date('Y');
+		$month = date('m');
+		$Setting_model->genRaio($year, $month);
+
+		if(date('d')>28){
+			$month_next = $month+1;
+			if($month_next>12){
+				$month_next = 1;
+				$year = $year+1;
+			}
+			$Setting_model->genRaio($year, $month_next);
+		}
+		
 
 		$this->Mydate = new Mydate();
 		$data['Mydate'] = $this->Mydate;

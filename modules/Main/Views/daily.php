@@ -1019,8 +1019,8 @@ for ($i=1; $i <= 12; $i++) {
 			format: "dd/mm/yyyy",
 			autoclose: true,
 			language: 'th-th',
-			endDate: new Date('<?php list($year, $month, $day) = explode('-', $to_date);
-								echo $year . '-' . $month . '-' . ($day); ?>')
+			endDate: new Date('<?php list($year_picker, $month, $day) = explode('-', $to_date);
+								echo $year_picker . '-' . $month . '-' . ($day); ?>')
 		});
 
 
@@ -1028,14 +1028,14 @@ for ($i=1; $i <= 12; $i++) {
 		const data_chart = {
 			labels: chart_label,
 			datasets: [{
-					label: '<?php echo date('Y') + 543 ?>',
+					label: '<?php echo $year + 543 ?>',
 					data: chart_current,
 					borderColor: '#57DACC',
 					backgroundColor: '#57DACC',
 				}
 				,
 				{
-					label: '<?php echo date('Y') + 542 ?>',
+					label: '<?php echo $year + 542 ?>',
 					data: chart_pre,
 					borderColor: '#FACE74',
 					backgroundColor: '#FACE74',

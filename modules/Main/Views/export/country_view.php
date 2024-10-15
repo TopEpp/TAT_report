@@ -131,16 +131,14 @@ body {
 }
 
 .box-shadow {
-    box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;
+/*    box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;*/
     width: 100%;
-
     background-color: white !important;
     /* border-radius: 12px; */
-
 }
 
 .box-shadow-2 {
-    box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;
+/*    box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;*/
     width: 100%;
     background-color: white !important;
     height: 105px;
@@ -225,12 +223,12 @@ body {
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="text-center" style="color: #4f70b4;">
+                                <div class="text-center" style="color: #4f70b4; font-size: 18px;">
                                     <b>ที่มา : สำนักงานตรวจคนเข้าเมือง</b>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="text-center" style="color:#4f70b4">
+                                <div class="text-center" style="color:#4f70b4; font-size: 18px;">
                                     <b>จัดทำโดย ด้านดิจิทัล วิจัยและพัฒนา</b>
                                 </div>
                             </div>
@@ -246,7 +244,7 @@ body {
                     <div class="row m-0">
                         <div class="col-lg-4">
                             <div class="box-1 my-2" style="">
-                                <div class="box-shadow" style="border-radius:15px;">
+                                <div class="box-shadow" style="border-radius:15px; border-color: #fff;">
                                     <div class="row">
                                         <div class="col-lg-12 " style=" overflow: hidden;">
                                             <div class="row m-0" style="padding-top: 20px;padding-bottom: 20px;">
@@ -272,7 +270,7 @@ body {
                             </div>
 
                             <div class="box-1 my-2" style="">
-                                <div class="box-shadow-2"  style="border-radius:15px;">
+                                <div class="box-shadow-2"  style="border-radius:15px; border-color: #fff;">
                                     <div class="row">
                                         <div class="col-lg-12 " style=" overflow: hidden;">
                                             <div class="row m-0" style="padding-top: 10px;">
@@ -318,13 +316,14 @@ body {
                                 </div>
                             </div>
                             <div class="box-1 my-2" style="">
-                                <div class="box-shadow-2"  style="border-radius:15px;">
+                                <div class="box-shadow-2"  style="border-radius:15px; border-color: #fff; ">
                                     <div class="row">
                                         <div class="col-lg-12 " style=" overflow: hidden;">
                                             <div class="row m-0" style="padding-top: 10px;">
                                                 <div class="col-lg-12">
-                                                    <div class="font-21" style="color: #a98f44;">
-                                                        <b> <?php echo $Mydate->date_eng2thai($prev_date, 543, 'S', 'S') ?>
+                                                    <div  style="color: #a98f44; font-size: 18px;" >
+                                                        <b> สะสมรายสัปดาห์ 
+                                                            <?php echo $Mydate->date_eng2thai($prev_date, 543, 'S', 'S') ?>
                                                             -
                                                             <?php echo $Mydate->date_eng2thai($end_date_label, 543, 'S', 'S') ?></b>
                                                     </div>
@@ -362,20 +361,20 @@ body {
                         </div>
                         <div class="col-lg-8 my-auto">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-7">
                                     <div class="box-1 my-2" style="">
-                                        <div class="box-shadow" style="height: 73px; border-radius: 15px;">
+                                        <div class="box-shadow" style="height: 73px; border-radius: 15px;  border-color: #fff;">
                                             <div class="row">
                                                 <div class="col-lg-12  my-auto" style=" overflow: hidden;">
                                                     <div class="row m-0 my-auto" style="padding-top: 12px;">
-                                                        <div class="col-lg-8 my-auto">
+                                                        <div class="col-lg-9 my-auto">
                                                             <div class="font-17">
                                                                 <b style="color:#36BA98">ด่านอากาศ :
                                                                     <?php echo number_format($SumPortType[1]['NUM']); ?>
                                                                     คน</b>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-4 text-center">
+                                                        <div class="col-lg-3 text-center">
                                                             <div class="font-17">
                                                                 <b style="color:#36BA98"><?php echo
                                                                     number_format($SumPortType[1]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2);
@@ -383,14 +382,14 @@ body {
                                                             </div>
 
                                                         </div>
-                                                        <div class="col-lg-8">
+                                                        <div class="col-lg-9">
                                                             <div class="font-17">
                                                                 <b style="color:#1679AB">ไม่ใช่ด่านอากาศ :
                                                                     <?php echo number_format($SumPortType[0]['NUM']); ?>
                                                                     คน</b>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-4 text-center">
+                                                        <div class="col-lg-3 text-center">
                                                             <div class="font-17">
                                                                 <b
                                                                     style="color:#1679AB"><?php echo number_format($SumPortType[0]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2); ?>%</b>
@@ -403,7 +402,7 @@ body {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6" >
+                                <div class="col-lg-5" >
                                     <div class="text-right" style="padding-top:20px;">
                                     <?php
                                         $flag = base_url('public/img/logotat.png');
@@ -430,10 +429,12 @@ body {
 
                     </div>
                     <div class="col-lg-12 p-0 bg-footer">
-                        <div class="p-3">
-                            หมายเหตุ : ข้อมูลสัญชาติ (Nationality) ที่ไม่นับรวมข้อมูลผู้อพยพ , หน่วยงานพิเศษ UN ,
-                            ไม่มีสัญชาติ <br>
-                            WoW (Week on Week) หมายถึง อัตราการเปลี่ยนแปลงเทียบกับสัปดาห์ก่อนหน้า
+                        <div class="p-3" style="font-size:11px">
+                            หมายเหตุ : <br>1. ข้อมูลจำแนกรายสัญชาติ (Nationality) ที่มีการกำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศ
+(สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
+2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass<br>
+                        
+                            3. WoW (Week on Week) หมายถึง อัตราการเปลี่ยนแปลงเทียบกับสัปดาห์ก่อนหน้า
                         </div>
                     </div>
                 </div>

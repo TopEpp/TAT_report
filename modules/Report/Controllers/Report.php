@@ -248,6 +248,7 @@ class Report extends BaseController
 		$data['year'] = date('Y');
 		$data['m_start'] = 1; $data['m_end'] = 12;
 		$data['month_label'] = $this->month_en;
+		$data['month_label_short'] = $this->month_en_short;
 		
 		$data['country_type'] = 'all';
 		$data['country_id'] = '';
@@ -280,7 +281,7 @@ class Report extends BaseController
 
 		$m_start = $data['m_start']; $m_end = $data['m_end'];
 		for($m_start;$m_start<=$m_end;$m_start++){
-			$data['period'][$m_start] = $data['month_label'][$m_start];
+			$data['period'][$m_start] = $data['month_label_short'][$m_start];
 		}
 
 		if (!empty($data['port_type'])) {

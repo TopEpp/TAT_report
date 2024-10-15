@@ -90,7 +90,7 @@ foreach ($data_month_lastyear as $v) {
 				<td style="text-align:right;"> <?php echo number_format($sum_other / $sumMonth * 100, 2); ?></td>
 			</tr>
 			<tr style="border:0px">
-				<td colspan="5">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td>
+				<!-- <td colspan="5">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td> -->
 			</tr>
 			<?php if ($export_type == 'excel') { ?>
 				<tr style="border:0px">
@@ -166,7 +166,7 @@ foreach ($data_month_lastyear as $v) {
 					<td align="right"><?php echo number_format($sum_other / $sumMonth * 100, 2); ?></td>
 				</tr>
 				<tr style="border:0px">
-					<td colspan="5">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td>
+					<!-- <td colspan="5">* เปรียบเทียบกับช่วงเดียวกันของปีที่ผ่านมา (Year-On-Year)</td> -->
 				</tr>
 				<?php if ($export_type == 'excel') { ?>
 					<tr style="border:0px">
