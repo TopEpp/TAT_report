@@ -104,90 +104,16 @@ class Login extends BaseController{
             $url = base_url();
           }
           return redirect()->to($url);
-      }else{
-        $session = session();
-
-        $username = $this->request->getVar('user_name');
-        $password = $this->request->getVar('password');
-
-        $pastAuthUsr = $this->request->getVar('pastAuthUsr');
-        $pastAuthPwd = $this->request->getVar('pastAuthPwd');
-        if($pastAuthUsr){
-            $username = $pastAuthUsr;
-            $password = $pastAuthPwd;
-        }
-
-        $User_model = new User_model();
-        $userInfo = $User_model
-                    ->where('USER_NAME', $username)
-                    ->where('USER_ACTIVE_STATUS', 1)
-                    ->first();
-
-        // echo '<pre>'; print_r($userInfo); exit;
-          if(empty($userInfo['USER_PASSWORD'])){
-            
-            return redirect()->to('welcome');
-          }
-
-
-          $checkPassword = Hash::check($password, $userInfo['USER_PASSWORD']);
-          if(!$checkPassword)
-          {
-            return redirect()->to('welcome');
-          }
-          else
-          {
-
-            $userId = $userInfo['USER_ID'];
-            if ($userInfo['USER_PHOTO_FILE'] != '') {
-              $user_img = base_url('public/uploads/user/'.$userInfo['USER_PHOTO_FILE']);
-            }else{
-              $user_img = base_url('public/img/default-profile.jpeg');
-            }
-            $session = session();
-            $userRole = array();
-
-            if($userInfo['USER_PERMISSION_TYPE']==2){
-              $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
-            }else{
-              $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1,'DEPARTURE'=>1);
-            }
-            
-            $ses_data = [
-            'user_id' => $userInfo['USER_ID'],
-            'org_id' => $userInfo['USER_ORG_ID'],
-            'username' => $userInfo['USER_NAME'],
-            'name' =>  $userInfo['USER_NAME_TH'],
-            'user_type' => $userInfo['USER_TYPE_ORG'],
-            'user_permission_type'=>$userInfo['USER_PERMISSION_TYPE'],
-            'user_area_id' => $userInfo['USER_AREA_ID'],
-            'user_region_id' => $userInfo['USER_REGION_ID'],
-            'user_img' => $user_img,
-            'user_menu' => $userPermission,
-            'user_role' => $userRole,
-            'logged_in' => TRUE
-            ];
-            $session->set($ses_data);
-
-            $Main = new Main_model();
-            $ip = $this->request->getIPAddress();
-            $Main->saveLogLogin('REPORT',$ip,$session);
-
-            $redirect_url = $session->get('redirect_url');
-            if($redirect_url){
-              return redirect()->to($redirect_url);
-            }
-            return redirect()->to('/main');
-          }
       }
     }
-      
 
     return redirect()->to('welcome');
   }
 
   function auth2(){
+
     $session = session();
+
     $username = $this->request->getVar('user_name');
     $password = $this->request->getVar('password');
 
@@ -196,12 +122,6 @@ class Login extends BaseController{
     if($pastAuthUsr){
         $username = $pastAuthUsr;
         $password = $pastAuthPwd;
-    }
-
-    if (function_exists('ldap_connect')) {
-      if($this->loginAD($username,$password)){
-          return redirect()->to('/main');
-      }
     }
 
     $User_model = new User_model();
@@ -236,12 +156,7 @@ class Login extends BaseController{
         $session = session();
         $userRole = array();
 
-        if($userInfo['USER_PERMISSION_TYPE']==2){
-          $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
-        }else{
-          $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1,'DEPARTURE'=>1);
-        }
-        
+        $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1);
         $ses_data = [
         'user_id' => $userInfo['USER_ID'],
         'org_id' => $userInfo['USER_ORG_ID'],
@@ -272,7 +187,6 @@ class Login extends BaseController{
 
   function loginAD($username='',$pass=''){
     // return false;
-    $User_model = new User_model();
     $session = session();
     $response = '';
     $server   = "pdc2012.tat.or.th";
@@ -303,17 +217,12 @@ class Login extends BaseController{
           $C = explode('=', $C[0]);
           $C = $C[1];
           
+          $userPermission = $this->getPermissionAD($userInfo['title'][0],$userInfo['samaccountname'][0],$C);
 
-          if(!empty($userInfo['samaccountname'][0])  || ( $C == 'C9' || $C == 'C10' || $C == 'C11') ){
-              $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
-              // if($userInfo['title'][0]==410202 || $userInfo['title'][0] == 420101){
-              //   $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'SETTING'=>1,'IMPORT'=>1,'DEPARTURE'=>1);
-              // }
-              // if($userInfo['title'][0]==310201){
-              //   $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'DEPARTURE'=>1);
-              // }
-              $userPermission = $User_model->getPermissionAD($userInfo['title'][0],$userInfo['samaccountname'][0],$C);
-
+          if(!empty($userInfo['samaccountname'][0]) && $userPermission['DASHBOARD']  || ( $C == 'C9' || $C == 'C10' || $C == 'C11') ){
+              if( $C == 'C9' || $C == 'C10' || $C == 'C11' ){
+                $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
+              }
               $userRole['REPORT'] = 'REPORT';
               $ses_data = [
               'user_id' => $userInfo['title'][0],
@@ -333,11 +242,11 @@ class Login extends BaseController{
 
 
 
-
               $Main = new Main_model();
               $ip = $this->request->getIPAddress();
               // echo '<pre>';
-              // print_r($userInfo);
+              // echo 'ip '.$ip;
+              // print_r($ses_data);
               // print_r($session); exit;
 
               $Main->saveLogLogin('REPORT',$ip,$session);
@@ -443,7 +352,7 @@ class Login extends BaseController{
       $session = session();
       $userRole = array();
 
-      $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1,'DEPARTURE'=>1);
+      $userPermission = array('DASHBOARD'=>1,'REPORT'=>1,'IMPORT'=>1,'SETTING'=>1);
 
       $ses_data = [
       'user_id' => $userInfo['USER_ID'],

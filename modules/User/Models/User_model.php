@@ -392,18 +392,21 @@ class User_model extends Model
     if(!empty($row)){
       return $row;
     }else{
-      $builder = $this->db->table('TAT.REPORT_PERMISSION_USER');
-      $builder->select('*');
-      $builder->where('USERNAME',$username);
-      $row = $builder->get()->getRowArray();
-      if(!empty($row)){
-        return $row;
+      if($username){
+        $builder = $this->db->table('TAT.REPORT_PERMISSION_USER');
+        $builder->select('*');
+        $builder->where('USERNAME',$username);
+        $row = $builder->get()->getRowArray();
+        if(!empty($row)){
+          return $row;
+        }
       }
+      
     }
 
-    if($C == 'C9' || $C == 'C10' || $C == 'C11'){
+    // if($C == 'C9' || $C == 'C10' || $C == 'C11'){
       $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
-    }
+    // }
 
     return $userPermission;
   }

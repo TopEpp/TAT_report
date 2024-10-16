@@ -859,8 +859,8 @@ class Main extends BaseController
 		$data['to_date_past'] = ($year - 1) . '-' . $month . '-' . $day;
 
 
-		$prev_date_week = date('Y-m-d', strtotime($prev_date . ' -6 day'));
-		$end_date_week = date('Y-m-d', strtotime($end_date . ' -6 day'));
+		$prev_date_week = date('Y-m-d', strtotime($prev_date . ' -7 day'));
+		$end_date_week = date('Y-m-d', strtotime($end_date . ' -7 day'));
 
 
 		$data['SumDateData'] = $Model->getSumDate($end_date, $data['country_id']);
@@ -872,6 +872,9 @@ class Main extends BaseController
 
 		$data['SumPortType'] = $Model->getSumPortType($start_date, $end_date, $data['country_id']);
 		$data['DataChart'] = $Model->getSumChartCountry($end_date, $data['country_id']);
+
+		// echo $prev_date.' - '.$end_date.'<br>';
+		// echo $prev_date_week.' - '.$end_date_week;
 
 		return view("Modules\Main\Views\country", $data);
 	}
@@ -949,8 +952,8 @@ class Main extends BaseController
 		$data['to_date_past'] = ($year - 1) . '-' . $month . '-' . $day;
 
 
-		$prev_date_week = date('Y-m-d', strtotime($prev_date . ' -6 day'));
-		$end_date_week = date('Y-m-d', strtotime($end_date . ' -6 day'));
+		$prev_date_week = date('Y-m-d', strtotime($prev_date . ' -7 day'));
+		$end_date_week = date('Y-m-d', strtotime($end_date . ' -7 day'));
 
 
 		$data['SumDateData'] = $Model->getSumDate($end_date, $data['country_id']);

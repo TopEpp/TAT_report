@@ -339,7 +339,7 @@
                                     </div>
                                 </div>
                             </div>
-                        <div class="text-center" id="htmltoimage_chart_country" style="padding:5px; background: #FFF; border-radius: 15px;">
+                        <div class="text-center" id="htmltoimage_chart_country" style="padding:5px; background: #FFF; border-radius: 15px; font-family: 'TATSana-Chon', sans-serif;">
 
                             <div id="chart_country" style="height:285px !important"></div>
                         </div>
@@ -523,14 +523,18 @@ function SaveImg2ExportPdf(url2SaveImg, url2DowloadReport) {
 }
 
 function saveImg(url2SaveImg, url2DowloadReport) {
+    
+
     $('.btn-download').hide();
     const chart_array = ["chart_country"];
     var count_canvas = 0;
     var country_select = $('#country_select').val();
     $.each(chart_array, function(key, value) {
         var container = document.getElementById("htmltoimage_" + value);
+        document.getElementById("htmltoimage_"+value).style.fontFamily = 'TATSana-Chon, sans-serif';
         html2canvas(container, {
-            allowTaint: true
+            allowTaint: true,
+            useCORS: true 
         }).then(function(canvas) {
 
             var link = document.createElement("a");
