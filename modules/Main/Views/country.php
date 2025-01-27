@@ -292,14 +292,14 @@
                                                         <div class="col-lg-8 my-auto">
                                                             <div class="font-17">
                                                                 <b style="color:#36BA98">ด่านอากาศ :
-                                                                    <?php echo number_format($SumPortType[1]['NUM']); ?>
+                                                                    <?php echo number_format(@$SumPortType[1]['NUM']); ?>
                                                                     คน</b>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4 text-center">
                                                             <div class="font-17">
                                                                 <b style="color:#36BA98"><?php echo
-                                                                    number_format($SumPortType[1]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2);
+                                                                    number_format(@$SumPortType[1]['NUM']/(@$SumPortType[1]['NUM']+@$SumPortType[0]['NUM'])*100,2);
                                                                     ?>%</b>
                                                             </div>
 
@@ -307,14 +307,14 @@
                                                         <div class="col-lg-8">
                                                             <div class="font-17">
                                                                 <b style="color:#1679AB">ไม่ใช่ด่านอากาศ :
-                                                                    <?php echo number_format($SumPortType[0]['NUM']); ?>
+                                                                    <?php echo number_format(@$SumPortType[0]['NUM']); ?>
                                                                     คน</b>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4 text-center">
                                                             <div class="font-17">
                                                                 <b
-                                                                    style="color:#1679AB"><?php echo number_format($SumPortType[0]['NUM']/($SumPortType[1]['NUM']+$SumPortType[0]['NUM'])*100,2); ?>%</b>
+                                                                    style="color:#1679AB"><?php echo number_format(@$SumPortType[0]['NUM']/(@$SumPortType[1]['NUM']+@$SumPortType[0]['NUM'])*100,2); ?>%</b>
                                                             </div>
 
                                                         </div>
@@ -362,16 +362,42 @@
 
 function convertArrayToHighchartsFormat($array,$end_date_label) {
     $series = [];
-    list($year, $month, $day) = explode('-', $end_date_label);
+    
 
+    $min_year = PHP_INT_MAX; // Initialize to the largest possible integer
+    foreach ($array as $name => $data) {
+        foreach ($data as $date => $value) {
+            $dateParts = explode("-", $date); // Split date into parts
+            if ($name === 'current') { // Check for the 'current' series
+                $year = (int)$dateParts[0]; // Get the year as an integer
+                if ($year < $min_year) { // Compare to find the minimum year
+                    $min_year = $year;
+                }
+            }
+        }
+    }
+
+    list($year, $month, $day) = explode('-', $end_date_label);
     foreach ($array as $name => $data) {
     	if($name=='current'){
-    		$name_chart = $year;
+            if($min_year==$year){
+                $name_chart = $year;
+            }else{
+                $name_chart = $min_year.' - '.$year;
+            }
+    		
     	}else{
-    		$name_chart = $year-1;
+            if($min_year==$year){
+                $name_chart = $year-1;
+            }else{
+                $name_chart = ($min_year-1).' - '.($year-1);
+            }
+    		
     	}
+
+        
         $seriesObject = [
-            "name" => $name_chart,
+            "name" => "'".(string)$name_chart."'",
             "lineWidth" => 4,
             "marker" => [
                 "radius" => 4
@@ -395,6 +421,7 @@ function convertArrayToHighchartsFormat($array,$end_date_label) {
     }
 
     return json_encode($series);
+    // return json_encode($series, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
 }
 
 $highchartsData = convertArrayToHighchartsFormat($DataChart,$end_date_label);
