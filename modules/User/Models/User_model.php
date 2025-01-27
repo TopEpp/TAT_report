@@ -405,7 +405,7 @@ class User_model extends Model
     }
 
     // if($C == 'C9' || $C == 'C10' || $C == 'C11'){
-      $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
+    $userPermission = array('DASHBOARD'=>1,'REPORT'=>1);
     // }
 
     return $userPermission;

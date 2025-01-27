@@ -486,14 +486,30 @@ $(function() {
             pointFormat: '<tr><td style="color: {series.color}">{series.name} : </td>' +
                 '<td style="text-align: right"><b>{point.y:,.0f}</b></td></tr>',
             footerFormat: '</table>',
-            formatter: function() {
-                return '<small>' + Highcharts.dateFormat('%d-%m-%Y', this.x) + '</small><table>' +
-                    this.points.map(point => (
-                        '<tr><td style="color:' + point.series.color + '"> : </td>' +
-                        '<td style="text-align: right;color: ' + point.series.color + '"><b>' +
-                        Highcharts.numberFormat(point.y, 0, '.', ',') + '</b></td></tr>'
-                    )).join('') +
-                    '</table>';
+            // formatter: function() {
+            //     return '<small>' + Highcharts.dateFormat('%d-%m-%Y', this.x) + '</small><table>' +
+            //         this.points.map(point => (
+            //             '<tr><td style="color:' + point.series.color + '"> : </td>' +
+            //             '<td style="text-align: right;color: ' + point.series.color + '"><b>' +
+            //             Highcharts.numberFormat(point.y, 0, '.', ',') + '</b></td></tr>'
+            //         )).join('') +
+            //         '</table>';
+            // }
+            formatter: function () {
+                return this.points
+                    .map(point => {
+                        let date = new Date(point.x);
+                        
+                        // Adjust the date for the second series (index 1)
+                        if (point.series.index === 1) {
+                            date.setFullYear(date.getFullYear() - 1); // Subtract 1 year
+                        }
+                        
+                        const formattedDate = Highcharts.dateFormat('%d-%m-%Y', date.getTime());
+                        const value = Highcharts.numberFormat(point.y, 0, '.', ','); // Format the value
+                        return `<span style="color: ${point.series.color}">${formattedDate} : ${value}</span>`;
+                    })
+                    .join('<br>'); // Separate each series by a new line
             }
         },
         <?php echo "series: " . str_replace('"', '', $highchartsData); ?>

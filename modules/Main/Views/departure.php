@@ -596,6 +596,18 @@ $dataHeat = json_encode($data_chart_heat, JSON_UNESCAPED_UNICODE | JSON_PRETTY_P
                 ]
             }
         }]
+    }, function(chart) {
+        // Callback หลังจากโหลดกราฟเสร็จ
+        chart.renderer.text(
+            '<?php echo $check_noti_month_label;?>',
+            chart.chartWidth - 200,
+            chart.chartHeight - 20
+        )
+        .css({
+            color: '#666666',
+            fontSize: '12px'
+        })
+        .add();
     });
 
 
@@ -665,6 +677,18 @@ $dataHeat = json_encode($data_chart_heat, JSON_UNESCAPED_UNICODE | JSON_PRETTY_P
                 }
             }]
         }
+    }, function(chart) {
+        // Callback หลังจากโหลดกราฟเสร็จ
+        chart.renderer.text(
+            '<?php echo $check_noti_month_label;?>',
+            chart.chartWidth - 200,
+            chart.chartHeight - 20
+        )
+        .css({
+            color: '#666666',
+            fontSize: '12px'
+        })
+        .add();
     });
 
 
@@ -889,6 +913,18 @@ $dataHeat = json_encode($data_chart_heat, JSON_UNESCAPED_UNICODE | JSON_PRETTY_P
                 }
             }]
         }
+    }, function(chart) {
+        // Callback หลังจากโหลดกราฟเสร็จ
+        chart.renderer.text(
+            '<?php echo $check_noti_month_label;?>',
+            chart.chartWidth - 200,
+            chart.chartHeight - 20
+        )
+        .css({
+            color: '#666666',
+            fontSize: '12px'
+        })
+        .add();
     });
 
 })();
