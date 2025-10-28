@@ -3,55 +3,55 @@
 
 <style>
 	:root {
-  --blue: #0E66AE;
-  --indigo: #6610f2;
-  --purple: #6f42c1;
-  --pink: #e83e8c;
-  --red: #e74a3b;
-  --orange: #fd7e14;
-  --yellow: #f6c23e;
-  --green: #1cc88a;
-  --teal: #20c9a6;
-  --cyan: #36b9cc;
-  --white: #fff;
-  --gray: #858796;
-  --gray-dark: #5a5c69;
-  --primary: #0E66AE;
-  --secondary: #858796;
-  --success: #1cc88a;
-  --info: #36b9cc;
-  --warning: #f6c23e;
-  --danger: #e74a3b;
-  --light: #f8f9fc;
-  --dark: #5a5c69;
-  --breakpoint-xs: 0;
-  --breakpoint-sm: 576px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
-  --font-family-sans-serif: "TATSana-Chon", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
+		--blue: #0E66AE;
+		--indigo: #6610f2;
+		--purple: #6f42c1;
+		--pink: #e83e8c;
+		--red: #e74a3b;
+		--orange: #fd7e14;
+		--yellow: #f6c23e;
+		--green: #1cc88a;
+		--teal: #20c9a6;
+		--cyan: #36b9cc;
+		--white: #fff;
+		--gray: #858796;
+		--gray-dark: #5a5c69;
+		--primary: #0E66AE;
+		--secondary: #858796;
+		--success: #1cc88a;
+		--info: #36b9cc;
+		--warning: #f6c23e;
+		--danger: #e74a3b;
+		--light: #f8f9fc;
+		--dark: #5a5c69;
+		--breakpoint-xs: 0;
+		--breakpoint-sm: 576px;
+		--breakpoint-md: 768px;
+		--breakpoint-lg: 992px;
+		--breakpoint-xl: 1200px;
+		--font-family-sans-serif: "TATSana-Chon", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+		--font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	}
 
-@font-face {
-  font-family: 'TATSana-Chon';
-  src: url('<?php echo base_url('public/font/tatsana_chon-reg-webfont.eot')?>');
-  /* IE9 Compat Modes */
-  src: url('<?php echo base_url('public/font/tatsana_chon-reg-webfont.eot?#iefix')?>') format('embedded-opentype'),
-    /* IE6-IE8 */
-    url('<?php echo base_url('public/font/tatsana_chon-reg-webfont.woff')?>') format('woff'),
-    /* Modern Browsers */
-    url('<?php echo base_url('public/font/tatsana_chon-reg-webfont.ttf')?>') format('truetype'),
-    /* Safari, Android, iOS */
-    url('<?php echo base_url('public/font/tatsana_chon-reg-webfont.svg#svgFontName')?>') format('svg');
-  /* Legacy iOS */
-}
+	@font-face {
+		font-family: 'TATSana-Chon';
+		src: url('<?php echo base_url('public/font/tatsana_chon-reg-webfont.eot') ?>');
+		/* IE9 Compat Modes */
+		src: url('<?php echo base_url('public/font/tatsana_chon-reg-webfont.eot?#iefix') ?>') format('embedded-opentype'),
+			/* IE6-IE8 */
+			url('<?php echo base_url('public/font/tatsana_chon-reg-webfont.woff') ?>') format('woff'),
+			/* Modern Browsers */
+			url('<?php echo base_url('public/font/tatsana_chon-reg-webfont.ttf') ?>') format('truetype'),
+			/* Safari, Android, iOS */
+			url('<?php echo base_url('public/font/tatsana_chon-reg-webfont.svg#svgFontName') ?>') format('svg');
+		/* Legacy iOS */
+	}
 
-body {
-  margin: 0;
-  font-family: "TATSana-Chon", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  
-}
+	body {
+		margin: 0;
+		font-family: "TATSana-Chon", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+	}
 
 	#CartItem {
 		display: flex !important;
@@ -315,12 +315,12 @@ if (!empty($SumMarketDate_past['Long'])) {
 						<div class="col-lg-11 pr-0">
 							<div class="mx-3 backgroundColorBox1">
 								<div style="padding-left: 40px; padding-right: 40px; padding-top:3px">
-									<p style="margin: 0px; font-weight:bold; line-height: 1.2em; font-size: 30px; color: white;">
+									<p style="margin: 0px; font-weight:bold; line-height: 1.2em; font-size: 27px; color: white;">
 										สถิตินักท่องเที่ยวระหว่างประเทศ
 										<br>
 										ที่เดินทางเข้าประเทศไทย
 									</p>
-									<h3 style="margin: 0px; line-height: normal; font-size: 30px; font-weight:bold; color: #E8D023;">
+									<h3 style="margin: 0px; line-height: normal; font-size: 27px; font-weight:bold; color: #E8D023;">
 										วันที่ <?php echo $Mydate->date_eng2thai($to_date, 543) ?>
 									</h3>
 									<div style="font-size: 13px; color: white; margin: 0px; padding-top: 6px; padding-bottom: 3px;">
@@ -676,15 +676,15 @@ if (!empty($SumMarketDate_past['Long'])) {
 <script type="text/javascript">
 	var base_url = '<?php echo base_url(); ?>';
 
-	function SaveImg2ExportImg(url2SaveImg,type) {
+	function SaveImg2ExportImg(url2SaveImg, type) {
 		$('.btn-download').hide();
 		$('#htmltoimage_chart_daily_year').show();
 		setTimeout(function() {
-			saveImg(url2SaveImg,type);
+			saveImg(url2SaveImg, type);
 		}, 1000);
 	}
 
-	function saveImg(url2SaveImg,type) {
+	function saveImg(url2SaveImg, type) {
 		const chart_array = ["info_dashboard"];
 		var count_canvas = 0;
 		$.each(chart_array, function(key, value) {
@@ -700,7 +700,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 				link.target = '_blank';
 				// console.log(link);
 				var dataURL = link.href;
-				var imgUrl = base_url + "/public/uploads/main/<?php echo $to_date; ?>" + value + "."+type;
+				var imgUrl = base_url + "/public/uploads/main/<?php echo $to_date; ?>" + value + "." + type;
 				$.post(url2SaveImg, {
 					imgBase64: dataURL,
 					imgName: "<?php echo $to_date; ?>" + value
@@ -718,5 +718,4 @@ if (!empty($SumMarketDate_past['Long'])) {
 
 		});
 	}
-
 </script>
