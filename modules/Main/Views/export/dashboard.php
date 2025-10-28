@@ -336,7 +336,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                                                     $c++;
                                                     $flag = base_url('public/img/logotat.png');
 
-                                                    $number_icon  = base_url('public/img/Number_icon/number_' . $c . '.png');
+                                                    $number_icon  = ROOTPATH . 'public/img/Number_icon/number_' . $c . '.png';
 
                                                     if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
                                                         $flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
@@ -407,7 +407,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                                                 foreach ($SumNatMonthData as $v) {
                                                     $c++;
                                                     $flag = base_url('public/img/logotat.png');
-                                                    $number_icon2  = base_url('public/img/Number_icon/number2_' . $c . '.png');
+                                                    $number_icon2  = ROOTPATH . 'public/img/Number_icon/number2_' . $c . '.png';
                                                     if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
                                                         $flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
                                                     }
@@ -450,17 +450,17 @@ if (!empty($SumMarketDate_past['Long'])) {
         <div class="col6" style="margin-left: 20px;">
             <div class="row" style="margin: 0px;padding-top: 10px;padding-bottom: 10px;">
                 <div class="col6" style="text-align: right;">
-                    <img src="<?php echo base_url('public/img/amezingThai.png') ?>" alt=""
+                    <img src="<?php echo ROOTPATH . 'public/img/amezingThai.png' ?>" alt=""
                         style=" margin-right: 10px;height: 50px;">
                 </div>
                 <div class="col6">
-                    <img src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt=""
+                    <img src="<?php echo ROOTPATH . 'public/img/TATIC-Logo.png' ?>" alt=""
                         style="height:50px ;margin-left: 10px;">
                 </div>
             </div>
             <div style="">
 
-                <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_daily_year.jpg') ?>"
+                <img src="<?php echo ROOTPATH . 'public/uploads/main/' . $to_date . 'chart_daily_year.png' ?>"
                     style="width:100%;height:100px;">
             </div>
             <div class="col12" style="padding-top:0px; ">
@@ -487,7 +487,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                             foreach ($SumMarketDate['Short'] as $v) {
                                 $c++;
                                 $flag = base_url('public/img/logotat.png');
-                                $number_icon2_1  = base_url('public/img/Number_icon/number_' . $c . '.png');
+                                $number_icon2_1  = ROOTPATH . 'public/img/Number_icon/number_' . $c . '.png';
                                 if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
                                     $flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
                                 }
@@ -540,7 +540,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                                 $c++;
                                 $flag = base_url('public/img/logotat.png');
 
-                                $number_icon2_2  = base_url('public/img/Number_icon/number2_' . $c . '.png');
+                                $number_icon2_2  = ROOTPATH . 'public/img/Number_icon/number2_' . $c . '.png';
                                 if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
                                     $flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
                                 }
@@ -599,7 +599,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                             foreach ($SumMarketDate['Long'] as $v) {
                                 $c++;
                                 $flag = base_url('public/img/logotat.png');
-                                $number_icon3_1  = base_url('public/img/Number_icon/number_' . $c . '.png');
+                                $number_icon3_1  = ROOTPATH . 'public/img/Number_icon/number_' . $c . '.png';
                                 if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
                                     $flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
                                 }
@@ -654,7 +654,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                             foreach ($SumMarketMonth['Long'] as $v) {
                                 $c++;
                                 $flag = base_url('public/img/logotat.png');
-                                $number_icon3_2  = base_url('public/img/Number_icon/number2_' . $c . '.png');
+                                $number_icon3_2  = ROOTPATH . 'public/img/Number_icon/number2_' . $c . '.png';
                                 if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
                                     $flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
                                 }

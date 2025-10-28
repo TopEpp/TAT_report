@@ -344,7 +344,7 @@ class Main extends BaseController
 			'margin_right' => 2,
 			'margin_header' => 0, // 30mm not pixel
 			'margin_footer' => 0, // 10mm
-			'orientation' =>'L', // L แนวนอน P แนวตั้งง
+			'orientation' => 'L', // L แนวนอน P แนวตั้งง
 		]);
 
 		// $footer = '<table width="100%" border=0 style="border:0px">
@@ -533,7 +533,7 @@ class Main extends BaseController
 			'margin_footer' => 0, // 10mm
 			'orientation' => 'L', // L แนวนอน P แนวตั้งง
 		]);
-
+		$mpdf->curlAllowUnsafeSslRequests = true;
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 	}
@@ -572,9 +572,9 @@ class Main extends BaseController
 		$file = $uploadfile . $_POST['imgName'] . '.png';
 
 		// Remove the old image file if it exists
-	    if (file_exists($file)) {
-	        unlink($file);
-	    }
+		if (file_exists($file)) {
+			unlink($file);
+		}
 
 		$success = file_put_contents($file, $data);
 		$this->convPNGtoJPG($file, $_POST['imgName']);
@@ -592,10 +592,10 @@ class Main extends BaseController
 		$file = $uploadfile . $file_name;
 		$jpgFile = $file . ".jpg";
 
-	    // Remove the old JPG image file if it exists
-	    if (file_exists($jpgFile)) {
-	        unlink($jpgFile);
-	    }
+		// Remove the old JPG image file if it exists
+		if (file_exists($jpgFile)) {
+			unlink($jpgFile);
+		}
 
 		$image = imagecreatefrompng($filePath);
 		$bg = imagecreatetruecolor(imagesx($image), imagesy($image));
@@ -779,11 +779,10 @@ class Main extends BaseController
 		$data['SumPort'] = $Model->getSumOutSumPort($data['year']);
 
 		$orientation = @$_GET['orientation'];
-		if(@$_GET['export']=='pdf'){
-			$this->export_pdf('Modules\Main\Views\export\departure', $data , $orientation);
-		}else{
+		if (@$_GET['export'] == 'pdf') {
+			$this->export_pdf('Modules\Main\Views\export\departure', $data, $orientation);
+		} else {
 			return view('Modules\Main\Views\export\departure_view', $data);
-
 		}
 	}
 
@@ -966,13 +965,11 @@ class Main extends BaseController
 		$data['SumPortType'] = $Model->getSumPortType($start_date, $end_date, $data['country_id']);
 		$data['DataChart'] = $Model->getSumChartCountry($end_date, $data['country_id']);
 
-		
-		if(@$_GET['export']=='pdf'){
-			$this->export_pdf('Modules\Main\Views\export\country', $data);
-		}else{
-			return view('Modules\Main\Views\export\country_view', $data);
 
+		if (@$_GET['export'] == 'pdf') {
+			$this->export_pdf('Modules\Main\Views\export\country', $data);
+		} else {
+			return view('Modules\Main\Views\export\country_view', $data);
 		}
-		
 	}
 }
