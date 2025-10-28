@@ -315,12 +315,12 @@ if (!empty($SumMarketDate_past['Long'])) {
 						<div class="col-lg-11 pr-0">
 							<div class="mx-3 backgroundColorBox1">
 								<div style="padding-left: 40px; padding-right: 40px; padding-top:3px">
-									<p style="margin: 0px; font-weight:bold; line-height: 1.2em; font-size: 27px; color: white;">
+									<p style="margin: 0px; font-weight:bold; line-height: 1.2em; font-size: 26px; color: white;">
 										สถิตินักท่องเที่ยวระหว่างประเทศ
 										<br>
 										ที่เดินทางเข้าประเทศไทย
 									</p>
-									<h3 style="margin: 0px; line-height: normal; font-size: 27px; font-weight:bold; color: #E8D023;">
+									<h3 style="margin: 0px; line-height: normal; font-size: 26px; font-weight:bold; color: #E8D023;">
 										วันที่ <?php echo $Mydate->date_eng2thai($to_date, 543) ?>
 									</h3>
 									<div style="font-size: 13px; color: white; margin: 0px; padding-top: 6px; padding-bottom: 3px;">
@@ -337,7 +337,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 											</div>
 										</div>
 										<div class="col-lg-12 " style="background-color: #73A0E0; border-radius: 30px;">
-											<div style="color: white;text-align: center;padding: 5px 10px ; font-size: 25px;font-weight: bold;">
+											<div style="color: white;text-align: center;padding: 5px 10px ; font-size: 23px;font-weight: bold;">
 												<?php echo number_format($SumDateData); ?> คน
 											</div>
 										</div>
@@ -349,7 +349,7 @@ if (!empty($SumMarketDate_past['Long'])) {
 											สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
 										</div>
 										<div class="col-lg-12" style="background-color: #DDC354; border-radius: 30px;">
-											<div style="color: white;text-align: center;padding: 5px 10px ; font-size: 25px;font-weight: bold; color:#163868">
+											<div style="color: white;text-align: center;padding: 5px 10px ; font-size: 23px;font-weight: bold; color:#163868">
 												<?php echo number_format($SumMonthData); ?> คน
 											</div>
 
