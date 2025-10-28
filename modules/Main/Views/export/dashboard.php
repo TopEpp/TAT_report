@@ -335,8 +335,8 @@ if (!empty($SumMarketDate_past['Long'])) {
                                                 foreach ($SumNatDateData as $v) {
                                                     $c++;
                                                     $flag = base_url('public/img/logotat.png');
-                                                    $path_number_icon =  FCPATH . 'public/img/Number_icon/number_' . $c . '.png';
-                                                    $iconBase64_number = base64_encode(file_get_contents($path_number_icon));
+
+                                                    $number_icon  = base_url('public/img/Number_icon/number_' . $c . '.png');
 
                                                     if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
                                                         $flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
@@ -360,7 +360,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                                                                     <td
                                                                         style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
                                                                         <img class="img-profile rounded-circle"
-                                                                            src="data:image/png;base64,<?php echo $iconBase64_number ?>"
+                                                                            src="<?php echo $number_icon ?>"
                                                                             style="height: 34px; ">
                                                                     </td>
                                                                     <td
@@ -407,12 +407,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                                                 foreach ($SumNatMonthData as $v) {
                                                     $c++;
                                                     $flag = base_url('public/img/logotat.png');
-                                                    // $number_icon2  = base_url('public/img/Number_icon/number2_' . $c . '.png');
-
-                                                    $path_number_icon =  FCPATH . 'public/img/Number_icon/number2_' . $c . '.png';
-                                                    $iconBase64_number = base64_encode(file_get_contents($path_number_icon));
-
-
+                                                    $number_icon2  = base_url('public/img/Number_icon/number2_' . $c . '.png');
                                                     if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
                                                         $flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
                                                     }
@@ -424,7 +419,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                                                                     <td
                                                                         style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
                                                                         <img class="img-profile rounded-circle"
-                                                                            src="data:image/png;base64,<?php echo $iconBase64_number ?>"
+                                                                            src="<?php echo $number_icon2 ?>"
                                                                             style="height: 34px; ">
                                                                     </td>
                                                                     <td class="colorText"
@@ -464,6 +459,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                 </div>
             </div>
             <div style="">
+
                 <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_daily_year.jpg') ?>"
                     style="width:100%;height:100px;">
             </div>
@@ -491,13 +487,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                             foreach ($SumMarketDate['Short'] as $v) {
                                 $c++;
                                 $flag = base_url('public/img/logotat.png');
-
-                                // $number_icon2_1  = base_url('public/img/Number_icon/number_' . $c . '.png');
-                                $path_number_icon =  FCPATH . 'public/img/Number_icon/number_' . $c . '.png';
-                                $iconBase64_number = base64_encode(file_get_contents($path_number_icon));
-
-
-
+                                $number_icon2_1  = base_url('public/img/Number_icon/number_' . $c . '.png');
                                 if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
                                     $flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
                                 }
@@ -519,7 +509,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                                         <tr>
                                             <td
                                                 style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-                                                <img class="img-profile rounded-circle" src="data:image/png;base64,<?php echo $iconBase64_number ?>"
+                                                <img class="img-profile rounded-circle" src="<?php echo $number_icon2_1 ?>"
                                                     style="height: 34px; ">
                                             </td>
                                             <td
@@ -550,13 +540,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                                 $c++;
                                 $flag = base_url('public/img/logotat.png');
 
-                                // $number_icon2_2  = base_url('public/img/Number_icon/number2_' . $c . '.png');
-
-
-                                $path_number_icon =  FCPATH . 'public/img/Number_icon/number2_' . $c . '.png';
-                                $iconBase64_number = base64_encode(file_get_contents($path_number_icon));
-
-
+                                $number_icon2_2  = base_url('public/img/Number_icon/number2_' . $c . '.png');
                                 if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
                                     $flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
                                 }
@@ -566,7 +550,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                                         <tr>
                                             <td
                                                 style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-                                                <img class="img-profile rounded-circle" src="data:image/png;base64,<?php echo $iconBase64_number ?>"
+                                                <img class="img-profile rounded-circle" src="<?php echo $number_icon2_2 ?>"
                                                     style="height: 34px; ">
                                             </td>
                                             <td
@@ -615,12 +599,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                             foreach ($SumMarketDate['Long'] as $v) {
                                 $c++;
                                 $flag = base_url('public/img/logotat.png');
-                                // $number_icon3_1  = base_url('public/img/Number_icon/number_' . $c . '.png');
-
-                                $path_number_icon =  FCPATH . 'public/img/Number_icon/number_' . $c . '.png';
-                                $iconBase64_number = base64_encode(file_get_contents($path_number_icon));
-
-
+                                $number_icon3_1  = base_url('public/img/Number_icon/number_' . $c . '.png');
                                 if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
                                     $flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
                                 }
@@ -641,7 +620,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                                         <tr>
                                             <td
                                                 style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-                                                <img class="img-profile rounded-circle" src="data:image/png;base64,<?php echo $iconBase64_number ?>"
+                                                <img class="img-profile rounded-circle" src="<?php echo $number_icon3_1 ?>"
                                                     style="height: 34px; ">
                                             </td>
                                             <td
@@ -675,13 +654,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                             foreach ($SumMarketMonth['Long'] as $v) {
                                 $c++;
                                 $flag = base_url('public/img/logotat.png');
-                                // $number_icon3_2  = base_url('public/img/Number_icon/number2_' . $c . '.png');
-
-                                $path_number_icon =  FCPATH . 'public/img/Number_icon/number2_' . $c . '.png';
-                                $iconBase64_number = base64_encode(file_get_contents($path_number_icon));
-
-
-
+                                $number_icon3_2  = base_url('public/img/Number_icon/number2_' . $c . '.png');
                                 if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
                                     $flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
                                 }
@@ -693,7 +666,7 @@ if (!empty($SumMarketDate_past['Long'])) {
                                             <tr>
                                                 <td
                                                     style="width: 10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-                                                    <img class="img-profile rounded-circle" src="data:image/png;base64,<?php echo $iconBase64_number ?>"
+                                                    <img class="img-profile rounded-circle" src="<?php echo $number_icon3_2 ?>"
                                                         style="height: 34px; ">
                                                 </td>
                                                 <td
