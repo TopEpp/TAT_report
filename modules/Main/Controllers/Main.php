@@ -533,7 +533,7 @@ class Main extends BaseController
 			'margin_footer' => 0, // 10mm
 			'orientation' => 'L', // L แนวนอน P แนวตั้งง
 		]);
-		$mpdf->curlAllowUnsafeSslRequests = true;
+		// $mpdf->curlAllowUnsafeSslRequests = true;
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 	}
