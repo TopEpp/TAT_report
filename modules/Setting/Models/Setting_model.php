@@ -371,7 +371,7 @@ class Setting_model extends Model
 			$builder_temp = $this->db->table('MD_PORT_RATIO');
 			$builder_temp->select('*');
 			$builder_temp->where('YEAR',$yearx);
-			$builder_temp->where('MONTH',$monthx-1);
+			$builder_temp->where('MONTH',$monthx);
 			$data_temp = $builder_temp->get()->getResultArray();
 			foreach ($data_temp as $key => $value) {
 

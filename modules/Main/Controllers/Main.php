@@ -552,7 +552,7 @@ class Main extends BaseController
 		$data = base64_decode($img);
 		$file = $uploadfile . $_POST['imgName'] . '.png';
 		// @unlike($file);
-		$success = file_put_contents($file, $data);
+		$success = @file_put_contents($file, $data);
 
 		return $this->setResponseFormat('json')->respond($file);
 	}

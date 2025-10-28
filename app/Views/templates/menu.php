@@ -250,7 +250,13 @@ $user_menu = $session->get('user_menu');
     <?php } ?>
  
     <?php } ?>
-
+    <li class="nav-item ">
+        <a class="nav-link " href="<?php echo base_url('public/uploads/manual.pdf') ?>" target="_blank">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Manual</span>
+        </a>
+       
+    </li>
     <!-- Nav Item - Tables -->
 
 

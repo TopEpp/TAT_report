@@ -959,22 +959,22 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<div>
-					<span style="font-weight:bold; font-size:1.2em">ประกาศ</span><br>
+					<span style="font-weight:bold; font-size:1.2em">เรียน ผู้ใช้ข้อมูลระบบสถิติรายวันทุกท่าน</span><br>
 				</div>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				ข้อมูลในระบบสถิตินักท่องเที่ยวรายวัน Updated ถึงวันที่ 26 ก.พ. 2567 เนื่องจาก สำนักงานตรวจคนเข้าเมือง (สตม.) ปิดระบบฐานข้อมูล <br>จึงไม่สามารถนำส่งข้อมูลรายวันมาให้หน่วยงานที่เกี่ยวข้องได้ <br>ตั้งแต่วันที่  27 ก.พ. 2567 
+				เนื่องจาก สตม. แจ้งว่าระบบขัดข้อง จึงไม่สามารถนำส่งข้อมูลให้หน่วยงานที่เกี่ยวข้องได้ หากทาง กวจ. ได้รับข้อมูลแล้วจะนำเข้าระบบสถิติรายวันต่อไป
 				<br><br>
 				จึงเรียนมาเพื่อโปรดทราบ
 			</div>
 		</div>
 	</div>
-</div> -->
+</div>
 
-
+ -->
 
 <div class="text-center" id="htmltoimage_chart_daily_year" style="height:220px; padding:15px; display: none;">
 	<canvas id="chart_main_year" height="220" style="height:220px !important"></canvas>
@@ -1070,7 +1070,7 @@ for ($i=1; $i <= 12; $i++) {
 				}
 				,
 				{
-					label: '<?php echo date('Y') + 542 ?>',
+					label: '<?php echo $year + 542 ?>',
 					data: chart_pre_year,
 					borderColor: '#FACE74',
 					backgroundColor: '#FACE74',
