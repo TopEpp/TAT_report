@@ -181,11 +181,11 @@ $arraycolor=['#1d3860','#dd6910' , '#2e74b4']
             </b>
         </div>
         <div>
-            <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'departure1.png') ?>"
+            <img src="<?php echo ROOTPATH.'public/uploads/main/' . $to_date . 'departure1.png'; ?>"
                 style="width:100%;height:250px;">
         </div>
         <div style="margin-top: 10px; margin-bottom:10px">
-            <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'departure2.png') ?>"
+            <img src="<?php echo ROOTPATH.'public/uploads/main/' . $to_date . 'departure2.png'; ?>"
                 style="width:100%;height:250px;">
         </div>
         <div style="margin-top: 20px;  background-color:white">
@@ -284,12 +284,12 @@ $arraycolor=['#1d3860','#dd6910' , '#2e74b4']
                 <tr>
                     <td style="width: 30%;">
                         <div style="margin:10px">
-                            <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'departure3.png') ?>"
+                            <img src="<?php echo ROOTPATH.'public/uploads/main/' . $to_date . 'departure3.png'; ?>"
                                 style="height:300px;">
                         </div>
                     </td>
                     <td style="width: 70%;">
-                        <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'departure4.png') ?>"
+                        <img src="<?php echo ROOTPATH.'public/uploads/main/' . $to_date . 'departure4.png'; ?>"
                             style="width:100%;height:300px">
                     </td>
                 </tr>
@@ -303,7 +303,7 @@ $arraycolor=['#1d3860','#dd6910' , '#2e74b4']
             <?php $sum_past=$sum_current=0;?>
         </div>
         <div>
-            <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'departure5.png') ?>"
+            <img src="<?php echo ROOTPATH.'public/uploads/main/' . $to_date . 'departure5.png'; ?>"
                 style="width:100%;height:200px;">
         </div>
         <div style="background-color: white; margin-top: 9px;">

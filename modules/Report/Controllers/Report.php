@@ -560,9 +560,9 @@ class Report extends BaseController
 
 		]);
 		if ($orientation == 'P') {
-			$mpdf->SetWatermarkImage(base_url('public/img/watermark_P.png'), 1, array(3000, 3000));
+			$mpdf->SetWatermarkImage(ROOTPATH.'public/img/watermark_P.png', 1, array(3000, 3000));
 		} else {
-			$mpdf->SetWatermarkImage(base_url('public/img/watermark_L.png'), 1, array(3000, 3000));
+			$mpdf->SetWatermarkImage(ROOTPATH.'public/img/watermark_L.png', 1, array(3000, 3000));
 		}
 		$mpdf->showWatermarkImage = true;
 
@@ -570,7 +570,7 @@ class Report extends BaseController
 		$footer = '<table width="100%" border=0 style="border:0px ">
                 <tr border=0 style="border:0px ">
                   <td align="left" border=0 style="border:0px ">
-                    <img src="' . base_url('public/img/logotat.png') . '">
+                    <img src="' . ROOTPATH.'public/img/logotat.png' . '">
                     
                   </td>
                   <td align="right" border=0 style="border:0px ">

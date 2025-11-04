@@ -164,14 +164,14 @@
 <div class="row" style="padding-top: 80px;">
     <div class="col-md-12">
         <div class=""
-            style="background-position: center;background-size: cover;background-image: url(<?php echo base_url('public/img/bg_report_country_2.png') ?>);background-repeat: no-repeat;">
+            style="background-position: center;background-size: cover;background-image: url(<?php echo ROOTPATH.'public/img/bg_report_country_2.png'; ?>);background-repeat: no-repeat;">
             <!-- <div class="card-header">  </div> -->
             <div class="card-body" style="">
                 <table style="width: 100%;">
                     <tr>
                         <td style="width: 20%;text-align: center;">
                             <img class="height-img-left" style="height: 70px;"
-                                src="<?php echo base_url('public/img/TATIC-Logo.png') ?>" alt="">
+                                src="<?php echo ROOTPATH.'public/img/TATIC-Logo.png'; ?>" alt="">
                         </td>
                         <td style="width: 60%; text-align: center;">
                             <b data-content="สถิติการท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย"
@@ -195,7 +195,7 @@
                         </td>
                         <td style="width: 20%;text-align: center;">
                             <img class="height-img-left" style="height: 70px;"
-                                src="<?php echo base_url('public/img/amazingTH-Logo-04.png') ?>" alt="">
+                                src="<?php echo ROOTPATH.'public/img/amazingTH-Logo-04.png'; ?>" alt="">
                         </td>
                     </tr>
                 </table>
@@ -317,10 +317,10 @@
                         </div>
                         <div class="col6">
                                 <?php 
-                                    $flag = base_url('public/img/logotat.png');
+                                    $flag = ROOTPATH.'public/img/logotat.png';
 
-                                    if (!file_exists(base_url('public/img/flag/' . $country_id . '.png'))) {
-                                        $flag = base_url('public/img/flag/' . $country_id . '.png');
+                                    if (!file_exists(ROOTPATH.'public/img/flag/' . $country_id . '.png')) {
+                                        $flag = ROOTPATH.'public/img/flag/' . $country_id . '.png';
                                     }
                                  ?>
                                  <div style="text-align:right;width: 100%;margin-top: 17px; margin-right: 17px;">
@@ -338,7 +338,7 @@
                                 <div style="border-radius:14px; overflow: hidden; background-color: white;">
                                     <div style="padding:5px">
                                         <img style="height:250px;width:100%;"
-                                    src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_country'.$country_id.'.png') ?>">
+                                    src="<?php echo ROOTPATH.'public/uploads/main/' . $to_date . 'chart_country'.$country_id.'.png'; ?>">
                                     </div>
                                 </div>
                             </div>
