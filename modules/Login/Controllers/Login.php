@@ -456,7 +456,7 @@ class Login extends BaseController{
 
       $ses_data = [
       'user_id' => $userInfo['USER_ID'],
-      'org_id' => $userInfo['USER_ORG_ID'],
+      'org_id' => $AuthorizationHeader->jobTitle,
       'username' => $userInfo['USER_NAME'],
       'name' =>  $userInfo['USER_NAME_TH'],
       'user_type' => $userInfo['USER_TYPE_ORG'],
@@ -498,7 +498,7 @@ class Login extends BaseController{
         $userRole['REPORT'] = 'REPORT';
         $ses_data = [
         'user_id' => $employeeId,
-        'org_id' => substr($userInfo['title'][0], 0, -2).'00',
+        'org_id' => $AuthorizationHeader->jobTitle,
         'username' => $userInfo['samaccountname'][0],
         'name' =>  $AuthorizationHeader->displayName,
         'user_type' => 3,

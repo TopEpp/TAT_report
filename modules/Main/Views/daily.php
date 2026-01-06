@@ -431,7 +431,7 @@
 	<div class="col-md-3 py-2 col-12">
 		<div class="card" style="border-radius: 20px; overflow: hidden;">
 			<div class="card-header pt-3 px-4" style="background-color: #d4e9ec; ">
-				<span style="font-weight:bold; font-size: 16px; color: #3a4a4a;">จำแนกรายด่าน (คน)</span><br>
+				<span style="font-weight:bold; font-size: 16px; color: #3a4a4a;">จำแนกรายด่านสะสม (คน)</span><br>
 				<span style="font-size:13px;  color: #3a4a4a;"><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
 			</div>
 			<div class="card-body px-4" style="background: white; padding: 0; border-radius: 0.35rem;">
