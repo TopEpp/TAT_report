@@ -64,7 +64,7 @@
 	}
 
 	.rounded-circle {
-	    border-radius: 50% !important;
+		border-radius: 50% !important;
 	}
 
 	@media (max-width: 576px) {
@@ -129,10 +129,12 @@
 		<div class="col-md-4 col-12 my-auto ">
 			<div class="row" style="margin-top: 0px;">
 				<div class="col-md-6 col-6 SetAlignInputleft1">
-					<input type="text" name="start_date" id="start_date" class="SetwidthInput1 form-control date_picker" style="display: inline;" value="" placeholder="from">
+					<input type="text" name="start_date" id="start_date" class="SetwidthInput1 form-control date_picker"
+						style="display: inline;" value="" placeholder="from">
 				</div>
 				<div class="col-md-6 col-6 SetAlignInputleft2">
-					<input type="text" name="end_date" id="end_date" class="SetwidthInput2 form-control date_picker" style="display: inline;" value="" placeholder="to" />
+					<input type="text" name="end_date" id="end_date" class="SetwidthInput2 form-control date_picker"
+						style="display: inline;" value="" placeholder="to" />
 				</div>
 			</div>
 		</div>
@@ -145,9 +147,11 @@
 					<div class="btn btn_Color" onclick="ClearFilter()">ล้างค่า</div>
 				</div>
 				<div class="col-md-4 col-4 SetAlingBtn2">
-					<button type="button" onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard_view?start_date=' . $start_date . '&end_date=' . $end_date); ?>')" class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
-					<i class="fa-solid fa-download"></i> Export
-				</button>
+					<button type="button"
+						onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard_view?start_date=' . $start_date . '&end_date=' . $end_date); ?>')"
+						class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
+						<i class="fa-solid fa-download"></i> Export
+					</button>
 				</div>
 			</div>
 		</div>
@@ -172,7 +176,8 @@
 								</div>
 							</div>
 							<div class="col-md-3 col-3 text-right">
-								<img src="<?php echo base_url('public/img/carlender.png') ?>" alt="" style="width: 30px;" class="">
+								<img src="<?php echo base_url('public/img/carlender.png') ?>" alt=""
+									style="width: 30px;" class="">
 							</div>
 							<div class="col-md-12 text-center">
 								<h1 style="font-size: 47px; color: white;" class="my-3">
@@ -184,11 +189,11 @@
 									<p class="mx-1 my-auto" style="margin: 0; color: white;">
 										<?php
 										if ($SumDateData_past > 0) {
-											$percent = number_format(($SumDateData-$SumDateData_past)  / $SumDateData_past  * 100, 2);
+											$percent = number_format(($SumDateData - $SumDateData_past) / $SumDateData_past * 100, 2);
 											if ($SumDateData > $SumDateData_past) {
 												echo '<img src="' . base_url('public/img/arrow.png') . '" alt="" style="width: 15px;"> เพิ่มขึ้น ' . $percent . ' % จากปีที่ผ่านมา';
 											} else {
-												echo '<img src="' . base_url('public/img/arrowDown.png') . '" alt="" style="width: 15px;"> ลดลง ' . $percent*(-1) . ' % จากปีที่ผ่านมา';
+												echo '<img src="' . base_url('public/img/arrowDown.png') . '" alt="" style="width: 15px;"> ลดลง ' . $percent * (-1) . ' % จากปีที่ผ่านมา';
 											}
 										} else {
 											echo '-';
@@ -217,11 +222,13 @@
 									</p>
 								</div>
 								<div style="font-size: 13px;  color: #4a899a;">
-									วันที่ <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
+									วันที่ <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> -
+									<?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
 								</div>
 							</div>
 							<div class="col-md-3 col-3 text-right">
-								<img src="<?php echo base_url('public/img/donut.png') ?>" alt="" style="width: 30px;" class="">
+								<img src="<?php echo base_url('public/img/donut.png') ?>" alt="" style="width: 30px;"
+									class="">
 							</div>
 							<div class="col-md-12 text-center">
 								<h1 style="font-size: 47px; color: #4a899a;" class="my-3">
@@ -232,11 +239,11 @@
 								<div class="d-flex justify-content-center">
 									<?php
 									if ($SumMonthData_past > 0) {
-										$percent = number_format(($SumMonthData-$SumMonthData_past) / $SumMonthData_past * 100, 2);
+										$percent = number_format(($SumMonthData - $SumMonthData_past) / $SumMonthData_past * 100, 2);
 										if ($SumMonthData > $SumMonthData_past) {
-											echo '<img src="' . base_url('public/img/arrow.png') . '" alt="" style="margin-right:5px;width: 15px;">  เพิ่มขึ้น ' . $percent  . ' % จากปีที่ผ่านมา';
+											echo '<img src="' . base_url('public/img/arrow.png') . '" alt="" style="margin-right:5px;width: 15px;">  เพิ่มขึ้น ' . $percent . ' % จากปีที่ผ่านมา';
 										} else {
-											echo '<img src="' . base_url('public/img/arrowDown.png') . '" alt="" style="width: 15px;">  ลดลง ' . $percent*(-1)  . ' % จากปีที่ผ่านมา';
+											echo '<img src="' . base_url('public/img/arrowDown.png') . '" alt="" style="width: 15px;">  ลดลง ' . $percent * (-1) . ' % จากปีที่ผ่านมา';
 										}
 									} else {
 										echo '-';
@@ -265,7 +272,7 @@
 							<?php $chart_label = $chart_current = $chart_pre = array();
 							foreach ($period as $d) { ?>
 								<td align="center"><?php echo $Mydate->date_eng2thai($d, 'X', 'S');
-													$chart_label[] = $Mydate->date_eng2thai($d, 'X', 'S'); ?></td>
+								$chart_label[] = $Mydate->date_eng2thai($d, 'X', 'S'); ?></td>
 							<?php } ?>
 						</tr>
 						<tr>
@@ -273,7 +280,7 @@
 							<?php
 							foreach ($period as $d) { ?>
 								<td style="background:#3cacae" align="center"><?php echo number_format(@$SumChartData['current'][$d]);
-																				$chart_current[] = @$SumChartData['current'][$d] ? @$SumChartData['current'][$d] : null; ?></td>
+								$chart_current[] = @$SumChartData['current'][$d] ? @$SumChartData['current'][$d] : null; ?></td>
 							<?php } ?>
 						</tr>
 						<tr>
@@ -281,9 +288,9 @@
 							<?php
 							foreach ($period as $d) {
 								$d_ex = explode('-', $d);
-								$d_pre = ($d_ex[0] - 1) . '-' . $d_ex[1] . '-' . $d_ex[2];   ?>
+								$d_pre = ($d_ex[0] - 1) . '-' . $d_ex[1] . '-' . $d_ex[2]; ?>
 								<td align="center"><?php echo number_format(@$SumChartData['past'][$d_pre]);
-													$chart_pre[] = @$SumChartData['past'][$d_pre] ? @$SumChartData['past'][$d_pre] : null; ?></td>
+								$chart_pre[] = @$SumChartData['past'][$d_pre] ? @$SumChartData['past'][$d_pre] : null; ?></td>
 							<?php } ?>
 						</tr>
 					</table>
@@ -310,7 +317,7 @@
 						if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
 							$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
 						}
-					?>
+						?>
 						<div class="row" style="margin-bottom:4px;">
 							<div class="col-md-3 col-3 my-auto" style="padding:0px">
 								<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 50px;">
@@ -325,7 +332,8 @@
 								</div>
 							</div>
 						</div>
-					<?php if ($c == 5) break;
+						<?php if ($c == 5)
+							break;
 					} ?>
 				</div>
 			</div>
@@ -340,7 +348,9 @@
 		<div class="card" style="border-radius: 20px; overflow: hidden;">
 			<div class="card-header pt-3 px-4" style="background-color: #3cacae; ">
 				<span style="font-weight:bold; font-size: 15px; color: white;">จำแนกรายสัญชาติสะสม (คน)</span><br>
-				<span style="font-size:13px;  color: white;"><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
+				<span
+					style="font-size:13px;  color: white;"><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?>
+					- <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
 			</div>
 			<div class="card-body px-4" style="background: white; padding: 0; border-radius: 0.35rem;">
 				<div style="padding:7px;">
@@ -352,7 +362,7 @@
 						if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
 							$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
 						}
-					?>
+						?>
 						<div class="row" style="margin-bottom:4px;">
 							<div class="col-md-3 col-3 my-auto" style="padding:0px">
 								<!-- <img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="width: 100%;"> -->
@@ -368,7 +378,8 @@
 								</div>
 							</div>
 						</div>
-					<?php if ($c == 5) break;
+						<?php if ($c == 5)
+							break;
 					} ?>
 				</div>
 			</div>
@@ -386,23 +397,26 @@
 		<div class="card" style="border-radius: 20px; overflow: hidden;">
 			<div class="card-header pt-3 px-4" style="background-color: #d4e9ec; ">
 				<span style="font-weight:bold; font-size: 16px; color: #3a4a4a;">จำแนกรายด่าน (คน)</span><br>
-				<span style="font-size:13px;  color: #3a4a4a;"><?php echo $Mydate->date_eng2thai($to_date, 543) ?></span>
+				<span
+					style="font-size:13px;  color: #3a4a4a;"><?php echo $Mydate->date_eng2thai($to_date, 543) ?></span>
 			</div>
 			<div class="card-body px-4" style="background: white; padding: 0;">
 				<div style="padding:7px;">
 					<?php $c = 0;
 					foreach ($SumPortDateData as $v) {
-						$c++;  ?>
+						$c++; ?>
 						<div class="row" style="margin-bottom:4px;">
 							<div class="col-md-3 col-3 my-auto" style="padding:0px">
 								<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
-								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan-02.png') ?>" style="width: 50px;">
-								<?php
+									?>
+									<img class="img-profile rounded-circle"
+										src="<?php echo base_url('public/img/plan-02.png') ?>" style="width: 50px;">
+									<?php
 								} else {
-								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="width: 50px;">
-								<?php
+									?>
+									<img class="img-profile rounded-circle"
+										src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="width: 50px;">
+									<?php
 								}
 								?>
 							</div>
@@ -417,7 +431,8 @@
 								</div>
 							</div>
 						</div>
-					<?php if ($c == 5) break;
+						<?php if ($c == 5)
+							break;
 					} ?>
 				</div>
 			</div>
@@ -432,23 +447,27 @@
 		<div class="card" style="border-radius: 20px; overflow: hidden;">
 			<div class="card-header pt-3 px-4" style="background-color: #d4e9ec; ">
 				<span style="font-weight:bold; font-size: 16px; color: #3a4a4a;">จำแนกรายด่านสะสม (คน)</span><br>
-				<span style="font-size:13px;  color: #3a4a4a;"><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
+				<span
+					style="font-size:13px;  color: #3a4a4a;"><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?>
+					- <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
 			</div>
 			<div class="card-body px-4" style="background: white; padding: 0; border-radius: 0.35rem;">
 				<div style="padding:7px;">
 					<?php $c = 0;
 					foreach ($SumPortMonthData as $v) {
-						$c++;  ?>
+						$c++; ?>
 						<div class="row" style="margin-bottom:4px;">
 							<div class="col-md-3 col-3 my-auto" style="padding:0px">
 								<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
-								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan-02.png') ?>" style="width: 50px;">
-								<?php
+									?>
+									<img class="img-profile rounded-circle"
+										src="<?php echo base_url('public/img/plan-02.png') ?>" style="width: 50px;">
+									<?php
 								} else {
-								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="width: 50px;">
-								<?php
+									?>
+									<img class="img-profile rounded-circle"
+										src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="width: 50px;">
+									<?php
 								}
 								?>
 							</div>
@@ -463,7 +482,8 @@
 								</div>
 							</div>
 						</div>
-					<?php if ($c == 5) break;
+						<?php if ($c == 5)
+							break;
 					} ?>
 				</div>
 			</div>
@@ -558,19 +578,30 @@
 				?>
 				<!-- <div id="resultsTable"> -->
 				<div class="table-responsive" style="height:auto; overflow:auto; margin-bottom: 10px;">
-					<table class="table table-striped " style="width: 100%; border-collapse: collapse !important; border: white;" border="1">
+					<table class="table table-striped "
+						style="width: 100%; border-collapse: collapse !important; border: white;" border="1">
 						<thead style=" background-color: #488a9a !important;">
 							<tr>
-								<th class="py-4" style="background-color: #488a9a;color:white;border-bottom: 0px;">Region</th>
-								<th class="py-4" style="background-color: #488a9a;color:white;border-bottom: 0px;"><?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></th>
-								<th class="py-4" style="background-color: #488a9a;color:white;border-bottom: 0px;"><?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></th>
+								<th class="py-4" style="background-color: #488a9a;color:white;border-bottom: 0px;">
+									Region</th>
+								<th class="py-4" style="background-color: #488a9a;color:white;border-bottom: 0px;">
+									<?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
+								</th>
+								<th class="py-4" style="background-color: #488a9a;color:white;border-bottom: 0px;">
+									<?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> -
+									<?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
+								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr style="background-color: #BD98A1;">
 								<td style="padding-left: 15px;">ASIA</td>
-								<td align="right"><?php echo number_format(@$SumRegionDateData[13] + @$SumRegionDateData[15] + @$SumRegionDateData[38] + @$SumRegionDateData[23] + @$SumRegionDateData[39]) ?></td>
-								<td align="right"><?php echo number_format(@$SumRegionMonthData[13] + @$SumRegionMonthData[15] + @$SumRegionMonthData[38] + @$SumRegionMonthData[23] + @$SumRegionMonthData[39]) ?></td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionDateData[13] + @$SumRegionDateData[15] + @$SumRegionDateData[38] + @$SumRegionDateData[23] + @$SumRegionDateData[39]) ?>
+								</td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionMonthData[13] + @$SumRegionMonthData[15] + @$SumRegionMonthData[38] + @$SumRegionMonthData[23] + @$SumRegionMonthData[39]) ?>
+								</td>
 							</tr>
 							<tr style="background:#EBABC0;">
 								<td style="padding-left: 40px;">ASEAN</td>
@@ -580,167 +611,235 @@
 							<?php foreach ($country_region[13] as $c) { ?>
 								<tr class="region_13 tr_country" style="display:none;background-color:#EBABC0;">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<tr style="background-color: #F9C9B2">
 								<td style="padding-left: 40px;">NORTH-EAST ASIA</td>
-								<td align="right"><?php echo number_format(@$SumRegionDateData[15] + @$SumRegionDateData[38]) ?></td>
-								<td align="right"><?php echo number_format(@$SumRegionMonthData[15] + @$SumRegionMonthData[38]) ?></td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionDateData[15] + @$SumRegionDateData[38]) ?>
+								</td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionMonthData[15] + @$SumRegionMonthData[38]) ?>
+								</td>
 							</tr>
 							<?php foreach ($country_region[15] as $c) { ?>
 								<tr class="region_15 tr_country" style="display:none;background-color: #F9C9B2">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<?php foreach ($country_region[38] as $c) { ?>
 								<tr class="region_15 tr_country" style="display:none;background-color: #F9C9B2">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<tr style="background: #FFFFAE">
 								<td style="padding-left: 40px;">SOUTH ASIA</td>
-								<td align="right"><?php echo number_format(@$SumRegionDateData[23] + @$SumRegionDateData[39]) ?></td>
-								<td align="right"><?php echo number_format(@$SumRegionMonthData[23] + @$SumRegionMonthData[39]) ?></td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionDateData[23] + @$SumRegionDateData[39]) ?>
+								</td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionMonthData[23] + @$SumRegionMonthData[39]) ?>
+								</td>
 							</tr>
 							<?php foreach ($country_region[23] as $c) { ?>
 								<tr class="region_23 tr_country" style="display:none;background: #FFFFAE">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<?php foreach ($country_region[39] as $c) { ?>
 								<tr class="region_23 tr_country" style="display:none;background: #FFFFAE">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<tr style="background: #C6A7CB">
 								<td style="padding-left: 15px;">EUROPE</td>
-								<td align="right"><?php echo number_format(@$SumRegionDateData[2] + @$SumRegionDateData[44] + @$SumRegionDateData[36] + @$SumRegionDateData[37]) ?></td>
-								<td align="right"><?php echo number_format(@$SumRegionMonthData[2] + @$SumRegionMonthData[44] + @$SumRegionMonthData[36] + @$SumRegionMonthData[37]) ?></td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionDateData[2] + @$SumRegionDateData[44] + @$SumRegionDateData[36] + @$SumRegionDateData[37]) ?>
+								</td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionMonthData[2] + @$SumRegionMonthData[44] + @$SumRegionMonthData[36] + @$SumRegionMonthData[37]) ?>
+								</td>
 							</tr>
 							<?php foreach ($country_region[2] as $c) { ?>
 								<tr class="region_2 tr_country" style="display:none;background: #C6A7CB">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<?php foreach ($country_region[44] as $c) { ?>
 								<tr class="region_2 tr_country" style="display:none;background: #C6A7CB">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<?php foreach ($country_region[36] as $c) { ?>
 								<tr class="region_2 tr_country" style="display:none;background: #C6A7CB">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<tr style="background: #E9D4E2">
 								<td style="padding-left: 40px;">EAST EUROPE</td>
-								<td align="right"><?php echo number_format(@$SumRegionDateData[37] + @$SumRegionDateData[36]) ?></td>
-								<td align="right"><?php echo number_format(@$SumRegionMonthData[37] + @$SumRegionMonthData[36]) ?></td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionDateData[37] + @$SumRegionDateData[36]) ?>
+								</td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionMonthData[37] + @$SumRegionMonthData[36]) ?>
+								</td>
 							</tr>
 							<?php foreach ($country_region[37] as $c) { ?>
 								<tr class="region_37 tr_country" style="display:none;background: #E9D4E2">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<?php foreach ($country_region[36] as $c) { ?>
 								<tr class="region_37 tr_country" style="display:none;background: #E9D4E2">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<tr style="background: #65B5DA">
 								<td style="padding-left: 15px;">THE AMERICAS</td>
-								<td align="right"><?php echo number_format(@$SumRegionDateData[7] + @$SumRegionDateData[45]) ?></td>
-								<td align="right"><?php echo number_format(@$SumRegionMonthData[7] + @$SumRegionMonthData[45]) ?></td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionDateData[7] + @$SumRegionDateData[45]) ?>
+								</td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionMonthData[7] + @$SumRegionMonthData[45]) ?>
+								</td>
 							</tr>
 							<?php foreach ($country_region[7] as $c) { ?>
 								<tr class="region_7 tr_country" style="display:none;background: #65B5DA">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<?php foreach ($country_region[45] as $c) { ?>
 								<tr class="region_7 tr_country" style="display:none;background: #65B5DA">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<tr style="background: #B2DFE8">
 								<td style="padding-left: 15px;">OCEANIA</td>
-								<td align="right"><?php echo number_format(@$SumRegionDateData[5] + @$SumRegionDateData[46]) ?></td>
-								<td align="right"><?php echo number_format(@$SumRegionMonthData[5] + @$SumRegionMonthData[46]) ?></td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionDateData[5] + @$SumRegionDateData[46]) ?>
+								</td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionMonthData[5] + @$SumRegionMonthData[46]) ?>
+								</td>
 							</tr>
 							<?php foreach ($country_region[5] as $c) { ?>
 								<tr class="region_5 tr_country" style="display:none;background: #B2DFE8">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<?php foreach ($country_region[46] as $c) { ?>
 								<tr class="region_5 tr_country" style="display:none;background: #B2DFE8">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<tr style="background: #9CC1A7">
 								<td style="padding-left: 15px;">MIDDLE EAST</td>
-								<td align="right"><?php echo number_format(@$SumRegionDateData[20] + @$SumRegionDateData[47]) ?></td>
-								<td align="right"><?php echo number_format(@$SumRegionMonthData[20] + @$SumRegionMonthData[47]) ?></td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionDateData[20] + @$SumRegionDateData[47]) ?>
+								</td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionMonthData[20] + @$SumRegionMonthData[47]) ?>
+								</td>
 							</tr>
 							<?php foreach ($country_region[20] as $c) { ?>
 								<tr class="region_20 tr_country" style="display:none;background: #9CC1A7">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<?php foreach ($country_region[47] as $c) { ?>
 								<tr class="region_20 tr_country" style="display:none;background: #9CC1A7">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<tr style="background: #B6C8C7">
 								<td style="padding-left: 15px;">AFRICA</td>
-								<td align="right"><?php echo number_format(@$SumRegionDateData[6] + @$SumRegionDateData[40]) ?></td>
-								<td align="right"><?php echo number_format(@$SumRegionMonthData[6] + @$SumRegionMonthData[40]) ?></td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionDateData[6] + @$SumRegionDateData[40]) ?>
+								</td>
+								<td align="right">
+									<?php echo number_format(@$SumRegionMonthData[6] + @$SumRegionMonthData[40]) ?>
+								</td>
 							</tr>
 							<?php foreach ($country_region[6] as $c) { ?>
 								<tr class="region_6 tr_country" style="display:none;background: #B6C8C7">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<?php foreach ($country_region[40] as $c) { ?>
 								<tr class="region_6 tr_country" style="display:none;background: #B6C8C7">
 									<td style="padding-left: 15px;"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?></td>
-									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?></td>
+									<td align="right"><?php echo number_format(@$SumCountryDateData[$c['COUNTRYID']]) ?>
+									</td>
+									<td align="right"><?php echo number_format(@$SumCountryMonthData[$c['COUNTRYID']]) ?>
+									</td>
 								</tr>
 							<?php } ?>
 							<tr style="background:#ECE9E4">
@@ -778,7 +877,8 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="modalInfo1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalInfo1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -795,39 +895,44 @@
 					<?php $json_nat = array();
 					$c = 0;
 					foreach ($SumNatDateData as $v) {
-						if($v['NUM']>0){
-						$c++;
-						$flag = base_url('public/img/logotat.png');
+						if ($v['NUM'] > 0) {
+							$c++;
+							$flag = base_url('public/img/logotat.png');
 
-						if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
-							$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
-						}
-					?>
-						<div class="row" style="margin-bottom:10px;">
-							<div class="col-md-2 col-2 text-center" style="padding:0px;font-size: 2.4em;">
-								<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 54px;">
+							if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
+								$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
+							}
+							?>
+							<div class="row" style="margin-bottom:10px;">
+								<div class="col-md-2 col-2 text-center" style="padding:0px;font-size: 2.4em;">
+									<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 54px;">
+								</div>
+								<div class="col-md-5 col-5 my-auto" style="padding-left:0;font-weight:bold;">
+									<span
+										style="font-weight:bold; font-size: 0.85em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
+								</div>
+								<div class="col-md-5 col-5 my-auto" style="padding-left:0;font-weight:bold;">
+									<?php echo number_format($v['NUM']); ?>
+								</div>
 							</div>
-							<div class="col-md-5 col-5 my-auto" style="padding-left:0;font-weight:bold;">
-								<span style="font-weight:bold; font-size: 0.85em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
-							</div>
-							<div class="col-md-5 col-5 my-auto" style="padding-left:0;font-weight:bold;">
-								<?php echo number_format($v['NUM']); ?>
-							</div>
-						</div>
-					<?php } }?>
+						<?php }
+					} ?>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="modal fade" id="modalInfo2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalInfo2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<div>
 					<span style="font-weight:bold;">จำแนกรายสัญชาติ</span><br>
-					<span style="font-size:0.8em">สะสม วันที่ <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
+					<span style="font-size:0.8em">สะสม วันที่
+						<?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> -
+						<?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
 				</div>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -838,26 +943,28 @@
 					<?php $json_nat_month = array();
 					$c = 0;
 					foreach ($SumNatMonthData as $v) {
-						if($v['NUM']>0){
-						$c++;
-						$flag = base_url('public/img/logotat.png');
+						if ($v['NUM'] > 0) {
+							$c++;
+							$flag = base_url('public/img/logotat.png');
 
-						if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
-							$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
-						}
-					?>
-						<div class="row" style="margin-bottom:10px;">
-							<div class="col-md-2 col-2 text-center" style="padding:0px;font-size: 2.4em;">
-								<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 54px;">
+							if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
+								$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
+							}
+							?>
+							<div class="row" style="margin-bottom:10px;">
+								<div class="col-md-2 col-2 text-center" style="padding:0px;font-size: 2.4em;">
+									<img class="img-profile rounded-circle" src="<?php echo $flag ?>" style="height: 54px;">
+								</div>
+								<div class="col-md-5 col-5 my-auto" style="padding-left:0;font-weight:bold;">
+									<span
+										style="font-weight:bold; font-size: 0.85em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
+								</div>
+								<div class="col-md-5 col-5 my-auto" style="padding-left:0;font-weight:bold;">
+									<?php echo number_format($v['NUM']); ?>
+								</div>
 							</div>
-							<div class="col-md-5 col-5 my-auto" style="padding-left:0;font-weight:bold;">
-								<span style="font-weight:bold; font-size: 0.85em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
-							</div>
-							<div class="col-md-5 col-5 my-auto" style="padding-left:0;font-weight:bold;">
-								<?php echo number_format($v['NUM']); ?>
-							</div>
-						</div>
-					<?php  }} ?>
+						<?php }
+					} ?>
 				</div>
 			</div>
 		</div>
@@ -865,7 +972,8 @@
 </div>
 
 
-<div class="modal fade" id="modalInfo3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalInfo3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -881,17 +989,19 @@
 				<div style="padding:10px;">
 					<?php $c = 0;
 					foreach ($SumPortDateData as $v) {
-						$c++;  ?>
+						$c++; ?>
 						<div class="row" style="margin-bottom:10px;">
 							<div class="col-md-2 col-2 text-center" style="font-size: 2.4em; padding:0px">
 								<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
-								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan-02.png') ?>" style="height: 54px;">
-								<?php
+									?>
+									<img class="img-profile rounded-circle"
+										src="<?php echo base_url('public/img/plan-02.png') ?>" style="height: 54px;">
+									<?php
 								} else {
-								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="height: 54px;">
-								<?php
+									?>
+									<img class="img-profile rounded-circle"
+										src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="height: 54px;">
+									<?php
 								}
 								?>
 							</div>
@@ -902,20 +1012,23 @@
 								<?php echo number_format($v['NUM']); ?>
 							</div>
 						</div>
-					<?php  } ?>
+					<?php } ?>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="modal fade" id="modalInfo4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalInfo4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<div>
 					<span style="font-weight:bold;">จำแนกรายด่าน</span><br>
-					<span style="font-size:0.8em">สะสม วันที่ <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
+					<span style="font-size:0.8em">สะสม วันที่
+						<?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> -
+						<?php echo $Mydate->date_eng2thai($to_date, 543, 'S') ?></span>
 				</div>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -925,17 +1038,19 @@
 				<div style="padding:10px;">
 					<?php $c = 0;
 					foreach ($SumPortMonthData as $v) {
-						$c++;  ?>
+						$c++; ?>
 						<div class="row" style="margin-bottom:10px;">
 							<div class="col-md-2 col-2" style="text-align:center; font-size: 2.4em; padding:0px">
 								<?php if ($v['PORT_TYPE'] == 'ด่านอากาศ') {
-								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/plan-02.png') ?>" style="height: 54px;">
-								<?php
+									?>
+									<img class="img-profile rounded-circle"
+										src="<?php echo base_url('public/img/plan-02.png') ?>" style="height: 54px;">
+									<?php
 								} else {
-								?>
-									<img class="img-profile rounded-circle" src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="height: 54px;">
-								<?php
+									?>
+									<img class="img-profile rounded-circle"
+										src="<?php echo base_url('public/img/checkpoint-03.png') ?>" style="height: 54px;">
+									<?php
 								}
 								?>
 							</div>
@@ -976,12 +1091,13 @@
 
  -->
 
-<div class="text-center" id="htmltoimage_chart_daily_year" style="height:220px; padding:15px; display: none;">
+<div class="text-center" id="htmltoimage_chart_daily_year"
+	style="height:220px; width: 1100px; padding:15px; display: none;">
 	<canvas id="chart_main_year" height="220" style="height:220px !important"></canvas>
 </div>
-<?php  $chart_label_year = $chart_current_year = $chart_pre_year = array();
+<?php $chart_label_year = $chart_current_year = $chart_pre_year = array();
 $shortmonth = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
-for ($i=1; $i <= 12; $i++) { 
+for ($i = 1; $i <= 12; $i++) {
 	$chart_label_year[] = $shortmonth[$i];
 	$chart_current_year[] = @$SumChartDataYear['current'][$i] ? @$SumChartDataYear['current'][$i] : null;
 	$chart_pre_year[] = @$SumChartDataYear['past'][$i] ? @$SumChartDataYear['past'][$i] : null;
@@ -1009,7 +1125,7 @@ for ($i=1; $i <= 12; $i++) {
 
 	// console.log(dataRegionMap);
 	// import zoomPlugin from 'chartjs-plugin-zoom';
-	$(function() {
+	$(function () {
 		// $('#modal_noti').modal('show');
 
 		initMap();
@@ -1020,7 +1136,7 @@ for ($i=1; $i <= 12; $i++) {
 			autoclose: true,
 			language: 'th-th',
 			endDate: new Date('<?php list($year_picker, $month, $day) = explode('-', $to_date);
-								echo $year_picker . '-' . $month . '-' . ($day); ?>')
+			echo $year_picker . '-' . $month . '-' . ($day); ?>')
 		});
 
 
@@ -1028,18 +1144,18 @@ for ($i=1; $i <= 12; $i++) {
 		const data_chart = {
 			labels: chart_label,
 			datasets: [{
-					label: '<?php echo $year + 543 ?>',
-					data: chart_current,
-					borderColor: '#57DACC',
-					backgroundColor: '#57DACC',
-				}
+				label: '<?php echo $year + 543 ?>',
+				data: chart_current,
+				borderColor: '#57DACC',
+				backgroundColor: '#57DACC',
+			}
 				,
-				{
-					label: '<?php echo $year + 542 ?>',
-					data: chart_pre,
-					borderColor: '#FACE74',
-					backgroundColor: '#FACE74',
-				}
+			{
+				label: '<?php echo $year + 542 ?>',
+				data: chart_pre,
+				borderColor: '#FACE74',
+				backgroundColor: '#FACE74',
+			}
 			]
 		};
 		const chart_main = new Chart(ctx, {
@@ -1063,18 +1179,18 @@ for ($i=1; $i <= 12; $i++) {
 		const data_chart_year = {
 			labels: chart_label_year,
 			datasets: [{
-					label: '<?php echo $year + 543 ?>',
-					data: chart_current_year,
-					borderColor: '#57DACC',
-					backgroundColor: '#57DACC',
-				}
+				label: '<?php echo $year + 543 ?>',
+				data: chart_current_year,
+				borderColor: '#57DACC',
+				backgroundColor: '#57DACC',
+			}
 				,
-				{
-					label: '<?php echo $year + 542 ?>',
-					data: chart_pre_year,
-					borderColor: '#FACE74',
-					backgroundColor: '#FACE74',
-				}
+			{
+				label: '<?php echo $year + 542 ?>',
+				data: chart_pre_year,
+				borderColor: '#FACE74',
+				backgroundColor: '#FACE74',
+			}
 			]
 		};
 		const chart_main_year = new Chart(ctx2, {
@@ -1102,7 +1218,7 @@ for ($i=1; $i <= 12; $i++) {
 	function ChangeFilter() {
 		if ($('#start_date').val() != '' && $('#start_date').val() != '') {
 			var date = $('#start_date').val();
-			if(date==''){
+			if (date == '') {
 				$('#start_date').focus();
 				$('#start_date').css("border-color", "#e74a3b");
 				return false;
@@ -1111,7 +1227,7 @@ for ($i=1; $i <= 12; $i++) {
 			start_date = date[0] + '-' + date[1] + '-' + (date[2] - 543);
 
 			var date = $('#end_date').val();
-			if(date==''){
+			if (date == '') {
 				$('#end_date').focus();
 				$('#end_date').css("border-color", "#e74a3b");
 				return false;
@@ -1159,7 +1275,7 @@ for ($i=1; $i <= 12; $i++) {
 
 	function addMarker(data) {
 
-		$.each(data, function(index, value) {
+		$.each(data, function (index, value) {
 
 			index = value.id;
 			var latlong = value.latlong.split(',');
@@ -1224,51 +1340,84 @@ for ($i=1; $i <= 12; $i++) {
 	function SaveImg2ExportPdf(url2SaveImg, url2DowloadReport) {
 		$('.btn-download').hide();
 		$('#htmltoimage_chart_daily_year').show();
-		setTimeout(function(){ saveImg(url2SaveImg, url2DowloadReport); }, 1000);
-		setTimeout(function(){ $('#htmltoimage_chart_daily_year').hide(); }, 6000);
+		setTimeout(function () { saveImg(url2SaveImg, url2DowloadReport); }, 1000);
+		setTimeout(function () { $('#htmltoimage_chart_daily_year').hide(); }, 6000);
 
 		$.ajax({
-	        method: "POST",
-	        url: base_url + "/main/saveLog",
-	        data: {'type':'Daily'},
-	        success: function(res) {
-	          
-	        }
-	    });
-		
+			method: "POST",
+			url: base_url + "/main/saveLog",
+			data: { 'type': 'Daily' },
+			success: function (res) {
+
+			}
+		});
+
 	}
 
-	function saveImg(url2SaveImg, url2DowloadReport){
+	function saveImg(url2SaveImg, url2DowloadReport) {
 		$('.btn-download').hide();
-		const chart_array = ["chart_daily","chart_daily_year"];
+		const chart_array = ["chart_daily", "chart_daily_year"];
 		var count_canvas = 0;
-		$.each(chart_array, function(key, value) {
+
+		// กำหนดขนาดคงที่สำหรับรูปภาพ export
+		const TARGET_WIDTH = 1100;
+		const TARGET_HEIGHT = 220;
+
+		$.each(chart_array, function (key, value) {
 			var container = document.getElementById("htmltoimage_" + value);
-			html2canvas(container, {
-				allowTaint: true
-			}).then(function(canvas) {
 
-				var link = document.createElement("a");
-				document.body.appendChild(link);
-				link.download = "<?php echo $to_date; ?>" + value + ".jpg";
-				link.href = canvas.toDataURL();
-				link.target = '_blank';
+			// ตรวจสอบและกำหนดขนาด container ก่อน capture
+			var originalDisplay = container.style.display;
+			var originalWidth = container.style.width;
+			var originalPosition = container.style.position;
+			var originalLeft = container.style.left;
 
+			// กำหนดขนาดคงที่และแสดง container (ใช้ position absolute เพื่อไม่ให้กระทบ layout)
+			container.style.display = 'block';
+			container.style.width = TARGET_WIDTH + 'px';
+			container.style.position = 'absolute';
+			container.style.left = '-9999px';
 
-				var dataURL = link.href;
-				$.post(url2SaveImg, {
-					imgBase64: dataURL,
-					imgName: "<?php echo $to_date; ?>" + value
-				}, function(data, status) {
-					count_canvas++;
-					// console.log(count_canvas+' == '+chart_array.length );
-					if (count_canvas == chart_array.length) {
-						window.open(url2DowloadReport);
-					}
+			// รอให้ browser render ก่อน capture
+			setTimeout(function () {
+				html2canvas(container, {
+					allowTaint: true,
+					useCORS: true,
+					scale: 1,
+					width: TARGET_WIDTH,
+					height: TARGET_HEIGHT
+				}).then(function (canvas) {
+					// คืนค่า style เดิม
+					container.style.display = originalDisplay;
+					container.style.width = originalWidth;
+					container.style.position = originalPosition;
+					container.style.left = originalLeft;
 
+					var link = document.createElement("a");
+					document.body.appendChild(link);
+					link.download = "<?php echo $to_date; ?>" + value + ".png";
+					link.href = canvas.toDataURL('image/png');
+					link.target = '_blank';
+
+					var dataURL = link.href;
+					$.post(url2SaveImg, {
+						imgBase64: dataURL,
+						imgName: "<?php echo $to_date; ?>" + value
+					}, function (data, status) {
+						count_canvas++;
+						if (count_canvas == chart_array.length) {
+							window.open(url2DowloadReport);
+						}
+					});
+				}).catch(function (error) {
+					console.error('html2canvas error:', error);
+					// คืนค่า style เดิมเมื่อเกิด error
+					container.style.display = originalDisplay;
+					container.style.width = originalWidth;
+					container.style.position = originalPosition;
+					container.style.left = originalLeft;
 				});
-			});
-
+			}, 100);
 		});
 	}
 
