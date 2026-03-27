@@ -1,4 +1,5 @@
 
+*.md
 app/Config/App.php
 *.json
 writable

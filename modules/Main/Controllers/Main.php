@@ -546,13 +546,21 @@ class Main extends BaseController
 		$uploadpath = 'public/uploads/main/';
 		$uploadfile = $uploaddir . $uploadpath;
 
-		$img = $_POST['imgBase64'];
-		$img = str_replace('data:image/png;base64,', '', $img);
-		$img = str_replace(' ', '+', $img);
-		$data = base64_decode($img);
-		$file = $uploadfile . $_POST['imgName'] . '.png';
-		// @unlike($file);
-		$success = @file_put_contents($file, $data);
+		$imgName = $_POST['imgName'] ?? 'export';
+		$file = $uploadfile . $imgName . '.png';
+
+		// รองรับ file upload (FormData)
+		if (isset($_FILES['imgFile']) && $_FILES['imgFile']['error'] === UPLOAD_ERR_OK) {
+			move_uploaded_file($_FILES['imgFile']['tmp_name'], $file);
+		}
+		// รองรับ base64 (PNG หรือ JPEG)
+		elseif (isset($_POST['imgBase64'])) {
+			$img = $_POST['imgBase64'];
+			$img = preg_replace('/^data:image\/(png|jpeg);base64,/', '', $img);
+			$img = str_replace(' ', '+', $img);
+			$data = base64_decode($img);
+			@file_put_contents($file, $data);
+		}
 
 		return $this->setResponseFormat('json')->respond($file);
 	}
@@ -580,6 +588,44 @@ class Main extends BaseController
 		$this->convPNGtoJPG($file, $_POST['imgName']);
 
 		return $this->setResponseFormat('json')->respond($file);
+	}
+
+	function export_region_pdf()
+	{
+		$imgName = $this->request->getGet('img');
+		$uploaddir = ROOTPATH;
+		$uploaddir = explode('system', $uploaddir);
+		$uploaddir = $uploaddir[0];
+		$imgPath = $uploaddir . 'public/uploads/main/' . $imgName . '.png';
+
+		if (!file_exists($imgPath)) {
+			return $this->response->setStatusCode(404, 'Image not found');
+		}
+
+		// ตรวจสอบประเภทไฟล์
+		$imgInfo = getimagesize($imgPath);
+		$imgW = $imgInfo[0];
+		$imgH = $imgInfo[1];
+		$imgType = image_type_to_extension($imgInfo[2], false); // png, jpeg, etc.
+		$ratio = $imgW / $imgH;
+
+		// ใช้ custom format ขนาดพอดีกับรูป (landscape)
+		$pageW = 287; // A4 landscape width mm
+		$imgH_mm = $pageW / $ratio;
+
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [$pageW + 10, $imgH_mm + 10],
+			'margin_top' => 5,
+			'margin_bottom' => 5,
+			'margin_left' => 5,
+			'margin_right' => 5,
+		]);
+
+		$mpdf->Image($imgPath, 5, 5, $pageW, $imgH_mm, $imgType, '', true, false);
+
+		$this->response->setHeader('Content-Type', 'application/pdf');
+		$mpdf->Output('region_dashboard.pdf', 'I');
 	}
 
 	function convPNGtoJPG($filePath, $file_name)
@@ -971,5 +1017,110 @@ class Main extends BaseController
 		} else {
 			return view('Modules\Main\Views\export\country_view', $data);
 		}
+	}
+
+	function region()
+	{
+		$Model = new Main_model();
+		$Report_model = new Report_model();
+		$data['session'] = session();
+		$ses_data = ['report_type' => 'daily'];
+		$data['session']->set($ses_data);
+
+		$data['Mydate'] = $this->Mydate;
+		$data['Date_thai'] = $this->Date_thai;
+		$month = date('m');
+		$data['year'] = date('Y');
+		$data['month'] = $month;
+		$data['month_label'] = $this->month_th_short[(int)$month];
+		$data['start_date'] = '01-01-' . (date('Y'));
+		$data['country_type'] = 'all';
+
+		$end_date = $Model->getMaxDate();
+		list($year, $month, $day) = explode('-', $end_date);
+		$data['end_date'] = $day . '-' . $month . '-' . $year;
+
+		if (!empty($_GET['start_date'])) {
+			$data['start_date'] = $_GET['start_date'];
+		}
+		if (!empty($_GET['end_date'])) {
+			$data['end_date'] = $_GET['end_date'];
+		}
+
+		list($day, $month, $year) = explode('-', $data['start_date']);
+		$start_date = $year . '-' . $month . '-' . $day;
+		$start_date_past = ($year - 1) . '-' . $month . '-' . $day;
+		$data['start_date_label'] = $start_date;
+		$data['start_date_label_past'] = $start_date_past;
+
+		list($day, $month, $year) = explode('-', $data['end_date']);
+		$end_date = $year . '-' . $month . '-' . $day;
+		$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
+		$data['end_date_label'] = $end_date;
+		$data['end_date_label_past'] = $end_date_past;
+		$data['year'] = $year;
+
+		$date_now = strtotime($start_date);
+		$date2 = strtotime($end_date);
+
+		if ($date_now > $date2) {
+			list($day, $month, $year) = explode('-', $data['start_date']);
+			$end_date = $year . '-' . $month . '-' . $day;
+			$end_date_past = ($year - 1) . '-' . $month . '-' . $day;
+			$data['end_date_label'] = $end_date;
+			$data['year'] = $year;
+		}
+
+		// Region mapping: name => [STD_REGION_IDs]
+		$regionMap = [
+			['name' => 'INBOUND TOURIST', 'ids' => [], 'color' => '#1a329a', 'titleColor' => '#0e1f6b'],
+			['name' => 'ASEAN', 'ids' => [13], 'color' => '#ebabc0', 'titleColor' => '#c44d75'],
+			['name' => 'NORTH-EAST ASIA', 'ids' => [15, 38], 'color' => '#f9c9b2', 'titleColor' => '#d47830'],
+			['name' => 'SOUTH ASIA', 'ids' => [23, 39], 'color' => '#ffffae', 'titleColor' => '#b5a000'],
+			['name' => 'EUROPE', 'ids' => [2, 44, 36, 37], 'color' => '#c6a7cb', 'titleColor' => '#7b4a85'],
+			['name' => 'THE AMERICAS', 'ids' => [7, 45], 'color' => '#64b5da', 'titleColor' => '#1a6e99'],
+			['name' => 'MIDDLE EAST', 'ids' => [20, 47], 'color' => '#9bc1a7', 'titleColor' => '#3d7a52'],
+			['name' => 'OCEANIA', 'ids' => [5, 46], 'color' => '#b2dfe8', 'titleColor' => '#2a8a9e'],
+			['name' => 'AFRICA', 'ids' => [6, 40], 'color' => '#b6c8c7', 'titleColor' => '#4a7170'],
+		];
+
+		// Region sum data
+		$data['SumRegionMonthData'] = $Model->getSumRegionMonth($start_date, $end_date);
+		$data['SumRegionMonthData_past'] = $Model->getSumRegionMonth($start_date_past, $end_date_past);
+
+		// Collect all region IDs for INBOUND total
+		$allRegionIds = [];
+		foreach ($regionMap as $r) {
+			if (!empty($r['ids'])) {
+				$allRegionIds = array_merge($allRegionIds, $r['ids']);
+			}
+		}
+		$allRegionIds = array_unique($allRegionIds);
+
+		// Chart data for each region
+		$regionCharts = [];
+		foreach ($regionMap as $idx => $region) {
+			if (empty($region['ids'])) {
+				// INBOUND = all regions combined
+				$regionCharts[$idx] = $Model->getSumChartRegion($end_date, $allRegionIds);
+				$regionMap[$idx]['sumMonth'] = array_sum($data['SumRegionMonthData']);
+				$regionMap[$idx]['sumMonth_past'] = array_sum($data['SumRegionMonthData_past']);
+			} else {
+				$regionCharts[$idx] = $Model->getSumChartRegion($end_date, $region['ids']);
+				$sum = 0;
+				$sum_past = 0;
+				foreach ($region['ids'] as $rid) {
+					$sum += @$data['SumRegionMonthData'][$rid];
+					$sum_past += @$data['SumRegionMonthData_past'][$rid];
+				}
+				$regionMap[$idx]['sumMonth'] = $sum;
+				$regionMap[$idx]['sumMonth_past'] = $sum_past;
+			}
+		}
+
+		$data['regionMap'] = $regionMap;
+		$data['regionCharts'] = $regionCharts;
+
+		return view('Modules\Main\Views\region', $data);
 	}
 }

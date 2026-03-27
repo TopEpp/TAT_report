@@ -4,6 +4,10 @@
 <?php $this->section('content') ?>
 <?php $user_menu = $session->get('user_menu'); ?>
 <style type="text/css">
+.highcharts-contextmenu {
+    z-index: 9999 !important;
+}
+
 .gm-style .gm-style-iw-c {
     padding: 0 !important;
 }
@@ -298,9 +302,7 @@
                                                         </div>
                                                         <div class="col-lg-4 text-center">
                                                             <div class="font-17">
-                                                                <b style="color:#36BA98"><?php echo
-                                                                    number_format(@$SumPortType[1]['NUM']/(@$SumPortType[1]['NUM']+@$SumPortType[0]['NUM'])*100,2);
-                                                                    ?>%</b>
+                                                                <b style="color:#36BA98"><?php $total_port = (@$SumPortType[1]['NUM']+@$SumPortType[0]['NUM']); echo $total_port > 0 ? number_format(@$SumPortType[1]['NUM']/$total_port*100,2) : '0.00'; ?>%</b>
                                                             </div>
 
                                                         </div>
@@ -314,7 +316,7 @@
                                                         <div class="col-lg-4 text-center">
                                                             <div class="font-17">
                                                                 <b
-                                                                    style="color:#1679AB"><?php echo number_format(@$SumPortType[0]['NUM']/(@$SumPortType[1]['NUM']+@$SumPortType[0]['NUM'])*100,2); ?>%</b>
+                                                                    style="color:#1679AB"><?php echo $total_port > 0 ? number_format(@$SumPortType[0]['NUM']/$total_port*100,2) : '0.00'; ?>%</b>
                                                             </div>
 
                                                         </div>
@@ -339,14 +341,14 @@
                                     </div>
                                 </div>
                             </div>
-                        <div class="text-center" id="htmltoimage_chart_country" style="padding:5px; background: #FFF; border-radius: 15px; font-family: 'TATSana-Chon', sans-serif;">
+                        <div class="text-center" id="htmltoimage_chart_country" style="padding:5px; background: #FFF; border-radius: 15px; font-family: 'TATSana-Chon', sans-serif; position: relative; z-index: 1;">
 
                             <div id="chart_country" style="height:285px !important"></div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12" style="background-color: #0a1b54;color: white; font-size: 11px;">
+                    <div class="col-md-12" style="background-color: #0a1b54;color: white; font-size: 11px; position: relative; z-index: 0;">
                         หมายเหตุ : <br>1. ข้อมูลจำแนกรายสัญชาติ (Nationality) ที่มีการกำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศ
 (สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
 2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass<br>

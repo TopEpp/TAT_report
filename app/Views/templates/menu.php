@@ -68,6 +68,9 @@ $user_menu = $session->get('user_menu');
                 <a class="collapse-item <?php if ($method == 'country') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('main/country') ?>">สถิตินักท่องเที่ยวรายประเทศ</a>
+                <a class="collapse-item <?php if ($method == 'country') {
+                                            echo 'active';
+                                        } ?>" href="<?php echo base_url('main/region') ?>">สถิตินักท่องเที่ยวรายภูมิภาค</a>
                <!--  <a class="collapse-item <?php if ($method == 'departure') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('main/departure') ?>">สถิติคนไทยเดินทางออกนอกราชอาณาจักรในภาพรวม</a> -->

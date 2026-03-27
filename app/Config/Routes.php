@@ -64,6 +64,9 @@ $routes->group('main', ['namespace' => '\Modules\Main\Controllers', 'filter' => 
     $routes->get('export_country', 'Main::export_country');
     $routes->get('export_departure', 'Main::export_departure');
 
+    $routes->get('region', 'Main::region');
+    $routes->get('export_region_pdf', 'Main::export_region_pdf');
+
     $routes->post('saveLog', 'Main::saveLog');
     
 });

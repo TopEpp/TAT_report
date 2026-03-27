@@ -759,4 +759,50 @@ class Main_model extends Model
 		return $data_chart;
 	}
 
+	function getSumChartRegion($to_date, $region_ids)
+	{
+		$data_chart = array();
+		$region_list = implode(',', $region_ids);
+
+		$builder = $this->db->table($this->table);
+		$builder->select(" TO_CHAR({$this->table}.REPORT_DATE,'YYYY-MM-DD') AS REPORT_DATE, SUM({$this->table}.SUM) AS NUM ");
+		$builder->join('MD_COUNTRY', "MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
+		$builder->join('MD_SUB_REGION', "MD_COUNTRY.REGIONID = MD_SUB_REGION.SUB_REGION_ID");
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table}.OFFICE_ID AND PORT_CATEGORY_ID = 1");
+		$builder->where("REPORT_DATE BETWEEN TO_DATE('{$to_date}','YYYY-MM-DD')-30 AND TO_DATE('{$to_date}','YYYY-MM-DD') ");
+		$builder->where('PORT_DAILY', 1);
+		$builder->where("MD_COUNTRY.STD_REGION_ID IN ({$region_list})");
+		$builder->groupBy("{$this->table}.REPORT_DATE");
+		$builder->orderBy("REPORT_DATE");
+		$data = $builder->get()->getResultArray();
+		foreach ($data as $d) {
+			$data_chart['current'][$d['REPORT_DATE']] = $d['NUM'];
+		}
+
+		list($year, $month, $day) = explode('-', $to_date);
+		$to_date_past = ($year - 1) . '-' . $month . '-' . $day;
+
+		list($year, $month, $day) = explode('-', $to_date_past);
+		if (!checkdate($month, $day, $year)) {
+			$to_date_past = $year . '-' . $month . '-' . ($day - 1);
+		}
+
+		$builder = $this->db->table($this->table);
+		$builder->select(" TO_CHAR({$this->table}.REPORT_DATE,'YYYY-MM-DD') AS REPORT_DATE, SUM({$this->table}.SUM) AS NUM ");
+		$builder->join('MD_COUNTRY', "MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
+		$builder->join('MD_SUB_REGION', "MD_COUNTRY.REGIONID = MD_SUB_REGION.SUB_REGION_ID");
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table}.OFFICE_ID AND PORT_CATEGORY_ID = 1");
+		$builder->where("REPORT_DATE BETWEEN TO_DATE('{$to_date_past}','YYYY-MM-DD')-30 AND TO_DATE('{$to_date_past}','YYYY-MM-DD') ");
+		$builder->where('PORT_DAILY', 1);
+		$builder->where("MD_COUNTRY.STD_REGION_ID IN ({$region_list})");
+		$builder->groupBy("{$this->table}.REPORT_DATE");
+		$builder->orderBy("REPORT_DATE");
+		$data = $builder->get()->getResultArray();
+		foreach ($data as $d) {
+			$data_chart['past'][$d['REPORT_DATE']] = $d['NUM'];
+		}
+
+		return $data_chart;
+	}
+
 }

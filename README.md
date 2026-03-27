@@ -1,56 +1,91 @@
-# CodeIgniter 4 Framework
+# TAT Tourist System
+**ระบบวิเคราะห์ข้อมูลนักท่องเที่ยว การท่องเที่ยวแห่งประเทศไทย (ททท.)**
 
-## What is CodeIgniter?
+## ภาพรวมระบบ
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](http://codeigniter.com).
+ระบบ TAT Tourist เป็นแอปพลิเคชันเว็บสำหรับวิเคราะห์และรายงานสถิตินักท่องเที่ยวต่างชาติที่เดินทางเข้าประเทศไทย พัฒนาด้วย CodeIgniter 4 และฐานข้อมูล Oracle ใช้งานภายในองค์กรของ ททท.
 
-This repository holds the distributable version of the framework,
-including the user guide. It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+---
 
-More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
+## Tech Stack
 
-The user guide corresponding to this version of the framework can be found
-[here](https://codeigniter4.github.io/userguide/).
+| ส่วน | เทคโนโลยี |
+|------|-----------|
+| Framework | CodeIgniter 4 (HMVC Modules) |
+| Database | Oracle (OCI8) |
+| PHP | 7.3+ |
+| Frontend | Bootstrap 4, SB Admin 2 |
+| Charts | HighCharts |
+| UI Components | jQuery EasyUI, jsTree, Datepicker |
+| Export | PhpSpreadsheet (Excel), mPDF (PDF), PhpPresentation (PowerPoint) |
 
+---
 
-## Important Change with index.php
+## เอกสารระบบ
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+| เอกสาร | คำอธิบาย |
+|--------|---------|
+| [ARCHITECTURE.md](ARCHITECTURE.md) | สถาปัตยกรรมระบบ, โครงสร้าง directory, flow การทำงาน |
+| [MODULES.md](MODULES.md) | รายละเอียดแต่ละ module (Controllers, Models, Views) |
+| [DATABASE.md](DATABASE.md) | โครงสร้างฐานข้อมูล, ตาราง, ความสัมพันธ์ |
+| [INSTALLATION.md](INSTALLATION.md) | ขั้นตอนการติดตั้งและตั้งค่าระบบ |
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+---
 
-**Please** read the user guide for a better explanation of how CI4 works!
+## โครงสร้างโปรเจกต์
 
-## Repository Management
+```
+TAT_tourist/
+├── app/                    # Application core
+│   ├── Config/             # การตั้งค่าระบบ
+│   ├── Controllers/        # BaseController
+│   ├── Filters/            # Auth filter
+│   ├── Helpers/            # Helper functions
+│   ├── Libraries/          # Custom libraries
+│   └── Views/              # Layouts, templates
+├── modules/                # HMVC Modules
+│   ├── Login/              # Authentication
+│   ├── Main/               # Dashboard & Daily Reports
+│   ├── Report/             # รายงานสถิติ
+│   ├── Import/             # นำเข้าข้อมูล
+│   ├── Setting/            # ตั้งค่าระบบ
+│   └── User/               # จัดการผู้ใช้
+├── public/                 # Web root (document root)
+│   ├── css/
+│   ├── js/
+│   └── uploads/
+└── writable/               # Cache, Sessions, Logs
+```
 
-We use Github issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+---
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+## ฟีเจอร์หลัก
 
-## Contributing
+- **Dashboard** — สรุปสถิตินักท่องเที่ยวรายวัน/รายเดือน พร้อม chart
+- **รายงาน** — เปรียบเทียบตามสัญชาติ, ท่าเข้าออก, ตลาด, วันที่เดินทาง
+- **นำเข้าข้อมูล** — Import ไฟล์ Excel รายวัน/รายเดือน
+- **ตั้งค่า** — บริหารข้อมูล country, port, visa, permission, log
+- **จัดการผู้ใช้** — เพิ่ม/แก้ไข/ลบผู้ใช้ กำหนดสิทธิ์
+- **Export** — ส่งออกรายงานเป็น Excel / PDF / PowerPoint
 
-We welcome contributions from the community.
+---
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing.md) section in the development repository.
+## Authentication
+
+ระบบรองรับ 3 วิธีเข้าสู่ระบบ:
+1. **Active Directory (LDAP)** — สำหรับพนักงาน ททท. (domain: tat.or.th)
+2. **Database** — username/password เก็บใน Oracle
+3. **Microsoft OAuth** — Azure AD (Microsoft Graph API)
+
+---
 
 ## Server Requirements
 
-PHP version 7.3 or higher is required, with the following extensions installed:
+- PHP 7.3 หรือสูงกว่า
+- Extension: `oci8`, `intl`, `curl`, `json`, `mbstring`, `xml`
+- Oracle Client สำหรับ OCI8
+- Web Server: Apache/Nginx
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+---
 
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
-- xml (enabled by default - don't turn it off)
+*See [INSTALLATION.md](INSTALLATION.md) for setup instructions*
