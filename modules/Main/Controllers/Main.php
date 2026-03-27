@@ -1073,10 +1073,10 @@ class Main extends BaseController
 
 		// Region mapping: name => [STD_REGION_IDs]
 		$regionMap = [
-			['name' => 'INBOUND TOURIST', 'ids' => [], 'color' => '#1a329a', 'titleColor' => '#0e1f6b'],
+			['name' => 'GRAND TOTAL', 'ids' => [], 'color' => '#1a329a', 'titleColor' => '#0e1f6b'],
 			['name' => 'ASEAN', 'ids' => [13], 'color' => '#ebabc0', 'titleColor' => '#c44d75'],
 			['name' => 'NORTH-EAST ASIA', 'ids' => [15, 38], 'color' => '#f9c9b2', 'titleColor' => '#d47830'],
-			['name' => 'SOUTH ASIA', 'ids' => [23, 39], 'color' => '#ffffae', 'titleColor' => '#b5a000'],
+			['name' => 'SOUTH ASIA', 'ids' => [23, 39], 'color' => '#b5a000', 'titleColor' => '#b5a000'],
 			['name' => 'EUROPE', 'ids' => [2, 44, 36, 37], 'color' => '#c6a7cb', 'titleColor' => '#7b4a85'],
 			['name' => 'THE AMERICAS', 'ids' => [7, 45], 'color' => '#64b5da', 'titleColor' => '#1a6e99'],
 			['name' => 'MIDDLE EAST', 'ids' => [20, 47], 'color' => '#9bc1a7', 'titleColor' => '#3d7a52'],

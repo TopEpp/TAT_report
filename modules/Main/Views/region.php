@@ -139,7 +139,7 @@
 
                 <!-- Page Title -->
                 <div class="text-center mb-4">
-                    <h4 style="color: #1a329a;"><b>สถิตินักท่องเที่ยวรายภูมิภาค</b></h4>
+                    <h4 style="color: #1a329a;"><b>ภาพรวมนักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย</b></h4>
                     <p style="color: #666;">
                         ข้อมูลสะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S'); ?> - <?php echo $Mydate->date_eng2thai($end_date_label, 543, 'S', 'S'); ?>
                         เทียบกับ <?php echo $Mydate->date_eng2thai($start_date_label_past, 543, 'S', 'S'); ?> - <?php echo $Mydate->date_eng2thai($end_date_label_past, 543, 'S', 'S'); ?>
@@ -160,74 +160,68 @@
                     $changeSign = $percent >= 0 ? '+' : '';
                 ?>
 
-                <div class="row mb-3 region-row">
-                    <div class="col-md-3">
-                        <div class="region-card" style="height: 100%;">
-                            <!-- Region Name -->
-                            <div class="mb-3">
-                                <span class="region-badge" style="background-color: <?php echo $region['color']; ?>;">
+                <?php
+                    $chartData = @$regionCharts[$idx];
+                    $avg_current = 0;
+                    $avg_past = 0;
+                    if (!empty($chartData['current'])) {
+                        $avg_current = round(array_sum($chartData['current']) / count($chartData['current']));
+                    }
+                    if (!empty($chartData['past'])) {
+                        $avg_past = round(array_sum($chartData['past']) / count($chartData['past']));
+                    }
+
+                    list($sy, $sm, $sd) = explode('-', $start_date_label_past);
+                    list($ey, $em, $ed) = explode('-', $end_date_label_past);
+                    $datePastLine1 = $sd . ' ' . $shortmonth[(int)$sm] . ' ' . ($sy + 543);
+                    $datePastLine2 = $ed . ' ' . $shortmonth[(int)$em] . ' ' . ($ey + 543);
+
+                    list($sy, $sm, $sd) = explode('-', $start_date_label);
+                    list($ey, $em, $ed) = explode('-', $end_date_label);
+                    $dateCurrentLine1 = $sd . ' ' . $shortmonth[(int)$sm] . ' ' . ($sy + 543);
+                    $dateCurrentLine2 = $ed . ' ' . $shortmonth[(int)$em] . ' ' . ($ey + 543);
+                ?>
+                <div class="row mb-3 region-row" style="display: flex; align-items: stretch;">
+                    <div class="col-md-3 d-flex">
+                        <div class="region-card flex-fill">
+                            <!-- Row 1: Badge + Change % -->
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                <span class="region-badge" style="background-color: <?php echo $region['titleColor']; ?>;">
                                     <?php echo $region['name']; ?>
+                                </span>
+                                <span class="change-label <?php echo $changeClass; ?>">
+                                    <?php echo $changeSign . number_format($percent, 1); ?>%
                                 </span>
                             </div>
 
-                            <!-- Change % -->
-                            <div class="text-center mb-3">
-                                <div class="change-label <?php echo $changeClass; ?>">
-                                    <?php echo $changeSign . number_format($percent, 1); ?>%
-                                </div>
-                                <div style="font-size: 12px; color: #888;">
-                                    <?php
-                                    list($sy, $sm, $sd) = explode('-', $start_date_label);
-                                    list($ey, $em, $ed) = explode('-', $end_date_label);
-                                    echo $sd . ' ' . $shortmonth[(int)$sm] . ' ' . ($sy + 543);
-                                    echo ' - ';
-                                    echo $ed . ' ' . $shortmonth[(int)$em] . ' ' . ($ey + 543);
-                                    ?>
-                                    <br>VS.
-                                    <?php
-                                    list($sy, $sm, $sd) = explode('-', $start_date_label_past);
-                                    list($ey, $em, $ed) = explode('-', $end_date_label_past);
-                                    echo $sd . ' ' . $shortmonth[(int)$sm] . ' ' . ($sy + 543);
-                                    echo ' - ';
-                                    echo $ed . ' ' . $shortmonth[(int)$em] . ' ' . ($ey + 543);
-                                    ?>
-                                </div>
+                            <!-- Row 2: Date range (past left, current right) -->
+                            <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px;">
+                                <div style="color: #888; text-align: left;"><?php echo $datePastLine1; ?><br><?php echo $datePastLine2; ?></div>
+                                <div style="color: <?php echo $region['titleColor']; ?>; text-align: right;"><?php echo $dateCurrentLine1; ?><br><?php echo $dateCurrentLine2; ?></div>
                             </div>
 
-                            <!-- Sum Data -->
-                            <div class="mb-2">
-                                <div class="px-2 py-1" style="background-color: <?php echo $region['color']; ?>; border-radius: 8px;">
-                                    <div class="text-right" style="font-size: 15px; color: <?php echo $region['titleColor']; ?>;">
-                                        <b><?php echo number_format($sumMonth); ?> คน</b>
-                                    </div>
-                                </div>
-                                <div class="text-right" style="font-size: 12px; color: #888; margin-top: 3px;">
-                                    ปีที่แล้ว: <?php echo number_format($sumMonth_past); ?> คน
-                                </div>
+                            <!-- VS -->
+                            <div class="text-center" style="font-size: 11px; color: <?php echo $region['titleColor']; ?>; margin-bottom: 3px;"><b>VS</b></div>
+
+                            <!-- Row 3: Sum (past left gray, current right colored bg) -->
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 14px; color: #666;"><b><?php echo number_format($sumMonth_past); ?></b></span>
+                                <span style="font-size: 14px; color: #fff; background-color: <?php echo $region['titleColor']; ?>; padding: 3px 12px; border-radius: 15px;"><b><?php echo number_format($sumMonth); ?></b></span>
                             </div>
 
-                            <!-- Average -->
-                            <?php
-                            $chartData = @$regionCharts[$idx];
-                            $avg_current = 0;
-                            $avg_past = 0;
-                            if (!empty($chartData['current'])) {
-                                $avg_current = round(array_sum($chartData['current']) / count($chartData['current']));
-                            }
-                            if (!empty($chartData['past'])) {
-                                $avg_past = round(array_sum($chartData['past']) / count($chartData['past']));
-                            }
-                            ?>
-                            <div style="font-size: 13px; margin-top: 10px;">
-                                <div><b>AVERAGE</b></div>
-                                <div style="color: #57DACC;"><b><?php echo number_format($avg_current); ?> PERSONS/DAY (<?php echo $year; ?>)</b></div>
-                                <div style="color: #FACE74;"><b><?php echo number_format($avg_past); ?> PERSONS/DAY (<?php echo $year - 1; ?>)</b></div>
+                            <!-- Row 4: Average label -->
+                            <div class="text-center" style="font-size: 12px; color: <?php echo $region['titleColor']; ?>; margin-bottom: 3px;"><b>Average</b></div>
+
+                            <!-- Row 5: Average (past left gray, current right colored) -->
+                            <div style="display: flex; justify-content: space-between; font-size: 12px;">
+                                <div style="color: #888; text-align: left;"><b><?php echo number_format($avg_past); ?></b><br><b>person/day</b></div>
+                                <div style="color: <?php echo $region['titleColor']; ?>; text-align: right;"><b><?php echo number_format($avg_current); ?></b><br><b>person/day</b></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-9">
-                        <div class="region-card" style="position: relative; z-index: 1;">
-                            <div id="chart_region_<?php echo $idx; ?>" style="height: 280px;"></div>
+                    <div class="col-md-9 d-flex">
+                        <div class="region-card flex-fill" style="position: relative; z-index: 1;">
+                            <div id="chart_region_<?php echo $idx; ?>" style="height: 100%; min-height: 280px;"></div>
                         </div>
                     </div>
                 </div>
@@ -344,10 +338,6 @@ $(function() {
             gridLineDashStyle: 'Dash',
             labels: {
                 formatter: function() {
-                    var day = Highcharts.dateFormat('%A', this.value);
-                    if (day === 'Monday') {
-                        return Highcharts.dateFormat('%d/%m', this.value) + ' (Mon)';
-                    }
                     return Highcharts.dateFormat('%d/%m', this.value);
                 }
             }
@@ -489,7 +479,7 @@ function exportPage(format) {
                                 if (capturedCount === totalPages) {
                                     // ทุกหน้า capture เสร็จ → เปิด print window
                                     var printWindow = window.open('', '_blank');
-                                    var html = '<html><head><title>สถิตินักท่องเที่ยวรายภูมิภาค</title>' +
+                                    var html = '<html><head><title>ภาพรวมนักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย</title>' +
                                         '<style>' +
                                         '@page { size: landscape; margin: 8mm; }' +
                                         'body { margin: 0; padding: 0; }' +
