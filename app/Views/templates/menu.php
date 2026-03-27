@@ -67,7 +67,7 @@ $user_menu = $session->get('user_menu');
                                         } ?>" href="<?php echo base_url('main/daily') ?>">สถิตินักท่องเที่ยวรายวัน</a>
                 <a class="collapse-item <?php if ($method == 'country') {
                                             echo 'active';
-                                        } ?>" href="<?php echo base_url('main/region') ?>">ภาพรวมนักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย</a>
+                                        } ?>" href="<?php echo base_url('main/region') ?>">สถิตินักท่องเที่ยวรายภูมิภาค</a>
                 <a class="collapse-item <?php if ($method == 'country') {
                                             echo 'active';
                                         } ?>" href="<?php echo base_url('main/country') ?>">สถิตินักท่องเที่ยวรายประเทศ</a>

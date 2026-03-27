@@ -139,7 +139,7 @@
 
                 <!-- Page Title -->
                 <div class="text-center mb-4">
-                    <h4 style="color: #1a329a;"><b>ภาพรวมนักท่องเที่ยวระหว่างประเทศที่เดินทางเข้าประเทศไทย</b></h4>
+                    <h4 style="color: #1a329a;"><b>สถิตินักท่องเที่ยวรายภูมิภาค</b></h4>
                     <p style="color: #666;">
                         ข้อมูลสะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S'); ?> - <?php echo $Mydate->date_eng2thai($end_date_label, 543, 'S', 'S'); ?>
                         เทียบกับ <?php echo $Mydate->date_eng2thai($start_date_label_past, 543, 'S', 'S'); ?> - <?php echo $Mydate->date_eng2thai($end_date_label_past, 543, 'S', 'S'); ?>
