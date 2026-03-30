@@ -68,6 +68,8 @@ $routes->group('main', ['namespace' => '\Modules\Main\Controllers', 'filter' => 
     $routes->get('export_region_pdf', 'Main::export_region_pdf');
 
     $routes->post('saveLog', 'Main::saveLog');
+
+    $routes->get('realtime', 'Main::realtime');
     
 });
 

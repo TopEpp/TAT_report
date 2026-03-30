@@ -47,7 +47,7 @@
 }
 
 .change-label {
-    font-size: 22px;
+    font-size: 26px;
     font-weight: bold;
 }
 
@@ -243,25 +243,25 @@
                             </div>
 
                             <!-- Row 2: Date range (past left, current right) -->
-                            <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px;">
+                            <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 3px;">
                                 <div style="color: #888; text-align: left;"><?php echo $datePastLine1; ?><br><?php echo $datePastLine2; ?></div>
                                 <div style="color: <?php echo $region['titleColor']; ?>; text-align: right;"><?php echo $dateCurrentLine1; ?><br><?php echo $dateCurrentLine2; ?></div>
                             </div>
 
                             <!-- VS -->
-                            <div class="text-center" style="font-size: 11px; color: <?php echo $region['titleColor']; ?>; margin-bottom: 3px;"><b>VS</b></div>
+                            <div class="text-center" style="font-size: 13px; color: <?php echo $region['titleColor']; ?>; margin-bottom: 3px;"><b>VS</b></div>
 
                             <!-- Row 3: Sum (past left gray, current right colored bg) -->
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                <span style="font-size: 14px; color: #666;"><b><?php echo number_format($sumMonth_past); ?></b></span>
-                                <span style="font-size: 14px; color: #fff; background-color: <?php echo $region['titleColor']; ?>; padding: 3px 12px; border-radius: 15px;"><b><?php echo number_format($sumMonth); ?></b></span>
+                                <span style="font-size: 17px; color: #666;"><b><?php echo number_format($sumMonth_past); ?></b></span>
+                                <span style="font-size: 17px; color: #fff; background-color: <?php echo $region['titleColor']; ?>; padding: 3px 12px; border-radius: 15px;"><b><?php echo number_format($sumMonth); ?></b></span>
                             </div>
 
                             <!-- Row 4: Average label -->
-                            <div class="text-center" style="font-size: 12px; color: <?php echo $region['titleColor']; ?>; margin-bottom: 3px;"><b>Average</b></div>
+                            <div class="text-center" style="font-size: 14px; color: <?php echo $region['titleColor']; ?>; margin-bottom: 3px;"><b>Average</b></div>
 
                             <!-- Row 5: Average (past left gray, current right colored) -->
-                            <div style="display: flex; justify-content: space-between; font-size: 12px;">
+                            <div style="display: flex; justify-content: space-between; font-size: 14px;">
                                 <div style="color: #888; text-align: left;"><b><?php echo number_format($avg_past); ?></b><br><b>person/day</b></div>
                                 <div style="color: <?php echo $region['titleColor']; ?>; text-align: right;"><b><?php echo number_format($avg_current); ?></b><br><b>person/day</b></div>
                             </div>

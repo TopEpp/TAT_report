@@ -53,9 +53,9 @@ class Database extends Config
 	// $tnsname = "(DESCRIPTION=(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 127.0.0.1)(PORT = 1521)))(CONNECT_DATA=(SID=jigsaw01)))";
 
 	public $default = array(
-	    'hostname' => "(DESCRIPTION=(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 149.28.129.22)(PORT = 1521)))(CONNECT_DATA=(SID=jigsaw01)))",
-	    'username' => 'TAT',
-	    'password' => 'tat@jigsaw',
+	    'hostname' => "(DESCRIPTION=(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 139.180.208.163 )(PORT = 1521)))(CONNECT_DATA=(SID=XE)))",
+	    'username' => 'system',
+	    'password' => 'dfbLWHqqkke99Sir',
 	    'database' => 'TAT',
 	    'DBDriver' => 'OCI8',
 	    'DBPrefix' => '',
