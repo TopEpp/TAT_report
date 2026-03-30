@@ -60,7 +60,55 @@
 }
 
 .highcharts-contextmenu {
-    z-index: 9999 !important;
+    position: fixed !important;
+    z-index: 99999 !important;
+}
+
+.highcharts-data-table {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.highcharts-data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    font-family: 'TATSana-Chon', sans-serif;
+}
+
+.highcharts-data-table thead tr {
+    background-color: #0a1b54;
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.highcharts-data-table th,
+.highcharts-data-table td {
+    padding: 8px 12px;
+    text-align: center;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.highcharts-data-table th {
+    font-weight: bold;
+}
+
+.highcharts-data-table tbody tr:nth-child(even) {
+    background-color: #f5f7fa;
+}
+
+.highcharts-data-table tbody tr:hover {
+    background-color: #e3edf9;
+}
+
+.highcharts-data-table td:first-child {
+    text-align: left;
+    white-space: nowrap;
 }
 
 #export-loading {
@@ -220,8 +268,8 @@
                         </div>
                     </div>
                     <div class="col-md-9 d-flex">
-                        <div class="region-card flex-fill" style="position: relative; z-index: 1;">
-                            <div id="chart_region_<?php echo $idx; ?>" style="height: 100%; min-height: 280px;"></div>
+                        <div class="region-card flex-fill" style="position: relative; overflow: auto;">
+                            <div id="chart_region_<?php echo $idx; ?>" style="height: 280px;"></div>
                         </div>
                     </div>
                 </div>
@@ -367,6 +415,7 @@ $(function() {
         series: <?php echo str_replace('"', '', $jsonData); ?>
     });
     <?php endforeach; ?>
+
 
 });
 
