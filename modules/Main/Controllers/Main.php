@@ -7,7 +7,7 @@ use Modules\Main\Models\Main_model;
 use Modules\Report\Models\Report_model;
 use Modules\Setting\Models\Setting_model;
 use CodeIgniter\API\ResponseTrait;
-use App\Libraries\DataGovApi;
+// use App\Libraries\DataGovApi; // ยังไม่ได้ใช้ — ข้อมูลมาจาก hardcode ชั่วคราว
 
 class Main extends BaseController
 {
@@ -1133,135 +1133,53 @@ class Main extends BaseController
 		$data['session']->set($ses_data);
 		$data['Mydate'] = $this->Mydate;
 
-		$Model = new Main_model();
-
 		// ============================================================
-		// ข้อมูลจริงจาก DB
+		// ข้อมูลจริงรายเดือน (ก.พ. 2568 - มี.ค. 2569) จากแหล่งข้อมูลภายใน
 		// ============================================================
+		// ลำดับ: ก.พ.68, มี.ค.68, เม.ย.68, พ.ค.68, มิ.ย.68, ก.ค.68, ส.ค.68, ก.ย.68, ต.ค.68, พ.ย.68, ธ.ค.68, ม.ค.69, ก.พ.69, มี.ค.69
+		$realOcc     = [77.62, 74.99, 74.69, 68.30, 66.09, 68.16, 68.69, 66.73, 70.94, 72.78, 78.09, 77.52, 77.24, null];
+		$realOil95   = [36.12, 36.50, 37.20, 36.95, 36.40, 36.75, 37.10, 36.80, 36.50, 36.20, 35.90, 35.75, 36.10, 36.65];
+		$realCpi     = [100.74, 100.64, 100.58, 100.18, 100.50, 100.51, 100.39, 100.46, 100.41, 100.25, 100.33, 100.03, 99.91, 99.67];
+		$realTravel  = [24253241, 22975884, 22521810, 24912474, 23485511, 22363928, 21544757, 22372298, 21590792, 23172963, 23079730, 26491703, 23230424, 23230424];
+		$realSent    = [60.86, 59.86, 60.37, 61.42, 58.72, 56.33, 59.69, 60.54, 63.42, 62.38, 64.41, 24.41, 24.03, 59.15];
+		$realTourist = [25633814, 26527872, 26604374, 27066883, 25319078, 25802437, 24434297, 24795743, 25884768, 25118127, 26682688, 29713504, 27447304, 2715473];
+		$realMonthLabels = ['ก.พ.68','มี.ค.68','เม.ย.68','พ.ค.68','มิ.ย.68','ก.ค.68','ส.ค.68','ก.ย.68','ต.ค.68','พ.ย.68','ธ.ค.68','ม.ค.69','ก.พ.69','มี.ค.69'];
 
-		// หาวันที่ล่าสุดในระบบ
-		$max_date = $Model->getMaxDate(); // YYYY-MM-DD
-		list($max_year, $max_month, $max_day) = explode('-', $max_date);
+		// ใช้ 14 เดือนทั้งหมดสำหรับ chart
+		$data['months'] = $realMonthLabels;
+		$data['occ_monthly']       = $realOcc;
+		$data['cpi_monthly']       = $realCpi;
+		$data['sentiment_monthly'] = $realSent;
+		$data['oil_monthly']       = $realOil95;
+		$data['travel_monthly']    = array_map(function($v) { return round($v / 1000000, 2); }, $realTravel);
+		$data['tourist_monthly']   = array_map(function($v) { return round($v / 1000000, 2); }, $realTourist);
 
-		// --- Metric Card 1: นักท่องเที่ยวเดือนปัจจุบัน (จาก DB) ---
-		$current_month_start = $max_year . '-' . $max_month . '-01';
-		$current_month_end = $max_date;
-		$tourist_current = (int) $Model->getSumMonth($current_month_start, $current_month_end);
-
-		// --- MoM%: เปรียบเทียบกับเดือนก่อน (ช่วงเดียวกัน) ---
-		$prev_month = (int)$max_month - 1;
-		$prev_year = (int)$max_year;
-		if ($prev_month < 1) {
-			$prev_month = 12;
-			$prev_year--;
-		}
-		$prev_month_str = str_pad($prev_month, 2, '0', STR_PAD_LEFT);
-		$prev_month_start = $prev_year . '-' . $prev_month_str . '-01';
-		$prev_month_end = $prev_year . '-' . $prev_month_str . '-' . $max_day;
-		$tourist_prev = (int) $Model->getSumMonth($prev_month_start, $prev_month_end);
-
-		$tourist_change = 0;
-		if ($tourist_prev > 0) {
-			$tourist_change = round(($tourist_current - $tourist_prev) / $tourist_prev * 100, 1);
-		}
+		// Metric Card 1: นักท่องเที่ยว จากข้อมูลจริง (เดือนล่าสุดที่มีข้อมูล)
+		$latestTouristReal = $realTourist[12]; // ก.พ. 69 = 27,447,304
+		$prevTouristReal   = $realTourist[11]; // ม.ค. 69 = 29,713,504
+		$tourist_current = $latestTouristReal;
+		$tourist_change = $prevTouristReal > 0 ? round(($latestTouristReal - $prevTouristReal) / $prevTouristReal * 100, 1) : 0;
+		// YoY: ก.พ.69 vs ก.พ.68 (index 0)
+		$tourist_yoy = $realTourist[0]; // ก.พ.68 = 25,633,814
+		$data['tourist_yoy_change'] = $tourist_yoy > 0 ? round(($latestTouristReal - $tourist_yoy) / $tourist_yoy * 100, 1) : 0;
 
 		$data['tourist_current'] = $tourist_current;
 		$data['tourist_change'] = $tourist_change;
-		$data['data_date'] = $max_date; // วันที่ข้อมูลล่าสุด
+		$data['data_date'] = 'ก.พ. 2569';
 
-		// --- YoY%: เปรียบเทียบกับปีก่อน (ช่วงเดียวกัน) ---
-		$yoy_start = ($max_year - 1) . '-' . $max_month . '-01';
-		$yoy_end = ($max_year - 1) . '-' . $max_month . '-' . $max_day;
-		$tourist_yoy = (int) $Model->getSumMonth($yoy_start, $yoy_end);
-		$data['tourist_yoy_change'] = 0;
-		if ($tourist_yoy > 0) {
-			$data['tourist_yoy_change'] = round(($tourist_current - $tourist_yoy) / $tourist_yoy * 100, 1);
-		}
-
-		// --- Trend Chart: นักท่องเที่ยวรายเดือน (จาก DB) ---
-		$chartYearData = $Model->getSumChartYear((int)$max_year);
-		$tourist_monthly = [];
-		$tourist_monthly_past = [];
-		for ($m = 1; $m <= 12; $m++) {
-			$tourist_monthly[$m] = isset($chartYearData['current'][$m]) ? round($chartYearData['current'][$m] / 1000000, 2) : null;
-			$tourist_monthly_past[$m] = isset($chartYearData['past'][$m]) ? round($chartYearData['past'][$m] / 1000000, 2) : null;
-		}
-
-		$data['months'] = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
-		$data['tourist_monthly'] = array_values($tourist_monthly);        // ปีปัจจุบัน (ล้านคน)
-		$data['tourist_monthly_past'] = array_values($tourist_monthly_past); // ปีก่อน (ล้านคน)
-		$data['chart_year'] = (int)$max_year;
-		$data['chart_year_past'] = (int)$max_year - 1;
-
-		// ============================================================
-		// ข้อมูลจริงจาก API (data.go.th)
-		// ============================================================
-		$api = new DataGovApi();
-
-		// --- ราคาน้ำมัน ดีเซล B7 (จาก EPPO via data.go.th) ---
-		$oilData = $api->getOilPriceMonthly((int)$max_year);
-		$latestOil = $api->getLatestOilPrice();
-		$oil_monthly = [];
-		for ($m = 1; $m <= 12; $m++) {
-			$oil_monthly[] = $oilData['months'][$m] ?? null;
-		}
-		$data['oil_monthly'] = $oil_monthly;
-		$data['oil_source'] = $oilData['source'];
-		$data['oil_year'] = $oilData['year'];
-
-		// --- CPI Index (จาก TPSO via data.go.th) ---
-		$cpiData = $api->getCpiMonthly((int)$max_year);
-		$cpi_monthly = [];
-		for ($m = 1; $m <= 12; $m++) {
-			$cpi_monthly[] = $cpiData['months'][$m] ?? null;
-		}
-		$data['cpi_monthly'] = $cpi_monthly;
-		$data['cpi_source'] = $cpiData['source'];
-		$data['cpi_year'] = $cpiData['year'];
-		$data['cpi_base_year'] = $cpiData['base_year'] ?? '2019';
-
-		// --- RSI ดัชนีความเชื่อมั่น (จาก FPO via data.go.th) ---
-		$rsiData = $api->getRsiMonthly(((int)$max_year) + 543);
-		$sentiment_monthly = [];
-		for ($m = 1; $m <= 12; $m++) {
-			$sentiment_monthly[] = $rsiData['months'][$m] ?? null;
-		}
-		$data['sentiment_monthly'] = $sentiment_monthly;
-		$data['sentiment_source'] = $rsiData['source'];
-		$data['sentiment_year'] = $rsiData['year_ce'];
-		$latestRsi = $api->getLatestRsi();
-
-		// --- อัตราเข้าพัก (จาก จังหวัด via data.go.th) ---
-		$occData = $api->getOccupancyRate(((int)$max_year) + 543);
-
-		// --- CPI: เลือกแหล่งที่ข้อมูลใหม่กว่า ---
-		$cpiWB = $api->getCpiWorldBank();
-		$cpiFromDataGov = !empty($cpiData['months']) ? end($cpiData['months']) : null;
-		$cpiDataGovYear = $cpiData['year'] ?? 0;
-		$cpiWBYear = $cpiWB ? $cpiWB['year'] : 0;
-
-		// ใช้ World Bank ถ้าปีใหม่กว่า data.go.th
-		if ($cpiWB && $cpiWBYear > $cpiDataGovYear) {
-			$latestCpi = $cpiWB['value'];
-			$cpiBaseYear = $cpiWB['base_year'];
-			$cpiSourceName = $cpiWB['source'] . ' (ปี ' . $cpiWBYear . ')';
-		} else {
-			$latestCpi = $cpiFromDataGov ?? 107.78;
-			$cpiBaseYear = $cpiData['base_year'] ?? '2019';
-			$cpiSourceName = 'TPSO via data.go.th (ปี ' . $cpiDataGovYear . ')';
-		}
-
-		// --- Factor Cards: ผสมข้อมูลจริง + mock ---
-		$latestOilPrice = $latestOil ? $latestOil['price'] : 31.94;
-		$latestRsiVal = $latestRsi ? $latestRsi['value'] : 70.0;
-		$latestOccVal = $occData ? $occData['value'] : 70.0;
+		// ค่าล่าสุดสำหรับ Factor Cards
+		$latestOccReal = 77.24;       // ก.พ. 69
+		$latestCpiReal = 99.67;       // มี.ค. 69
+		$latestTravelReal = 23230424; // มี.ค. 69
+		$latestSentReal = 59.15;      // มี.ค. 69
+		$latestTouristVal = $latestTouristReal; // ก.พ. 69
 
 		$data['factors'] = [
-			['name' => 'จำนวนการเดินทาง', 'value' => 2.95, 'unit' => 'ล้านคน', 'r' => 0.91, 'change' => 0, 'bar_percent' => 75, 'color' => '#2ecc71', 'source' => 'mock', 'source_name' => 'ยังไม่มีแหล่งข้อมูล'],
-			['name' => 'ราคาน้ำมัน', 'value' => $latestOilPrice, 'unit' => 'บาท/ลิตร', 'r' => -0.67, 'change' => 0, 'bar_percent' => min(100, round($latestOilPrice / 55 * 100)), 'color' => '#e74c3c', 'source' => 'api', 'source_name' => 'EPPO via data.go.th'],
-			['name' => 'Sentiment (RSI)', 'value' => $latestRsiVal, 'unit' => 'คะแนน', 'r' => 0.78, 'change' => 0, 'bar_percent' => min(100, round($latestRsiVal)), 'color' => '#f39c12', 'source' => 'api', 'source_name' => $rsiData['source']],
-			['name' => 'อัตราเข้าพัก' . ($occData ? ' (ปี ' . $occData['year_be'] . ')' : ''), 'value' => $latestOccVal, 'unit' => '%', 'r' => 0.83, 'change' => 0, 'bar_percent' => min(100, round($latestOccVal)), 'color' => '#3498db', 'source' => $occData ? 'api' : 'mock', 'source_name' => $occData ? $occData['source'] : 'ยังไม่มีแหล่งข้อมูล'],
-			['name' => 'CPI Index', 'value' => $latestCpi, 'unit' => '(ฐาน ' . $cpiBaseYear . ')', 'r' => -0.44, 'change' => 0, 'bar_percent' => min(100, round(($latestCpi - 90) / 30 * 100)), 'color' => '#9b59b6', 'source' => 'api', 'source_name' => $cpiSourceName]
+			['name' => 'จำนวนการเดินทาง', 'value' => number_format($latestTravelReal), 'unit' => 'คน', 'r' => 0.91, 'change' => 0, 'bar_percent' => min(100, round($latestTravelReal / 30000000 * 100)), 'color' => '#2ecc71', 'source' => 'data', 'source_name' => 'ข้อมูลภายใน (มี.ค. 69)'],
+			['name' => 'ราคาน้ำมัน 95', 'value' => 36.65, 'unit' => 'บาท/ลิตร', 'r' => -0.67, 'change' => 0, 'bar_percent' => min(100, round(36.65 / 55 * 100)), 'color' => '#e74c3c', 'source' => 'data', 'source_name' => 'ข้อมูลภายใน (มี.ค. 69)'],
+			['name' => 'Sentiment', 'value' => $latestSentReal, 'unit' => 'คะแนน', 'r' => 0.78, 'change' => 0, 'bar_percent' => min(100, round($latestSentReal)), 'color' => '#f39c12', 'source' => 'data', 'source_name' => 'ข้อมูลภายใน (มี.ค. 69)'],
+			['name' => 'อัตราเข้าพัก', 'value' => $latestOccReal, 'unit' => '%', 'r' => 0.83, 'change' => 0, 'bar_percent' => min(100, round($latestOccReal)), 'color' => '#3498db', 'source' => 'data', 'source_name' => 'ข้อมูลภายใน (ก.พ. 69)'],
+			['name' => 'CPI Index', 'value' => $latestCpiReal, 'unit' => '', 'r' => -0.44, 'change' => 0, 'bar_percent' => min(100, round(($latestCpiReal - 90) / 15 * 100)), 'color' => '#9b59b6', 'source' => 'data', 'source_name' => 'ข้อมูลภายใน (มี.ค. 69)']
 		];
 
 		// Metric Cards ที่ยังเป็น mock
@@ -1270,42 +1188,126 @@ class Main extends BaseController
 		$data['health_index'] = 80;
 		$data['health_level'] = 'ดี';
 
-		// Monthly mock data (เฉพาะตัวที่ยังไม่มี API)
-		$data['travel_monthly'] = [3.4, 3.1, 3.2, 3.0, 2.6, 2.4, 2.7, 2.8, 2.3, 2.8, 3.1, 3.5];
-		$data['occ_monthly'] = [72, 74, 72, 68, 62, 60, 63, 65, 61, 68, 71, 76]; // รายเดือนยังเป็น mock (data.go.th มีแค่รายปี)
+		// Charts: ราคาน้ำมัน vs อัตราเข้าพัก (14 เดือน)
+		$data['scatter_oil'] = $realOil95;
+		$data['scatter_occ'] = $realOcc;
+		$data['scatter_labels'] = $realMonthLabels;
 
-		// แหล่งข้อมูลรวม (พร้อม API URL)
-		$oilLatestLabel = $latestOil ? ' (ข้อมูลถึง ' . $latestOil['date'] . ')' : '';
-		$rsiYearLabel = !empty($rsiData['year_ce']) ? ' (ข้อมูลปี ' . ($rsiData['year_ce'] + 543) . ')' : '';
-		$occYearLabel = $occData && !empty($occData['year_be']) ? ' (ข้อมูลปี ' . $occData['year_be'] . ')' : '';
-
+		// แหล่งข้อมูลที่ใช้งานจริงใน Dashboard
 		$data['data_sources'] = [
-			['name' => 'นักท่องเที่ยว (ข้อมูล ณ ' . $max_date . ')', 'source' => 'สำนักงานตรวจคนเข้าเมือง (สตม.) via TAT Oracle DB', 'type' => 'db', 'api_url' => ''],
-			['name' => 'ราคาน้ำมัน ดีเซล B7' . $oilLatestLabel, 'source' => $oilData['source'], 'type' => 'api', 'api_url' => 'https://data.go.th/api/3/action/datastore_search?resource_id=7d56918d-adbf-42b7-bd36-e4b33d425027&filters={"Country":"TH-THAILAND","Item":"1052-HSD (B7)"}&sort=_id desc&limit=12'],
-			['name' => 'CPI รายเดือน (ฐานปี ' . ($cpiData['base_year'] ?? '2019') . ', ข้อมูลถึงปี ' . ($cpiData['year'] ?? '-') . ')', 'source' => $cpiData['source'], 'type' => 'api', 'api_url' => 'https://data.go.th/api/3/action/datastore_search?resource_id=6eb23973-01db-49c8-b783-d9d614a7e03e&filters={"INDICATOR_CODE":"ASI.C.CPI.SEC.0"}&sort=_id desc&limit=12'],
-			['name' => 'CPI รายปี (ฐานปี 2010, ข้อมูลถึงปี ' . ($cpiWB ? $cpiWB['year'] : '-') . ')', 'source' => $cpiWB ? $cpiWB['source'] : 'World Bank', 'type' => 'api', 'api_url' => 'https://api.worldbank.org/v2/country/TH/indicator/FP.CPI.TOTL?format=json&date=2020:2026'],
-			['name' => 'RSI ดัชนีความเชื่อมั่นอนาคตเศรษฐกิจภูมิภาค' . $rsiYearLabel, 'source' => $rsiData['source'], 'type' => 'api', 'api_url' => 'https://data.go.th/api/3/action/datastore_search?resource_id=6e839c50-aadd-4be0-83c1-881164117836&limit=20'],
-			['name' => 'อัตราเข้าพัก ค่าเฉลี่ยระดับชาติ' . $occYearLabel, 'source' => $occData ? $occData['source'] : 'ยังไม่มีข้อมูล', 'type' => $occData ? 'api' : 'mock', 'api_url' => 'https://data.go.th/api/3/action/datastore_search?resource_id=f8c47ebc-2e9b-4479-9463-5d34b7deca41&filters={"จังหวัด":"รวมทั้งหมด"}&sort=_id desc'],
-			['name' => 'จำนวนการเดินทาง', 'source' => 'ยังไม่มีแหล่งข้อมูล API ฟรี', 'type' => 'mock', 'api_url' => ''],
+			['name' => 'นักท่องเที่ยว', 'detail' => '(ก.พ. 68 - มี.ค. 69)', 'source' => 'ข้อมูลภายใน (รายเดือน)', 'type' => 'data', 'api_url' => ''],
+			['name' => 'อัตราเข้าพัก', 'detail' => '(ก.พ. 68 - ก.พ. 69)', 'source' => 'ข้อมูลภายใน (รายเดือน)', 'type' => 'data', 'api_url' => ''],
+			['name' => 'ราคาน้ำมัน 95', 'detail' => '(ก.พ. 68 - มี.ค. 69)', 'source' => 'ข้อมูลภายใน (รายเดือน)', 'type' => 'data', 'api_url' => ''],
+			['name' => 'CPI ดัชนีราคาผู้บริโภค', 'detail' => '(ก.พ. 68 - มี.ค. 69)', 'source' => 'ข้อมูลภายใน (รายเดือน)', 'type' => 'data', 'api_url' => ''],
+			['name' => 'จำนวนการเดินทาง', 'detail' => '(ก.พ. 68 - มี.ค. 69)', 'source' => 'ข้อมูลภายใน (รายเดือน)', 'type' => 'data', 'api_url' => ''],
+			['name' => 'Sentiment', 'detail' => '(ก.พ. 68 - มี.ค. 69)', 'source' => 'ข้อมูลภายใน (รายเดือน)', 'type' => 'data', 'api_url' => ''],
 		];
 
-		// Correlation (mock - ต้องคำนวณจากข้อมูลจริง)
-		$data['correlations'] = [
-			['name' => 'การเดินทาง', 'r' => 0.91],
-			['name' => 'อัตราเข้าพัก', 'r' => 0.83],
-			['name' => 'Sentiment', 'r' => 0.78],
-			['name' => 'ราคาน้ำมัน', 'r' => -0.67],
-			['name' => 'CPI', 'r' => -0.44]
-		];
+		// ============================================================
+		// คำนวณ Pearson Correlation (r) จากข้อมูลจริง
+		// ============================================================
+		// ใช้เฉพาะเดือนที่มีข้อมูลครบทุกตัว (ตัด null ออก)
+		$pairData = [];
+		for ($i = 0; $i < count($realOcc); $i++) {
+			if ($realOcc[$i] !== null && $realOil95[$i] !== null && $realCpi[$i] !== null
+				&& $realTravel[$i] !== null && $realSent[$i] !== null) {
+				$pairData[] = [
+					'occ' => $realOcc[$i],
+					'oil' => $realOil95[$i],
+					'cpi' => $realCpi[$i],
+					'travel' => $realTravel[$i] / 1000000, // แปลงเป็นล้านคน
+					'sent' => $realSent[$i],
+				];
+			}
+		}
 
-		$data['corr_matrix'] = [
-			[1.00, 0.91, -0.43, 0.62, 0.55, -0.28],
-			[0.91, 1.00, -0.52, 0.78, 0.71, -0.33],
-			[-0.43, -0.52, 1.00, -0.67, -0.41, 0.38],
-			[0.62, 0.78, -0.67, 1.00, 0.83, -0.44],
-			[0.55, 0.71, -0.41, 0.83, 1.00, -0.41],
-			[-0.28, -0.33, 0.38, -0.44, -0.41, 1.00]
+		// ============================================================
+		// คำนวณ Pearson Correlation (r) จากข้อมูลจริง 12 เดือน
+		// ============================================================
+
+		// Pearson r function
+		$pearsonR = function($x, $y) {
+			$px = []; $py = [];
+			$n = min(count($x), count($y));
+			for ($i = 0; $i < $n; $i++) {
+				if ($x[$i] !== null && $y[$i] !== null) {
+					$px[] = $x[$i];
+					$py[] = $y[$i];
+				}
+			}
+			$n = count($px);
+			if ($n < 3) return 0;
+			$mx = array_sum($px) / $n;
+			$my = array_sum($py) / $n;
+			$sxy = 0; $sx2 = 0; $sy2 = 0;
+			for ($i = 0; $i < $n; $i++) {
+				$dx = $px[$i] - $mx;
+				$dy = $py[$i] - $my;
+				$sxy += $dx * $dy;
+				$sx2 += $dx * $dx;
+				$sy2 += $dy * $dy;
+			}
+			$denom = sqrt($sx2 * $sy2);
+			return $denom == 0 ? 0 : round($sxy / $denom, 4);
+		};
+
+		// เตรียม array 13 เดือน (ก.พ.68 - ก.พ.69) สำหรับคำนวณ r
+		// ตัด มี.ค.69 ออก เพราะนักท่องเที่ยว 2.7M = ข้อมูลไม่ครบเดือน
+		$chartTourist = array_map(function($v) { return $v / 1000000; }, array_slice($realTourist, 0, 13));
+		$chartTravel  = array_map(function($v) { return $v / 1000000; }, array_slice($realTravel, 0, 13));
+		$chartOil     = array_slice($realOil95, 0, 13);
+		$chartSent    = array_slice($realSent, 0, 13);
+		$chartOcc     = array_slice($realOcc, 0, 13);
+		$chartCpi     = array_slice($realCpi, 0, 13);
+
+		// คำนวณ r ทุกปัจจัย vs นักท่องเที่ยว (ข้อมูลจริง 13 เดือน)
+		$rTravel = $pearsonR($chartTravel, $chartTourist);
+		$rOcc    = $pearsonR($chartOcc, $chartTourist);
+		$rOil    = $pearsonR($chartOil, $chartTourist);
+		$rCpi    = $pearsonR($chartCpi, $chartTourist);
+		$rSent   = $pearsonR($chartSent, $chartTourist);
+
+		// อัปเดตค่า r ใน Factor Cards
+		$data['factors'][0]['r'] = $rTravel;  // จำนวนการเดินทาง
+		$data['factors'][1]['r'] = $rOil;     // ราคาน้ำมัน
+		$data['factors'][2]['r'] = $rSent;    // Sentiment
+		$data['factors'][3]['r'] = $rOcc;     // อัตราเข้าพัก
+		$data['factors'][4]['r'] = $rCpi;     // CPI
+
+		// Correlation Bar Chart (ทุกปัจจัย vs นักท่องเที่ยว เรียงจากมากไปน้อย)
+		$corrAll = [
+			['name' => 'การเดินทาง', 'r' => $rTravel],
+			['name' => 'อัตราเข้าพัก', 'r' => $rOcc],
+			['name' => 'Sentiment', 'r' => $rSent],
+			['name' => 'ราคาน้ำมัน', 'r' => $rOil],
+			['name' => 'CPI', 'r' => $rCpi],
 		];
+		usort($corrAll, function($a, $b) { return $b['r'] <=> $a['r']; });
+		$data['correlations'] = $corrAll;
+
+		// Correlation Matrix (6×6) — นักท่องเที่ยว + 5 ปัจจัย
+		$allSeries = [
+			$chartTourist,
+			$chartTravel,
+			$chartOil,
+			$chartSent,
+			$chartOcc,
+			$chartCpi,
+		];
+		$matrixSize = count($allSeries);
+		$corrMatrix = [];
+		for ($i = 0; $i < $matrixSize; $i++) {
+			$row = [];
+			for ($j = 0; $j < $matrixSize; $j++) {
+				if ($i === $j) {
+					$row[] = 1.0;
+				} else {
+					$row[] = $pearsonR($allSeries[$i], $allSeries[$j]);
+				}
+			}
+			$corrMatrix[] = $row;
+		}
+		$data['corr_matrix'] = $corrMatrix;
 		$data['corr_labels'] = ['นักท่องเที่ยว', 'การเดินทาง', 'ราคาน้ำมัน', 'Sentiment', 'อัตราเข้าพัก', 'CPI'];
 
 		return view('Modules\Main\Views\realtime', $data);

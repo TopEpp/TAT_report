@@ -3,10 +3,12 @@
 namespace App\Libraries;
 
 /**
- * DataGovApi - ดึงข้อมูลจาก data.go.th CKAN API
- * แหล่งข้อมูล: https://data.go.th
- * - ราคาน้ำมัน: สำนักงานนโยบายและแผนพลังงาน (EPPO)
- * - CPI: สำนักงานนโยบายและยุทธศาสตร์การค้า กระทรวงพาณิชย์ (TPSO)
+ * DataGovApi - ดึงข้อมูลจาก data.go.th, Bangchak, MOC, World Bank
+ * แหล่งข้อมูล:
+ * - ราคาน้ำมัน: Bangchak API (real-time) + EPPO via data.go.th (fallback)
+ * - CPI: MOC กระทรวงพาณิชย์ (รายเดือน) + data.go.th + World Bank (fallback)
+ * - RSI: FPO via data.go.th
+ * - อัตราเข้าพัก: กระทรวงท่องเที่ยวฯ via data.go.th
  */
 class DataGovApi
 {
@@ -65,6 +67,134 @@ class DataGovApi
         }
 
         return $data['result']['records'] ?? [];
+    }
+
+    /**
+     * Generic curl GET (ไม่ต้อง API key)
+     */
+    private function curlGet($url, $timeout = 10)
+    {
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => $timeout,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_HTTPHEADER => ['Accept: application/json'],
+        ]);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpCode !== 200 || !$response) return null;
+
+        $data = json_decode($response, true);
+        return $data;
+    }
+
+    // ==========================================================
+    // Bangchak Oil Price API (real-time, ฟรี ไม่ต้อง key)
+    // ==========================================================
+
+    /**
+     * ดึงราคาน้ำมันวันนี้จาก Bangchak API (real-time)
+     * @return array|null ['diesel'=>price, 'gasohol95'=>price, 'date'=>'...', ...]
+     */
+    public function getBangchakOilPrice()
+    {
+        $data = $this->curlGet('https://oil-price.bangchak.co.th/ApiOilPrice2/en');
+        if (!$data) return null;
+
+        // API return เป็น array [{ ... }] ต้องเอา element แรก
+        if (isset($data[0])) $data = $data[0];
+
+        // OilList อาจเป็น string (JSON ซ้อน JSON) หรือ array
+        $oilList = $data['OilList'] ?? null;
+        if (is_string($oilList)) {
+            $oilList = json_decode($oilList, true);
+        }
+        if (empty($oilList)) return null;
+
+        $result = [
+            'date' => $data['OilDateNow'] ?? date('d/m/Y'),
+            'source' => 'Bangchak Oil Price API (real-time)',
+            'api_url' => 'https://oil-price.bangchak.co.th/ApiOilPrice2/en',
+            'prices' => [],
+        ];
+
+        foreach ($oilList as $oil) {
+            $name = trim($oil['OilName'] ?? '');
+            $result['prices'][$name] = [
+                'today' => (float) ($oil['PriceToday'] ?? 0),
+                'yesterday' => (float) ($oil['PriceYesterday'] ?? 0),
+                'tomorrow' => (float) ($oil['PriceTomorrow'] ?? 0),
+            ];
+
+            // map ชื่อหลัก
+            if (strpos($name, 'Hi Diesel S') !== false && strpos($name, 'Premium') === false) {
+                $result['diesel'] = (float) ($oil['PriceToday'] ?? 0);
+            }
+            if (strpos($name, 'Gasohol 95') !== false || strpos($name, 'Gasohol S 95') !== false) {
+                $result['gasohol95'] = (float) ($oil['PriceToday'] ?? 0);
+            }
+            if (strpos($name, 'Gasohol 91') !== false || strpos($name, 'Gasohol S 91') !== false) {
+                $result['gasohol91'] = (float) ($oil['PriceToday'] ?? 0);
+            }
+        }
+
+        // fallback ถ้าไม่เจอ diesel จาก keyword
+        if (empty($result['diesel']) && !empty($data['OilList'][1])) {
+            $result['diesel'] = (float) ($data['OilList'][1]['PriceToday'] ?? 0);
+        }
+
+        return $result;
+    }
+
+    // ==========================================================
+    // MOC CPI API (กระทรวงพาณิชย์ รายเดือน)
+    // ==========================================================
+
+    /**
+     * ดึง CPI รายเดือนจาก MOC (กระทรวงพาณิชย์)
+     * region_id=5 (ทั่วประเทศ), index_id=0000000000000000 (รวมทุกรายการ)
+     * @return array ['months'=>[1=>val,...], 'source'=>'...', ...]
+     */
+    public function getCpiMoc($year = null)
+    {
+        if (!$year) $year = (int) date('Y');
+
+        $url = 'https://dataapi.moc.go.th/cpig-indexes?region_id=5&index_id=0000000000000000&from_year=' . $year . '&to_year=' . $year;
+        $data = $this->curlGet($url);
+
+        $result = [
+            'months' => [],
+            'source' => 'สำนักงานนโยบายและยุทธศาสตร์การค้า กระทรวงพาณิชย์ (MOC)',
+            'api_url' => $url,
+            'year' => $year,
+            'base_year' => '2019',
+        ];
+
+        // ถ้าไม่มีข้อมูลปีปัจจุบัน ลองปีก่อน
+        if (empty($data) || !is_array($data)) {
+            $year--;
+            $url = 'https://dataapi.moc.go.th/cpig-indexes?region_id=5&index_id=0000000000000000&from_year=' . $year . '&to_year=' . $year;
+            $data = $this->curlGet($url);
+            $result['year'] = $year;
+            $result['api_url'] = $url;
+        }
+
+        if (empty($data) || !is_array($data)) return $result;
+
+        foreach ($data as $rec) {
+            $m = (int) ($rec['month'] ?? 0);
+            $val = $rec['price_index'] ?? null;
+            if ($m > 0 && $val !== null) {
+                $result['months'][$m] = (float) $val;
+            }
+        }
+
+        ksort($result['months']);
+        return $result;
     }
 
     /**

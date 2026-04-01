@@ -53,6 +53,37 @@
         50% { opacity: 0.3; transform: scale(0.75); }
     }
 
+    /* --- Scroll Animations --- */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInLeft {
+        from { opacity: 0; transform: translateX(-30px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    /* ซ่อนไว้ก่อน scroll ถึง */
+    .scroll-animate {
+        opacity: 0;
+    }
+    .scroll-animate.is-visible {
+        animation: fadeInUp 0.6s ease-out both;
+    }
+    .scroll-animate-left {
+        opacity: 0;
+    }
+    .scroll-animate-left.is-visible {
+        animation: fadeInLeft 0.5s ease-out both;
+    }
+    /* Stagger delays สำหรับ children */
+    .stagger-1.is-visible { animation-delay: 0.05s; }
+    .stagger-2.is-visible { animation-delay: 0.15s; }
+    .stagger-3.is-visible { animation-delay: 0.25s; }
+    .stagger-4.is-visible { animation-delay: 0.1s; }
+    .stagger-5.is-visible { animation-delay: 0.2s; }
+    .stagger-6.is-visible { animation-delay: 0.3s; }
+    .stagger-7.is-visible { animation-delay: 0.4s; }
+
     /* --- Cards --- */
     .rt-card {
         background: #fff;
@@ -61,12 +92,13 @@
         padding: 22px 24px;
         margin-bottom: 18px;
         border: 1px solid #e8f0f0;
-        transition: box-shadow 0.2s;
+        transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
     }
     .rt-card:hover {
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        box-shadow: 0 6px 24px rgba(0,124,132,0.15);
+        transform: translateY(-3px);
     }
     .rt-card::before {
         content: '';
@@ -80,11 +112,12 @@
     .rt-card.accent-orange::before { background: #f59e0b; }
 
     .card-icon {
-        width: 42px; height: 42px;
-        border-radius: 10px;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 1.2em;
-        margin-bottom: 12px;
+        width: 30px; height: 30px;
+        border-radius: 8px;
+        display: inline-flex; align-items: center; justify-content: center;
+        font-size: 1em;
+        vertical-align: middle;
+        margin-right: 4px;
     }
     .card-icon.icon-teal { background: #e6f7f7; color: #007C84; }
     .card-icon.icon-purple { background: #f0ecfe; color: #7c3aed; }
@@ -163,6 +196,18 @@
         font-size: 0.7em;
         font-weight: 700;
     }
+    .data-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        background: #fdf4ff;
+        border: 1px solid #d8b4fe;
+        color: #7c3aed;
+        border-radius: 6px;
+        padding: 1px 8px;
+        font-size: 0.7em;
+        font-weight: 700;
+    }
     /* Source table */
     .source-table {
         width: 100%;
@@ -194,10 +239,11 @@
         border: 1px solid #e8f0f0;
         padding: 16px 18px;
         margin-bottom: 14px;
-        transition: box-shadow 0.2s;
+        transition: all 0.3s ease;
     }
     .factor-card:hover {
-        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
     }
     .factor-name {
         font-weight: 700;
@@ -303,7 +349,7 @@
 <div class="rt-wrapper">
 
     <!-- Header -->
-    <div class="rt-header">
+    <div class="rt-header scroll-animate">
         <div>
             <h2>Thai Domestic Tourism Intelligence</h2>
             <div class="subtitle">วิเคราะห์ปัจจัยที่ส่งผลต่อจำนวนนักท่องเที่ยวชาวไทย</div>
@@ -312,14 +358,13 @@
 
     <!-- Section 1: Metric Cards -->
     <div class="row">
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6 scroll-animate stagger-1">
             <div class="rt-card accent-teal">
-                <div class="card-icon icon-teal"><i class="fas fa-users"></i></div>
-                <div class="card-label">นักท่องเที่ยว สะสมเดือนนี้ <span class="db-badge">DB</span></div>
+                <div class="card-label"><span class="card-icon icon-teal"><i class="fas fa-users"></i></span> นักท่องเที่ยว (เดือนล่าสุด) <span class="data-badge">Data</span></div>
                 <div class="card-value"><?= number_format($tourist_current) ?></div>
                 <div class="card-sub">
-                    ข้อมูล ณ <?= isset($data_date) ? $Mydate->date_eng2thai($data_date, 543, 'S', 'S') : 'N/A' ?>
-                    <br>
+                    ข้อมูล ณ <?= $data_date ?? 'N/A' ?>
+                    &nbsp;&middot;&nbsp;
                     <?php if ($tourist_change >= 0): ?>
                         <span class="tag-up">&#9650; +<?= number_format($tourist_change, 1) ?>%</span> MoM
                     <?php else: ?>
@@ -336,18 +381,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6 scroll-animate stagger-2">
             <div class="rt-card accent-purple">
-                <div class="card-icon icon-purple"><i class="fas fa-chart-line"></i></div>
-                <div class="card-label">ค่าพยากรณ์เดือนหน้า <span class="mock-badge">&#10060; Mock</span></div>
+                <div class="card-label"><span class="card-icon icon-purple"><i class="fas fa-chart-line"></i></span> ค่าพยากรณ์เดือนหน้า <span class="mock-badge">&#10060; Mock</span></div>
                 <div class="card-value"><?= number_format($tourist_forecast / 1000000, 2) ?>M</div>
                 <div class="card-sub">ความเชื่อมั่น <strong style="color:#7c3aed;"><?= number_format($forecast_confidence, 0) ?>%</strong></div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-12">
+        <div class="col-lg-4 col-md-12 scroll-animate stagger-3">
             <div class="rt-card accent-orange">
-                <div class="card-icon icon-orange"><i class="fas fa-heartbeat"></i></div>
-                <div class="card-label">ดัชนีสุขภาพการท่องเที่ยว <span class="mock-badge">&#10060; Mock</span></div>
+                <div class="card-label"><span class="card-icon icon-orange"><i class="fas fa-heartbeat"></i></span> ดัชนีสุขภาพการท่องเที่ยว <span class="mock-badge">&#10060; Mock</span></div>
                 <div class="card-value"><?= number_format($health_index, 0) ?></div>
                 <div class="card-sub">ระดับ: <strong style="color:#059669;"><?= esc($health_level) ?></strong></div>
             </div>
@@ -355,10 +398,10 @@
     </div>
 
     <!-- Section 2: Factor Cards -->
-    <div class="section-title">
+    <div class="section-title scroll-animate-left">
         <i class="fas fa-sliders-h" style="color:#3eabae;"></i>
         ปัจจัย 5 ตัว Real-Time
-        <span class="mock-badge">&#10060; Mock</span>
+        <span class="data-badge">Data</span>
     </div>
     <div class="row">
         <?php
@@ -381,6 +424,8 @@
                         <span class="api-badge">API</span>
                     <?php elseif (($f['source'] ?? 'mock') === 'db'): ?>
                         <span class="db-badge">DB</span>
+                    <?php elseif (($f['source'] ?? 'mock') === 'data'): ?>
+                        <span class="data-badge">Data</span>
                     <?php else: ?>
                         <span class="mock-badge">Mock</span>
                     <?php endif; ?>
@@ -402,32 +447,32 @@
     </div>
 
     <!-- Section 3: Trend Chart -->
-    <div class="chart-panel">
+    <div class="chart-panel scroll-animate">
         <div class="panel-title">
             <i class="fas fa-chart-area" style="color:#3eabae;"></i>
-            แนวโน้มนักท่องเที่ยว ปี <?= ($chart_year ?? date('Y')) + 543 ?> vs <?= ($chart_year_past ?? (date('Y') - 1)) + 543 ?>
-            <span class="db-badge">DB</span>
+            แนวโน้มจำนวนการเดินทาง vs นักท่องเที่ยว (ก.พ.68 - มี.ค.69)
+            <span class="data-badge">Data</span>
         </div>
         <div id="chart_trend" style="height: 360px;"></div>
     </div>
 
     <!-- Section 4: Correlation Bar -->
-    <div class="chart-panel">
+    <div class="chart-panel scroll-animate">
         <div class="panel-title">
             <i class="fas fa-exchange-alt" style="color:#7c3aed;"></i>
             ค่าสหสัมพันธ์ (Correlation) vs นักท่องเที่ยว
-            <span class="mock-badge">&#10060; Mock</span>
+            <span class="data-badge">คำนวณจากข้อมูลจริง</span>
         </div>
         <div id="chart_correlation" style="height: 280px;"></div>
     </div>
 
-    <!-- Section 5: Scatter + Dual Axis -->
-    <div class="row">
+    <!-- Section 5: Dual Axis Charts -->
+    <div class="row scroll-animate">
         <div class="col-lg-6">
             <div class="chart-panel">
                 <div class="panel-title">
-                    <i class="fas fa-braille" style="color:#d97706;"></i>
-                    ราคาน้ำมัน <span class="api-badge">API</span> vs อัตราเข้าพัก <span class="mock-badge">Mock</span>
+                    <i class="fas fa-chart-line" style="color:#d97706;"></i>
+                    ราคาน้ำมัน 95 vs อัตราเข้าพัก (ก.พ.68 - มี.ค.69) <span class="data-badge">Data</span>
                 </div>
                 <div id="chart_scatter" style="height: 310px;"></div>
             </div>
@@ -436,15 +481,15 @@
             <div class="chart-panel">
                 <div class="panel-title">
                     <i class="fas fa-wave-square" style="color:#059669;"></i>
-                    Sentiment (RSI) <span class="api-badge">API</span> &amp; CPI Index <span class="api-badge">API</span>
+                    Sentiment &amp; CPI Index (ก.พ.68 - มี.ค.69) <span class="data-badge">Data</span>
                 </div>
                 <div id="chart_dual_axis" style="height: 310px;"></div>
             </div>
         </div>
     </div>
 
-    <!-- Section 6: Heatmap -->
-    <div class="chart-panel">
+    <!-- Section 6: Heatmap (ซ่อนไว้ก่อน รอข้อมูลจริง) -->
+    <div class="chart-panel" style="display:none;">
         <div class="panel-title">
             <i class="fas fa-th" style="color:#dc2626;"></i>
             Correlation Matrix Heatmap
@@ -453,9 +498,9 @@
         <div id="chart_heatmap" style="height: 400px;"></div>
     </div>
 
-    <!-- Section 7: แหล่งข้อมูล -->
+    <!-- Section 7: แหล่งข้อมูล (ซ่อนไว้ก่อน) -->
     <?php if (!empty($data_sources)): ?>
-    <div class="chart-panel">
+    <div class="chart-panel" style="display:none;">
         <div class="panel-title">
             <i class="fas fa-database" style="color:#3eabae;"></i>
             แหล่งที่มาข้อมูล (Data Sources)
@@ -463,10 +508,11 @@
         <table class="source-table">
             <thead>
                 <tr>
-                    <th>ข้อมูล</th>
-                    <th>แหล่งที่มา</th>
-                    <th>API Endpoint</th>
-                    <th>สถานะ</th>
+                    <th style="width:25%;">ข้อมูล</th>
+                    <th style="width:35%;">แหล่งที่มา</th>
+                    <th style="width:15%;">ข้อมูลล่าสุด</th>
+                    <th style="width:15%;">API</th>
+                    <th style="width:10%;">สถานะ</th>
                 </tr>
             </thead>
             <tbody>
@@ -474,13 +520,14 @@
                 <tr>
                     <td><strong><?= esc($src['name']) ?></strong></td>
                     <td><?= esc($src['source']) ?></td>
+                    <td style="font-size:0.85em; color:#475569;"><?= $src['detail'] ?? '' ?></td>
                     <td>
                         <?php if (!empty($src['api_url'])): ?>
-                            <a href="<?= esc($src['api_url']) ?>" target="_blank" style="color:#0891b2; font-size:0.85em; word-break:break-all;">
-                                <i class="fas fa-external-link-alt"></i> API Link
+                            <a href="<?= esc($src['api_url']) ?>" target="_blank" style="color:#0891b2; font-size:0.85em;">
+                                <i class="fas fa-external-link-alt"></i> Link
                             </a>
                         <?php else: ?>
-                            <span style="color:#94a3b8;">-</span>
+                            <span style="color:#cbd5e1;">-</span>
                         <?php endif; ?>
                     </td>
                     <td>
@@ -488,8 +535,10 @@
                             <span class="db-badge">DB</span>
                         <?php elseif ($src['type'] === 'api'): ?>
                             <span class="api-badge">API</span>
+                        <?php elseif ($src['type'] === 'data'): ?>
+                            <span class="data-badge">Data</span>
                         <?php else: ?>
-                            <span class="mock-badge">&#10060; Mock</span>
+                            <span class="mock-badge">Mock</span>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -500,15 +549,15 @@
     <?php endif; ?>
 
     <!-- Bottom Status Bar -->
-    <div class="rt-status-bar">
+    <div class="rt-status-bar scroll-animate">
         <div>
             <strong style="color:#1a3a3c;">ปัจจัยหลักที่ส่งผล</strong>
-            <span class="mock-badge" style="margin-right:4px;">&#10060; Mock</span>
-            <span class="corr-tag corr-tag-pos">การเดินทาง r=+0.91</span>
-            <span class="corr-tag corr-tag-pos">อัตราเข้าพัก r=+0.83</span>
-            <span class="corr-tag corr-tag-pos">Sentiment r=+0.78</span>
-            <span class="corr-tag corr-tag-neg">ราคาน้ำมัน r=-0.67</span>
-            <span class="corr-tag corr-tag-neg">CPI r=-0.44</span>
+            <span class="data-badge" style="margin-right:4px;">Pearson r</span>
+            <?php foreach ($correlations as $c): ?>
+                <span class="corr-tag <?= $c['r'] >= 0 ? 'corr-tag-pos' : 'corr-tag-neg' ?>">
+                    <?= esc($c['name']) ?> r=<?= ($c['r'] >= 0 ? '+' : '') . number_format($c['r'], 2) ?>
+                </span>
+            <?php endforeach; ?>
         </div>
         <div class="rt-timestamp">
             อัปเดตล่าสุด: <span id="rt-update-time"></span>
@@ -524,6 +573,69 @@
         String(now.getHours()).padStart(2,'0') + ':' +
         String(now.getMinutes()).padStart(2,'0') + ':' +
         String(now.getSeconds()).padStart(2,'0');
+
+    // === Intersection Observer: trigger animation เมื่อ scroll ถึง ===
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target); // ทำครั้งเดียว
+
+                // ถ้าเป็น card-value ให้ counter animation
+                entry.target.querySelectorAll('.card-value').forEach(function(el) {
+                    animateNumber(el);
+                });
+
+                // ถ้ามี factor-bar ให้ sweep
+                entry.target.querySelectorAll('.factor-bar-inner').forEach(function(bar) {
+                    var targetWidth = bar.getAttribute('data-width') || bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(function() { bar.style.width = targetWidth; }, 200);
+                });
+            }
+        });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.scroll-animate, .scroll-animate-left').forEach(function(el) {
+        observer.observe(el);
+    });
+
+    // เก็บ target width ของ progress bar ไว้ก่อน reset
+    document.querySelectorAll('.factor-bar-inner').forEach(function(bar) {
+        bar.setAttribute('data-width', bar.style.width);
+        bar.style.width = '0%';
+    });
+
+    // Number counter function
+    function animateNumber(el) {
+        if (el.dataset.animated) return;
+        el.dataset.animated = '1';
+        var text = el.textContent.trim();
+        var num = parseFloat(text.replace(/,/g, ''));
+        if (isNaN(num) || num === 0) return;
+        var isDecimal = text.indexOf('.') > -1;
+        var hasM = text.indexOf('M') > -1;
+        var duration = 1200;
+        var start = performance.now();
+        var originalText = text;
+
+        el.textContent = '0';
+        function step(ts) {
+            var progress = Math.min((ts - start) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            var current = num * eased;
+            if (hasM) {
+                el.textContent = current.toFixed(2) + 'M';
+            } else if (isDecimal) {
+                el.textContent = current.toFixed(1);
+            } else {
+                el.textContent = Math.floor(current).toLocaleString();
+            }
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = originalText;
+        }
+        requestAnimationFrame(step);
+    }
 })();
 </script>
 
@@ -549,6 +661,9 @@ var cpiMonthly = <?= json_encode($cpi_monthly) ?>;
 var sentimentMonthly = <?= json_encode($sentiment_monthly) ?>;
 var corrMatrix = <?= json_encode($corr_matrix) ?>;
 var corrLabels = <?= json_encode($corr_labels) ?>;
+var scatterOil = <?= json_encode($scatter_oil ?? []) ?>;
+var scatterOcc = <?= json_encode($scatter_occ ?? []) ?>;
+var scatterLabels = <?= json_encode($scatter_labels ?? []) ?>;
 
 // Light theme
 Highcharts.setOptions({
@@ -560,32 +675,34 @@ Highcharts.setOptions({
     credits: { enabled: false }
 });
 
-// Chart 1: Trend (DB)
+// Chart 1: Trend - จำนวนการเดินทาง vs นักท่องเที่ยว
 Highcharts.chart('chart_trend', {
     chart: { type: 'areaspline' },
     title: { text: null },
     xAxis: { categories: months, labels: { style: { fontSize: '11px', color: '#64748b' } } },
     yAxis: { title: { text: 'ล้านคน', style: { color: '#64748b' } }, gridLineColor: '#f1f5f9' },
-    tooltip: { shared: true, valueSuffix: ' ล้านคน', backgroundColor: '#fff', borderColor: '#e2e8f0', style: { color: '#1a3a3c' } },
+    tooltip: { shared: true, backgroundColor: '#fff', borderColor: '#e2e8f0', style: { color: '#1a3a3c' } },
     plotOptions: {
         areaspline: { fillOpacity: 0.06, marker: { radius: 4, lineWidth: 2 }, lineWidth: 2.5, connectNulls: false }
     },
     series: [
         {
-            name: 'ปี ' + (chartYear + 543),
-            data: touristMonthly,
+            name: 'จำนวนการเดินทาง (ล้านคน)',
+            data: travelMonthly,
             color: '#007C84',
             fillColor: { linearGradient: {x1:0,y1:0,x2:0,y2:1}, stops: [[0,'rgba(0,124,132,0.15)'],[1,'rgba(0,124,132,0)']] },
-            marker: { symbol: 'circle', fillColor: '#007C84', lineColor: '#005f66' }
+            marker: { symbol: 'circle', fillColor: '#007C84', lineColor: '#005f66' },
+            tooltip: { valueSuffix: ' ล้านคน' }
         },
         {
-            name: 'ปี ' + (chartYearPast + 543),
-            data: touristMonthlyPast,
-            color: '#94a3b8',
+            name: 'นักท่องเที่ยว (ล้านคน)',
+            data: touristMonthly,
+            color: '#d97706',
             dashStyle: 'ShortDash',
             fillColor: 'transparent',
             lineWidth: 2,
-            marker: { symbol: 'diamond', fillColor: '#94a3b8', radius: 3 }
+            marker: { symbol: 'diamond', fillColor: '#d97706', radius: 3 },
+            tooltip: { valueSuffix: ' ล้านคน' }
         }
     ]
 });
@@ -614,32 +731,39 @@ Highcharts.chart('chart_trend', {
     });
 })();
 
-// Chart 3: Scatter
-(function() {
-    var sd = [];
-    for (var i = 0; i < oilMonthly.length; i++) {
-        if (oilMonthly[i] != null && occMonthly[i] != null)
-            sd.push({ x: parseFloat(oilMonthly[i]), y: parseFloat(occMonthly[i]), name: months[i] });
-    }
-    var n=sd.length, sx=0, sy=0, sxy=0, sx2=0;
-    sd.forEach(function(p){ sx+=p.x; sy+=p.y; sxy+=p.x*p.y; sx2+=p.x*p.x; });
-    var sl=(n*sxy-sx*sy)/(n*sx2-sx*sx), ic=(sy-sl*sx)/n;
-    var xMn=Infinity, xMx=-Infinity;
-    sd.forEach(function(p){ if(p.x<xMn) xMn=p.x; if(p.x>xMx) xMx=p.x; });
-
-    Highcharts.chart('chart_scatter', {
-        chart: { type: 'scatter', zoomType: 'xy' },
-        title: { text: null },
-        xAxis: { title: { text: 'ราคาน้ำมัน (บาท/ลิตร)', style:{color:'#64748b'} }, gridLineColor: '#f1f5f9' },
-        yAxis: { title: { text: 'อัตราเข้าพัก (%)', style:{color:'#64748b'} }, gridLineColor: '#f1f5f9' },
-        tooltip: { formatter: function(){ return '<b>'+this.point.name+'</b><br>น้ำมัน: '+Highcharts.numberFormat(this.x,1)+' บาท<br>OCC: '+Highcharts.numberFormat(this.y,1)+'%'; }, backgroundColor: '#fff', borderColor: '#e2e8f0' },
-        legend: { enabled: false },
-        series: [
-            { name:'ข้อมูลรายเดือน', data:sd, color:'#d97706', marker:{radius:7,symbol:'circle',fillColor:'#d97706',lineWidth:2,lineColor:'#b45309'} },
-            { type:'line', name:'Trend', data:[[xMn,sl*xMn+ic],[xMx,sl*xMx+ic]], color:'#dc2626', dashStyle:'LongDash', lineWidth:2, marker:{enabled:false}, enableMouseTracking:false }
-        ]
-    });
-})();
+// Chart 3: ราคาน้ำมัน 95 vs อัตราเข้าพัก (Dual-Axis Line)
+Highcharts.chart('chart_scatter', {
+    chart: { type: 'spline' },
+    title: { text: null },
+    xAxis: { categories: scatterLabels, labels: { style: { fontSize: '10px', color: '#64748b' }, rotation: -45 } },
+    yAxis: [
+        { title: { text: 'ราคาน้ำมัน 95 (บาท/ลิตร)', style: { color: '#dc2626' } }, labels: { style: { color: '#dc2626' } }, gridLineColor: '#f1f5f9' },
+        { title: { text: 'อัตราเข้าพัก (%)', style: { color: '#2563eb' } }, labels: { style: { color: '#2563eb' } }, opposite: true, gridLineWidth: 0 }
+    ],
+    tooltip: { shared: true, backgroundColor: '#fff', borderColor: '#e2e8f0' },
+    legend: { align: 'center', verticalAlign: 'bottom' },
+    series: [
+        {
+            name: 'ราคาน้ำมัน 95 (บาท/ลิตร)',
+            data: scatterOil,
+            color: '#dc2626',
+            yAxis: 0,
+            lineWidth: 2.5,
+            marker: { radius: 4, symbol: 'circle' },
+            tooltip: { valueSuffix: ' บาท/ลิตร' }
+        },
+        {
+            name: 'อัตราเข้าพัก (%)',
+            data: scatterOcc,
+            color: '#2563eb',
+            yAxis: 1,
+            lineWidth: 2.5,
+            dashStyle: 'ShortDash',
+            marker: { radius: 4, symbol: 'diamond' },
+            tooltip: { valueSuffix: '%' }
+        }
+    ]
+});
 
 // Chart 4: Dual Axis
 Highcharts.chart('chart_dual_axis', {
