@@ -70,6 +70,7 @@ $routes->group('main', ['namespace' => '\Modules\Main\Controllers', 'filter' => 
     $routes->post('saveLog', 'Main::saveLog');
 
     $routes->get('realtime', 'Main::realtime');
+    $routes->get('realtime_inter', 'Main::realtime_inter');
     
 });
 
