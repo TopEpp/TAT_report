@@ -515,7 +515,7 @@
                 Tourism Intelligence Dashboard &mdash; Real-time Demand Monitor
             </h2>
             <div class="subtitle">
-                กองวิจัยตลาดการท่องเที่ยว &middot; Tourism Authority of Thailand
+                Tourism Authority of Thailand
             </div>
         </div>
         <div class="d-flex align-items-center gap-3 flex-wrap justify-content-end">
@@ -645,8 +645,7 @@
 
         <!-- Region %Change Table -->
         <div class="section-title scroll-animate" style="margin-top: 16px;">
-            TOP %Change Regions &mdash; JAN-<?= strtoupper(date('M')) ?> <?= $prev_year_thai ?> vs JAN-<?= strtoupper(date('M')) ?> <?= $current_year_thai ?>
-            <span class="db-badge" style="font-size: 0.7em;">DB</span>
+            TOP %Change Regions &mdash; <?= $region_period ?? 'JAN-MAR' ?> <?= $prev_year_thai ?> vs <?= $region_period ?? 'JAN-MAR' ?> <?= $current_year_thai ?>
         </div>
         <div class="table-responsive scroll-animate">
             <table class="region-table">
@@ -693,7 +692,7 @@
                     <?= number_format($ytd_total, 2) ?>M
                 </div>
                 <div class="card-sub">
-                    <?= $data_period ?> &middot; <span class="db-badge">ข้อมูลจริง</span>
+                    <?= $ytd_period ?> <?= $current_year_thai ?> &middot; YoY: <span class="<?= $ytd_yoy >= 0 ? 'yoy-pos' : 'yoy-neg' ?>"><?= ($ytd_yoy >= 0 ? '+' : '') . $ytd_yoy ?>%</span> &middot; <span class="db-badge">ข้อมูลจริง</span>
                 </div>
                 <table class="ytd-table">
                     <thead>
@@ -1059,8 +1058,8 @@ $(document).ready(function() {
                 const m = markets[this.point.index];
                 return '<b>' + this.x + '</b><br/>' +
                     'YoY Change: <b>' + (this.y >= 0 ? '+' : '') + this.y + '%</b><br/>' +
-                    '<?= $current_year_thai ?>: ' + Highcharts.numberFormat(m.current, 0) + '<br/>' +
-                    '<?= $prev_year_thai ?>: ' + Highcharts.numberFormat(m.past, 0);
+                    '<?= $current_year_thai ?>: ' + Highcharts.numberFormat(m.current, 0, '.', ',') + '<br/>' +
+                    '<?= $prev_year_thai ?>: ' + Highcharts.numberFormat(m.past, 0, '.', ',');
             }
         },
         plotOptions: {

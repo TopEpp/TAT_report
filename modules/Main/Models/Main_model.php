@@ -419,6 +419,69 @@ class Main_model extends Model
 		return $data;
 	}
 
+	/**
+	 * ดึงยอดรวม region จาก REPORT_CAL_DAILY ตาม date range (สำหรับเดือนที่ยังไม่ครบ)
+	 */
+	function getSumDailyRegionByDateRange($startDate, $endDate)
+	{
+		$data = array();
+		$builder = $this->db->table($this->table);
+		$builder->select("MD_COUNTRY.STD_REGION_ID, SUM({$this->table}.SUM) AS NUM");
+		$builder->join('MD_COUNTRY', "MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
+		$builder->join('MD_SUB_REGION', "MD_COUNTRY.REGIONID = MD_SUB_REGION.SUB_REGION_ID");
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table}.OFFICE_ID AND PORT_CATEGORY_ID = 1");
+		$builder->where("REPORT_DATE BETWEEN TO_DATE('{$startDate}','YYYY-MM-DD') AND TO_DATE('{$endDate}','YYYY-MM-DD')");
+		$builder->where('PORT_DAILY', 1);
+		$builder->groupBy("MD_COUNTRY.STD_REGION_ID");
+		$res = $builder->get()->getResultArray();
+		foreach ($res as $r) {
+			$data[$r['STD_REGION_ID']] = $r['NUM'];
+		}
+		return $data;
+	}
+
+	/**
+	 * ดึง Top ประเทศจาก REPORT_CAL_DAILY ตาม date range (สำหรับเดือนที่ยังไม่ครบ)
+	 * คืน array key=COUNTRYID => ['COUNTRYID','COUNTRY_NAME_EN','NUM']
+	 */
+	function getSumDailyCountryByDateRange($startDate, $endDate)
+	{
+		$data = array();
+		$builder = $this->db->table($this->table);
+		$builder->select("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN, SUM({$this->table}.SUM) AS NUM");
+		$builder->join('MD_COUNTRY', "MD_COUNTRY.COUNTRYID = {$this->table}.COUNTRY_ID");
+		$builder->join('MD_PORT', "MD_PORT.PORT_ID = {$this->table}.OFFICE_ID AND PORT_CATEGORY_ID = 1");
+		$builder->where("REPORT_DATE BETWEEN TO_DATE('{$startDate}','YYYY-MM-DD') AND TO_DATE('{$endDate}','YYYY-MM-DD')");
+		$builder->where('PORT_DAILY', 1);
+		$builder->groupBy("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN");
+		$res = $builder->get()->getResultArray();
+		foreach ($res as $row) {
+			$data[$row['COUNTRYID']] = $row;
+		}
+		return $data;
+	}
+
+	/**
+	 * ดึงยอดรวมรายประเทศจาก monthly table (ไม่ query ปีก่อน)
+	 * คืน array key=COUNTRYID => ['COUNTRYID','COUNTRY_NAME_EN','NUM']
+	 */
+	function getSumMonthlyCountryPeriodSimple($month, $month2, $year)
+	{
+		$data = array();
+		$builder = $this->db->table($this->table_month);
+		$builder->select("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN, SUM({$this->table_month}.NUM) AS NUM");
+		$builder->join('MD_COUNTRY', "MD_COUNTRY.COUNTRYID = {$this->table_month}.COUNTRY_ID");
+		$builder->where("{$this->table_month}.MONTH >=", $month);
+		$builder->where("{$this->table_month}.MONTH <=", $month2);
+		$builder->where("{$this->table_month}.YEAR", $year);
+		$builder->groupBy("MD_COUNTRY.COUNTRYID, MD_COUNTRY.COUNTRY_NAME_EN");
+		$res = $builder->get()->getResultArray();
+		foreach ($res as $row) {
+			$data[$row['COUNTRYID']] = $row;
+		}
+		return $data;
+	}
+
 	function getSumMonthlyCountryPeriod($month, $month2, $year, $limit)
 	{
 		$data = array();

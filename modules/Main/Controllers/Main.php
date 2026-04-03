@@ -1339,6 +1339,9 @@ class Main extends BaseController
 		$maxDay = 25;
 		$maxMonth = 3;
 
+		$chartMonthly2569 = [];
+		$chartMonthly2568 = [];
+
 		try {
 			$maxDate = $Model->getMaxDate();
 			if ($maxDate) {
@@ -1346,50 +1349,81 @@ class Main extends BaseController
 				$maxDay = (int)$maxDateParts[2];
 				$maxMonth = (int)$maxDateParts[1];
 
+				// 1) ดึงจาก CAL_MONTHLY_RAW_REPORT (ข้อมูลหลัก)
 				$monthly2569 = $Model->getSumMonthly($currentYear);
 				$monthly2568 = $Model->getSumMonthly($prevYear);
 
-				if ($maxDay < 28 || !isset($monthly2569[$maxMonth])) {
-					$partialStart = $currentYear . '-' . str_pad($maxMonth, 2, '0', STR_PAD_LEFT) . '-01';
-					$partialEnd = $maxDate;
-					$partialMonthTotal = (float)$Model->getSumMonth($partialStart, $partialEnd);
-					$hasPartialMonth = $partialMonthTotal > 0;
+				// 2) ดึงจาก REPORT_CAL_DAILY group by month (เสริมเดือนที่ขาด)
+				$chartYearData = $Model->getSumChartYear($currentYear);
+				$dailyCur = isset($chartYearData['current']) ? $chartYearData['current'] : [];
+				$dailyPast = isset($chartYearData['past']) ? $chartYearData['past'] : [];
+
+				// รวมข้อมูล: monthly เป็นหลัก, daily เสริมเดือนที่ขาด
+				$chartMonthly2569 = $monthly2569;
+				$chartMonthly2568 = $monthly2568;
+				foreach ($dailyCur as $dm => $dv) {
+					if (!isset($chartMonthly2569[$dm])) $chartMonthly2569[$dm] = $dv;
+				}
+				foreach ($dailyPast as $dm => $dv) {
+					if (!isset($chartMonthly2568[$dm])) $chartMonthly2568[$dm] = $dv;
+				}
+
+				// 3) เดือนปัจจุบัน: ดึงข้อมูลถึงวันล่าสุดที่มีข้อมูล ($maxDate)
+				$currentM = $maxMonth;
+				$currentDay = $maxDay;
+				$mPad = str_pad($currentM, 2, '0', STR_PAD_LEFT);
+				$dayPad = str_pad($currentDay, 2, '0', STR_PAD_LEFT);
+
+				// ปีปัจจุบัน (2569): ดึงถึง maxDate (วันล่าสุดที่มีข้อมูล)
+				$mStart = $currentYear . '-' . $mPad . '-01';
+				$mEnd = $maxDate;
+				$currentMonthSum = (float)$Model->getSumMonth($mStart, $mEnd);
+				if ($currentMonthSum > 0) $chartMonthly2569[$currentM] = $currentMonthSum;
+
+				// ปีก่อน (2568) สำหรับ Chart: ใช้ข้อมูลเต็มเดือน (ไม่ override $chartMonthly2568)
+				// ถ้ายังไม่มีเดือนปัจจุบัน ดึงเต็มเดือนมาเสริม
+				if (!isset($chartMonthly2568[$currentM])) {
+					$lastDay = date('t', mktime(0, 0, 0, $currentM, 1, $prevYear));
+					$mStartPastFull = $prevYear . '-' . $mPad . '-01';
+					$mEndPastFull = $prevYear . '-' . $mPad . '-' . $lastDay;
+					$pastMonthSumFull = (float)$Model->getSumMonth($mStartPastFull, $mEndPastFull);
+					if ($pastMonthSumFull > 0) $chartMonthly2568[$currentM] = $pastMonthSumFull;
+				}
+
+				// ปีก่อน (2568) สำหรับ YTD: ตัดถึงวันที่เดียวกับ maxDate (เช่น 1-2 เม.ย.)
+				$mStartPast = $prevYear . '-' . $mPad . '-01';
+				$mEndPast = $prevYear . '-' . $mPad . '-' . $dayPad;
+				$ytdPastMonthSum = (float)$Model->getSumMonth($mStartPast, $mEndPast);
+
+				// สร้าง ytdMonthly2568 แยกสำหรับ YTD (copy จาก chart แล้ว override เดือนปัจจุบัน)
+				$ytdMonthly2568 = $chartMonthly2568;
+				if ($ytdPastMonthSum > 0) {
+					$ytdMonthly2568[$currentM] = $ytdPastMonthSum;
+				} else {
+					unset($ytdMonthly2568[$currentM]);
 				}
 			}
 		} catch (\Exception $e) {
-			// DB connection failed — ใช้ fallback data
+			// DB connection failed
 		}
 
-		// สร้าง array ข้อมูลรายเดือน (ล้านคน)
+		// สร้าง array ข้อมูลรายเดือน
 		$data['month_labels'] = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 		$data['month_labels_th'] = $this->month_th_short;
 
-		// ตรวจสอบว่า DB มีข้อมูลจริงหรือไม่
-		$dbHasData = !empty($monthly2568) || !empty($monthly2569);
+		$dbHasData = !empty($chartMonthly2569) || !empty($chartMonthly2568);
 
-		if ($dbHasData) {
-			// สร้าง array จากข้อมูล DB
-			$arrivals2568 = [];
-			$arrivals2569Actual = [];
-			for ($m = 1; $m <= 12; $m++) {
-				$arrivals2568[] = isset($monthly2568[$m]) ? round($monthly2568[$m] / 1000000, 2) : null;
-
-				if (isset($monthly2569[$m])) {
-					$arrivals2569Actual[] = round($monthly2569[$m] / 1000000, 2);
-				} elseif ($m == $maxMonth && $hasPartialMonth) {
-					$arrivals2569Actual[] = round($partialMonthTotal / 1000000, 2);
-				} else {
-					$arrivals2569Actual[] = null;
-				}
-			}
-			$data['data_period'] = '1 ม.ค. - ' . $maxDay . ' ' . $this->month_th_short[$maxMonth] . ' ' . $currentYearThai;
-		} else {
-			// Fallback: DB ไม่มีข้อมูลหรือเชื่อมไม่ได้
-			$arrivals2568 = [3.09, 3.42, 3.58, 3.41, 2.93, 2.75, 2.89, 2.78, 2.65, 2.95, 3.15, 3.52];
-			$arrivals2569Actual = [3.28, 3.26, 2.28, null, null, null, null, null, null, null, null, null];
-			$maxDay = 25; $maxMonth = 3;
-			$data['data_period'] = '1 ม.ค. - 25 มี.ค. ' . $currentYearThai;
+		$arrivals2568 = [];
+		$arrivals2569Actual = [];
+		$latestMonthWithData = 0;
+		for ($m = 1; $m <= 12; $m++) {
+			$arrivals2568[] = isset($chartMonthly2568[$m]) ? round($chartMonthly2568[$m] / 1000000, 2) : null;
+			$arrivals2569Actual[] = isset($chartMonthly2569[$m]) ? round($chartMonthly2569[$m] / 1000000, 2) : null;
+			if (isset($chartMonthly2569[$m])) $latestMonthWithData = $m;
 		}
+		$data['data_period'] = $latestMonthWithData > 0
+			? 'ม.ค. - ' . $this->month_th_short[$latestMonthWithData] . ' ' . $currentYearThai
+			: '-';
 		$data['arrivals_2568'] = $arrivals2568;
 		$data['arrivals_2569_actual'] = $arrivals2569Actual;
 
@@ -1404,96 +1438,71 @@ class Main extends BaseController
 		}
 		$data['arrivals_2569_forecast'] = $forecast;
 
-		// YTD summary
-		if ($dbHasData) {
-			$ytdTotal = 0;
-			$ytdMonths = [];
-			for ($m = 1; $m <= 12; $m++) {
-				$val = null;
-				$monthLabel = $this->month_th_short[$m];
-
-				if (isset($monthly2569[$m])) {
-					$val = $monthly2569[$m];
-				} elseif ($m == $maxMonth && $hasPartialMonth) {
-					$val = $partialMonthTotal;
-					$monthLabel .= '(1-' . $maxDay . ')';
-				}
-
-				if ($val !== null) {
-					$ytdTotal += $val;
-					$prevVal = isset($monthly2568[$m]) ? $monthly2568[$m] : 0;
-					$yoy = $prevVal > 0 ? round(($val - $prevVal) / $prevVal * 100, 1) : 0;
-					$ytdMonths[] = [
-						'month' => $monthLabel,
-						'actual' => round($val / 1000000, 2),
-						'yoy' => $yoy,
-					];
-				}
+		// YTD summary — ช่วง ม.ค. ถึงเดือนปัจจุบัน (เช่น ม.ค.-เม.ย. ถ้าวันนี้คือ เม.ย.)
+		// ใช้ ytdMonthly2568 (ตัดวันที่เดือนปัจจุบัน) ไม่ใช่ chartMonthly2568 (เต็มเดือน)
+		$ytdSource = $dbHasData ? $chartMonthly2569 : $monthly2569;
+		$ytdSourcePast = $dbHasData ? (isset($ytdMonthly2568) ? $ytdMonthly2568 : $chartMonthly2568) : $monthly2568;
+		$ytdTotal = 0;
+		$ytdTotalPast = 0;
+		$ytdMonths = [];
+		for ($m = 1; $m <= $maxMonth; $m++) {
+			$val = isset($ytdSource[$m]) ? $ytdSource[$m] : 0;
+			$prevVal = isset($ytdSourcePast[$m]) ? $ytdSourcePast[$m] : 0;
+			$ytdTotal += $val;
+			$ytdTotalPast += $prevVal;
+			if ($val <= 0 && $prevVal <= 0) continue;
+			$yoy = $prevVal > 0 ? round(($val - $prevVal) / $prevVal * 100, 1) : 0;
+			// เดือนปัจจุบันที่ยังไม่ครบ ให้แสดงช่วงวันที่ เช่น "เม.ย.(1-3)"
+			$monthLabel = $this->month_th_short[$m];
+			if ($m == $maxMonth && $maxDay < 28) {
+				$monthLabel .= '(1-' . $maxDay . ')';
 			}
-			$data['ytd_total'] = round($ytdTotal / 1000000, 2);
-			$data['ytd_months'] = $ytdMonths;
-		} else {
-			// Fallback YTD — คำนวณ YoY จาก fallback arrivals
-			// 2568: [3.09, 3.42, 3.58, ...], 2569: [3.28, 3.26, 2.28, ...]
-			$data['ytd_total'] = 8.82;
-			$fallbackPairs = [
-				['month' => 'ม.ค.', 'cur' => 3.28, 'prev' => 3.09],
-				['month' => 'ก.พ.', 'cur' => 3.26, 'prev' => 3.42],
-				['month' => 'มี.ค.(1-25)', 'cur' => 2.28, 'prev' => 3.58],
+			$ytdMonths[] = [
+				'month' => $monthLabel,
+				'actual' => round($val / 1000000, 2),
+				'actual_past' => round($prevVal / 1000000, 2),
+				'yoy' => $yoy,
 			];
-			$data['ytd_months'] = [];
-			foreach ($fallbackPairs as $fp) {
-				$yoy = $fp['prev'] > 0 ? round(($fp['cur'] - $fp['prev']) / $fp['prev'] * 100, 1) : 0;
-				$data['ytd_months'][] = [
-					'month' => $fp['month'],
-					'actual' => $fp['cur'],
-					'yoy' => $yoy,
-				];
-			}
 		}
+		$ytdYoy = $ytdTotalPast > 0 ? round(($ytdTotal - $ytdTotalPast) / $ytdTotalPast * 100, 1) : 0;
+		$data['ytd_total'] = round($ytdTotal / 1000000, 2);
+		$data['ytd_total_past'] = round($ytdTotalPast / 1000000, 2);
+		$data['ytd_yoy'] = $ytdYoy;
+		$data['ytd_months'] = $ytdMonths;
+		$data['ytd_period'] = $this->month_th_short[1] . ' - ' . $maxDay . ' ' . $this->month_th_short[$maxMonth];
 		$data['current_year_thai'] = $currentYearThai;
 		$data['prev_year_thai'] = $prevYearThai;
 
-		// Top Markets จาก DB — ดึง Top 10 ประเทศ
+		// Top Markets — ดึงจาก REPORT_CAL_DAILY (1 ม.ค. ถึงวันนี้ = ช่วงเดียวกับ YTD)
 		$topMarkets = [];
 		if ($dbHasData) {
-			$latestFullMonth = 0;
-			for ($m = 12; $m >= 1; $m--) {
-				if (isset($monthly2569[$m])) { $latestFullMonth = $m; break; }
-			}
-			if ($latestFullMonth == 0 && $hasPartialMonth) {
-				$latestFullMonth = $maxMonth;
-			}
-			if ($latestFullMonth > 0) {
-				$topCountries = $Model->getSumMonthlyCountryPeriod(1, $latestFullMonth, $currentYear, 10);
-				foreach ($topCountries as $c) {
-					$change = 0;
-					if (isset($c['NUM_PAST']) && $c['NUM_PAST'] > 0) {
-						$change = round(($c['NUM'] - $c['NUM_PAST']) / $c['NUM_PAST'] * 100, 1);
-					}
+			try {
+				$endDateStr = $maxDate ?: date('Y-m-d');
+				$startCur = $currentYear . '-01-01';
+				$endCur = $endDateStr;
+				$startPast = $prevYear . '-01-01';
+				$endPast = $prevYear . '-' . $mPad . '-' . $dayPad; // ช่วงเดียวกับปีปัจจุบัน
+
+				// getSumNatMonth: REPORT_CAL_DAILY พร้อมชื่อประเทศ เรียง DESC
+				$countriesCur = $Model->getSumNatMonth($startCur, $endCur);
+				// getSumCountryMonth: REPORT_CAL_DAILY ปีก่อนช่วงเดียวกัน
+				$countriesPastRaw = $Model->getSumCountryMonth($startPast, $endPast);
+
+				$count = 0;
+				foreach ($countriesCur as $c) {
+					if ($count >= 10) break;
+					$curNum = (int)$c['NUM'];
+					$pastNum = isset($countriesPastRaw[$c['COUNTRY_ID']]) ? (int)$countriesPastRaw[$c['COUNTRY_ID']] : 0;
+					$change = $pastNum > 0 ? round(($curNum - $pastNum) / $pastNum * 100, 1) : 0;
 					$topMarkets[] = [
 						'name' => $c['COUNTRY_NAME_EN'],
 						'change' => $change,
-						'current' => (int)$c['NUM'],
-						'past' => (int)($c['NUM_PAST'] ?? 0),
+						'current' => $curNum,
+						'past' => $pastNum,
 					];
+					$count++;
 				}
-			}
-		}
-		// Fallback Top Markets
-		if (empty($topMarkets)) {
-			$topMarkets = [
-				['name' => 'China', 'change' => 5.2, 'current' => 1850000, 'past' => 1758000],
-				['name' => 'Malaysia', 'change' => -12.3, 'current' => 980000, 'past' => 1117000],
-				['name' => 'India', 'change' => 18.5, 'current' => 720000, 'past' => 607000],
-				['name' => 'Russia', 'change' => 8.1, 'current' => 650000, 'past' => 601000],
-				['name' => 'South Korea', 'change' => -8.7, 'current' => 580000, 'past' => 635000],
-				['name' => 'Japan', 'change' => 3.4, 'current' => 510000, 'past' => 493000],
-				['name' => 'United Kingdom', 'change' => 6.8, 'current' => 380000, 'past' => 356000],
-				['name' => 'Germany', 'change' => 4.2, 'current' => 320000, 'past' => 307000],
-				['name' => 'USA', 'change' => 2.1, 'current' => 290000, 'past' => 284000],
-				['name' => 'Vietnam', 'change' => -15.4, 'current' => 250000, 'past' => 295000],
-			];
+			} catch (\Exception $e) {}
 		}
 		$data['top_markets'] = $topMarkets;
 
@@ -1559,21 +1568,22 @@ class Main extends BaseController
 			['route' => 'Guangzhou → BKK', 'count' => 28],
 		];
 
-		// TOP %Change Regions — ดึงจาก DB (JAN-MAR ปีปัจจุบัน vs ปีก่อน)
+		// TOP %Change Regions — ดึงจาก REPORT_CAL_DAILY (1 ม.ค. ถึงวันนี้ = ช่วงเดียวกับ YTD)
 		$regionChanges = [];
+		$curDay = $maxDay;
+		$curMonthNum = $maxMonth;
 		if ($dbHasData) {
 			try {
-				$latestM = $maxMonth;
-				// ถ้าเดือนปัจจุบันยังไม่ครบ ใช้เดือนก่อนหน้า
-				if ($hasPartialMonth && !isset($monthly2569[$maxMonth])) {
-					$latestM = $maxMonth - 1;
-				}
-				if ($latestM < 1) $latestM = 1;
+				$endDateStr = $maxDate ?: date('Y-m-d');
+				$startCur = $currentYear . '-01-01';
+				$endCur = $endDateStr;
+				$startPast = $prevYear . '-01-01';
+				$endPast = $prevYear . '-' . $mPad . '-' . $dayPad;
 
-				$regCurrent = $Model->getSumMonthlyRegionPeriod(1, $latestM, $currentYear);
-				$regPast = $Model->getSumMonthlyRegionPeriod(1, $latestM, $prevYear);
+				// getSumRegionMonth: REPORT_CAL_DAILY group by STD_REGION_ID
+				$regCurrent = $Model->getSumRegionMonth($startCur, $endCur);
+				$regPast = $Model->getSumRegionMonth($startPast, $endPast);
 
-				// Region mapping: STD_REGION_ID => region name (ตาม monthly_period.php)
 				$regionMap = [
 					'ASEAN' => [13],
 					'NORTH-EAST ASIA' => [15],
@@ -1600,16 +1610,17 @@ class Main extends BaseController
 					$regionRows[] = ['region' => $name, 'prev' => (int)$prev, 'current' => (int)$cur, 'diff' => $diff, 'is_total' => false];
 				}
 
-				// เรียงตาม %diff (ลบมาก → บวกมาก)
 				usort($regionRows, function($a, $b) { return $a['diff'] <=> $b['diff']; });
 
 				$grandDiff = $grandPast > 0 ? round(($grandCurrent - $grandPast) / $grandPast * 100, 2) : 0;
 				array_unshift($regionRows, ['region' => 'GRAND TOTAL', 'prev' => (int)$grandPast, 'current' => (int)$grandCurrent, 'diff' => $grandDiff, 'is_total' => true]);
 
-				$regionChanges = $regionRows;
-			} catch (\Exception $e) {
-				// fallback below
-			}
+				if ($grandCurrent > 0 || $grandPast > 0) {
+					$regionChanges = $regionRows;
+					$monthNames = ['','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+					$data['region_period'] = '1 JAN - ' . $curDay . ' ' . $monthNames[$curMonthNum];
+				}
+			} catch (\Exception $e) {}
 		}
 
 		// Fallback
@@ -1624,6 +1635,7 @@ class Main extends BaseController
 				['region' => 'EUROPE', 'prev' => 2936277, 'current' => 3050711, 'diff' => 3.90, 'is_total' => false],
 				['region' => 'SOUTH ASIA', 'prev' => 637113, 'current' => 733984, 'diff' => 15.20, 'is_total' => false],
 			];
+			$data['region_period'] = 'JAN-MAR';
 		}
 		$data['region_changes'] = $regionChanges;
 
