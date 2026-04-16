@@ -543,6 +543,139 @@
     </div>
     -->
 
+    <!-- ===== METRIC CARDS ===== -->
+    <div class="row">
+        <!-- Card 1: นักท่องเที่ยวรวมสะสม YTD -->
+        <div class="col-lg-3 col-md-6 scroll-animate stagger-1">
+            <div class="rti-card accent-teal" style="min-height: 260px;">
+                <div class="card-label">
+                    <i class="fa fa-plane"></i>
+                    นักท่องเที่ยวรวมสะสม ปี <?= $current_year_thai ?> (YTD)
+                </div>
+                <div class="card-value neutral">
+                    <?= number_format($ytd_total, 2) ?>M
+                </div>
+                <div class="card-sub">
+                    <?= $ytd_period ?> <?= $current_year_thai ?> &middot; YoY: <span class="<?= $ytd_yoy >= 0 ? 'yoy-pos' : 'yoy-neg' ?>"><?= ($ytd_yoy >= 0 ? '+' : '') . $ytd_yoy ?>%</span> &middot; <span class="db-badge">ข้อมูลจริง</span>
+                </div>
+                <table class="ytd-table">
+                    <thead>
+                        <tr>
+                            <th>เดือน</th>
+                            <th style="text-align:right;"><?= $current_year_thai ?> Actual</th>
+                            <th style="text-align:right;">YOY%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($ytd_months as $m): ?>
+                        <tr>
+                            <td><?= $m['month'] ?></td>
+                            <td style="text-align:right;"><?= number_format($m['actual'], 2) ?>M</td>
+                            <td style="text-align:right;" class="<?= $m['yoy'] >= 0 ? 'yoy-pos' : 'yoy-neg' ?>">
+                                <?= ($m['yoy'] >= 0 ? '+' : '') . $m['yoy'] ?>%
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Card 2: Seat Capacity -->
+        <div class="col-lg-3 col-md-6 scroll-animate stagger-2">
+            <div class="rti-card accent-red">
+                <div class="card-label">
+                    <i class="fa fa-chair"></i>
+                    SEAT CAPACITY W5 VS W1 (OAG)
+                </div>
+                <div class="card-value negative">
+                    <?= ($seat_capacity_change >= 0 ? '+' : '') . $seat_capacity_change ?>%
+                </div>
+                <div class="card-sub">
+                    <?= $seat_capacity_desc ?>
+                </div>
+                <div class="card-sub" style="margin-top: 8px; font-weight: 600;">
+                    <?= $seat_capacity_detail ?>
+                </div>
+                <div style="margin-top: 8px;"><span class="source-tag">OAG · Actual</span></div>
+            </div>
+        </div>
+
+        <!-- Card 3: Forward Booking Index -->
+        <div class="col-lg-3 col-md-6 scroll-animate stagger-3">
+            <div class="rti-card accent-orange">
+                <div class="card-label">
+                    <i class="fa fa-calendar-check"></i>
+                    FORWARD BOOKING INDEX &mdash; LATEST VS BASELINE
+                </div>
+                <div class="card-value negative">
+                    <?= ($fbi_change >= 0 ? '+' : '') . $fbi_change ?>%
+                </div>
+                <div class="card-sub">
+                    <?= $fbi_desc ?>
+                </div>
+                <div class="card-sub" style="margin-top: 8px; font-weight: 600;">
+                    <?= $fbi_detail ?>
+                </div>
+                <div style="margin-top: 8px;"><span class="source-tag">ForwardKeys · Actual</span></div>
+            </div>
+        </div>
+
+        <!-- Card 4: Sentiment -->
+        <div class="col-lg-3 col-md-6 scroll-animate stagger-4">
+            <div class="rti-card accent-purple">
+                <div class="card-label">
+                    <i class="fa fa-comment-dots"></i>
+                    SENTIMENT &mdash; NEG MENTIONS (%)
+                </div>
+                <div class="card-value warning">
+                    <?= $sentiment_neg ?>%
+                </div>
+                <div class="card-sub">
+                    <?= $sentiment_detail ?>
+                </div>
+                <div class="card-sub" style="margin-top: 8px; font-weight: 600;">
+                    <?= $sentiment_breakdown ?>
+                </div>
+                <div style="margin-top: 8px;"><span class="source-tag">Meltwater</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CHARTS ROW ===== -->
+    <div class="row">
+        <!-- Monthly Arrivals Chart -->
+        <div class="col-lg-8 scroll-animate scroll-animate-left">
+            <div class="chart-card">
+                <h5>Monthly Arrivals &mdash; เปรียบเทียบ <?= $current_year_thai ?> vs <?= $prev_year_thai ?> (ล้านคน)</h5>
+                <div class="chart-subtitle">
+                    Actual <?= $current_year_thai ?> (จากฐานข้อมูล) &middot; Forecast (Updated) &middot; เทียบ Actual <?= $prev_year_thai ?> ทั้งปี
+                </div>
+                <div id="chartArrivals" style="height: 400px;"></div>
+                <div class="war-marker">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    28 ก.พ. 2569 &mdash; <?= $event_name ?> &middot; มี.ค. 2569 เริ่มเห็นผลกระทบ
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Markets Chart -->
+        <div class="col-lg-4 scroll-animate">
+            <div class="chart-card" style="min-height: 500px;">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                        <h5>Top Markets &mdash; YoY Change (%)</h5>
+                        <div class="chart-subtitle">
+                            เปรียบเทียบ <?= $current_year_thai ?> vs <?= $prev_year_thai ?> (YTD) &middot; ข้อมูลจากฐานข้อมูล
+                        </div>
+                    </div>
+                    <span class="db-badge">DB</span>
+                </div>
+                <div id="chartMarkets" style="height: 380px;"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- ===== FLIGHT DASHBOARD ===== -->
     <div class="flight-section scroll-animate">
         <div class="flight-header">
@@ -679,138 +812,7 @@
         <strong><?= $event_name ?>:</strong> <?= $event_desc ?>
     </div>
 
-    <!-- ===== METRIC CARDS ===== -->
-    <div class="row">
-        <!-- Card 1: นักท่องเที่ยวรวมสะสม YTD -->
-        <div class="col-lg-3 col-md-6 scroll-animate stagger-1">
-            <div class="rti-card accent-teal" style="min-height: 260px;">
-                <div class="card-label">
-                    <i class="fa fa-plane"></i>
-                    นักท่องเที่ยวรวมสะสม ปี <?= $current_year_thai ?> (YTD)
-                </div>
-                <div class="card-value neutral">
-                    <?= number_format($ytd_total, 2) ?>M
-                </div>
-                <div class="card-sub">
-                    <?= $ytd_period ?> <?= $current_year_thai ?> &middot; YoY: <span class="<?= $ytd_yoy >= 0 ? 'yoy-pos' : 'yoy-neg' ?>"><?= ($ytd_yoy >= 0 ? '+' : '') . $ytd_yoy ?>%</span> &middot; <span class="db-badge">ข้อมูลจริง</span>
-                </div>
-                <table class="ytd-table">
-                    <thead>
-                        <tr>
-                            <th>เดือน</th>
-                            <th style="text-align:right;"><?= $current_year_thai ?> Actual</th>
-                            <th style="text-align:right;">YOY%</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($ytd_months as $m): ?>
-                        <tr>
-                            <td><?= $m['month'] ?></td>
-                            <td style="text-align:right;"><?= number_format($m['actual'], 2) ?>M</td>
-                            <td style="text-align:right;" class="<?= $m['yoy'] >= 0 ? 'yoy-pos' : 'yoy-neg' ?>">
-                                <?= ($m['yoy'] >= 0 ? '+' : '') . $m['yoy'] ?>%
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Card 2: Seat Capacity -->
-        <div class="col-lg-3 col-md-6 scroll-animate stagger-2">
-            <div class="rti-card accent-red">
-                <div class="card-label">
-                    <i class="fa fa-chair"></i>
-                    SEAT CAPACITY W5 VS W1 (OAG)
-                </div>
-                <div class="card-value negative">
-                    <?= ($seat_capacity_change >= 0 ? '+' : '') . $seat_capacity_change ?>%
-                </div>
-                <div class="card-sub">
-                    <?= $seat_capacity_desc ?>
-                </div>
-                <div class="card-sub" style="margin-top: 8px; font-weight: 600;">
-                    <?= $seat_capacity_detail ?>
-                </div>
-                <div style="margin-top: 8px;"><span class="source-tag">OAG · Actual</span></div>
-            </div>
-        </div>
-
-        <!-- Card 3: Forward Booking Index -->
-        <div class="col-lg-3 col-md-6 scroll-animate stagger-3">
-            <div class="rti-card accent-orange">
-                <div class="card-label">
-                    <i class="fa fa-calendar-check"></i>
-                    FORWARD BOOKING INDEX &mdash; LATEST VS BASELINE
-                </div>
-                <div class="card-value negative">
-                    <?= ($fbi_change >= 0 ? '+' : '') . $fbi_change ?>%
-                </div>
-                <div class="card-sub">
-                    <?= $fbi_desc ?>
-                </div>
-                <div class="card-sub" style="margin-top: 8px; font-weight: 600;">
-                    <?= $fbi_detail ?>
-                </div>
-                <div style="margin-top: 8px;"><span class="source-tag">ForwardKeys · Actual</span></div>
-            </div>
-        </div>
-
-        <!-- Card 4: Sentiment -->
-        <div class="col-lg-3 col-md-6 scroll-animate stagger-4">
-            <div class="rti-card accent-purple">
-                <div class="card-label">
-                    <i class="fa fa-comment-dots"></i>
-                    SENTIMENT &mdash; NEG MENTIONS (%)
-                </div>
-                <div class="card-value warning">
-                    <?= $sentiment_neg ?>%
-                </div>
-                <div class="card-sub">
-                    <?= $sentiment_detail ?>
-                </div>
-                <div class="card-sub" style="margin-top: 8px; font-weight: 600;">
-                    <?= $sentiment_breakdown ?>
-                </div>
-                <div style="margin-top: 8px;"><span class="source-tag">Meltwater</span></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== CHARTS ROW ===== -->
-    <div class="row">
-        <!-- Monthly Arrivals Chart -->
-        <div class="col-lg-8 scroll-animate scroll-animate-left">
-            <div class="chart-card">
-                <h5>Monthly Arrivals &mdash; เปรียบเทียบ <?= $current_year_thai ?> vs <?= $prev_year_thai ?> (ล้านคน)</h5>
-                <div class="chart-subtitle">
-                    Actual <?= $current_year_thai ?> (จากฐานข้อมูล) &middot; Forecast (Updated) &middot; เทียบ Actual <?= $prev_year_thai ?> ทั้งปี
-                </div>
-                <div id="chartArrivals" style="height: 400px;"></div>
-                <div class="war-marker">
-                    <i class="fa fa-exclamation-triangle"></i>
-                    28 ก.พ. 2569 &mdash; <?= $event_name ?> &middot; มี.ค. 2569 เริ่มเห็นผลกระทบ
-                </div>
-            </div>
-        </div>
-
-        <!-- Top Markets Chart -->
-        <div class="col-lg-4 scroll-animate">
-            <div class="chart-card" style="min-height: 500px;">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                    <div>
-                        <h5>Top Markets &mdash; YoY Change (%)</h5>
-                        <div class="chart-subtitle">
-                            เปรียบเทียบ <?= $current_year_thai ?> vs <?= $prev_year_thai ?> (YTD) &middot; ข้อมูลจากฐานข้อมูล
-                        </div>
-                    </div>
-                    <span class="db-badge">DB</span>
-                </div>
-                <div id="chartMarkets" style="height: 380px;"></div>
-            </div>
-        </div>
-    </div>
+    
 
 </div>
 
