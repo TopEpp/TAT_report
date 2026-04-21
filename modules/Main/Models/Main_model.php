@@ -868,4 +868,122 @@ class Main_model extends Model
 		return $data_chart;
 	}
 
+	// =====================================================================
+	// Forecast_inter helpers — pull monthly history for overall/region/country
+	// =====================================================================
+
+	/**
+	 * ดึง monthly arrivals รายภูมิภาค (STD_REGION_ID) ของปี ใช้ใน forecast_inter
+	 * คืน [ month => [ std_region_id => NUM ] ]
+	 */
+	function getSumMonthlyRegionByYear($year)
+	{
+		$data = array();
+		$builder = $this->db->table($this->table_month);
+		$builder->select("{$this->table_month}.MONTH, MD_COUNTRY.STD_REGION_ID, SUM({$this->table_month}.NUM) AS NUM");
+		$builder->join('MD_COUNTRY', "MD_COUNTRY.COUNTRYID = {$this->table_month}.COUNTRY_ID");
+		$builder->where("{$this->table_month}.YEAR", $year);
+		$builder->groupBy("{$this->table_month}.MONTH, MD_COUNTRY.STD_REGION_ID");
+		$res = $builder->get()->getResultArray();
+		foreach ($res as $r) {
+			$m = (int)$r['MONTH'];
+			$rid = (int)$r['STD_REGION_ID'];
+			if (!isset($data[$m])) $data[$m] = array();
+			$data[$m][$rid] = (float)$r['NUM'];
+		}
+		return $data;
+	}
+
+	/**
+	 * ดึง monthly arrivals รายประเทศของปี
+	 * คืน [ country_id => [ 'name' => ..., 'monthly' => [m => NUM] ] ]
+	 */
+	function getSumMonthlyCountryByYear($year)
+	{
+		$data = array();
+		$builder = $this->db->table($this->table_month);
+		$builder->select("{$this->table_month}.MONTH, {$this->table_month}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_EN, SUM({$this->table_month}.NUM) AS NUM");
+		$builder->join('MD_COUNTRY', "MD_COUNTRY.COUNTRYID = {$this->table_month}.COUNTRY_ID");
+		$builder->where("{$this->table_month}.YEAR", $year);
+		$builder->groupBy("{$this->table_month}.MONTH, {$this->table_month}.COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_EN");
+		$res = $builder->get()->getResultArray();
+		foreach ($res as $r) {
+			$cid = (int)$r['COUNTRY_ID'];
+			$m = (int)$r['MONTH'];
+			if (!isset($data[$cid])) {
+				$data[$cid] = array('name' => $r['COUNTRY_NAME_EN'], 'monthly' => array());
+			}
+			$data[$cid]['monthly'][$m] = (float)$r['NUM'];
+		}
+		return $data;
+	}
+
+	/**
+	 * รวม sentiment จาก INTER_SENTIMENT (TAT project)
+	 * Impact: 1=positive, 2=negative, 3=neutral
+	 * คืน [ 'markets' => [ market_id => ['pos'=>n, 'neg'=>n, 'neu'=>n, 'score'=>, 'total'=>] ],
+	 *        'overall' => [ 'pos'=>, 'neg'=>, 'neu'=>, 'score'=>, 'total'=> ] ]
+	 */
+	function getInterSentimentAggregate($year, $month_start = null, $month_end = null)
+	{
+		$result = array('markets' => array(), 'overall' => array('pos'=>0,'neg'=>0,'neu'=>0,'total'=>0,'score'=>0));
+		try {
+			$builder = $this->db->table('INTER_SENTIMENT');
+			$builder->select('MARKET_ID, SENTIMENT_IMPACT, COUNT(*) AS CNT');
+			$builder->where('YEAR', $year);
+			if ($month_start !== null) $builder->where('MONTH >=', $month_start);
+			if ($month_end !== null) $builder->where('MONTH <=', $month_end);
+			$builder->groupBy('MARKET_ID, SENTIMENT_IMPACT');
+			$rows = $builder->get()->getResultArray();
+			foreach ($rows as $r) {
+				$mid = (int)$r['MARKET_ID'];
+				$imp = (int)$r['SENTIMENT_IMPACT'];
+				$cnt = (int)$r['CNT'];
+				if (!isset($result['markets'][$mid])) {
+					$result['markets'][$mid] = array('pos'=>0,'neg'=>0,'neu'=>0,'total'=>0,'score'=>0);
+				}
+				if ($imp == 1) $result['markets'][$mid]['pos'] += $cnt;
+				else if ($imp == 2) $result['markets'][$mid]['neg'] += $cnt;
+				else if ($imp == 3) $result['markets'][$mid]['neu'] += $cnt;
+				$result['markets'][$mid]['total'] += $cnt;
+				if ($imp == 1) $result['overall']['pos'] += $cnt;
+				else if ($imp == 2) $result['overall']['neg'] += $cnt;
+				else if ($imp == 3) $result['overall']['neu'] += $cnt;
+				$result['overall']['total'] += $cnt;
+			}
+			foreach ($result['markets'] as $mid => $d) {
+				$t = max(1, $d['total']);
+				$result['markets'][$mid]['score'] = round(($d['pos'] - $d['neg']) / $t * 100, 2);
+			}
+			$t = max(1, $result['overall']['total']);
+			$result['overall']['score'] = round(($result['overall']['pos'] - $result['overall']['neg']) / $t * 100, 2);
+		} catch (\Throwable $e) {
+			// DB/schema missing — fallback ค่าว่าง
+		}
+		return $result;
+	}
+
+	/**
+	 * ดึงรายชื่อ market ทั้งหมด พร้อม country_id mapping — ใช้ join ชื่อประเทศ
+	 * คืน [ market_id => ['name'=>..., 'country_id'=>..., 'country_name_en'=>...] ]
+	 */
+	function getMarketMap()
+	{
+		$out = array();
+		try {
+			$builder = $this->db->table('MD_DEP_MARKET');
+			$builder->select('MD_DEP_MARKET.MARKET_ID, MD_DEP_MARKET.MARKET_NAME, MD_DEP_MARKET.MARKET_COUNTRY_ID, MD_COUNTRY.COUNTRY_NAME_EN');
+			$builder->join('MD_COUNTRY', 'MD_COUNTRY.COUNTRYID = MD_DEP_MARKET.MARKET_COUNTRY_ID', 'left');
+			$rows = $builder->get()->getResultArray();
+			foreach ($rows as $r) {
+				$out[(int)$r['MARKET_ID']] = array(
+					'name' => $r['MARKET_NAME'],
+					'country_id' => (int)$r['MARKET_COUNTRY_ID'],
+					'country_name_en' => $r['COUNTRY_NAME_EN'],
+				);
+			}
+		} catch (\Throwable $e) {}
+		return $out;
+	}
+
 }

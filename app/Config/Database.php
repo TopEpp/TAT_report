@@ -54,8 +54,8 @@ class Database extends Config
 
 	public $default = array(
 	    'hostname' => "(DESCRIPTION=(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 139.180.208.163 )(PORT = 1521)))(CONNECT_DATA=(SID=XE)))",
-	    'username' => 'system',
-	    'password' => 'dfbLWHqqkke99Sir',
+	    'username' => 'TAT',
+	    'password' => 'tatjigsaw',
 	    'database' => 'TAT',
 	    'DBDriver' => 'OCI8',
 	    'DBPrefix' => '',

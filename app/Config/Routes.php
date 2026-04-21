@@ -72,6 +72,8 @@ $routes->group('main', ['namespace' => '\Modules\Main\Controllers', 'filter' => 
     $routes->get('realtime', 'Main::realtime');
     $routes->get('realtime2', 'Main::realtime2');
     $routes->get('realtime_inter', 'Main::realtime_inter');
+    $routes->get('forecast', 'Main::forecast');
+    $routes->get('forecast_inter', 'Main::forecast_inter');
     
 });
 

@@ -508,20 +508,20 @@
 
     .rs-summary {
         display: flex; gap: 16px; align-items: center;
-        background: linear-gradient(135deg, #fef9c3 0%, #ecfccb 100%);
-        border: 1px solid #d9f99d;
+        background: linear-gradient(135deg, #ccfbf1 0%, #f0fdfa 100%);
+        border: 1px solid #5eead4;
         border-radius: 12px; padding: 14px 20px;
         margin-bottom: 14px; flex-wrap: wrap;
     }
     .rs-summary .rs-sum-label {
-        font-weight: 800; color: #365314; font-size: 0.92em;
+        font-weight: 800; color: #0f766e; font-size: 0.92em;
     }
     .rs-summary .rs-sum-stat {
         display: flex; gap: 22px;
-        font-size: 0.88em; color: #365314; flex-wrap: wrap;
+        font-size: 0.88em; color: #115e59; flex-wrap: wrap;
     }
     .rs-summary .rs-sum-stat b {
-        display: block; font-size: 1.3em; color: #1a2e05;
+        display: block; font-size: 1.3em; color: #0f766e;
     }
 
     /* ========================================================
@@ -555,7 +555,7 @@
     .pp-table tbody tr.tier-main td:first-child::before {
         content: ''; display: inline-block;
         width: 6px; height: 6px; border-radius: 50%;
-        background: #0891b2; margin-right: 8px; vertical-align: middle;
+        background: #0f766e; margin-right: 8px; vertical-align: middle;
     }
     .pp-table tbody tr.tier-minor td:first-child::before {
         content: ''; display: inline-block;
@@ -577,7 +577,7 @@
         border-radius: 10px; margin-left: 4px;
         font-weight: 700;
     }
-    .pp-tier-badge.main  { background: #cffafe; color: #0e7490; }
+    .pp-tier-badge.main  { background: #ccfbf1; color: #0f766e; }
     .pp-tier-badge.minor { background: #f1f5f9; color: #475569; }
     .pp-or-mini {
         display: inline-block;
@@ -604,7 +604,7 @@
         font-size: 0.88em;
     }
     .rm-table th {
-        background: #1a3a3c;
+        background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
         color: #fff;
         padding: 12px 14px;
         font-weight: 700;
@@ -855,8 +855,8 @@
 
     /* --- Sentiment summary breath --- */
     @keyframes summary-breath {
-        0%, 100% { box-shadow: 0 2px 6px rgba(101,163,13,0.08); }
-        50%      { box-shadow: 0 4px 18px rgba(101,163,13,0.20); }
+        0%, 100% { box-shadow: 0 2px 6px rgba(15,118,110,0.08); }
+        50%      { box-shadow: 0 4px 18px rgba(15,118,110,0.20); }
     }
     .rs-summary { animation: summary-breath 3.5s ease-in-out infinite; }
 
@@ -904,14 +904,14 @@
         border-radius: 14px;
         padding: 18px 22px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        border-left: 5px solid #0891b2;
+        border-left: 5px solid #0f766e;
         position: relative;
         overflow: hidden;
         transition: transform 0.3s, box-shadow 0.3s;
     }
     .tier-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 8px 24px rgba(8,145,178,0.18);
+        box-shadow: 0 8px 24px rgba(15,118,110,0.18);
     }
     .tier-card.minor { border-left-color: #94a3b8; }
     .tier-card .t-label {
@@ -919,7 +919,7 @@
         text-transform: uppercase; font-weight: 700;
     }
     .tier-card .t-value {
-        font-size: 1.9em; font-weight: 800; color: #0891b2;
+        font-size: 1.9em; font-weight: 800; color: #0f766e;
         line-height: 1; margin-top: 6px;
     }
     .tier-card.minor .t-value { color: #475569; }
@@ -1056,8 +1056,8 @@
     }
     .act-stat.active   { border-left-color: #f59e0b; background: linear-gradient(135deg,#fff,#fffbeb); }
     .act-stat.active .a-icon { background: #fef3c7; color: #d97706; }
-    .act-stat.upcoming { border-left-color: #6366f1; background: linear-gradient(135deg,#fff,#eef2ff); }
-    .act-stat.upcoming .a-icon { background: #e0e7ff; color: #4338ca; }
+    .act-stat.upcoming { border-left-color: #14b8a6; background: linear-gradient(135deg,#fff,#f0fdfa); }
+    .act-stat.upcoming .a-icon { background: #ccfbf1; color: #0f766e; }
     .act-stat.yoy      { border-left-color: #059669; background: linear-gradient(135deg,#fff,#f0fdf4); }
     .act-stat.yoy .a-icon { background: #d1fae5; color: #059669; }
     .act-stat .a-label {
@@ -1071,7 +1071,7 @@
         margin-top: 4px;
     }
     .act-stat.active .a-value   { color: #d97706; }
-    .act-stat.upcoming .a-value { color: #4338ca; }
+    .act-stat.upcoming .a-value { color: #0f766e; }
     .act-stat.yoy .a-value      { color: #059669; }
     .act-stat .a-note {
         font-size: 0.78em; color: #64748b; margin-top: 4px;
@@ -1097,7 +1097,7 @@
         padding: 12px 16px;
         margin-bottom: 8px;
         border: 1px solid #e8f0f0;
-        border-left: 4px solid #6366f1;
+        border-left: 4px solid #14b8a6;
         display: flex;
         align-items: center;
         gap: 14px;
@@ -1105,10 +1105,10 @@
     }
     .act-upcoming-list li:hover {
         transform: translateX(6px);
-        box-shadow: 0 4px 14px rgba(99,102,241,0.12);
+        box-shadow: 0 4px 14px rgba(15,118,110,0.12);
     }
     .act-upcoming-list .au-date {
-        background: linear-gradient(135deg,#6366f1,#818cf8);
+        background: linear-gradient(135deg,#0f766e,#14b8a6);
         color: #fff;
         border-radius: 8px;
         padding: 8px 12px;
@@ -1142,8 +1142,8 @@
         color: #475569; font-weight: 700;
     }
     .act-upcoming-list .au-countdown {
-        background: #ecfeff;
-        color: #0e7490;
+        background: #ccfbf1;
+        color: #0f766e;
         border-radius: 8px;
         padding: 4px 10px;
         font-weight: 800; font-size: 0.85em;
@@ -1176,8 +1176,8 @@
     .act-type-chip {
         display: inline-block;
         padding: 3px 10px;
-        background: #cffafe;
-        color: #0e7490;
+        background: #ccfbf1;
+        color: #0f766e;
         border-radius: 12px;
         font-size: 0.78em; font-weight: 700;
         margin-right: 4px;
@@ -1185,7 +1185,7 @@
 
     /* Events column highlight (Top 10 + Region) */
     .pp-events {
-        font-weight: 800; color: #6366f1;
+        font-weight: 800; color: #0f766e;
     }
     .pp-events.zero { color: #cbd5e1; }
     .pp-events i { margin-right: 3px; }
@@ -1420,7 +1420,7 @@
 
     <!-- Section 2: Factor Cards -->
     <div class="section-title scroll-animate-left">
-        <i class="fas fa-sliders-h" style="color:#3eabae;"></i>
+        <i class="fas fa-sliders-h" style="color:#0f766e;"></i>
         ปัจจัย 5 ตัว Real-Time
         <span class="data-badge">Data</span>
     </div>
@@ -1470,7 +1470,7 @@
     <!-- Section 3: Trend Chart -->
     <div class="chart-panel scroll-animate">
         <div class="panel-title">
-            <i class="fas fa-chart-area" style="color:#3eabae;"></i>
+            <i class="fas fa-chart-area" style="color:#0f766e;"></i>
             แนวโน้มจำนวนการเดินทาง vs นักท่องเที่ยว (ก.พ.68 - มี.ค.69)
             <span class="data-badge">Data</span>
         </div>
@@ -1480,7 +1480,7 @@
     <!-- Section 4: Correlation Bar -->
     <div class="chart-panel scroll-animate">
         <div class="panel-title">
-            <i class="fas fa-exchange-alt" style="color:#7c3aed;"></i>
+            <i class="fas fa-exchange-alt" style="color:#0f766e;"></i>
             ค่าสหสัมพันธ์ (Correlation) vs นักท่องเที่ยว
             <span class="data-badge">คำนวณจากข้อมูลจริง</span>
         </div>
@@ -1492,7 +1492,7 @@
         <div class="col-lg-6">
             <div class="chart-panel">
                 <div class="panel-title">
-                    <i class="fas fa-chart-line" style="color:#d97706;"></i>
+                    <i class="fas fa-chart-line" style="color:#0f766e;"></i>
                     ราคาน้ำมัน 95 vs อัตราเข้าพัก (ก.พ.68 - มี.ค.69) <span class="data-badge">Data</span>
                 </div>
                 <div id="chart_scatter" style="height: 310px;"></div>
@@ -1501,7 +1501,7 @@
         <div class="col-lg-6">
             <div class="chart-panel">
                 <div class="panel-title">
-                    <i class="fas fa-wave-square" style="color:#059669;"></i>
+                    <i class="fas fa-wave-square" style="color:#0f766e;"></i>
                     Sentiment &amp; CPI Index (ก.พ.68 - มี.ค.69) <span class="data-badge">Data</span>
                 </div>
                 <div id="chart_dual_axis" style="height: 310px;"></div>
@@ -1788,9 +1788,9 @@
                 <?= $tier_minor_yoy >= 0 ? '▲ +' : '▼ ' ?><?= $tier_minor_yoy ?>% YoY
             </span>
         </div>
-        <div class="tier-card" style="border-left-color:#7c3aed;">
+        <div class="tier-card" style="border-left-color:#14b8a6;">
             <div class="t-label">Growth Gap</div>
-            <div class="t-value" style="color:#7c3aed;"><?= ($tier_minor_yoy - $tier_main_yoy) >= 0 ? '+' : '' ?><?= number_format($tier_minor_yoy - $tier_main_yoy, 2) ?>%</div>
+            <div class="t-value" style="color:#14b8a6;"><?= ($tier_minor_yoy - $tier_main_yoy) >= 0 ? '+' : '' ?><?= number_format($tier_minor_yoy - $tier_main_yoy, 2) ?>%</div>
             <div class="t-share">เมืองรองโต<?= $tier_minor_yoy > $tier_main_yoy ? 'เร็วกว่า' : 'ช้ากว่า' ?>เมืองหลัก</div>
             <div style="font-size:0.78em;color:#94a3b8;margin-top:4px;">YoY 2568 vs 2567</div>
         </div>
@@ -1825,9 +1825,9 @@
             <div class="gi-value"><?= $gt_price_avg ?></div>
             <div class="gi-note">ตั๋วราคาถูก · ที่พักราคาถูก (เฉลี่ย)</div>
         </div>
-        <div class="gt-insight-card" style="background: linear-gradient(135deg,#ede9fe,#fff);border-color:#c4b5fd;">
-            <div class="gi-label" style="color:#6d28d9;"><i class="fas fa-arrows-down-to-line"></i> Total Avg (ล่าสุด)</div>
-            <div class="gi-value" style="color:#6d28d9;"><?= $gt_latest ?></div>
+        <div class="gt-insight-card" style="background: linear-gradient(135deg,#ccfbf1,#fff);border-color:#5eead4;">
+            <div class="gi-label" style="color:#0f766e;"><i class="fas fa-arrows-down-to-line"></i> Total Avg (ล่าสุด)</div>
+            <div class="gi-value" style="color:#0f766e;"><?= $gt_latest ?></div>
             <div class="gi-note"><?= $gt_latest_month ?> · YoY <?= $gt_delta >= 0 ? '+' : '' ?><?= $gt_delta ?> MoM</div>
         </div>
     </div>
@@ -2487,7 +2487,7 @@ Highcharts.setOptions({
         style: { fontFamily: "'Sarabun', 'Nunito', sans-serif" },
         backgroundColor: 'transparent'
     },
-    colors: ['#3eabae', '#007C84', '#0891b2', '#2563eb', '#7c3aed', '#d97706', '#dc2626'],
+    colors: ['#0f766e', '#14b8a6', '#3eabae', '#0891b2', '#2563eb', '#f59e0b', '#dc2626'],
     credits: { enabled: false }
 });
 
@@ -2655,7 +2655,7 @@ if (document.getElementById('chartLongTerm')) {
         series: [
             { name: 'ทั้งประเทศ',     type: 'areaspline', data: totalExt, color: '#0f766e',
               fillColor: { linearGradient: {x1:0,y1:0,x2:0,y2:1}, stops: [[0,'rgba(15,118,110,0.25)'],[1,'rgba(15,118,110,0)']] } },
-            { name: '22 เมืองหลัก',    type: 'spline', data: mainExt,  color: '#0891b2', dashStyle: 'ShortDash' },
+            { name: '22 เมืองหลัก',    type: 'spline', data: mainExt,  color: '#14b8a6', dashStyle: 'ShortDash' },
             { name: '55 เมืองรอง',     type: 'spline', data: minorExt, color: '#94a3b8', dashStyle: 'ShortDash' },
             { name: 'Forecast 2569',   type: 'spline', data: fcSeries, color: '#f59e0b', dashStyle: 'Dot', lineWidth: 3,
               marker: { symbol: 'triangle', radius: 7, fillColor: '#f59e0b' } }
@@ -3289,8 +3289,8 @@ if (document.getElementById('chartTier')) {
         xAxis: { categories: <?= json_encode($tier_months) ?>, crosshair: true },
         yAxis: [
             {
-                title: { text: 'จำนวน (ล้านคน)', style: { color: '#0891b2' } },
-                labels: { formatter: function() { return (this.value/1000000).toFixed(0) + 'M'; }, style: { color: '#0891b2' } },
+                title: { text: 'จำนวน (ล้านคน)', style: { color: '#0f766e' } },
+                labels: { formatter: function() { return (this.value/1000000).toFixed(0) + 'M'; }, style: { color: '#0f766e' } },
                 gridLineColor: '#f1f5f9',
                 stackLabels: {
                     enabled: true,
@@ -3299,8 +3299,8 @@ if (document.getElementById('chartTier')) {
                 }
             },
             {
-                title: { text: 'Ratio % เมืองหลัก', style: { color: '#7c3aed' } },
-                labels: { format: '{value}%', style: { color: '#7c3aed' } },
+                title: { text: 'Ratio % เมืองหลัก', style: { color: '#f59e0b' } },
+                labels: { format: '{value}%', style: { color: '#f59e0b' } },
                 opposite: true,
                 min: 50, max: 70,
                 gridLineWidth: 0
@@ -3325,9 +3325,9 @@ if (document.getElementById('chartTier')) {
             spline: { marker: { radius: 5, lineWidth: 2, lineColor: '#fff' }, lineWidth: 3 }
         },
         series: [
-            { name: '22 เมืองหลัก', type: 'column', yAxis: 0, data: <?= json_encode($tier_main_monthly) ?>,  color: '#0891b2' },
+            { name: '22 เมืองหลัก', type: 'column', yAxis: 0, data: <?= json_encode($tier_main_monthly) ?>,  color: '#0f766e' },
             { name: '55 เมืองรอง',  type: 'column', yAxis: 0, data: <?= json_encode($tier_minor_monthly) ?>, color: '#94a3b8' },
-            { name: 'Ratio % หลัก', type: 'spline', yAxis: 1, data: <?= json_encode($tier_ratio) ?>, color: '#7c3aed', dashStyle: 'ShortDash' }
+            { name: 'Ratio % หลัก', type: 'spline', yAxis: 1, data: <?= json_encode($tier_ratio) ?>, color: '#f59e0b', dashStyle: 'ShortDash' }
         ],
         legend: { itemStyle: { fontWeight: '600' } }
     });

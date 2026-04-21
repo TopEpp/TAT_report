@@ -2462,4 +2462,895 @@ class Main extends BaseController
 
 		return view('Modules\Main\Views\realtime2', $data);
 	}
+
+	// ================================================================
+	// [Tier 1] Forecast & Scenario Analytics (/main/forecast)
+	//   - Multivariate OLS Forecast 3 เดือน
+	//   - Scenario Simulator (CCI/GT/OR/Oil sliders)
+	//   - Early Warning System (rule-based)
+	//   - Event ROI Calculator
+	// ================================================================
+	function forecast()
+	{
+		$data = [];
+		$data['session'] = session();
+		$data['session']->set(['report_type' => 'forecast']);
+		$data['Mydate'] = $this->Mydate;
+
+		// ---- Historical data 14 months (ก.พ.68 - มี.ค.69) ----
+		$realOcc     = [77.62, 74.99, 74.69, 68.30, 66.09, 68.16, 68.69, 66.73, 70.94, 72.78, 78.09, 77.52, 77.24, null];
+		$realOil95   = [36.12, 36.50, 37.20, 36.95, 36.40, 36.75, 37.10, 36.80, 36.50, 36.20, 35.90, 35.75, 36.10, 36.65];
+		$realCpi     = [100.74, 100.64, 100.58, 100.18, 100.50, 100.51, 100.39, 100.46, 100.41, 100.25, 100.33, 100.03, 99.91, 99.67];
+		$realSent    = [60.86, 59.86, 60.37, 61.42, 58.72, 56.33, 59.69, 60.54, 63.42, 62.38, 64.41, 24.41, 24.03, 59.15];
+		$realTourist = [25633814, 26527872, 26604374, 27066883, 25319078, 25802437, 24434297, 24795743, 25884768, 25118127, 26682688, 29713504, 27447304, 2715473];
+		$cci_overall = [52.0, 50.8, 48.8, 48.9, 46.7, 48.4, 47.9, 49.4, 50.9, 51.8, 51.8, 52.6, 53.0, null];
+		$gt_avg      = [23.45, 24.32, 30.75, 23.60, 22.28, 26.35, 24.48, 22.60, 30.40, 28.20, 33.10, 24.00, 21.90, 22.40];
+		$labels14    = ['ก.พ.68','มี.ค.68','เม.ย.68','พ.ค.68','มิ.ย.68','ก.ค.68','ส.ค.68','ก.ย.68','ต.ค.68','พ.ย.68','ธ.ค.68','ม.ค.69','ก.พ.69','มี.ค.69'];
+		// Tourist มี.ค.69 เป็นค่า preliminary ดูผิดปกติ (2.7M vs ปกติ 25M+) → ใช้ไม่ได้สำหรับ regression
+		$labelsForecast = ['เม.ย.69','พ.ค.69','มิ.ย.69']; // 3 เดือนล่วงหน้า
+
+		// ---- Gaussian elimination solver (Aβ = b) ----
+		$gaussianSolve = function(array $A, array $b) {
+			$n = count($A);
+			$M = [];
+			for ($i = 0; $i < $n; $i++) { $M[$i] = $A[$i]; $M[$i][] = $b[$i]; }
+			for ($i = 0; $i < $n; $i++) {
+				$maxRow = $i;
+				for ($k = $i + 1; $k < $n; $k++) {
+					if (abs($M[$k][$i]) > abs($M[$maxRow][$i])) $maxRow = $k;
+				}
+				[$M[$i], $M[$maxRow]] = [$M[$maxRow], $M[$i]];
+				if (abs($M[$i][$i]) < 1e-12) return null;
+				for ($k = $i + 1; $k < $n; $k++) {
+					$f = $M[$k][$i] / $M[$i][$i];
+					for ($j = $i; $j <= $n; $j++) $M[$k][$j] -= $f * $M[$i][$j];
+				}
+			}
+			$x = array_fill(0, $n, 0.0);
+			for ($i = $n - 1; $i >= 0; $i--) {
+				$s = $M[$i][$n];
+				for ($j = $i + 1; $j < $n; $j++) $s -= $M[$i][$j] * $x[$j];
+				$x[$i] = $s / $M[$i][$i];
+			}
+			return $x;
+		};
+
+		// ---- Multivariate OLS: y = β₀ + β₁x₁ + … + βₖxₖ ----
+		$olsMulti = function(array $X, array $y) use ($gaussianSolve) {
+			$n = count($X);
+			if ($n < 2) return null;
+			$k = count($X[0]);
+			$p = $k + 1;
+			$AtA = array_fill(0, $p, array_fill(0, $p, 0.0));
+			$Aty = array_fill(0, $p, 0.0);
+			for ($i = 0; $i < $n; $i++) {
+				$row = array_merge([1.0], array_map('floatval', $X[$i]));
+				for ($j = 0; $j < $p; $j++) {
+					$Aty[$j] += $row[$j] * $y[$i];
+					for ($l = 0; $l < $p; $l++) {
+						$AtA[$j][$l] += $row[$j] * $row[$l];
+					}
+				}
+			}
+			$beta = $gaussianSolve($AtA, $Aty);
+			if ($beta === null) return null;
+			$meanY = array_sum($y) / $n;
+			$ssTot = 0.0; $ssRes = 0.0; $preds = []; $mape = 0.0;
+			for ($i = 0; $i < $n; $i++) {
+				$pi = $beta[0];
+				for ($j = 0; $j < $k; $j++) $pi += $beta[$j+1] * $X[$i][$j];
+				$preds[] = $pi;
+				$ssRes += ($y[$i] - $pi) ** 2;
+				$ssTot += ($y[$i] - $meanY) ** 2;
+				if ($y[$i] != 0) $mape += abs(($y[$i] - $pi) / $y[$i]);
+			}
+			$df = max(1, $n - $p);
+			return [
+				'intercept' => $beta[0],
+				'coefs'     => array_slice($beta, 1),
+				'r2'        => $ssTot > 0 ? 1.0 - $ssRes / $ssTot : 0.0,
+				'rmse'      => sqrt($ssRes / $n),
+				'se'        => sqrt($ssRes / $df), // standard error ของ residual
+				'mape'      => $mape / $n * 100,
+				'preds'     => $preds,
+			];
+		};
+
+		// ---- Univariate linear trend (สำหรับ forecast features) ----
+		$linearTrend = function(array $y) {
+			$n = count($y); if ($n < 2) return [0, 0];
+			$sx = 0; $sy = 0; $sxy = 0; $sx2 = 0;
+			for ($i = 0; $i < $n; $i++) {
+				$t = $i + 1;
+				$sx += $t; $sy += $y[$i]; $sxy += $t * $y[$i]; $sx2 += $t * $t;
+			}
+			$b = ($n * $sxy - $sx * $sy) / ($n * $sx2 - $sx * $sx);
+			$a = ($sy - $b * $sx) / $n;
+			return [$a, $b]; // y = a + b*t
+		};
+
+		// ---- Simple Pearson r ----
+		$pearsonR = function(array $x, array $y) {
+			$px = []; $py = []; $n = min(count($x), count($y));
+			for ($i = 0; $i < $n; $i++) {
+				if ($x[$i] !== null && $y[$i] !== null) { $px[] = $x[$i]; $py[] = $y[$i]; }
+			}
+			$n = count($px); if ($n < 3) return 0;
+			$mx = array_sum($px)/$n; $my = array_sum($py)/$n;
+			$sxy=0; $sx2=0; $sy2=0;
+			for ($i=0;$i<$n;$i++){
+				$dx=$px[$i]-$mx; $dy=$py[$i]-$my;
+				$sxy+=$dx*$dy; $sx2+=$dx*$dx; $sy2+=$dy*$dy;
+			}
+			$d = sqrt($sx2*$sy2);
+			return $d==0?0:round($sxy/$d, 4);
+		};
+
+		// ---- เตรียม data matrix (13 เดือนใช้ได้: indices 0..12) ----
+		// Target: tourist (million คน) · Features: [CCI, GT, OR, Oil]
+		$n_fit = 13;
+		$y_fit = [];
+		$X_fit = [];
+		for ($i = 0; $i < $n_fit; $i++) {
+			$y_fit[] = $realTourist[$i] / 1000000;
+			$X_fit[] = [$cci_overall[$i], $gt_avg[$i], $realOcc[$i], $realOil95[$i]];
+		}
+		$feature_names = ['CCI', 'Google Trends', 'อัตราเข้าพัก (%)', 'ราคาน้ำมัน 95'];
+		$feature_keys  = ['cci', 'gt', 'or', 'oil'];
+		$feature_units = ['pts', 'idx', '%', 'บาท'];
+
+		$model = $olsMulti($X_fit, $y_fit);
+		$data['model'] = $model;
+		$data['feature_names'] = $feature_names;
+		$data['feature_keys']  = $feature_keys;
+		$data['feature_units'] = $feature_units;
+
+		// ---- Forecast features 3 เดือน (linear trend ต่อ feature) ----
+		$cci_series_fit = array_slice($cci_overall, 0, $n_fit);
+		$gt_series_fit  = array_slice($gt_avg, 0, $n_fit);
+		$or_series_fit  = array_slice($realOcc, 0, $n_fit);
+		$oil_series_fit = array_slice($realOil95, 0, $n_fit);
+
+		$trendCci = $linearTrend($cci_series_fit);
+		$trendGt  = $linearTrend($gt_series_fit);
+		$trendOr  = $linearTrend($or_series_fit);
+		$trendOil = $linearTrend($oil_series_fit);
+
+		$forecast_features = [];   // [ [cci, gt, or, oil] , ... ] per future month
+		$forecast_visitors = [];   // million
+		$forecast_lower = [];      // CI lower
+		$forecast_upper = [];      // CI upper
+		$ci_z = 1.96;              // 95% CI
+
+		for ($step = 1; $step <= 3; $step++) {
+			$t = $n_fit + $step; // 14, 15, 16
+			$fcci = $trendCci[0] + $trendCci[1] * $t;
+			$fgt  = $trendGt[0]  + $trendGt[1]  * $t;
+			$for_ = $trendOr[0]  + $trendOr[1]  * $t;
+			$foil = $trendOil[0] + $trendOil[1] * $t;
+			$feat = [
+				'cci' => round($fcci, 1),
+				'gt'  => round($fgt, 1),
+				'or'  => round($for_, 1),
+				'oil' => round($foil, 2),
+			];
+			$forecast_features[] = $feat;
+			$pred = $model['intercept']
+			      + $model['coefs'][0] * $fcci
+			      + $model['coefs'][1] * $fgt
+			      + $model['coefs'][2] * $for_
+			      + $model['coefs'][3] * $foil;
+			$forecast_visitors[] = round($pred, 2);
+			$forecast_lower[]    = round($pred - $ci_z * $model['se'], 2);
+			$forecast_upper[]    = round($pred + $ci_z * $model['se'], 2);
+		}
+
+		$data['forecast_labels']   = $labelsForecast;
+		$data['forecast_features'] = $forecast_features;
+		$data['forecast_visitors'] = $forecast_visitors;
+		$data['forecast_lower']    = $forecast_lower;
+		$data['forecast_upper']    = $forecast_upper;
+
+		// Historical for chart
+		$data['hist_labels']   = array_slice($labels14, 0, $n_fit);
+		$data['hist_visitors'] = array_map(function($v){ return round($v/1000000, 2); }, array_slice($realTourist, 0, $n_fit));
+		$data['hist_preds']    = array_map(function($v){ return round($v, 2); }, $model['preds']);
+
+		// ---- Scenario baseline (latest month values) ----
+		$baseline = [
+			'cci' => $cci_overall[12],
+			'gt'  => $gt_avg[12],
+			'or'  => $realOcc[12],
+			'oil' => $realOil95[12],
+		];
+		$baseline_pred = $model['intercept']
+			+ $model['coefs'][0] * $baseline['cci']
+			+ $model['coefs'][1] * $baseline['gt']
+			+ $model['coefs'][2] * $baseline['or']
+			+ $model['coefs'][3] * $baseline['oil'];
+		$data['baseline']      = $baseline;
+		$data['baseline_pred'] = round($baseline_pred, 2);
+		$data['baseline_month']= 'ก.พ. 2569';
+
+		// slider ranges: ±20% around baseline (เหมาะกับ simulate realistic scenarios)
+		$data['slider_ranges'] = [
+			'cci' => ['min' => round($baseline['cci']*0.8, 1), 'max' => round($baseline['cci']*1.2, 1), 'step' => 0.5],
+			'gt'  => ['min' => round($baseline['gt']*0.6, 1),  'max' => round($baseline['gt']*1.6, 1),  'step' => 0.5],
+			'or'  => ['min' => 50,                              'max' => 90,                             'step' => 0.5],
+			'oil' => ['min' => round($baseline['oil']*0.8, 2),  'max' => round($baseline['oil']*1.2, 2), 'step' => 0.1],
+		];
+
+		// ---- Early Warning System ----
+		$alerts = [];
+
+		// Rule 1: Leading score
+		$norm_cci = max(0, min(100, ($baseline['cci'] - 30) / (70 - 30) * 100));
+		$norm_gt  = max(0, min(100, ($baseline['gt']  - 15) / (40 - 15) * 100));
+		$norm_or  = max(0, min(100, ($baseline['or']  - 55) / (85 - 55) * 100));
+		$leading_score = round($norm_cci * 0.4 + $norm_gt * 0.3 + $norm_or * 0.3, 1);
+		$alerts[] = [
+			'name'    => 'Composite Leading Score',
+			'value'   => $leading_score . ' / 100',
+			'level'   => $leading_score >= 60 ? 'ok' : ($leading_score >= 40 ? 'warn' : 'critical'),
+			'message' => $leading_score >= 60 ? 'สัญญาณบวก — ปัจจัยนำชี้ทิศทางเติบโต'
+			           : ($leading_score >= 40 ? 'สัญญาณกลาง — เฝ้าระวัง CCI/GT/OR' : 'สัญญาณลบ — เสี่ยงชะลอ'),
+			'icon'    => 'fa-gauge-high',
+		];
+
+		// Rule 2: CCI declining 3 months?
+		$cci_decl = ($cci_overall[10] > $cci_overall[11] && $cci_overall[11] > $cci_overall[12]) ? true : false;
+		$cci_decl_strict = ($cci_overall[12] < $cci_overall[9]);
+		$alerts[] = [
+			'name'    => 'CCI Trend',
+			'value'   => number_format($cci_overall[12], 1) . ' pts',
+			'level'   => $cci_decl ? 'warn' : ($cci_overall[12] < 45 ? 'critical' : 'ok'),
+			'message' => $cci_decl ? 'CCI ลดลงติด 3 เดือน — ความเชื่อมั่นอ่อนตัว'
+			           : ($cci_overall[12] < 45 ? 'CCI ต่ำกว่าเกณฑ์ 45' : 'CCI อยู่ในระดับปกติ'),
+			'icon'    => 'fa-user-check',
+		];
+
+		// Rule 3: Visitor MoM (ล่าสุด 2 เดือน) — เช็คจากเดือน 11→12, 12→13 (tourist ใช้ได้ index 11,12; 13 outlier)
+		$mom_last = ($realTourist[12] - $realTourist[11]) / $realTourist[11] * 100;
+		$mom_prev = ($realTourist[11] - $realTourist[10]) / $realTourist[10] * 100;
+		$momDouble = ($mom_last < -5 && $mom_prev < -5);
+		$alerts[] = [
+			'name'    => 'Visitor MoM',
+			'value'   => ($mom_last >= 0 ? '+' : '') . number_format($mom_last, 1) . '%',
+			'level'   => $momDouble ? 'critical' : ($mom_last < -5 ? 'warn' : 'ok'),
+			'message' => $momDouble ? 'MoM ลดลงติด 2 เดือน (<-5%)'
+			           : ($mom_last < -5 ? 'MoM ล่าสุดลดลง >5%' : 'MoM อยู่ในระดับปกติ'),
+			'icon'    => 'fa-arrow-trend-down',
+		];
+
+		// Rule 4: Oil surge MoM
+		$oil_mom = ($realOil95[13] - $realOil95[12]) / $realOil95[12] * 100;
+		$alerts[] = [
+			'name'    => 'ราคาน้ำมัน 95 MoM',
+			'value'   => ($oil_mom >= 0 ? '+' : '') . number_format($oil_mom, 1) . '%',
+			'level'   => $oil_mom > 8 ? 'critical' : ($oil_mom > 4 ? 'warn' : 'ok'),
+			'message' => $oil_mom > 8 ? 'น้ำมันพุ่ง >8% ต้นทุนเดินทางสูง'
+			           : ($oil_mom > 4 ? 'น้ำมันเริ่มสูงขึ้น' : 'ราคาน้ำมันอยู่ในระดับปกติ'),
+			'icon'    => 'fa-gas-pump',
+		];
+
+		// Rule 5: OR (อัตราเข้าพัก) ล่าสุด
+		$or_last = $realOcc[12];
+		$alerts[] = [
+			'name'    => 'อัตราเข้าพักล่าสุด',
+			'value'   => number_format($or_last, 1) . '%',
+			'level'   => $or_last < 65 ? 'critical' : ($or_last < 72 ? 'warn' : 'ok'),
+			'message' => $or_last < 65 ? 'OR ต่ำกว่า 65% — ดีมานด์ที่พักอ่อน'
+			           : ($or_last < 72 ? 'OR ต่ำกว่าค่าเฉลี่ย' : 'OR อยู่ในระดับแข็งแกร่ง'),
+			'icon'    => 'fa-hotel',
+		];
+
+		// Rule 6: Sentiment
+		$sent_last = $realSent[12];
+		$sent_avg_12 = array_sum(array_slice($realSent, 0, 12)) / 12; // ไม่รวม outlier ที่ index 11
+		$alerts[] = [
+			'name'    => 'Sentiment ล่าสุด',
+			'value'   => number_format($sent_last, 1),
+			'level'   => $sent_last < 40 ? 'critical' : ($sent_last < 55 ? 'warn' : 'ok'),
+			'message' => $sent_last < 40 ? 'Sentiment ต่ำมาก — ลูกค้าไม่พอใจ'
+			           : ($sent_last < 55 ? 'Sentiment ต่ำกว่าค่าเฉลี่ย' : 'Sentiment อยู่ในระดับปกติ'),
+			'icon'    => 'fa-comments',
+		];
+
+		$data['alerts'] = $alerts;
+		$data['leading_score'] = $leading_score;
+
+		// ---- Event ROI (country-level) ----
+		// Events 2568 รายเดือน (จาก realtime2 structure: ใช้ helper ประมาณการ) + Visitors 2568P รายเดือน
+		// หมายเหตุ: ค่าเหล่านี้ hardcode mirror จาก realtime2 เพื่อความเรียบง่าย v1
+		$events_2568 = [85, 72, 68, 90, 75, 62, 58, 65, 70, 88, 95, 110]; // ม.ค.-ธ.ค. 2568
+		$visitors_2568_m = [24.25, 25.30, 26.55, 24.20, 23.80, 22.15, 21.30, 22.80, 23.10, 25.00, 26.70, 28.90]; // ล้านคน
+		$n_roi = count($events_2568);
+		$sum_e = array_sum($events_2568);
+		$sum_v = array_sum($visitors_2568_m);
+		$sum_ev = 0; $sum_e2 = 0;
+		for ($i = 0; $i < $n_roi; $i++) {
+			$sum_ev += $events_2568[$i] * $visitors_2568_m[$i];
+			$sum_e2 += $events_2568[$i] * $events_2568[$i];
+		}
+		$roi_slope = ($n_roi * $sum_ev - $sum_e * $sum_v) / ($n_roi * $sum_e2 - $sum_e * $sum_e);
+		$roi_intercept = ($sum_v - $roi_slope * $sum_e) / $n_roi;
+		$roi_r = $pearsonR($events_2568, $visitors_2568_m);
+		$data['roi_slope']     = round($roi_slope, 4); // ล้านคน ต่อ 1 event
+		$data['roi_intercept'] = round($roi_intercept, 3);
+		$data['roi_r']         = $roi_r;
+		$data['roi_events_monthly']   = $events_2568;
+		$data['roi_visitors_monthly'] = $visitors_2568_m;
+		$data['roi_avg_events']       = round($sum_e / $n_roi, 1);
+		$data['roi_avg_visitors']     = round($sum_v / $n_roi, 2);
+
+		// =============================================================
+		// [Tier 1 ext] ROI per-province (77 จังหวัด)
+		// =============================================================
+		$province_visitors_monthly = $this->_provinceVisitors2568();
+		try {
+			$ActModel = new Activity_model();
+			$prov_events_monthly = $ActModel->getActivityByMonthByProvince(2025);
+		} catch (\Throwable $e) {
+			$prov_events_monthly = [];
+		}
+
+		$provRegress = function(array $evt, array $vis) use ($pearsonR) {
+			$n = min(count($evt), count($vis));
+			if ($n < 3) return ['slope'=>0,'intercept'=>0,'r'=>0,'avg_events'=>0,'avg_visitors'=>0];
+			$sum_e = array_sum($evt); $sum_v = array_sum($vis);
+			$sum_ev = 0; $sum_e2 = 0;
+			for ($i=0; $i<$n; $i++) { $sum_ev += $evt[$i]*$vis[$i]; $sum_e2 += $evt[$i]*$evt[$i]; }
+			$den = $n*$sum_e2 - $sum_e*$sum_e;
+			$slope     = $den != 0 ? ($n*$sum_ev - $sum_e*$sum_v)/$den : 0;
+			$intercept = ($sum_v - $slope*$sum_e)/$n;
+			return [
+				'slope'        => round($slope, 6),
+				'intercept'    => round($intercept, 4),
+				'r'            => $pearsonR($evt, $vis),
+				'avg_events'   => round($sum_e / $n, 1),
+				'avg_visitors' => round($sum_v / $n, 3),
+			];
+		};
+
+		$prov_roi_dataset = [];
+		$all_vis_sum = array_fill(0, 12, 0);
+		$all_evt_sum = array_fill(0, 12, 0);
+		foreach ($province_visitors_monthly as $pname => $vis_arr) {
+			$evt_arr = isset($prov_events_monthly[$pname]) ? array_values($prov_events_monthly[$pname]) : array_fill(0, 12, 0);
+			for ($i = 0; $i < 12; $i++) {
+				$all_vis_sum[$i] += $vis_arr[$i];
+				$all_evt_sum[$i] += $evt_arr[$i];
+			}
+			$vis_million = array_map(function($v){ return round($v/1000000, 4); }, $vis_arr);
+			$reg = $provRegress($evt_arr, $vis_million);
+			$prov_roi_dataset[$pname] = array_merge(['visitors'=>$vis_million, 'events'=>$evt_arr], $reg);
+		}
+		$all_vis_m = array_map(function($v){ return round($v/1000000, 4); }, $all_vis_sum);
+		$reg_all = $provRegress($all_evt_sum, $all_vis_m);
+		$prov_roi_dataset['__ALL__'] = array_merge(['visitors'=>$all_vis_m, 'events'=>$all_evt_sum], $reg_all);
+		$data['prov_roi_dataset'] = $prov_roi_dataset;
+
+		// =============================================================
+		// [Tier 3] Backtesting — rolling-origin validation (3 เดือนล่าสุด)
+		// Train บน index 0..k-1 แล้ว predict index k
+		// =============================================================
+		$backtest = [];
+		for ($k = 10; $k <= 12; $k++) {
+			$X_train = []; $y_train = [];
+			for ($i = 0; $i < $k; $i++) {
+				$y_train[] = $realTourist[$i] / 1000000;
+				$X_train[] = [$cci_overall[$i], $gt_avg[$i], $realOcc[$i], $realOil95[$i]];
+			}
+			$m = $olsMulti($X_train, $y_train);
+			if ($m === null) continue;
+			$actual = $realTourist[$k] / 1000000;
+			$pred = $m['intercept']
+			      + $m['coefs'][0] * $cci_overall[$k]
+			      + $m['coefs'][1] * $gt_avg[$k]
+			      + $m['coefs'][2] * $realOcc[$k]
+			      + $m['coefs'][3] * $realOil95[$k];
+			$err_pct = $actual > 0 ? abs($actual - $pred) / $actual * 100 : 0;
+			$backtest[] = [
+				'month'      => $labels14[$k],
+				'actual'     => round($actual, 2),
+				'predicted'  => round($pred, 2),
+				'error_pct'  => round($err_pct, 2),
+				'train_size' => $k,
+			];
+		}
+		$data['backtest'] = $backtest;
+		$bt_mape = count($backtest) > 0 ? array_sum(array_column($backtest, 'error_pct')) / count($backtest) : 0;
+		$bt_errors = array_column($backtest, 'error_pct');
+		$bt_max_err = count($bt_errors) > 0 ? max($bt_errors) : 0;
+		$data['backtest_mape']    = round($bt_mape, 2);
+		$data['backtest_max_err'] = round($bt_max_err, 2);
+
+		// =============================================================
+		// [Tier 3] Preset Scenarios (delta offset จาก baseline)
+		// =============================================================
+		$data['presets'] = [
+			['key' => 'normal',    'name' => 'Normal',          'icon' => 'fa-circle-check',    'desc' => 'ค่าปัจจุบัน (baseline)',
+			 'deltas' => ['cci' => 0,   'gt' => 0,   'or' => 0,   'oil' => 0]],
+			['key' => 'boom',      'name' => 'Tourism Boom',    'icon' => 'fa-rocket',          'desc' => 'ความเชื่อมั่นสูง + ค้นหาเพิ่ม + OR เต็ม',
+			 'deltas' => ['cci' => 5,   'gt' => 6,   'or' => 7,   'oil' => -1]],
+			['key' => 'oil',       'name' => 'Oil Crisis',      'icon' => 'fa-gas-pump',        'desc' => 'น้ำมันพุ่ง 25% · CCI/GT ลด',
+			 'deltas' => ['cci' => -4,  'gt' => -3,  'or' => -4,  'oil' => 9]],
+			['key' => 'recession', 'name' => 'Recession',       'icon' => 'fa-chart-line',      'desc' => 'เศรษฐกิจชะลอ ทุกตัวลดลง',
+			 'deltas' => ['cci' => -8,  'gt' => -5,  'or' => -8,  'oil' => 2]],
+			['key' => 'holiday',   'name' => 'Holiday Season',  'icon' => 'fa-umbrella-beach',  'desc' => 'ช่วงเทศกาล GT + OR พุ่ง',
+			 'deltas' => ['cci' => 2,   'gt' => 10,  'or' => 8,   'oil' => 0]],
+		];
+
+		// =============================================================
+		// [Tier 2] อ่าน pre-computed forecast จาก Python pipeline
+		//   รัน: cd analytics && source venv/bin/activate && python forecast_sarima.py
+		//   Output: public/data/forecast_tier2.json (SARIMAX + Holt + Anomaly + Decomposition)
+		// =============================================================
+		$tier2_path = FCPATH . 'public/data/forecast_tier2.json';
+		$data['tier2'] = null;
+		$data['tier2_status'] = 'missing';
+		if (is_file($tier2_path)) {
+			$json = @file_get_contents($tier2_path);
+			if ($json !== false) {
+				$decoded = json_decode($json, true);
+				if (is_array($decoded)) {
+					$data['tier2'] = $decoded;
+					$data['tier2_status'] = 'ok';
+					$data['tier2_generated_at'] = $decoded['generated_at'] ?? '';
+				} else {
+					$data['tier2_status'] = 'invalid_json';
+				}
+			}
+		}
+
+		return view('Modules\Main\Views\forecast', $data);
+	}
+
+	// =================================================================
+	// /main/forecast_inter — International Tourism Forecast (6 เดือน)
+	// Tier 1: Seasonal-naive + Trend + Indicator multiplier (PHP)
+	// Tier 2: SARIMAX pre-computed JSON (Python)
+	// Tier 3: Scenario / Sensitivity / Backtest
+	// =================================================================
+	function forecast_inter()
+	{
+		$data = array();
+		$data['session'] = session();
+		$data['session']->set(['report_type' => 'forecast_inter']);
+		$data['Mydate'] = $this->Mydate;
+
+		$Model = new Main_model();
+
+		$currentYear = (int)date('Y');
+		$prevYear    = $currentYear - 1;
+		$prev2Year   = $currentYear - 2;
+		$prev3Year   = $currentYear - 3;
+		$years = array($prev3Year, $prev2Year, $prevYear, $currentYear);
+
+		$maxMonth = (int)date('m');
+		$maxDate = null;
+		try {
+			$maxDate = $Model->getMaxDate();
+			if ($maxDate) {
+				$p = explode('-', $maxDate);
+				$maxMonth = (int)$p[1];
+			}
+		} catch (\Exception $e) {}
+
+		// ---- Pull history ----
+		$yearlyOverall = array(); $yearlyRegion = array(); $yearlyCountry = array();
+		foreach ($years as $y) {
+			try { $yearlyOverall[$y] = $Model->getSumMonthly($y); } catch (\Exception $e) { $yearlyOverall[$y] = array(); }
+			try { $yearlyRegion[$y]  = $Model->getSumMonthlyRegionByYear($y); } catch (\Exception $e) { $yearlyRegion[$y] = array(); }
+			try { $yearlyCountry[$y] = $Model->getSumMonthlyCountryByYear($y); } catch (\Exception $e) { $yearlyCountry[$y] = array(); }
+		}
+
+		$monthTh = array('','ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.');
+		$historyLabels = array(); $historyValues = array();
+		foreach (array($prev3Year, $prev2Year, $prevYear) as $y) {
+			for ($m = 1; $m <= 12; $m++) {
+				if (isset($yearlyOverall[$y][$m]) && $yearlyOverall[$y][$m] > 0) {
+					$historyLabels[] = $monthTh[$m] . ' ' . (($y + 543) - 2500);
+					$historyValues[] = round($yearlyOverall[$y][$m] / 1000000, 3);
+				}
+			}
+		}
+		for ($m = 1; $m < $maxMonth; $m++) {
+			if (isset($yearlyOverall[$currentYear][$m]) && $yearlyOverall[$currentYear][$m] > 0) {
+				$historyLabels[] = $monthTh[$m] . ' ' . (($currentYear + 543) - 2500);
+				$historyValues[] = round($yearlyOverall[$currentYear][$m] / 1000000, 3);
+			}
+		}
+
+		// ---- Forecast engine: Seasonal × Trend (lag-12 × YoY growth) + CI from backtest MAPE ----
+		$compute = function ($yearlyData) use ($prev3Year, $prev2Year, $prevYear, $currentYear, $maxMonth) {
+			$monthlyByYear = array(); $annualTotals = array();
+			foreach (array($prev3Year, $prev2Year, $prevYear, $currentYear) as $y) {
+				$monthlyByYear[$y] = array(); $sum = 0; $cnt = 0;
+				for ($m = 1; $m <= 12; $m++) {
+					if (isset($yearlyData[$y][$m]) && $yearlyData[$y][$m] > 0) {
+						$monthlyByYear[$y][$m] = (float)$yearlyData[$y][$m];
+						$sum += $monthlyByYear[$y][$m]; $cnt++;
+					}
+				}
+				if ($y != $currentYear && $cnt >= 10) $annualTotals[$y] = $sum;
+			}
+			// Seasonal index (อัตราส่วน month / yearly-avg)
+			$seasonal = array_fill(1, 12, 1.0);
+			for ($m = 1; $m <= 12; $m++) {
+				$ratios = array();
+				foreach (array($prev3Year, $prev2Year, $prevYear) as $y) {
+					if (empty($monthlyByYear[$y]) || count($monthlyByYear[$y]) < 10) continue;
+					$avgY = array_sum($monthlyByYear[$y]) / count($monthlyByYear[$y]);
+					if (isset($monthlyByYear[$y][$m]) && $avgY > 0) $ratios[] = $monthlyByYear[$y][$m] / $avgY;
+				}
+				if (count($ratios) > 0) $seasonal[$m] = array_sum($ratios) / count($ratios);
+			}
+			// Linear trend on annual totals
+			$totalsArr = array_values($annualTotals);
+			$n = count($totalsArr);
+			$growth = 1.0;
+			if ($n >= 2 && $totalsArr[$n-2] > 0) $growth = $totalsArr[$n-1] / $totalsArr[$n-2];
+			// Backtest: current year actual months vs lag-12 × growth
+			$backtest = array(); $errs = array();
+			for ($m = 1; $m < $maxMonth; $m++) {
+				if (isset($monthlyByYear[$currentYear][$m]) && isset($monthlyByYear[$prevYear][$m])) {
+					$actual = $monthlyByYear[$currentYear][$m];
+					$pred = $monthlyByYear[$prevYear][$m] * $growth;
+					$err = $actual > 0 ? abs($actual - $pred) / $actual * 100 : 0;
+					$errs[] = $err;
+					$backtest[] = array('month'=>$m, 'actual'=>$actual, 'pred'=>$pred, 'err_pct'=>round($err,2));
+				}
+			}
+			$mape = count($errs) ? array_sum($errs) / count($errs) : 15.0;
+			// Forecast 6 เดือนข้างหน้าเริ่มจาก maxMonth
+			$forecast = array();
+			for ($step = 0; $step < 6; $step++) {
+				$fmAbs = $maxMonth + $step;
+				$yy = $currentYear;
+				while ($fmAbs > 12) { $fmAbs -= 12; $yy++; }
+				$ref = isset($monthlyByYear[$yy - 1][$fmAbs]) && $monthlyByYear[$yy - 1][$fmAbs] > 0
+					? $monthlyByYear[$yy - 1][$fmAbs]
+					: (($n ? ($totalsArr[$n-1] / 12) : 0) * $seasonal[$fmAbs]);
+				$pred = $ref * $growth;
+				$forecast[] = array(
+					'year' => $yy, 'month' => $fmAbs, 'value' => $pred,
+					'lower' => $pred * (1 - $mape/100),
+					'upper' => $pred * (1 + $mape/100),
+				);
+			}
+			return array(
+				'annual_totals' => $annualTotals,
+				'seasonal'      => $seasonal,
+				'growth'        => $growth,
+				'mape'          => round($mape, 2),
+				'backtest'      => $backtest,
+				'forecast'      => $forecast,
+				'monthly_by_year' => $monthlyByYear,
+			);
+		};
+
+		$overallFc = $compute($yearlyOverall);
+
+		// Per region
+		$regionMap = array(
+			'ASEAN' => array(13),
+			'NORTH-EAST ASIA' => array(15),
+			'SOUTH ASIA' => array(23, 39),
+			'EUROPE' => array(2, 44, 36, 37),
+			'THE AMERICAS' => array(7, 45),
+			'OCEANIA' => array(5, 46),
+			'MIDDLE EAST' => array(20, 47),
+		);
+		$regionFc = array();
+		foreach ($regionMap as $name => $rids) {
+			$yearlyR = array();
+			foreach ($years as $y) {
+				$yearlyR[$y] = array();
+				if (empty($yearlyRegion[$y])) continue;
+				foreach ($yearlyRegion[$y] as $m => $rvals) {
+					$s = 0;
+					foreach ($rids as $rid) if (isset($rvals[$rid])) $s += $rvals[$rid];
+					if ($s > 0) $yearlyR[$y][$m] = $s;
+				}
+			}
+			$regionFc[$name] = $compute($yearlyR);
+		}
+
+		// Top-10 countries (by prev year total)
+		$countryTotals = array();
+		if (!empty($yearlyCountry[$prevYear])) {
+			foreach ($yearlyCountry[$prevYear] as $cid => $d) {
+				$countryTotals[$cid] = array('total' => array_sum($d['monthly']), 'name' => $d['name']);
+			}
+		}
+		uasort($countryTotals, function($a, $b) { return $b['total'] <=> $a['total']; });
+		$topCids = array_slice(array_keys($countryTotals), 0, 10);
+
+		$countryFc = array();
+		foreach ($topCids as $cid) {
+			$yearlyC = array();
+			foreach ($years as $y) $yearlyC[$y] = isset($yearlyCountry[$y][$cid]['monthly']) ? $yearlyCountry[$y][$cid]['monthly'] : array();
+			$fc = $compute($yearlyC);
+			$fc['name'] = isset($yearlyCountry[$prevYear][$cid]['name']) ? $yearlyCountry[$prevYear][$cid]['name'] : 'Country ' . $cid;
+			$countryFc[$cid] = $fc;
+		}
+
+		// ---- Sentiment from INTER_SENTIMENT (TAT project) ----
+		$sentimentAgg = $Model->getInterSentimentAggregate($currentYear);
+		$sentSource = 'current';
+		if (empty($sentimentAgg['overall']['total'])) {
+			$sentimentAgg = $Model->getInterSentimentAggregate($prevYear);
+			$sentSource = 'prev';
+		}
+		$marketMap = $Model->getMarketMap();
+		$sentimentMarkets = array();
+		foreach ($sentimentAgg['markets'] as $mid => $s) {
+			if (!isset($marketMap[$mid])) continue;
+			$mname = !empty($marketMap[$mid]['country_name_en']) ? $marketMap[$mid]['country_name_en'] : $marketMap[$mid]['name'];
+			$sentimentMarkets[] = array_merge(array('market_id' => $mid, 'name' => $mname), $s);
+		}
+		usort($sentimentMarkets, function($a, $b) { return $b['total'] <=> $a['total']; });
+		$sentimentMarkets = array_slice($sentimentMarkets, 0, 20);
+
+		// ---- Indicators (mirror จาก realtime_inter) ----
+		$indicators = array(
+			'flight_cancel_pct' => 15.7,
+			'seat_capacity_chg' => -9.2,
+			'fbi_chg' => -19.6,
+			'meltwater_neg' => 55.4,
+			'office_sentiment_score' => (float)$sentimentAgg['overall']['score'],
+		);
+
+		// ---- YTD YoY ----
+		$ytdCur = 0; $ytdPast = 0;
+		for ($m = 1; $m < $maxMonth; $m++) {
+			if (isset($yearlyOverall[$currentYear][$m])) $ytdCur += $yearlyOverall[$currentYear][$m];
+			if (isset($yearlyOverall[$prevYear][$m]))    $ytdPast += $yearlyOverall[$prevYear][$m];
+		}
+		$ytdYoy = $ytdPast > 0 ? round(($ytdCur - $ytdPast) / $ytdPast * 100, 1) : 0;
+
+		// ---- Early Warning ----
+		$alerts = array();
+		$alerts[] = array(
+			'name' => 'YoY นักท่องเที่ยวรวม (YTD)',
+			'value' => ($ytdYoy >= 0 ? '+' : '') . $ytdYoy . '%',
+			'level' => $ytdYoy < -5 ? 'critical' : ($ytdYoy < 0 ? 'warn' : 'ok'),
+			'message' => $ytdYoy < -5 ? 'ยอดรวมลดเกิน 5% จากปีก่อน — ต้องเฝ้าระวัง' : ($ytdYoy < 0 ? 'ยอดรวมเริ่มถดถอย' : 'ยอดรวมเติบโต'),
+			'icon' => 'fa-plane-arrival',
+		);
+		$alerts[] = array(
+			'name' => 'เที่ยวบินยกเลิก (Flight Cancel %)',
+			'value' => $indicators['flight_cancel_pct'] . '%',
+			'level' => $indicators['flight_cancel_pct'] > 15 ? 'critical' : ($indicators['flight_cancel_pct'] > 10 ? 'warn' : 'ok'),
+			'message' => $indicators['flight_cancel_pct'] > 15 ? 'ยกเลิก >15% — กระทบ Arrivals 2-3 เดือนข้างหน้า' : 'ยกเลิกอยู่ระดับปกติ',
+			'icon' => 'fa-ban',
+		);
+		$alerts[] = array(
+			'name' => 'Seat Capacity W5 vs Baseline',
+			'value' => ($indicators['seat_capacity_chg'] >= 0 ? '+' : '') . $indicators['seat_capacity_chg'] . '%',
+			'level' => $indicators['seat_capacity_chg'] < -10 ? 'critical' : ($indicators['seat_capacity_chg'] < -5 ? 'warn' : 'ok'),
+			'message' => $indicators['seat_capacity_chg'] < -10 ? 'ที่นั่งลดใกล้ 10% — เสี่ยงกระทบ arrivals 1-2 เดือนข้างหน้า' : 'ที่นั่งอยู่ในเกณฑ์',
+			'icon' => 'fa-chair',
+		);
+		$alerts[] = array(
+			'name' => 'FBI (ForwardKeys W8)',
+			'value' => ($indicators['fbi_chg'] >= 0 ? '+' : '') . $indicators['fbi_chg'] . '%',
+			'level' => $indicators['fbi_chg'] < -15 ? 'critical' : ($indicators['fbi_chg'] < -5 ? 'warn' : 'ok'),
+			'message' => $indicators['fbi_chg'] < -15 ? 'ยอดจองล่วงหน้าลดเกิน 15% — forecast 6 เดือนต่ำ' : 'FBI ไม่เลวร้าย',
+			'icon' => 'fa-calendar-check',
+		);
+		$alerts[] = array(
+			'name' => 'Meltwater Negative %',
+			'value' => $indicators['meltwater_neg'] . '%',
+			'level' => $indicators['meltwater_neg'] > 55 ? 'critical' : ($indicators['meltwater_neg'] > 45 ? 'warn' : 'ok'),
+			'message' => $indicators['meltwater_neg'] > 55 ? 'ข่าวลบเกินครึ่ง — ต้องสื่อสารตอบกลับ' : 'เสียงสื่ออยู่ในเกณฑ์',
+			'icon' => 'fa-message-exclamation',
+		);
+		$alerts[] = array(
+			'name' => 'Office Sentiment (TAT สนง.ต่างประเทศ)',
+			'value' => ($indicators['office_sentiment_score'] >= 0 ? '+' : '') . $indicators['office_sentiment_score'],
+			'level' => $indicators['office_sentiment_score'] < -10 ? 'critical' : ($indicators['office_sentiment_score'] < 0 ? 'warn' : 'ok'),
+			'message' => $indicators['office_sentiment_score'] < 0 ? 'สนง.ต่างประเทศรายงานเชิงลบมากกว่าบวก' : 'รายงานจาก สนง.ต่างประเทศอยู่ในเชิงบวก',
+			'icon' => 'fa-globe',
+		);
+
+		// ---- Composite Leading Score ----
+		$norm_seat   = max(0, min(100, ($indicators['seat_capacity_chg'] + 20) / 40 * 100));
+		$norm_fbi    = max(0, min(100, ($indicators['fbi_chg'] + 30) / 60 * 100));
+		$norm_cancel = max(0, min(100, 100 - $indicators['flight_cancel_pct'] * 3));
+		$norm_meltw  = max(0, min(100, 100 - $indicators['meltwater_neg']));
+		$norm_office = max(0, min(100, 50 + $indicators['office_sentiment_score'] / 2));
+		$leading = round($norm_seat * 0.25 + $norm_fbi * 0.30 + $norm_cancel * 0.15 + $norm_meltw * 0.15 + $norm_office * 0.15, 1);
+
+		// ---- Scenario (baseline values + sliders + presets) ----
+		$slider_ranges = array(
+			'seat'   => array('min'=>-30, 'max'=>15, 'step'=>0.5, 'label'=>'Seat Capacity %'),
+			'fbi'    => array('min'=>-40, 'max'=>20, 'step'=>0.5, 'label'=>'FBI %'),
+			'cancel' => array('min'=>0,   'max'=>40, 'step'=>0.5, 'label'=>'Flight Cancel %'),
+			'meltw'  => array('min'=>0,   'max'=>90, 'step'=>1,   'label'=>'Meltwater Neg %'),
+			'office' => array('min'=>-100,'max'=>100,'step'=>1,   'label'=>'Office Sentiment Score'),
+		);
+		$presets = array(
+			array('key'=>'normal',   'name'=>'Normal',            'icon'=>'fa-circle-check',          'desc'=>'ค่า indicator ปัจจุบัน',
+			      'vals'=>array('seat'=>$indicators['seat_capacity_chg'],'fbi'=>$indicators['fbi_chg'],'cancel'=>$indicators['flight_cancel_pct'],'meltw'=>$indicators['meltwater_neg'],'office'=>$indicators['office_sentiment_score'])),
+			array('key'=>'china',    'name'=>'China Recovery',     'icon'=>'fa-rocket',                'desc'=>'จีนกลับมา +ที่นั่ง/Sentiment',
+			      'vals'=>array('seat'=>5,'fbi'=>5,'cancel'=>10,'meltw'=>35,'office'=>20)),
+			array('key'=>'crisis',   'name'=>'Aviation Crisis',    'icon'=>'fa-triangle-exclamation',  'desc'=>'ยกเลิกเที่ยวบินสูง ที่นั่งลด',
+			      'vals'=>array('seat'=>-25,'fbi'=>-30,'cancel'=>35,'meltw'=>70,'office'=>-30)),
+			array('key'=>'conflict', 'name'=>'Regional Conflict',  'icon'=>'fa-shield-halved',         'desc'=>'สงครามตะวันออกกลาง ลามภูมิภาค',
+			      'vals'=>array('seat'=>-15,'fbi'=>-25,'cancel'=>20,'meltw'=>65,'office'=>-20)),
+			array('key'=>'peak',     'name'=>'Peak Season',        'icon'=>'fa-umbrella-beach',        'desc'=>'ฤดูท่องเที่ยว ที่นั่ง/FBI พุ่ง',
+			      'vals'=>array('seat'=>10,'fbi'=>15,'cancel'=>8,'meltw'=>35,'office'=>25)),
+		);
+		// Scenario multiplier weights (per unit impact to arrivals)
+		$weights = array(
+			'seat'   => 0.006,
+			'fbi'    => 0.004,
+			'cancel' => -0.003,
+			'meltw'  => -0.001,
+			'office' => 0.0015,
+		);
+
+		$data['overall_forecast']  = $overallFc;
+		$data['region_forecast']   = $regionFc;
+		$data['country_forecast']  = $countryFc;
+		$data['history_labels']    = $historyLabels;
+		$data['history_values']    = $historyValues;
+		$data['indicators']        = $indicators;
+		$data['sentiment_agg']     = $sentimentAgg;
+		$data['sentiment_markets'] = $sentimentMarkets;
+		$data['sentiment_source']  = $sentSource;
+		$data['alerts']            = $alerts;
+		$data['leading_score']     = $leading;
+		$data['baseline']          = $indicators;
+		$data['slider_ranges']     = $slider_ranges;
+		$data['presets']           = $presets;
+		$data['scenario_weights']  = $weights;
+		$data['ytd_yoy']           = $ytdYoy;
+		$data['max_month']         = $maxMonth;
+		$data['max_date']          = $maxDate;
+		$data['current_year']      = $currentYear;
+		$data['prev_year']         = $prevYear;
+		$data['current_year_thai'] = $currentYear + 543;
+		$data['prev_year_thai']    = $prevYear + 543;
+		$data['region_names']      = array_keys($regionMap);
+		$data['month_labels']      = array('ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.');
+
+		// ---- บันทึก history เป็น JSON สำหรับ Python Tier 2 pipeline อ่าน ----
+		$dataDir = FCPATH . 'public/data';
+		if (!is_dir($dataDir)) @mkdir($dataDir, 0775, true);
+		$historyDump = array(
+			'generated_at' => date('c'),
+			'current_year' => $currentYear,
+			'max_month' => $maxMonth,
+			'max_date' => $maxDate,
+			'overall_monthly_by_year' => $overallFc['monthly_by_year'],
+			'regions' => array(),
+			'countries' => array(),
+			'indicators' => $indicators,
+		);
+		foreach ($regionFc as $rn => $rfc) {
+			$historyDump['regions'][$rn] = array(
+				'monthly_by_year' => $rfc['monthly_by_year'],
+				'tier1_forecast' => $rfc['forecast'],
+				'mape' => $rfc['mape'],
+			);
+		}
+		foreach ($countryFc as $cid => $cfc) {
+			$historyDump['countries'][(string)$cid] = array(
+				'name' => $cfc['name'],
+				'monthly_by_year' => $cfc['monthly_by_year'],
+				'tier1_forecast' => $cfc['forecast'],
+				'mape' => $cfc['mape'],
+			);
+		}
+		@file_put_contents($dataDir . '/forecast_inter_history.json', json_encode($historyDump, JSON_UNESCAPED_UNICODE));
+
+		// Tier 2 Python output
+		$tier2_path = FCPATH . 'public/data/forecast_inter_tier2.json';
+		$data['tier2'] = null;
+		$data['tier2_status'] = 'missing';
+		if (is_file($tier2_path)) {
+			$json = @file_get_contents($tier2_path);
+			if ($json !== false) {
+				$decoded = json_decode($json, true);
+				if (is_array($decoded)) {
+					$data['tier2'] = $decoded;
+					$data['tier2_status'] = 'ok';
+					$data['tier2_generated_at'] = isset($decoded['generated_at']) ? $decoded['generated_at'] : '';
+				}
+			}
+		}
+
+		return view('Modules\Main\Views\forecast_inter', $data);
+	}
+
+	// ================================================================
+	// ข้อมูลจำนวนผู้เยี่ยมเยือนรายจังหวัด 77 จว. ปี 2568P (รายเดือน 12 ค่า)
+	// แหล่ง: Excel "Data Dashboard ตลาดในประเทศ.xlsx"
+	// NOTE: hardcode mirror กับ realtime2() บรรทัด 2358+ — ถ้าอัปเดต ให้ sync 2 ที่
+	// ================================================================
+	private function _provinceVisitors2568()
+	{
+		return [
+			'กระบี่'             => [241881,290027,293292,202400,144523,234588,216691,220169,193473,226565,262655,224797],
+			'กรุงเทพมหานคร'      => [2703279,2205898,2261223,2519116,2580102,2249047,2312585,2759280,2908570,3297953,2858749,3368263],
+			'กาญจนบุรี'          => [1201273,1171096,1068805,1257348,1259783,1193124,1246111,1186277,1240763,1216868,1310413,1390254],
+			'กาฬสินธุ์'          => [85332,263819,95102,430155,189423,143815,190184,185711,198093,226544,219635,286058],
+			'กำแพงเพชร'          => [78768,72654,72284,69643,69840,66226,71044,69196,68370,80872,83089,98910],
+			'ขอนแก่น'            => [428628,403221,411300,457055,424787,449447,395727,378838,361228,361669,339822,431650],
+			'จันทบุรี'           => [297544,249914,325830,356183,383801,345943,337927,332547,314584,320530,309797,340267],
+			'ฉะเชิงเทรา'         => [547350,541812,564988,585865,493386,505856,550341,523553,502858,518615,478381,650371],
+			'ชลบุรี'             => [1181144,1225138,1343524,1820605,1471447,1362646,1275555,1705794,1400026,1365052,1482357,1625537],
+			'ชัยนาท'             => [102121,97592,97281,117716,108269,104551,96664,99289,97221,92265,96320,107810],
+			'ชัยภูมิ'            => [181288,162795,148880,158331,186754,198838,209832,166540,150845,153729,156318,189035],
+			'ชุมพร'              => [163601,149746,160721,157630,152680,150264,158033,165402,148687,154852,154715,168507],
+			'ตรัง'               => [142389,155336,154994,175240,165440,123964,136815,131438,116397,120681,92905,139755],
+			'ตราด'               => [154324,151831,186584,207637,198138,157828,138197,115174,109262,116676,133864,138087],
+			'ตาก'                => [212779,185436,176665,201256,190988,181908,166229,173469,170321,186981,188592,220996],
+			'นครนายก'            => [244683,247634,240934,301816,240910,261614,280904,269189,250701,216511,232690,285583],
+			'นครปฐม'             => [391022,395434,391414,400478,382198,358268,434384,427017,432389,488180,437118,467521],
+			'นครพนม'             => [166667,210421,173369,193526,187299,163828,200134,180346,175734,188842,163163,187664],
+			'นครราชสีมา'         => [762574,704599,764572,787024,713555,786587,725315,745041,704200,789139,812007,916586],
+			'นครศรีธรรมราช'      => [433096,336747,358944,393991,324670,319958,372903,393537,425752,403764,310590,399975],
+			'นครสวรรค์'          => [227829,204621,184908,242521,228623,200236,188605,189548,181870,177578,176536,223134],
+			'นนทบุรี'            => [335014,337134,359316,344373,346983,325593,345601,350779,322425,292725,292554,345625],
+			'นราธิวาส'           => [35185,45362,44052,47846,55963,47129,36932,44997,47707,35807,27899,37467],
+			'น่าน'               => [159860,124701,112904,142732,138548,125495,85457,106405,106630,132438,148714,168667],
+			'บึงกาฬ'             => [81413,69637,82863,69698,68884,91448,79724,80809,85853,75177,67002,83604],
+			'บุรีรัมย์'          => [318706,308808,361075,324943,300006,308976,285921,289064,308234,316145,312743,310669],
+			'ปทุมธานี'           => [263076,267874,266072,240681,248695,259217,276818,290411,265714,241650,273173,302330],
+			'ประจวบคีรีขันธ์'    => [958732,880390,873211,977410,923193,846072,906759,876318,767386,819098,861584,1022584],
+			'ปราจีนบุรี'         => [124821,120090,128023,116394,124333,118393,114941,120073,120751,123903,119052,148098],
+			'ปัตตานี'            => [35347,36997,35212,38604,45379,39450,41478,44153,44195,41047,28622,41454],
+			'พระนครศรีอยุธยา'    => [773647,754042,764460,890653,696916,723541,782079,707148,712493,702503,738580,760865],
+			'พะเยา'              => [107685,102889,82743,99432,82462,80306,73679,75148,67379,94027,106264,129962],
+			'พังงา'              => [165582,102751,147969,143876,131726,125172,116323,113899,148760,169484,152795,178361],
+			'พัทลุง'             => [147097,142990,168450,163726,164440,157147,153231,136139,145989,140695,132570,152667],
+			'พิจิตร'             => [66330,62665,58376,74961,70616,66538,71097,68286,69537,73704,70645,90923],
+			'พิษณุโลก'           => [307291,265173,242163,258284,268804,267738,235115,241811,231465,273450,272536,303859],
+			'ภูเก็ต'             => [328377,387422,361538,289592,286387,340263,222938,287759,274431,306679,269802,297430],
+			'มหาสารคาม'          => [59040,66350,55936,77107,76192,79188,51837,50482,41998,48596,50359,59194],
+			'มุกดาหาร'           => [158433,150906,142078,159103,145021,147088,135441,125121,111547,147505,154799,180337],
+			'ยะลา'               => [92164,99778,95841,94044,99331,112665,89870,98072,79401,81633,68940,108143],
+			'ยโสธร'              => [55916,46311,45867,58153,62372,48438,57318,53014,46392,49822,50372,56948],
+			'ระนอง'              => [80140,72112,77447,88978,81556,78065,76169,80424,72219,77662,81407,86135],
+			'ระยอง'              => [398063,411378,444781,491719,550318,487035,468409,451596,416063,400009,387927,487394],
+			'ราชบุรี'            => [235212,244394,250432,296775,304410,292071,232722,239287,222475,227494,236479,251217],
+			'ร้อยเอ็ด'           => [76691,68633,74755,84183,90035,75860,72591,82089,83623,80961,78846,90255],
+			'ลพบุรี'             => [407135,413127,366930,383297,383567,387419,393113,363267,365589,360146,400554,442127],
+			'ลำปาง'              => [175364,144998,115963,130273,128327,116386,115114,121303,117631,165480,191831,232537],
+			'ลำพูน'              => [119143,100669,85934,110441,105459,95804,100651,108970,99741,112384,134266,150973],
+			'ศรีสะเกษ'           => [93499,88243,88562,103116,102403,97726,87630,96459,86692,93353,91599,101970],
+			'สกลนคร'             => [186360,165028,167888,167842,153317,147034,156411,170585,131289,156382,145869,187145],
+			'สงขลา'              => [298115,329766,309739,288266,289875,287101,216385,253692,254558,283049,175069,168573],
+			'สตูล'               => [140844,133230,144154,204719,207909,182275,160848,174907,155399,170417,106847,130404],
+			'สมุทรปราการ'        => [319026,302801,291341,320788,298606,293532,227014,247381,230027,246615,229261,254802],
+			'สมุทรสงคราม'        => [521433,495669,480027,473853,489475,446614,362795,353888,364348,393260,398276,467566],
+			'สมุทรสาคร'          => [153220,148036,153388,148062,138019,141072,124527,115388,120070,117877,114578,134212],
+			'สระบุรี'            => [428908,408173,389643,414253,392596,395185,396219,390022,377960,442608,485206,523168],
+			'สระแก้ว'            => [126373,120705,114674,126787,125712,94773,80374,88973,86775,91608,97112,77469],
+			'สิงห์บุรี'          => [72330,71046,75909,88646,84619,83129,80640,80344,77205,64913,69043,81129],
+			'สุพรรณบุรี'         => [646878,608292,522063,593312,488913,475835,415137,391078,383866,407740,433929,535015],
+			'สุราษฎร์ธานี'       => [348627,360250,404426,432952,395537,353831,395382,424495,401509,397748,389285,518928],
+			'สุรินทร์'           => [113805,114687,116077,113637,105819,106136,95482,90463,91017,90604,104874,107203],
+			'สุโขทัย'            => [110686,83119,82741,92504,106650,98077,79028,80516,77287,112773,122863,122644],
+			'หนองคาย'            => [226113,227231,229846,245491,213473,211925,226526,214634,202600,232031,212355,234074],
+			'หนองบัวลำภู'        => [34847,30619,31149,37938,34251,31807,33581,29485,29281,31436,32984,34110],
+			'อำนาจเจริญ'         => [23746,22853,21669,28450,27542,23568,23363,21812,21239,22088,23353,29740],
+			'อุดรธานี'           => [338399,316557,337672,373627,352720,343984,299768,336188,329823,360142,339841,372994],
+			'อุตรดิตถ์'          => [112774,99323,105491,96118,90878,89185,93979,94652,84680,96230,109958,119548],
+			'อุทัยธานี'          => [96193,87232,84481,85175,82187,79983,84938,84365,81246,92940,89990,110212],
+			'อุบลราชธานี'        => [444077,454439,447164,433361,350693,260333,234979,229799,226831,260950,256653,267435],
+			'อ่างทอง'            => [102817,102556,104337,111397,102862,97321,96830,101387,103372,85682,83759,99725],
+			'เชียงราย'           => [644347,549565,459741,501564,487600,418004,353058,359306,330826,480177,557243,624133],
+			'เชียงใหม่'          => [928142,866338,566973,635336,715003,655817,473833,540427,513561,735456,943449,997202],
+			'เพชรบุรี'           => [954669,889994,903595,941610,948426,799651,882740,837599,767359,806545,801184,1010577],
+			'เพชรบูรณ์'          => [315984,245963,192112,226436,228167,210352,189543,190679,194573,217193,247498,305809],
+			'เลย'                => [219249,201424,186841,187701,199363,344191,182567,173670,171009,185170,189049,226765],
+			'แพร่'               => [129341,113892,108156,121583,112043,104071,88016,95670,91478,114426,124393,142541],
+			'แม่ฮ่องสอน'         => [109403,85501,81946,85136,84314,90383,77656,80255,77940,89460,94179,126025],
+		];
+	}
 }
