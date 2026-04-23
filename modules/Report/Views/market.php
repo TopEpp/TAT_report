@@ -147,14 +147,19 @@ foreach ($data['Long'] as $key=> $c) {
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-2">
-
-	</div>
-	<div class="col-md-4 col-12 py-2 py-md-0">
+	<div class="col-md-3 col-12 py-2 py-md-0">
 		วันที่เริ่มต้น <input type="text" name="date_start" id="date_start" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($date_start, 543, '/') ?>">
 	</div>
-	<div class="col-md-4 col-12 py-2 py-md-0">
+	<div class="col-md-3 col-12 py-2 py-md-0">
 		วันที่สิ้นสุด <input type="text" name="date_end" id="date_end" class="form-control date_picker" style="display: inline;" value="<?php echo $Mydate->date_thai2eng($date_end, 543, '/') ?>">
+	</div>
+	<div class="col-md-3 col-12 py-2 py-md-0">
+		Country List
+		<select class="form-control" id="country_group">
+			<?php foreach (($country_groups ?? []) as $cg): ?>
+				<option value="<?= $cg['GROUP_CODE'] ?>" <?= (@$country_group === $cg['GROUP_CODE']) ? "selected='selected'" : '' ?>><?= $cg['NAME_TH'] ?></option>
+			<?php endforeach ?>
+		</select>
 	</div>
 	<div class="col-md-2 col-12 text-center text-md-left mt-auto py-2 py-md-0">
 		<div class="btn btn-primary" onclick="ChangeFilter()">ตกลง</div>
@@ -313,7 +318,8 @@ foreach ($data['Long'] as $key=> $c) {
 		date_end = date[0] + '-' + date[1] + '-' + (date[2] - 543);
 
 
-		window.location.href = base_url + '/report/market?d1=' + date_start + '&d2=' + date_end;
+		var country_group = $('#country_group').val();
+		window.location.href = base_url + '/report/market?d1=' + date_start + '&d2=' + date_end + '&country_group=' + country_group;
 	}
 
 	function export_report(type) {
@@ -327,7 +333,8 @@ foreach ($data['Long'] as $key=> $c) {
 		// end_date1 = (date[2]-543)+'-'+date[1]+'-'+date[0];
 		date_end = date[0] + '-' + date[1] + '-' + (date[2] - 543);
 
-		window.open(base_url + '/report/market/?export_type=' + type + '&d1=' + date_start + '&d2=' + date_end);
+		var country_group = $('#country_group').val();
+		window.open(base_url + '/report/market/?export_type=' + type + '&d1=' + date_start + '&d2=' + date_end + '&country_group=' + country_group);
 	}
 </script>
 <?= $this->endSection() ?>

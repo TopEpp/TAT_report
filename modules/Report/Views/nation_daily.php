@@ -54,13 +54,10 @@
 	</div>
 	<div class="col-md-3 col-12">
 		Country List
-		<select class="form-control" id="country_type">
-			<option value="standard" <?php if (@$country_type == 'standard') {
-											echo "selected='selected'";
-										} ?>>Standard</option>
-			<option value="all" <?php if (@$country_type == 'all') {
-									echo "selected='selected'";
-								} ?>>All Country</option>
+		<select class="form-control" id="country_group">
+			<?php foreach (($country_groups ?? []) as $cg): ?>
+				<option value="<?= $cg['GROUP_CODE'] ?>" <?= (@$country_group === $cg['GROUP_CODE']) ? "selected='selected'" : '' ?>><?= $cg['NAME_TH'] ?></option>
+			<?php endforeach ?>
 		</select>
 	</div>
 	<div class="col-md-1 col-12 text-center py-2 py-md-0 mt-auto">
@@ -109,7 +106,7 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1)
 
 			$padding_region = $level * 10;
 			$alink = '';
-			if (!empty($country[$re['MD_STD_REG_ID']]) && $re['IS_OTHERS'] != 'Y') {
+			if (!empty($country[$re['MD_STD_REG_ID']])) {
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
@@ -126,7 +123,7 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1)
 			echo '</tr>';
 
 
-			if (!empty($country[$re['MD_STD_REG_ID']]) && $re['IS_OTHERS'] != 'Y') {
+			if (!empty($country[$re['MD_STD_REG_ID']])) {
 				foreach ($country[$re['MD_STD_REG_ID']] as $co) {
 
 
@@ -190,9 +187,9 @@ function getSumData($data, $region, $region_id, $country, $period, &$sum = array
 		date = date.split('/');
 		report_date2 = (date[2] - 543) + '-' + date[1] + '-' + date[0];
 
-		var country_type = $('#country_type').val();
+		var country_group = $('#country_group').val();
 
-		window.location.href = base_url + '/report/nation_daily?d1=' + report_date1 + '&d2=' + report_date2+'&country_type='+country_type;
+		window.location.href = base_url + '/report/nation_daily?d1=' + report_date1 + '&d2=' + report_date2+'&country_group='+country_group;
 	}
 
 	function export_report(type) {
@@ -204,9 +201,9 @@ function getSumData($data, $region, $region_id, $country, $period, &$sum = array
 		date = date.split('/');
 		report_date2 = (date[2] - 543) + '-' + date[1] + '-' + date[0];
 
-		var country_type = $('#country_type').val();
+		var country_group = $('#country_group').val();
 
-		window.open(base_url + '/report/nation_daily/?export_type=' + type + '&d1=' + report_date1 + '&d2=' + report_date2+'&country_type='+country_type);
+		window.open(base_url + '/report/nation_daily/?export_type=' + type + '&d1=' + report_date1 + '&d2=' + report_date2+'&country_group='+country_group);
 	}
 
 	function ShowHide(reg_id) {

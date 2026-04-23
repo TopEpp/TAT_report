@@ -62,10 +62,10 @@
 		
 	</div>
 	<div class="col-md-6 col-12 py-2 py-md-0" style="text-align: right;">
-		<a target="_blank" href="<?php echo base_url('report/nation_compare/?export_type=excel&start1=' . $start_date1 . '&end1=' . $end_date1 . '&start2=' . $start_date2 . '&end2=' . $end_date2 . '&country_type=' . $country_type. '&country_id=' . $country_id); ?>" class="btn btn-success" style="width : 70px">
+		<a target="_blank" href="<?php echo base_url('report/nation_compare/?export_type=excel&start1=' . $start_date1 . '&end1=' . $end_date1 . '&start2=' . $start_date2 . '&end2=' . $end_date2 . '&country_group=' . $country_group. '&country_id=' . $country_id); ?>" class="btn btn-success" style="width : 70px">
 			<i class="fa-solid fa-file-excel"></i> Excel
 		</a>
-		<a target="_blank" href="<?php echo base_url('report/nation_compare/?export_type=pdf&start1=' . $start_date1 . '&end1=' . $end_date1 . '&start2=' . $start_date2 . '&end2=' . $end_date2 . '&country_type=' . $country_type. '&country_id=' . $country_id); ?>" class="btn btn-danger" style="width : 70px">
+		<a target="_blank" href="<?php echo base_url('report/nation_compare/?export_type=pdf&start1=' . $start_date1 . '&end1=' . $end_date1 . '&start2=' . $start_date2 . '&end2=' . $end_date2 . '&country_group=' . $country_group. '&country_id=' . $country_id); ?>" class="btn btn-danger" style="width : 70px">
 			<i class="fa-solid fa-file-pdf"></i> PDF
 		</a>
 	</div>
@@ -82,13 +82,10 @@
 	</div>
 	<div class="col-md-3 col-2">
 		Country List
-		<select class="form-control" id="country_type">
-			<option value="standard" <?php if (@$country_type == 'standard') {
-											echo "selected='selected'";
-										} ?>>Standard</option>
-			<option value="all" <?php if (@$country_type == 'all') {
-									echo "selected='selected'";
-								} ?>>All Country</option>
+		<select class="form-control" id="country_group">
+			<?php foreach (($country_groups ?? []) as $cg): ?>
+				<option value="<?= $cg['GROUP_CODE'] ?>" <?= (@$country_group === $cg['GROUP_CODE']) ? "selected='selected'" : '' ?>><?= $cg['NAME_TH'] ?></option>
+			<?php endforeach ?>
 		</select>
 	</div>
 
@@ -234,7 +231,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 
 			$padding_region = $level * 10;
 			$alink = '';
-			if (!empty($country[$re['MD_STD_REG_ID']]) && $re['IS_OTHERS'] != 'Y') {
+			if (!empty($country[$re['MD_STD_REG_ID']])) {
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
@@ -249,7 +246,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 			echo '<td  align="right">' . $sum_compare . '</td>';
 			echo '</tr>';
 			$idx = 0;
-			if (!empty($country[$re['MD_STD_REG_ID']]) && $re['IS_OTHERS'] != 'Y') {
+			if (!empty($country[$re['MD_STD_REG_ID']])) {
 				foreach ($country[$re['MD_STD_REG_ID']] as $key => $co) {
 
 					$compare = '-';
@@ -371,10 +368,10 @@ function getSumData($data1, $data2, $region, $region_id, $country, &$sum1 = 0, &
 		end_date2 = date[0] + '-' + date[1] + '-' + (date[2] - 543);
 
 		var show_type = $('#show_type').val();
-		var country_type = $('#country_type').val();
+		var country_group = $('#country_group').val();
 		var country_id = $('#country_id').val();
 
-		window.location.href = base_url + '/report/nation_compare?start1=' + start_date1 + '&end1=' + end_date1 + '&start2=' + start_date2 + '&end2=' + end_date2 + '&show_type=' + show_type + '&country_type=' + country_type+'&country_id='+country_id;
+		window.location.href = base_url + '/report/nation_compare?start1=' + start_date1 + '&end1=' + end_date1 + '&start2=' + start_date2 + '&end2=' + end_date2 + '&show_type=' + show_type + '&country_group=' + country_group+'&country_id='+country_id;
 	}
 
 	function ShowHide(reg_id) {

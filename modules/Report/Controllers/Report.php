@@ -4,6 +4,7 @@ namespace Modules\Report\Controllers;
 
 use App\Controllers\BaseController;
 use Modules\Report\Models\Report_model;
+use Modules\Report\Models\CountryGroup_model;
 use Modules\Setting\Models\Setting_model;
 use Modules\Main\Models\Main_model;
 use Modules\Import\Models\Import_model;
@@ -15,6 +16,34 @@ class Report extends BaseController
 
 	public function index()
 	{
+	}
+
+	/**
+	 * กำหนดค่า country_group + region/country จาก CountryGroup_model
+	 * รองรับ:
+	 *   - ?country_group=STD_GOV|STD_TAT|ALL_GOV|ALL_TAT  (ใหม่)
+	 *   - ?country_type=standard|all                      (legacy → map ไป STD_GOV/ALL_GOV)
+	 */
+	protected function _loadCountryGroup(&$data)
+	{
+		$CG = new CountryGroup_model();
+		$group = $_GET['country_group'] ?? null;
+
+		if (!$group) {
+			$legacy = $_GET['country_type'] ?? ($data['country_type'] ?? 'all');
+			$group = CountryGroup_model::codeFromLegacyType($legacy);
+		}
+		if (!in_array($group, CountryGroup_model::VALID_CODES, true)) {
+			$group = 'ALL_GOV';
+		}
+
+		$legacyFmt = $CG->getLegacyFormat($group);
+
+		$data['country_group']  = $group;
+		$data['country_type']   = CountryGroup_model::legacyTypeFromCode($group);
+		$data['country_groups'] = $CG->getGroups();
+		$data['region']         = $legacyFmt['region'];
+		$data['country']        = $legacyFmt['country'];
 	}
 
 	public function nation()
@@ -159,8 +188,7 @@ class Report extends BaseController
 
 		// echo '<pre>'; print_r($data); exit;
 		$data['country_select'] = $Model->getCountryAllRow();
-		$data['region'] = $Model->getSTDRegion($data['country_type']);
-		$data['country'] = $Model->getCountryByRegion($data['country_type']);
+		$this->_loadCountryGroup($data);
 		$data['data1'] = $Model->getNatBetweenDateData($data['start_date1'], $data['end_date1'], $data['country_type'],$data['country_id']);
 		$data['data2'] = $Model->getNatBetweenDateData($data['start_date2'], $data['end_date2'], $data['country_type'],$data['country_id']);
 		$data['export_type'] = @$_GET['export_type'];
@@ -222,8 +250,7 @@ class Report extends BaseController
 		}
 
 		$data['country_select'] = $Model->getCountryAllRow();
-		$data['region'] = $Model->getSTDRegion($data['country_type']);
-		$data['country'] = $Model->getCountryByRegion($data['country_type']);
+		$this->_loadCountryGroup($data);
 
 		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
@@ -291,8 +318,7 @@ class Report extends BaseController
 		}
 
 		$data['country_select'] = $Model->getCountryAllRow();
-		$data['region'] = $Model->getSTDRegion($data['country_type']);
-		$data['country'] = $Model->getCountryByRegion($data['country_type']);
+		$this->_loadCountryGroup($data);
 		$data['select_year'] = $Model->getSelectYear();
 
 
@@ -331,6 +357,15 @@ class Report extends BaseController
 		$data['date_end'] = $date_end;
 		$data['data'] = $Model->getMarketData($date_start, $date_end);
 		$data['country'] = $Model->getCountryByMarket();
+		$this->_loadCountryGroup($data);
+		// filter $data['data'][MARKET_TYPE] โดย COUNTRY_ID ให้อยู่ใน group ที่เลือก
+		$CG = new CountryGroup_model();
+		$allowed = array_flip($CG->getCountryIds($data['country_group']));
+		if (is_array($data['data'])) {
+			foreach ($data['data'] as $mt => $rows) {
+				$data['data'][$mt] = array_values(array_filter($rows, fn($r) => isset($allowed[(int)$r['COUNTRY_ID']])));
+			}
+		}
 		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
 			$this->export_excel('market.xlsx', 'Modules\Report\Views\export\market', $data);
@@ -378,11 +413,7 @@ class Report extends BaseController
 		$data['data'] = $Model->getNatDaily($date_start, $date_end);
 		// $data['country'] = $Model->getCountryForNatDaily($date_start,$date_end);
 
-		$data['region'] = $Model->getSTDRegion('standard');
-		$data['country'] = $Model->getCountryByRegion('standard');
-
-		$data['region'] = $Model->getSTDRegion($data['country_type']);
-		$data['country'] = $Model->getCountryByRegion($data['country_type']);
+		$this->_loadCountryGroup($data);
 
 		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
@@ -508,8 +539,7 @@ class Report extends BaseController
 		$data['point_select'] = $Model_import->getPointMonthly();
 		$data['point'] = $Model_import->getPointMonthly($data['point_type']);
 		$data['data'] = $Model_import->getRawDataMonthly($data['year'],$data['month'],$data['year2'],$data['month2']);
-		$data['region'] = $Model->getSTDRegion($data['country_type']);
-		$data['country'] = $Model->getCountryByRegion($data['country_type']);
+		$this->_loadCountryGroup($data);
 
 		if (@$_GET['export_type'] == 'excel') {
 			$this->export_excel('monthly.xlsx', 'Modules\Report\Views\export\monthly', $data);

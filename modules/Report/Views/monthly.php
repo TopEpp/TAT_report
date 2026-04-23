@@ -65,13 +65,10 @@
 	</div>
 	<div class="col-md-4 col-12 text-start py-2 py-md-0">
 		Country List
-		<select class="form-control" id="country_type">
-			<option value="standard" <?php if (@$country_type == 'standard') {
-											echo "selected='selected'";
-										} ?>>Standard</option>
-			<option value="all" <?php if (@$country_type == 'all') {
-									echo "selected='selected'";
-								} ?>>All Country</option>
+		<select class="form-control" id="country_group">
+			<?php foreach (($country_groups ?? []) as $cg): ?>
+				<option value="<?= $cg['GROUP_CODE'] ?>" <?= (@$country_group === $cg['GROUP_CODE']) ? "selected='selected'" : '' ?>><?= $cg['NAME_TH'] ?></option>
+			<?php endforeach ?>
 		</select>
 	</div>
 	<div class="col-md-1 py-2 py-md-0 text-center mt-auto">
@@ -246,7 +243,7 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $point
 
 			$padding_region = $level * 10;
 			$alink = '';
-			if (!empty($country[$re['MD_STD_REG_ID']])  && $re['IS_OTHERS'] != 'Y') {
+			if (!empty($country[$re['MD_STD_REG_ID']])) {
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
@@ -268,7 +265,7 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $point
 			echo '</tr>';
 
 
-			if (!empty($country[$re['MD_STD_REG_ID']])  && $re['IS_OTHERS'] != 'Y') {
+			if (!empty($country[$re['MD_STD_REG_ID']])) {
 				foreach ($country[$re['MD_STD_REG_ID']] as $co) {
 
 					$padding_country = $level * 15;
@@ -369,7 +366,7 @@ function getSumData($data, $region, $region_id, $country, $port_id, $point_id, &
 		var month = $('#m').val();
 		var year2 = $('#y2').val();
 		var month2 = $('#m2').val();
-		var country_type = $('#country_type').val();
+		var country_group = $('#country_group').val();
 		var port_type = $("input[name='port_type[]']").map(function() {
 			if ($(this).prop('checked') == true) {
 				return $(this).val();
@@ -382,7 +379,7 @@ function getSumData($data, $region, $region_id, $country, $port_id, $point_id, &
 			}
 		}).get();
 
-		window.location.href = base_url + '/report/monthly?m=' + month+'&y='+year+'&m2=' + month2+'&y2='+year2+'&country_type='+country_type+'&port_type='+port_type+'&point_type='+point_type;
+		window.location.href = base_url + '/report/monthly?m=' + month+'&y='+year+'&m2=' + month2+'&y2='+year2+'&country_group='+country_group+'&port_type='+port_type+'&point_type='+point_type;
 	}
 
 	function export_report(type){
@@ -390,7 +387,7 @@ function getSumData($data, $region, $region_id, $country, $port_id, $point_id, &
 		var month = $('#m').val();
 		var year2 = $('#y2').val();
 		var month2 = $('#m2').val();
-		var country_type = $('#country_type').val();
+		var country_group = $('#country_group').val();
 		var port_type = $("input[name='port_type[]']").map(function() {
 			if ($(this).prop('checked') == true) {
 				return $(this).val();
@@ -403,7 +400,7 @@ function getSumData($data, $region, $region_id, $country, $port_id, $point_id, &
 			}
 		}).get();
 
-		window.open (base_url + '/report/monthly?m=' + month+'&y='+year+'&m2=' + month2+'&y2='+year2+'&country_type='+country_type+'&port_type='+port_type+'&point_type='+point_type+'&export_type='+type);
+		window.open (base_url + '/report/monthly?m=' + month+'&y='+year+'&m2=' + month2+'&y2='+year2+'&country_group='+country_group+'&port_type='+port_type+'&point_type='+point_type+'&export_type='+type);
 	}
 
 </script>
