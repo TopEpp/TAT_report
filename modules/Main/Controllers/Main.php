@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use Modules\Main\Models\Main_model;
 use Modules\Main\Models\Activity_model;
 use Modules\Report\Models\Report_model;
+use Modules\Report\Models\CountryGroup_model;
 use Modules\Setting\Models\Setting_model;
 use CodeIgniter\API\ResponseTrait;
 // use App\Libraries\DataGovApi; // ยังไม่ได้ใช้ — ข้อมูลมาจาก hardcode ชั่วคราว
@@ -110,6 +111,10 @@ class Main extends BaseController
 		$data['region'] = $Report_model->getSTDRegion('standard');
 		$data['sub_region'] = $Model->getSubRegion();
 		$data['country_region'] = $Report_model->getCountryByRegion('standard');
+
+		// Standard (ททท) hierarchy สำหรับ table "Region"
+		$CG = new CountryGroup_model();
+		$data['dashboard_tree'] = $CG->getHierarchy('STD_TAT');
 
 		$data['SumChartData'] = $Model->getSumChart($end_date);
 		$data['SumChartDataYear'] = $Model->getSumChartYear($data['year']);

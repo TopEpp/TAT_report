@@ -594,15 +594,83 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr style="background-color: #BD98A1;">
-								<td style="padding-left: 15px;">ASIA</td>
-								<td align="right">
-									<?php echo number_format(@$SumRegionDateData[13] + @$SumRegionDateData[15] + @$SumRegionDateData[38] + @$SumRegionDateData[23] + @$SumRegionDateData[39]) ?>
-								</td>
-								<td align="right">
-									<?php echo number_format(@$SumRegionMonthData[13] + @$SumRegionMonthData[15] + @$SumRegionMonthData[38] + @$SumRegionMonthData[23] + @$SumRegionMonthData[39]) ?>
-								</td>
-							</tr>
+							<?php
+							// Render Region table using Standard (ททท) hierarchy
+							$stdTatColors = [
+								'ASIA AND SOUTH PACIFIC'                              => '#BD98A1',
+								'EAST ASIA'                                           => '#F9C9B2',
+								'OTHERS IN EAST ASIA'                                 => '#FBE0C7',
+								'ASEAN, SOUTH ASIA, SOUTH PACIFIC'                    => '#EBABC0',
+								'OTHERS IN ASEAN, SOUTH ASIA, SOUTH PACIFIC'          => '#FFFFAE',
+								'EUROPE AMERICA MIDDLE EAST AND AFRICA'               => '#9E88B5',
+								'EUROPE'                                              => '#C6A7CB',
+								'OTHERS IN EUROPE'                                    => '#E9D4E2',
+								'THE AMERICAS, THE MIDDLE EAST AND AFRICA'            => '#65B5DA',
+								'OTHERS IN THE AMERICAS, THE MIDDLE EAST AND AFRICA'  => '#B2DFE8',
+							];
+
+							$lightenHex = function($hex, $amount = 0.45) {
+								$hex = ltrim($hex, '#');
+								if (strlen($hex) !== 6) return '#' . $hex;
+								$r = hexdec(substr($hex, 0, 2));
+								$g = hexdec(substr($hex, 2, 2));
+								$b = hexdec(substr($hex, 4, 2));
+								$r = (int)min(255, $r + (255 - $r) * $amount);
+								$g = (int)min(255, $g + (255 - $g) * $amount);
+								$b = (int)min(255, $b + (255 - $b) * $amount);
+								return sprintf('#%02X%02X%02X', $r, $g, $b);
+							};
+
+							$walkSum = function($node, $map) use (&$walkSum) {
+								$total = 0;
+								if ($node['NODE_TYPE'] === 'COUNTRY' && !empty($node['COUNTRY_ID'])) {
+									$total += (int)(@$map[(int)$node['COUNTRY_ID']] ?? 0);
+								}
+								foreach ($node['children'] ?? [] as $c) $total += $walkSum($c, $map);
+								return $total;
+							};
+
+							$renderNode = function($node, $level, $bg) use (&$renderNode, &$walkSum, $lightenHex, $SumCountryDateData, $SumCountryMonthData, $stdTatColors) {
+								// skip OTHERS rows (OTHERS IN EAST ASIA, OTHERS IN EUROPE, ฯลฯ)
+								if (($node['IS_OTHERS'] ?? 'N') === 'Y') return;
+								$id  = (int)$node['NODE_ID'];
+								$pid = (int)($node['PARENT_NODE_ID'] ?? 0);
+								$sumD = $walkSum($node, $SumCountryDateData);
+								$sumM = $walkSum($node, $SumCountryMonthData);
+								$padding = 15 + $level * 25;
+								$hideStyle = $level >= 2 ? 'display:none;' : '';
+								// level 3 (ประเทศใต้ TAT office) ใช้สีจางกว่า level 2
+								$rowBg = $level >= 3 ? $lightenHex($bg, 0.45) : $bg;
+
+								if ($node['NODE_TYPE'] === 'COUNTRY') {
+									echo '<tr class="tr_row parent_' . $pid . '" data-node-id="' . $id . '" style="' . $hideStyle . 'background:' . $rowBg . ';">';
+									echo '<td style="padding-left:' . $padding . 'px;">' . htmlspecialchars($node['NAME_EN']) . '</td>';
+									echo '<td align="right">' . number_format($sumD) . '</td>';
+									echo '<td align="right">' . number_format($sumM) . '</td>';
+									echo '</tr>';
+								} else {
+									$hasChildren = !empty($node['children']);
+									$weight = $level === 0 ? 'bold' : ($node['NODE_TYPE'] === 'TAT_OFFICE' ? 'normal' : '600');
+									$onclick = $hasChildren ? ' onclick="toggleChildren(' . $id . ')"' : '';
+									$cursor  = $hasChildren ? 'cursor:pointer;' : '';
+									echo '<tr class="tr_row parent_' . $pid . '" data-node-id="' . $id . '"' . $onclick . ' style="' . $hideStyle . 'background:' . $rowBg . ';' . $cursor . '">';
+									echo '<td style="padding-left:' . $padding . 'px;font-weight:' . $weight . ';">' . htmlspecialchars($node['NAME_EN']) . '</td>';
+									echo '<td align="right">' . number_format($sumD) . '</td>';
+									echo '<td align="right">' . number_format($sumM) . '</td>';
+									echo '</tr>';
+									foreach ($node['children'] ?? [] as $c) {
+										$childBg = $stdTatColors[$c['NAME_EN']] ?? $bg;
+										$renderNode($c, $level + 1, $childBg);
+									}
+								}
+							};
+
+							foreach (($dashboard_tree ?? []) as $top) {
+								$topBg = $stdTatColors[$top['NAME_EN']] ?? '#cccccc';
+								$renderNode($top, 0, $topBg);
+							}
+							?>
+							<?php /* OLD_REMOVED_START - สำรอง block เก่าออก
 							<tr style="background:#EBABC0;">
 								<td style="padding-left: 40px;">ASEAN</td>
 								<td align="right"><?php echo number_format(@$SumRegionDateData[13]) ?></td>
@@ -847,6 +915,7 @@
 								<td align="right"><?php echo number_format(@$SumRegionDateData[29]) ?></td>
 								<td align="right"><?php echo number_format(@$SumRegionMonthData[29]) ?></td>
 							</tr>
+							OLD_REMOVED_END */ ?>
 						</tbody>
 						<tfoot>
 							<tr style="background: #488a9a;font-weight: bolder;">
@@ -868,6 +937,9 @@
 							</tr>
 						</tfoot>
 					</table>
+					<div class="text-muted" style="font-size: 0.85em; padding: 6px 4px 0 4px; font-style: italic;">
+						หมายเหตุ: จัดกลุ่มตามรูปแบบตารางมาตรฐาน (Standard Table) ของ ททท.
+					</div>
 					<!-- </div> -->
 				</div>
 			</div>
@@ -1335,6 +1407,25 @@ for ($i = 1; $i <= 12; $i++) {
 	function showCountry(id) {
 		// $('.tr_country').hide();
 		$('.region_' + id).show();
+	}
+
+	function toggleChildren(nodeId) {
+		var $children = $('.parent_' + nodeId);
+		if (!$children.length) return;
+		var isHidden = $children.first().css('display') === 'none';
+		if (isHidden) {
+			$children.show();
+		} else {
+			hideDescendants(nodeId);
+		}
+	}
+
+	function hideDescendants(parentId) {
+		$('.parent_' + parentId).each(function () {
+			$(this).hide();
+			var cid = $(this).data('node-id');
+			if (cid) hideDescendants(cid);
+		});
 	}
 
 	function SaveImg2ExportPdf(url2SaveImg, url2DowloadReport) {
