@@ -2,6 +2,54 @@
 $request = \Config\Services::request();
 $controller =  $request->uri->getSegment(1);
 $method =  $request->uri->getSegment(2);
+
+// Page title map: 'controller/method' => 'หัวข้อหน้า'
+$titleMap = [
+    // Main / Dashboard
+    'main/daily'           => 'สถิตินักท่องเที่ยวรายวัน',
+    'main/region'          => 'สถิตินักท่องเที่ยวรายภูมิภาค',
+    'main/country'         => 'สถิตินักท่องเที่ยวรายประเทศ',
+    'main/monthly'         => 'สถิตินักท่องเที่ยวรายเดือน',
+    'main/monthly_period'  => 'Dashboard รายเดือน',
+    'main/departure'       => 'สถิติคนไทยเดินทางออกนอกราชอาณาจักรในภาพรวม',
+    'main/realtime'        => 'Real-Time Tourism Intelligence (Domestic)',
+    'main/realtime2'       => 'Domestic Tourism v2 (Leading Indicators + Activity)',
+    'main/realtime_inter'  => 'Real-Time Tourism Intelligence (International)',
+    'main/forecast'        => 'Forecast & Scenario Analytics',
+    'main/forecast_inter'  => 'International Forecast (6 เดือน)',
+    // Report
+    'report/nation'              => 'รายงานจำนวนนักท่องเที่ยวรายสัญชาติ',
+    'report/port'                => 'รายงานจำนวนนักท่องเที่ยวรายด่าน',
+    'report/nation_compare'      => 'รายงานเปรียบเทียบจำนวนนักท่องเที่ยวรายสัญชาติ',
+    'report/port_compare'        => 'รายงานจำนวนนักท่องเที่ยวรายด่าน (สะสม) - รายวัน',
+    'report/port_compare_monthly'=> 'รายงานจำนวนนักท่องเที่ยวรายด่าน (สะสม) - รายเดือน',
+    'report/market'              => 'รายงานจำนวนนักท่องเที่ยวจำแนกรายตลาด',
+    'report/nation_daily'        => 'รายงานจำนวนนักท่องเที่ยวรายวัน จำแนกรายสัญชาติ',
+    'report/port_daily'          => 'รายงานจำนวนนักท่องเที่ยวรายวัน จำแนกรายด่าน',
+    'report/monthly'             => 'รายงานจำนวนนักท่องเที่ยวรายเดือน',
+    'report/port_monthly'        => 'รายงานจำนวนนักท่องเที่ยวรายด่าน รายเดือน',
+    'report/departure'           => 'สถิติคนไทยเดินทางออกนอกประเทศ รายวัน',
+    // Setting
+    'setting/country'    => 'Country Settings',
+    'setting/port'       => 'Port Settings',
+    'setting/visa'       => 'Visa Settings',
+    'setting/permission' => 'Permission Settings',
+    'setting/log_login'  => 'Log Login',
+    'setting/log_info'   => 'Log Export Info',
+    // Import
+    'import/index'       => 'Import',
+    'import/raw_monthly' => 'Import - Monthly',
+    'import/monthly'     => 'Import - Monthly',
+    // Login
+    'login/index'   => 'เข้าสู่ระบบ',
+    'login/welcome' => 'ยินดีต้อนรับ',
+];
+
+$siteName = 'การท่องเที่ยวแห่งประเทศไทย';
+$key = $controller . '/' . ($method ?: 'index');
+// Fallback: ลอง controller-only key (กรณี method ว่าง)
+$pageTitle = $titleMap[$key] ?? ($titleMap[$controller . '/index'] ?? '');
+$fullTitle = $pageTitle ? ($pageTitle . ' | ' . $siteName) : $siteName;
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +62,7 @@ $method =  $request->uri->getSegment(2);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>การท่องเที่ยวแห่งประเทศไทย</title>
+    <title><?= esc($fullTitle) ?></title>
 
     <!-- Custom fonts for this template-->
 
