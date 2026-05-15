@@ -440,6 +440,29 @@ class Main extends BaseController
 		$data['SumMarketMonth'] = $Report_model->getMarketData($data['start_date'], $data['end_date']);
 		$data['country_market'] = $Report_model->getCountryByMarket();
 
+		// === YoY baseline (ปีก่อนหน้า) ===
+		list($_y, $_m, $_d) = explode('-', $end_date);
+		$end_date_yoy = ($_y - 1) . '-' . $_m . '-' . $_d;
+		$start_date_yoy = $start_date_past;
+		$end_date_yoy_dmy = $_d . '-' . $_m . '-' . ($_y - 1);
+		list($_sd, $_sm, $_sy) = explode('-', $data['start_date']);
+		$start_date_yoy_dmy = $_sd . '-' . $_sm . '-' . ($_sy - 1);
+
+		try {
+			$data['SumDateData_yoy']     = $Model->getSumDate($end_date_yoy);
+			$data['SumMonthData_yoy']    = $Model->getSumMonth($start_date_yoy, $end_date_yoy);
+			$data['SumNatDateData_yoy']  = $Model->getSumNatDate($end_date_yoy);
+			$data['SumNatMonthData_yoy'] = $Model->getSumNatMonth($start_date_yoy, $end_date_yoy);
+			$data['SumMarketDate_yoy']   = $Report_model->getMarketData($end_date_yoy_dmy, $end_date_yoy_dmy);
+			$data['SumMarketMonth_yoy']  = $Report_model->getMarketData($start_date_yoy_dmy, $end_date_yoy_dmy);
+		} catch (\Throwable $e) {
+			$data['SumDateData_yoy']     = 0;
+			$data['SumMonthData_yoy']    = 0;
+			$data['SumNatDateData_yoy']  = [];
+			$data['SumNatMonthData_yoy'] = [];
+			$data['SumMarketDate_yoy']   = [];
+			$data['SumMarketMonth_yoy']  = [];
+		}
 
 		// echo '<pre>';
 		// print_r($data['SumMarketDate']);
@@ -519,6 +542,29 @@ class Main extends BaseController
 		$data['SumMarketMonth'] = $Report_model->getMarketData($data['start_date'], $data['end_date']);
 		$data['country_market'] = $Report_model->getCountryByMarket();
 
+		// === YoY baseline (ปีก่อนหน้า) ===
+		list($_y, $_m, $_d) = explode('-', $end_date);
+		$end_date_yoy = ($_y - 1) . '-' . $_m . '-' . $_d;
+		$start_date_yoy = $start_date_past;
+		$end_date_yoy_dmy = $_d . '-' . $_m . '-' . ($_y - 1);
+		list($_sd, $_sm, $_sy) = explode('-', $data['start_date']);
+		$start_date_yoy_dmy = $_sd . '-' . $_sm . '-' . ($_sy - 1);
+
+		try {
+			$data['SumDateData_yoy']     = $Model->getSumDate($end_date_yoy);
+			$data['SumMonthData_yoy']    = $Model->getSumMonth($start_date_yoy, $end_date_yoy);
+			$data['SumNatDateData_yoy']  = $Model->getSumNatDate($end_date_yoy);
+			$data['SumNatMonthData_yoy'] = $Model->getSumNatMonth($start_date_yoy, $end_date_yoy);
+			$data['SumMarketDate_yoy']   = $Report_model->getMarketData($end_date_yoy_dmy, $end_date_yoy_dmy);
+			$data['SumMarketMonth_yoy']  = $Report_model->getMarketData($start_date_yoy_dmy, $end_date_yoy_dmy);
+		} catch (\Throwable $e) {
+			$data['SumDateData_yoy']     = 0;
+			$data['SumMonthData_yoy']    = 0;
+			$data['SumNatDateData_yoy']  = [];
+			$data['SumNatMonthData_yoy'] = [];
+			$data['SumMarketDate_yoy']   = [];
+			$data['SumMarketMonth_yoy']  = [];
+		}
 
 		return view('Modules\Main\Views\export\dashboard_view', $data);
 	}

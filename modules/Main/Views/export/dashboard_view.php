@@ -286,6 +286,41 @@ if (!empty($SumMarketDate_past['Long'])) {
 // print_r($SumMarketDate_past);
 // print_r($numberMarketDay);
 // print_r($numberSumNatDay);
+
+// === YoY lookup maps (COUNTRY_ID => NUM ของปีก่อนหน้า) ===
+$natDateYoyMap = [];
+if (!empty($SumNatDateData_yoy)) {
+	foreach ($SumNatDateData_yoy as $v) $natDateYoyMap[$v['COUNTRY_ID']] = $v['NUM'];
+}
+$natMonthYoyMap = [];
+if (!empty($SumNatMonthData_yoy)) {
+	foreach ($SumNatMonthData_yoy as $v) $natMonthYoyMap[$v['COUNTRY_ID']] = $v['NUM'];
+}
+$marketDateYoyMap = ['Short' => [], 'Long' => []];
+foreach (['Short', 'Long'] as $t) {
+	if (!empty($SumMarketDate_yoy[$t])) {
+		foreach ($SumMarketDate_yoy[$t] as $v) $marketDateYoyMap[$t][$v['COUNTRY_ID']] = $v['NUM'];
+	}
+}
+$marketMonthYoyMap = ['Short' => [], 'Long' => []];
+foreach (['Short', 'Long'] as $t) {
+	if (!empty($SumMarketMonth_yoy[$t])) {
+		foreach ($SumMarketMonth_yoy[$t] as $v) $marketMonthYoyMap[$t][$v['COUNTRY_ID']] = $v['NUM'];
+	}
+}
+
+if (!function_exists('yoyBadge')) {
+	function yoyBadge($curr, $past, $size = 11)
+	{
+		if (empty($past) || $past == 0) {
+			return '<span style="color:#999;font-size:' . $size . 'px;font-weight:bold;">N/A</span>';
+		}
+		$pct = (($curr - $past) / $past) * 100;
+		$sign = $pct >= 0 ? '+' : '';
+		$color = $pct > 0 ? '#1cc88a' : ($pct < 0 ? '#e74a3b' : '#999');
+		return '<span style="color:' . $color . ';font-size:' . $size . 'px;font-weight:bold;white-space:nowrap;">' . $sign . number_format($pct, 1) . '%</span>';
+	}
+}
 ?>
 
 <body style="width:1150px; height: 680px;margin: auto;">
@@ -336,9 +371,13 @@ if (!empty($SumMarketDate_past['Long'])) {
 												จำนวนนักท่องเที่ยว
 											</div>
 										</div>
-										<div class="col-lg-12 " style="background-color: #73A0E0; border-radius: 30px;">
-											<div style="color: white;text-align: center;padding: 5px 10px ; font-size: 23px;font-weight: bold;">
+										<div class="col-lg-12" style="display:flex;align-items:center;gap:5px;">
+											<div style="background-color: #73A0E0; border-radius: 30px; flex:1; color: white;text-align: center;padding: 4px 8px; font-size: 18px;font-weight: bold;white-space:nowrap;">
 												<?php echo number_format($SumDateData); ?> คน
+											</div>
+											<div style="min-width:55px;text-align:center;font-size:11px;font-weight:bold;color:#163868;line-height:1.15;">
+												YoY<br>
+												<?php echo yoyBadge($SumDateData, $SumDateData_yoy, 12); ?>
 											</div>
 										</div>
 									</div>
@@ -348,11 +387,14 @@ if (!empty($SumMarketDate_past['Long'])) {
 										<div class="col-lg-12 colorText" style="padding: 10px 0px 0px 0px; font-size: 17px; text-align: center; font-weight: bold;">
 											สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
 										</div>
-										<div class="col-lg-12" style="background-color: #DDC354; border-radius: 30px;">
-											<div style="color: white;text-align: center;padding: 5px 10px ; font-size: 23px;font-weight: bold; color:#163868">
+										<div class="col-lg-12" style="display:flex;align-items:center;gap:5px;">
+											<div style="background-color: #DDC354; border-radius: 30px; flex:1; color:#163868;text-align: center;padding: 4px 8px; font-size: 18px;font-weight: bold;white-space:nowrap;">
 												<?php echo number_format($SumMonthData); ?> คน
 											</div>
-
+											<div style="min-width:55px;text-align:center;font-size:11px;font-weight:bold;color:#163868;line-height:1.15;">
+												YoY<br>
+												<?php echo yoyBadge($SumMonthData, $SumMonthData_yoy, 12); ?>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -361,8 +403,9 @@ if (!empty($SumMarketDate_past['Long'])) {
 								</div>
 								<div class="col-lg-6 text-center">
 									<div class="row">
-										<div class="col-lg-12" style="color: #193666;font-weight: bold;font-size: 17px;">
-											<?php echo $Mydate->date_eng2thai($to_date, 543) ?>
+										<div class="col-lg-12" style="display:flex;align-items:center;color: #193666;font-weight: bold;font-size: 14px;">
+											<div style="flex:1;text-align:left;padding-left:10px;white-space:nowrap;"><?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></div>
+											<div style="min-width:60px;text-align:center;font-size:13px;">YoY</div>
 										</div>
 										<div class="col-lg-12">
 											<div style="background-color: #73A0E0; border-radius: 20px;">
@@ -388,16 +431,20 @@ if (!empty($SumMarketDate_past['Long'])) {
 														}
 													}
 													$i++;
+													$pastNum = isset($natDateYoyMap[$v['COUNTRY_ID']]) ? $natDateYoyMap[$v['COUNTRY_ID']] : 0;
 												?>
 
 													<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 														<div class="text-center" style="padding: 3px 5px;">
 															<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 														</div>
-														<div style="text-align: left; padding: 6.4px 10px;color: white; font-size: 16.5px;font-weight: bold; width: 90%;">
+														<div style="text-align: left; padding: 4px 6px;color: white; font-size: 11.5px;font-weight: bold; flex:1;line-height:15px;">
 															<?php echo $v['COUNTRY_NAME_EN'] ?>
 															<br>
 															<?php echo number_format($v['NUM']); ?> คน
+														</div>
+														<div style="text-align: right; padding: 4px 8px; min-width:60px;color:white;font-size:12px;font-weight:bold;line-height:15px;">
+															<?php echo yoyBadge($v['NUM'], $pastNum, 12); ?>
 														</div>
 													</div>
 												<?php if ($c == 10) break;
@@ -408,8 +455,9 @@ if (!empty($SumMarketDate_past['Long'])) {
 								</div>
 								<div class="col-lg-6 text-center">
 									<div class="row">
-										<div class="col-lg-12" style="color: #193666;font-weight: bold;font-size: 17px;">
-											สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
+										<div class="col-lg-12" style="display:flex;align-items:center;color: #193666;font-weight: bold;font-size: 14px;">
+											<div style="flex:1;text-align:left;padding-left:10px;white-space:nowrap;">สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></div>
+											<div style="min-width:60px;text-align:center;font-size:13px;">YoY</div>
 										</div>
 										<div class="col-lg-12">
 											<div style="background-color: #DDC354; border-radius: 20px;">
@@ -433,16 +481,20 @@ if (!empty($SumMarketDate_past['Long'])) {
 														}
 													}
 													$i++;
+													$pastNum = isset($natMonthYoyMap[$v['COUNTRY_ID']]) ? $natMonthYoyMap[$v['COUNTRY_ID']] : 0;
 												?>
 
 													<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 														<div class="text-center" style="padding: 3px 5px;">
 															<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 														</div>
-														<div style="text-align: left; padding: 6.4px 10px;color: #163868; font-size: 16.5px;font-weight: bold; width: 90%;">
+														<div style="text-align: left; padding: 4px 6px;color: #163868; font-size: 11.5px;font-weight: bold; flex:1;line-height:15px;">
 															<?php echo $v['COUNTRY_NAME_EN'] ?>
 															<br>
 															<?php echo number_format($v['NUM']); ?> คน
+														</div>
+														<div style="text-align: right; padding: 4px 8px; min-width:60px;color:#163868;font-size:12px;font-weight:bold;line-height:15px;">
+															<?php echo yoyBadge($v['NUM'], $pastNum, 12); ?>
 														</div>
 													</div>
 												<?php if ($c == 10) break;
@@ -480,8 +532,9 @@ if (!empty($SumMarketDate_past['Long'])) {
 						<div class="col-lg-12">
 							<div class="row">
 								<div class="col-lg-6">
-									<div class="text-center" style="color: #049b97; font-weight:bold; font-size: 16px; ">
-										<?php echo $Mydate->date_eng2thai($to_date, 543) ?>
+									<div style="display:flex;align-items:center;color: #049b97; font-weight:bold; font-size: 13px;">
+										<div style="flex:1;text-align:left;padding-left:10px;white-space:nowrap;"><?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></div>
+										<div style="min-width:55px;text-align:center;font-size:12px;">YoY</div>
 									</div>
 									<div class="ms-3" style="background-color: #73A0E0; border-radius: 20px;">
 										<?php $c = 0;
@@ -506,15 +559,19 @@ if (!empty($SumMarketDate_past['Long'])) {
 													}
 												}
 												$i++;
+												$pastNum = isset($marketDateYoyMap['Short'][$v['COUNTRY_ID']]) ? $marketDateYoyMap['Short'][$v['COUNTRY_ID']] : 0;
 										?>
 												<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 													<div class="text-center" style="padding: 3px 5px;">
 														<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 													</div>
-													<div style="text-align: left; padding: 5px 10px;color: white; font-size: 15.5px;font-weight: bold; width: 90%;">
+													<div style="text-align: left; padding: 3px 6px;color: white; font-size: 11.5px;font-weight: bold; flex:1;line-height:15px;">
 														<?php echo $v['COUNTRY_NAME_EN'] ?>
 														<br>
 														<?php echo number_format($v['NUM']); ?> คน
+													</div>
+													<div style="text-align: right; padding: 3px 8px; min-width:55px;color:white;font-size:11.5px;font-weight:bold;line-height:14px;">
+														<?php echo yoyBadge($v['NUM'], $pastNum, 11); ?>
 													</div>
 												</div>
 										<?php if ($c == 5) break;
@@ -524,8 +581,9 @@ if (!empty($SumMarketDate_past['Long'])) {
 
 								</div>
 								<div class="col-lg-6">
-									<div class="text-center" style="color: #049b97; font-weight:bold; font-size: 16px; ">
-										สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
+									<div style="display:flex;align-items:center;color: #049b97; font-weight:bold; font-size: 13px;">
+										<div style="flex:1;text-align:left;padding-left:10px;white-space:nowrap;">สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></div>
+										<div style="min-width:55px;text-align:center;font-size:12px;">YoY</div>
 									</div>
 									<div style="background-color: #DDC354; border-radius: 20px;">
 										<?php $c = 0;
@@ -537,15 +595,19 @@ if (!empty($SumMarketDate_past['Long'])) {
 												if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
 													$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
 												}
+												$pastNum = isset($marketMonthYoyMap['Short'][$v['COUNTRY_ID']]) ? $marketMonthYoyMap['Short'][$v['COUNTRY_ID']] : 0;
 										?>
 												<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 													<div class="text-center" style="padding: 3px 5px;">
 														<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 													</div>
-													<div style="text-align: left; padding: 5px 10px;color: #163868; font-size: 15.5px;font-weight: bold; width: 90%;">
+													<div style="text-align: left; padding: 3px 6px;color: #163868; font-size: 11.5px;font-weight: bold; flex:1;line-height:15px;">
 														<?php echo $v['COUNTRY_NAME_EN'] ?>
 														<br>
 														<?php echo number_format($v['NUM']); ?> คน
+													</div>
+													<div style="text-align: right; padding: 3px 8px; min-width:55px;color:#163868;font-size:11.5px;font-weight:bold;line-height:14px;">
+														<?php echo yoyBadge($v['NUM'], $pastNum, 11); ?>
 													</div>
 												</div>
 										<?php if ($c == 5) break;
@@ -561,8 +623,9 @@ if (!empty($SumMarketDate_past['Long'])) {
 						<div class="col-lg-12">
 							<div class="row">
 								<div class="col-lg-6">
-									<div class="text-center " style="font-weight:bold; font-size: 16px; color: #d145a2;">
-										<?php echo $Mydate->date_eng2thai($to_date, 543) ?>
+									<div style="display:flex;align-items:center;font-weight:bold; font-size: 13px; color: #d145a2;">
+										<div style="flex:1;text-align:left;padding-left:10px;white-space:nowrap;"><?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></div>
+										<div style="min-width:55px;text-align:center;font-size:12px;">YoY</div>
 									</div>
 									<div class="ms-3" style="background-color: #73A0E0; border-radius: 20px;">
 										<?php $c = 0;
@@ -586,15 +649,19 @@ if (!empty($SumMarketDate_past['Long'])) {
 													}
 												}
 												$i++;
+												$pastNum = isset($marketDateYoyMap['Long'][$v['COUNTRY_ID']]) ? $marketDateYoyMap['Long'][$v['COUNTRY_ID']] : 0;
 										?>
 												<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 													<div class="text-center" style="padding: 3px 5px;">
 														<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 													</div>
-													<div style="text-align: left; padding: 5px 10px;color: white; font-size: 15.5px;font-weight: bold; width: 90%;">
+													<div style="text-align: left; padding: 3px 6px;color: white; font-size: 11.5px;font-weight: bold; flex:1;line-height:15px;">
 														<?php echo $v['COUNTRY_NAME_EN'] ?>
 														<br>
 														<?php echo number_format($v['NUM']); ?> คน
+													</div>
+													<div style="text-align: right; padding: 3px 8px; min-width:55px;color:white;font-size:11.5px;font-weight:bold;line-height:14px;">
+														<?php echo yoyBadge($v['NUM'], $pastNum, 11); ?>
 													</div>
 												</div>
 										<?php if ($c == 5) break;
@@ -604,8 +671,9 @@ if (!empty($SumMarketDate_past['Long'])) {
 
 								</div>
 								<div class="col-lg-6">
-									<div class="text-center " style="font-weight:bold; font-size: 16px; color: #d145a2;">
-										สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
+									<div style="display:flex;align-items:center;font-weight:bold; font-size: 13px; color: #d145a2;">
+										<div style="flex:1;text-align:left;padding-left:10px;white-space:nowrap;">สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?></div>
+										<div style="min-width:55px;text-align:center;font-size:12px;">YoY</div>
 									</div>
 									<div style="background-color: #DDC354; border-radius: 20px;">
 										<?php $c = 0;
@@ -617,15 +685,19 @@ if (!empty($SumMarketDate_past['Long'])) {
 												if (!file_exists(base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png'))) {
 													$flag = base_url('public/img/flag/' . $v['COUNTRY_ID'] . '.png');
 												}
+												$pastNum = isset($marketMonthYoyMap['Long'][$v['COUNTRY_ID']]) ? $marketMonthYoyMap['Long'][$v['COUNTRY_ID']] : 0;
 										?>
 												<div class="d-flex align-items-center" style="border-bottom:<?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
 													<div class="text-center" style="padding: 3px 5px;">
 														<img class="img-profile rounded-circle" src="<?php echo $number_icon ?>" style="height: 32px; ">
 													</div>
-													<div style="text-align: left; padding: 5px 10px;color: #163868; font-size: 15.5px;font-weight: bold; width: 90%;">
+													<div style="text-align: left; padding: 3px 6px;color: #163868; font-size: 11.5px;font-weight: bold; flex:1;line-height:15px;">
 														<?php echo $v['COUNTRY_NAME_EN'] ?>
 														<br>
 														<?php echo number_format($v['NUM']); ?> คน
+													</div>
+													<div style="text-align: right; padding: 3px 8px; min-width:55px;color:#163868;font-size:11.5px;font-weight:bold;line-height:14px;">
+														<?php echo yoyBadge($v['NUM'], $pastNum, 11); ?>
 													</div>
 												</div>
 										<?php if ($c == 5) break;
