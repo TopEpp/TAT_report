@@ -60,21 +60,21 @@
     }
 
     #resultsTable {
-        height: 470px;
         width: 230px;
         background: #73A0E0;
         overflow: hidden;
         border-radius: 25px !important;
+        padding-bottom: 4px;
         /* margin: 0px 0px 0px 0px */
         /* position: absolute; */
     }
 
     #resultsTable2 {
-        height: 470px;
         width: 230px;
         background: #DDC354;
         overflow: hidden;
         border-radius: 25px !important;
+        padding-bottom: 4px;
         /* margin: 0px 0px 0px auto; */
     }
 
@@ -231,6 +231,18 @@ if (!function_exists('yoyBadge')) {
         return '<span style="color:' . $color . ';font-size:' . $size . 'px;font-weight:bold;">' . $sign . number_format($pct, 1) . '%</span>';
     }
 }
+
+if (!function_exists('yoyInline')) {
+    function yoyInline($curr, $past, $size = 11)
+    {
+        if (empty($past) || $past == 0) {
+            return '<span style="color:#cccccc;font-size:' . $size . 'px;font-weight:bold;">(N/A)</span>';
+        }
+        $pct = (($curr - $past) / $past) * 100;
+        $color = $pct > 0 ? '#00c853' : ($pct < 0 ? '#e74a3b' : '#cccccc');
+        return '<span style="color:' . $color . ';font-size:' . $size . 'px;font-weight:bold;">(' . number_format($pct, 2) . '%)</span>';
+    }
+}
 ?>
 
 <body>
@@ -295,7 +307,7 @@ if (!function_exists('yoyBadge')) {
                                                     </tr>
                                                     <tr style="border: 0;padding: 0px 0px;">
                                                         <td style="color:white;text-align:center;padding:0 10px 5px;font-size:12px;font-weight:bold;">
-                                                            YoY <?php echo yoyBadge($SumDateData, $SumDateData_yoy, 12); ?>
+                                                            <?php echo yoyInline($SumDateData, $SumDateData_yoy, 12); ?>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -334,7 +346,7 @@ if (!function_exists('yoyBadge')) {
                                                     </tr>
                                                     <tr style="border: 0;padding: 0px 0px;">
                                                         <td class="colorText" style="text-align:center;padding:0 10px 5px;font-size:12px;font-weight:bold;">
-                                                            YoY <?php echo yoyBadge($SumMonthData, $SumMonthData_yoy, 12); ?>
+                                                            <?php echo yoyInline($SumMonthData, $SumMonthData_yoy, 12); ?>
                                                         </td>
                                                     </tr>
 
@@ -366,11 +378,8 @@ if (!function_exists('yoyBadge')) {
                                                 <tbody>
                                                     <tr>
                                                         <td
-                                                            style="padding: 8px 0 6px 10px; text-align: left;color: #193666;font-weight: bold;font-size: 12px;width: 75%;white-space:nowrap;">
+                                                            style="padding: 8px 0 6px 0; text-align: center;color: #193666;font-weight: bold;font-size: 16px;width: 100%;white-space:nowrap;">
                                                             <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
-                                                        </td>
-                                                        <td style="padding: 8px 5px 6px 0;text-align: center;color: #193666;font-weight: bold;font-size: 12px;width: 25%;">
-                                                            YoY
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -413,13 +422,13 @@ if (!function_exists('yoyBadge')) {
                                                                             style="height: 34px; ">
                                                                     </td>
                                                                     <td
-                                                                        style="text-align: left; padding: 6.4px 10px;color: white; font-size: 14px;font-weight: bold; width: 65%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
+                                                                        style="text-align: left; padding: 6.4px 10px;color: white; font-size: 14px;font-weight: bold; width: 65%; vertical-align: bottom; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
                                                                         <?php echo $v['COUNTRY_NAME_EN'] ?>
                                                                         <br>
                                                                         <?php echo number_format($v['NUM']); ?> คน
                                                                     </td>
-                                                                    <td style="text-align: right; padding: 6.4px 8px; width: 25%; border-bottom: <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
-                                                                        <?php echo yoyBadge($v['NUM'], $pastNum, 12); ?>
+                                                                    <td style="text-align: right; padding: 6.4px 8px; width: 25%; vertical-align: bottom; border-bottom: <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
+                                                                        <?php echo yoyInline($v['NUM'], $pastNum, 12); ?>
                                                                     </td>
                                                                     <!-- <td style="width:10%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;text-align: center;">
 																<?php echo $icon; ?>
@@ -443,11 +452,8 @@ if (!function_exists('yoyBadge')) {
                                                 <tbody>
                                                     <tr>
                                                         <td
-                                                            style="padding: 8px 0 6px 10px; text-align: left;color: #193666;font-weight: bold;font-size: 11px;width: 75%;white-space:nowrap;">
+                                                            style="padding: 8px 0 6px 0; text-align: center;color: #193666;font-weight: bold;font-size: 15px;width: 100%;white-space:nowrap;">
                                                             สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
-                                                        </td>
-                                                        <td style="padding: 8px 5px 6px 0;text-align: center;color: #193666;font-weight: bold;font-size: 12px;width: 25%;">
-                                                            YoY
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -476,13 +482,13 @@ if (!function_exists('yoyBadge')) {
                                                                             style="height: 34px; ">
                                                                     </td>
                                                                     <td class="colorText"
-                                                                        style="text-align: left; padding: 6.4px 10px; font-size: 14px;font-weight: bold; width: 65%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
+                                                                        style="text-align: left; padding: 6.4px 10px; font-size: 14px;font-weight: bold; width: 65%; vertical-align: bottom; border-bottom:  <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
                                                                         <?php echo $v['COUNTRY_NAME_EN'] ?>
                                                                         <br>
                                                                         <?php echo number_format($v['NUM']); ?> คน
                                                                     </td>
-                                                                    <td style="text-align: right; padding: 6.4px 8px; width: 25%; border-bottom: <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
-                                                                        <?php echo yoyBadge($v['NUM'], $pastNum, 12); ?>
+                                                                    <td class="colorText" style="text-align: right; padding: 6.4px 8px; width: 25%; vertical-align: bottom; border-bottom: <?php echo $c == 10 ? '' : '1px solid #FFFFFF' ?>;">
+                                                                        <?php echo yoyInline($v['NUM'], $pastNum, 12); ?>
                                                                     </td>
                                                                     <!-- <td style="border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;text-align: center; width: 10%;">
 																<img src="<?php echo base_url('public/img/arrowup1.png') ?>" alt="">
@@ -498,6 +504,9 @@ if (!function_exists('yoyBadge')) {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div style="padding: 2px 10px 0;">
+                            <p style="margin:0;line-height: 15px;font-weight: bold;font-size:10px;color:#163868;">หมายเหตุ : ตัวเลขในวงเล็บหมายถึงอัตราการเปลี่ยนแปลง YOY</p>
                         </div>
                     </div>
                 </div>
@@ -537,10 +546,9 @@ if (!function_exists('yoyBadge')) {
                     <div style="width:210px;margin:0 auto;padding: 0px 5px;">
                         <table style="width:100%;margin:0;">
                             <tr>
-                                <td class="colorTextLeft" style="font-size:11px;text-align:left;padding-left:10px;font-weight:bold;width:75%;white-space:nowrap;">
+                                <td class="colorTextLeft" style="font-size:15px;text-align:center;font-weight:bold;width:100%;white-space:nowrap;">
                                     <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
                                 </td>
-                                <td class="colorTextLeft" style="font-size:11px;text-align:center;font-weight:bold;width:25%;">YoY</td>
                             </tr>
                         </table>
                     </div>
@@ -578,13 +586,13 @@ if (!function_exists('yoyBadge')) {
                                                     style="height: 34px; ">
                                             </td>
                                             <td
-                                                style="text-align: left; padding: 4.8px 10px;color: white; font-size: 13.5px;font-weight: bold; width: 65%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+                                                style="text-align: left; padding: 4.8px 10px;color: white; font-size: 13.5px;font-weight: bold; width: 65%; vertical-align: bottom; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
                                                 <?php echo $v['COUNTRY_NAME_EN'] ?>
                                                 <br>
                                                 <?php echo number_format($v['NUM']); ?> คน
                                             </td>
-                                            <td style="text-align: right; padding: 4.8px 5px; width: 25%; border-bottom: <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-                                                <?php echo yoyBadge($v['NUM'], $pastNum, 11); ?>
+                                            <td style="text-align: right; padding: 4.8px 5px; width: 25%; vertical-align: bottom; border-bottom: <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+                                                <?php echo yoyInline($v['NUM'], $pastNum, 11); ?>
                                             </td>
                                         </tr>
                                     </table>
@@ -599,10 +607,9 @@ if (!function_exists('yoyBadge')) {
                     <div style="width:210px;margin:0 auto;padding: 0px 5px;">
                         <table style="width:100%;margin:0;">
                             <tr>
-                                <td class="colorTextLeft" style="font-size:10.5px;text-align:left;padding-left:10px;font-weight:bold;width:75%;white-space:nowrap;">
+                                <td class="colorTextLeft" style="font-size:14.5px;text-align:center;font-weight:bold;width:100%;white-space:nowrap;">
                                     สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
                                 </td>
-                                <td class="colorTextLeft" style="font-size:11px;text-align:center;font-weight:bold;width:25%;">YoY</td>
                             </tr>
                         </table>
                     </div>
@@ -630,13 +637,13 @@ if (!function_exists('yoyBadge')) {
                                                     style="height: 34px; ">
                                             </td>
                                             <td
-                                                style="text-align: left; padding: 4.8px 10px;color: #193666; font-size: 13.5px;font-weight: bold; width: 65%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+                                                style="text-align: left; padding: 4.8px 10px;color: #193666; font-size: 13.5px;font-weight: bold; width: 65%; vertical-align: bottom; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
                                                 <?php echo $v['COUNTRY_NAME_EN'] ?>
                                                 <br>
                                                 <?php echo number_format($v['NUM']); ?> คน
                                             </td>
-                                            <td style="text-align: right; padding: 4.8px 5px; width: 25%; border-bottom: <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-                                                <?php echo yoyBadge($v['NUM'], $pastNum, 11); ?>
+                                            <td style="text-align: right; padding: 4.8px 5px; width: 25%; vertical-align: bottom; border-bottom: <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+                                                <?php echo yoyInline($v['NUM'], $pastNum, 11); ?>
                                             </td>
                                             <!-- <td style="font-size: 14px; color: #193666; font-weight: bold; width: 10%; text-align: center;border-bottom:<?php echo $c == 10 ? '' : '1px solid white' ?>;">
 											<img src="<?php echo base_url('public/img/arrowup1.png') ?>" alt="">
@@ -669,10 +676,9 @@ if (!function_exists('yoyBadge')) {
                     <div style="width:210px;margin:0 auto;padding: 0px 5px;">
                         <table style="width:100%;margin:0;">
                             <tr>
-                                <td style="font-size:11px;text-align:left;padding-left:10px;font-weight:bold;color:#CC409E;width:75%;white-space:nowrap;">
+                                <td style="font-size:15px;text-align:center;font-weight:bold;color:#CC409E;width:100%;white-space:nowrap;">
                                     <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
                                 </td>
-                                <td style="font-size:11px;text-align:center;font-weight:bold;color:#CC409E;width:25%;">YoY</td>
                             </tr>
                         </table>
                     </div>
@@ -711,13 +717,13 @@ if (!function_exists('yoyBadge')) {
                                                     style="height: 34px; ">
                                             </td>
                                             <td
-                                                style="text-align: left; padding: 4.8px 10px;color: white; font-size: 13.5px;font-weight: bold; width: 65%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+                                                style="text-align: left; padding: 4.8px 10px;color: white; font-size: 13.5px;font-weight: bold; width: 65%; vertical-align: bottom; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
                                                 <?php echo $v['COUNTRY_NAME_EN'] ?>
                                                 <br>
                                                 <?php echo number_format($v['NUM']); ?> คน
                                             </td>
-                                            <td style="text-align: right; padding: 4.8px 5px; width: 25%; border-bottom: <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-                                                <?php echo yoyBadge($v['NUM'], $pastNum, 11); ?>
+                                            <td style="text-align: right; padding: 4.8px 5px; width: 25%; vertical-align: bottom; border-bottom: <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+                                                <?php echo yoyInline($v['NUM'], $pastNum, 11); ?>
                                             </td>
                                             <!-- <td style="font-size: 14px; color: #193666; font-weight: bold; width: 10%; text-align: center;border-bottom:<?php echo $c == 10 ? '' : '1px solid white' ?>;">
 											<?php echo $icon ?>
@@ -734,10 +740,9 @@ if (!function_exists('yoyBadge')) {
                     <div style="width:210px;margin:0 auto;padding: 0px 5px;">
                         <table style="width:100%;margin:0;">
                             <tr>
-                                <td style="font-size:10.5px;text-align:left;padding-left:10px;font-weight:bold;color:#CC409E;width:75%;white-space:nowrap;">
+                                <td style="font-size:14.5px;text-align:center;font-weight:bold;color:#CC409E;width:100%;white-space:nowrap;">
                                     สะสม <?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> - <?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
                                 </td>
-                                <td style="font-size:11px;text-align:center;font-weight:bold;color:#CC409E;width:25%;">YoY</td>
                             </tr>
                         </table>
                     </div>
@@ -767,13 +772,13 @@ if (!function_exists('yoyBadge')) {
                                                         style="height: 34px; ">
                                                 </td>
                                                 <td
-                                                    style="text-align: left; padding: 4.8px 10px;color: #193666; font-size: 13.5px;font-weight: bold; width: 65%; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+                                                    style="text-align: left; padding: 4.8px 10px;color: #193666; font-size: 13.5px;font-weight: bold; width: 65%; vertical-align: bottom; border-bottom:  <?php echo $c == 10 ? '' : '1px solid white' ?>;">
                                                     <?php echo $v['COUNTRY_NAME_EN'] ?>
                                                     <br>
                                                     <?php echo number_format($v['NUM']); ?> คน
                                                 </td>
-                                                <td style="text-align: right; padding: 4.8px 5px; width: 25%; border-bottom: <?php echo $c == 10 ? '' : '1px solid white' ?>;">
-                                                    <?php echo yoyBadge($v['NUM'], $pastNum, 11); ?>
+                                                <td style="text-align: right; padding: 4.8px 5px; width: 25%; vertical-align: bottom; border-bottom: <?php echo $c == 10 ? '' : '1px solid white' ?>;">
+                                                    <?php echo yoyInline($v['NUM'], $pastNum, 11); ?>
                                                 </td>
                                                 <!-- <td style="font-size: 14px; color: #193666; font-weight: bold; width: 10%; text-align: center;border-bottom:<?php echo $c == 10 ? '' : '1px solid white' ?>;">
 												<img src="<?php echo base_url('public/img/arrowup1.png') ?>" alt="">
