@@ -501,9 +501,6 @@ if (!function_exists('yoyInline')) {
 										</div>
 									</div>
 								</div>
-								<div class="col-lg-12" style="padding: 2px 10px 0;">
-									<p class="m-0" style="font-size:10px;color:#163868;font-style:italic;">หมายเหตุ : ตัวเลขในวงเล็บหมายถึงอัตราการเปลี่ยนแปลง YOY</p>
-								</div>
 								<div class="col-lg-12">
 									<p class="m-0" style="opacity: 0.5;font-size:10px;color: #a1afc2;padding: 5px;"><?php echo date('d/m/Y H:i:s:') . $session->get('org_id');; ?></p>
 								</div>
@@ -695,7 +692,8 @@ if (!function_exists('yoyInline')) {
 						<div class="col-lg-12 " style="font-weight: bold; color: #fff; font-size:10px; color: #163868; padding: 0;">
 							หมายเหตุ : <br>
 							1. ข้อมูลจำแนกรายสัญชาติ (Nationality) ที่มีการกำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศ <br>(สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
-							2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 <br>เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass
+							2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 <br>เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass <br>
+								3. ตัวเลขในวงเล็บหมายถึงอัตราการเปลี่ยนแปลง YOY
 						</div>
 					</div>
 				</div>
@@ -747,13 +745,17 @@ if (!function_exists('yoyInline')) {
 		$.each(chart_array, function(key, value) {
 			var container = document.getElementById("htmltoimage_" + value);
 			html2canvas(container, {
-				allowTaint: true
+				scale: 2,
+				useCORS: true,
+				allowTaint: true,
+				backgroundColor: '#ffffff',
+				logging: false
 			}).then(function(canvas) {
 
 				var link = document.createElement("a");
 				document.body.appendChild(link);
 				link.download = "<?php echo $to_date; ?>" + value + ".png";
-				link.href = canvas.toDataURL();
+				link.href = canvas.toDataURL('image/png', 1.0);
 				link.target = '_blank';
 				// console.log(link);
 				var dataURL = link.href;
