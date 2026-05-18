@@ -172,7 +172,7 @@
 							<td align="right"><?php echo number_format($sum2); ?></td>
 							<td align="right"><?php echo $sum_compare; ?></td>
 						</tr>
-						<?php genTableData($data1, $data2, $region, 0, $country); }?>
+						<?php genTableData($data1, $data2, $region, 0, $country, 1, $country_group ?? ''); }?>
 					</tbody>
 				</table>
 			</div>
@@ -206,7 +206,7 @@ function getTableCountry($data1, $data2, $country_id,$country_name){
 	echo '</tr>';
 }
 
-function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
+function genTableData($data1, $data2, $region, $region_id, $country, $level = 1, $country_group = '')
 {
 	$level++;
 	if (!empty($region[$region_id])) {
@@ -229,9 +229,11 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 				}
 			}
 
+			$hideChildren = ($re['IS_OTHERS'] === 'Y' && strpos($country_group, 'STD_') === 0);
+
 			$padding_region = $level * 10;
 			$alink = '';
-			if (!empty($country[$re['MD_STD_REG_ID']])) {
+			if (!$hideChildren && !empty($country[$re['MD_STD_REG_ID']])) {
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
@@ -246,7 +248,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 			echo '<td  align="right">' . $sum_compare . '</td>';
 			echo '</tr>';
 			$idx = 0;
-			if (!empty($country[$re['MD_STD_REG_ID']])) {
+			if (!$hideChildren && !empty($country[$re['MD_STD_REG_ID']])) {
 				foreach ($country[$re['MD_STD_REG_ID']] as $key => $co) {
 
 					$compare = '-';
@@ -302,7 +304,9 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 				}
 			}
 
-			genTableData($data1, $data2, $region, $re['MD_STD_REG_ID'], $country, $level);
+			if (!$hideChildren) {
+				genTableData($data1, $data2, $region, $re['MD_STD_REG_ID'], $country, $level, $country_group);
+			}
 		}
 	}
 

@@ -33,7 +33,7 @@
 					$country_name = $country_select[$country_id];
 					getTableCountry($data, $country_name, $country_id, $port_colunm, $period); 
 				}else{
-					genTableData($data, $region, 0, $country, $port_colunm, $period); }
+					genTableData($data, $region, 0, $country, $port_colunm, $period, 1, $country_group ?? ''); }
 			?>
 		</tbody>
 		<?php if ($export_type == 'excel') { ?>
@@ -66,16 +66,17 @@ function getTableCountry($data, $country_name, $country_id,$port_colunm,$period)
 	echo '</tr>';
 }
 
-function genTableData($data, $region, $region_id, $country, $port_colunm, $period, $level = 1)
+function genTableData($data, $region, $region_id, $country, $port_colunm, $period, $level = 1, $country_group = '')
 {
 	$level++;
 
 	if (!empty($region[$region_id])) {
 		foreach ($region[$region_id] as $re) {
+			$hideChildren = ($re['IS_OTHERS'] === 'Y' && strpos($country_group, 'STD_') === 0);
 
 			$padding_region = $level * 10;
 			$alink = '';
-			if (!empty($country[$re['MD_STD_REG_ID']])) {
+			if (!$hideChildren && !empty($country[$re['MD_STD_REG_ID']])) {
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
@@ -95,7 +96,7 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $perio
 			echo '</tr>';
 
 
-			if (!empty($country[$re['MD_STD_REG_ID']])) {
+			if (!$hideChildren && !empty($country[$re['MD_STD_REG_ID']])) {
 				foreach ($country[$re['MD_STD_REG_ID']] as $co) {
 
 					$padding_country = $level * 15;
@@ -115,7 +116,9 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $perio
 				}
 			}
 
-			genTableData($data, $region, $re['MD_STD_REG_ID'], $country, $port_colunm, $period, $level);
+			if (!$hideChildren) {
+				genTableData($data, $region, $re['MD_STD_REG_ID'], $country, $port_colunm, $period, $level, $country_group);
+			}
 		}
 	}
 

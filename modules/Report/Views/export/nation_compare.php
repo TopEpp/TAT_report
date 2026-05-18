@@ -62,7 +62,7 @@ $end_date2 = $day . '-' . $month . '-' . $year;
 				<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo ($sum2); ?></td>
 				<td align="right" style="background-color:#B6E2E9;border: 1px solid black "><?php echo $sum_compare; ?></td>
 			</tr>
-			<?php genTableData($data1, $data2, $region, 0, $country); } ?>
+			<?php genTableData($data1, $data2, $region, 0, $country, 1, $country_group ?? ''); } ?>
 
 			<?php if ($export_type == 'excel') { ?>
 				<tr style="border:0px">
@@ -104,7 +104,7 @@ function getTableCountry($data1, $data2, $country_id,$country_name){
 	echo '</tr>';
 }
 
-function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
+function genTableData($data1, $data2, $region, $region_id, $country, $level = 1, $country_group = '')
 {
 	$level++;
 
@@ -118,6 +118,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 			$dataSum = getSumData($data1, $data2, $region, $re['MD_STD_REG_ID'], $country);
 			$sum1 = $dataSum['sum1'];
 			$sum2 = $dataSum['sum2'];
+			$hideChildren = ($re['IS_OTHERS'] === 'Y' && strpos($country_group, 'STD_') === 0);
 
 			// if ($sum2 > 0) {
 			// 	$sum_diff = $sum2 - $sum1;
@@ -141,7 +142,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 
 			$padding_region = $level * 10;
 			$alink = '';
-			if (!empty($country[$re['MD_STD_REG_ID']])) {
+			if (!$hideChildren && !empty($country[$re['MD_STD_REG_ID']])) {
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
@@ -153,7 +154,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 			echo '</tr>';
 
 
-			if (!empty($country[$re['MD_STD_REG_ID']])) {
+			if (!$hideChildren && !empty($country[$re['MD_STD_REG_ID']])) {
 				foreach ($country[$re['MD_STD_REG_ID']] as $co) {
 					$compare = '-';
 					$num1 = @$data1[$co['COUNTRYID']]['NUM'];
@@ -188,7 +189,9 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1)
 				}
 			}
 
-			genTableData($data1, $data2, $region, $re['MD_STD_REG_ID'], $country, $level);
+			if (!$hideChildren) {
+				genTableData($data1, $data2, $region, $re['MD_STD_REG_ID'], $country, $level, $country_group);
+			}
 		}
 	}
 

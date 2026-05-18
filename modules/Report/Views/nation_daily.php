@@ -88,7 +88,7 @@
 						?>
 
 					</tr>
-					<?php genTableData($data, $region, 0, $country, $period) ?>
+					<?php genTableData($data, $region, 0, $country, $period, 1, $country_group ?? '') ?>
 				</tbody>
 			</table>
 		</div>
@@ -96,17 +96,18 @@
 </div>
 <?php
 
-function genTableData($data, $region, $region_id, $country, $period, $level = 1)
+function genTableData($data, $region, $region_id, $country, $period, $level = 1, $country_group = '')
 {
 	$level++;
 
 	if (!empty($region[$region_id])) {
 		foreach ($region[$region_id] as $re) {
 			$dataSum = getSumData($data, $region, $re['MD_STD_REG_ID'], $country, $period);
+			$hideChildren = ($re['IS_OTHERS'] === 'Y' && strpos($country_group, 'STD_') === 0);
 
 			$padding_region = $level * 10;
 			$alink = '';
-			if (!empty($country[$re['MD_STD_REG_ID']])) {
+			if (!$hideChildren && !empty($country[$re['MD_STD_REG_ID']])) {
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
@@ -115,7 +116,7 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1)
 			}else{
 				echo '<tr id="TR-' . $re['MD_STD_REG_ID'] . '" >';
 			}
-			
+
 			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
 			foreach ($period as $d) {
 				echo "<td align='right'>" . number_format(@$dataSum[$d]) . "</td>";
@@ -123,7 +124,7 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1)
 			echo '</tr>';
 
 
-			if (!empty($country[$re['MD_STD_REG_ID']])) {
+			if (!$hideChildren && !empty($country[$re['MD_STD_REG_ID']])) {
 				foreach ($country[$re['MD_STD_REG_ID']] as $co) {
 
 
@@ -137,7 +138,9 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1)
 				}
 			}
 
-			genTableData($data, $region, $re['MD_STD_REG_ID'], $country, $period, $level);
+			if (!$hideChildren) {
+				genTableData($data, $region, $re['MD_STD_REG_ID'], $country, $period, $level, $country_group);
+			}
 		}
 	}
 

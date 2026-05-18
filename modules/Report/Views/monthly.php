@@ -224,7 +224,7 @@
 						 }?>
 
 					</tr>
-					<?php genTableData($data, $region, 0, $country, $port_colunm, $point); ?>
+					<?php genTableData($data, $region, 0, $country, $port_colunm, $point, 1, $country_group ?? ''); ?>
 				</tbody>
 			</table>
 		</div>
@@ -232,7 +232,7 @@
 </div>
 
 <?php 
-function genTableData($data, $region, $region_id, $country, $port_colunm, $point, $level = 1)
+function genTableData($data, $region, $region_id, $country, $port_colunm, $point, $level = 1, $country_group = '')
 {
 	$level++;
 
@@ -240,10 +240,11 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $point
 
 	if (!empty($region[$region_id])) {
 		foreach ($region[$region_id] as $re) {
+			$hideChildren = ($re['IS_OTHERS'] === 'Y' && strpos($country_group, 'STD_') === 0);
 
 			$padding_region = $level * 10;
 			$alink = '';
-			if (!empty($country[$re['MD_STD_REG_ID']])) {
+			if (!$hideChildren && !empty($country[$re['MD_STD_REG_ID']])) {
 				$alink = '<a onclick="ShowHide(' . $re['MD_STD_REG_ID'] . ')"> <i class="fa-solid fa-caret-down"></i> </a>';
 			}
 
@@ -265,7 +266,7 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $point
 			echo '</tr>';
 
 
-			if (!empty($country[$re['MD_STD_REG_ID']])) {
+			if (!$hideChildren && !empty($country[$re['MD_STD_REG_ID']])) {
 				foreach ($country[$re['MD_STD_REG_ID']] as $co) {
 
 					$padding_country = $level * 15;
@@ -273,10 +274,10 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $point
 					echo '<td style="padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
 					if (!empty($port_colunm)) {
 						foreach ($port_colunm as $p) {
-							if(!empty($point[$p['PORT_ID']])){ 
+							if(!empty($point[$p['PORT_ID']])){
 								foreach($point[$p['PORT_ID']] as $po){
 									echo "<td align='right'>" . @number_format(@$data[$co['COUNTRYID']]['NUM'][$p['PORT_ID']][$po['POINT_ID']]) . "</td>";
-								} 
+								}
 							}else{
 								echo "<td align='right'>" . @number_format(@$data[$co['COUNTRYID']]['NUM'][$p['PORT_ID']][0]) . "</td>";
 							}
@@ -286,7 +287,9 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $point
 				}
 			}
 
-			genTableData($data, $region, $re['MD_STD_REG_ID'], $country, $port_colunm, $point, $level);
+			if (!$hideChildren) {
+				genTableData($data, $region, $re['MD_STD_REG_ID'], $country, $port_colunm, $point, $level, $country_group);
+			}
 		}
 	}
 
