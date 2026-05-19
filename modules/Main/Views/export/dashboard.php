@@ -227,7 +227,7 @@ if (!function_exists('yoyBadge')) {
         }
         $pct = (($curr - $past) / $past) * 100;
         $sign = $pct >= 0 ? '+' : '';
-        $color = $pct > 0 ? '#1cc88a' : ($pct < 0 ? '#e74a3b' : '#999');
+        $color = $pct > 0 ? '#257A00' : ($pct < 0 ? '#B52222' : '#666666');
         return '<span style="color:' . $color . ';font-size:' . $size . 'px;font-weight:bold;">' . $sign . number_format($pct, 1) . '%</span>';
     }
 }
@@ -239,7 +239,7 @@ if (!function_exists('yoyInline')) {
             return '<span style="color:#cccccc;font-size:' . $size . 'px;font-weight:bold;">(N/A)</span>';
         }
         $pct = (($curr - $past) / $past) * 100;
-        $color = $pct > 0 ? '#00c853' : ($pct < 0 ? '#e74a3b' : '#cccccc');
+        $color = $pct > 0 ? '#257A00' : ($pct < 0 ? '#B52222' : '#666666');
         return '<span style="color:' . $color . ';font-size:' . $size . 'px;font-weight:bold;">(' . number_format($pct, 2) . '%)</span>';
     }
 }
