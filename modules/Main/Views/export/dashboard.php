@@ -219,9 +219,19 @@ foreach (['Short', 'Long'] as $t) {
     }
 }
 
+if (!function_exists('yoyConfig')) {
+    function yoyConfig($enabled = null)
+    {
+        static $state = true;
+        if ($enabled !== null) $state = (bool)$enabled;
+        return $state;
+    }
+}
+
 if (!function_exists('yoyBadge')) {
     function yoyBadge($curr, $past, $size = 11)
     {
+        if (!yoyConfig()) return '';
         if (empty($past) || $past == 0) {
             return '<span style="color:#999;font-size:' . $size . 'px;font-weight:bold;">N/A</span>';
         }
@@ -235,6 +245,7 @@ if (!function_exists('yoyBadge')) {
 if (!function_exists('yoyInline')) {
     function yoyInline($curr, $past, $size = 11)
     {
+        if (!yoyConfig()) return '';
         if (empty($past) || $past == 0) {
             return '<span style="color:#cccccc;font-size:' . $size . 'px;font-weight:bold;">(N/A)</span>';
         }
@@ -243,6 +254,9 @@ if (!function_exists('yoyInline')) {
         return '<span style="color:' . $color . ';font-size:' . $size . 'px;font-weight:bold;">(' . number_format($pct, 2) . '%)</span>';
     }
 }
+
+$show_yoy = !isset($_GET['show_yoy']) || $_GET['show_yoy'] != '0';
+yoyConfig($show_yoy);
 ?>
 
 <body>
@@ -305,11 +319,13 @@ if (!function_exists('yoyInline')) {
                                                             <?php echo number_format($SumDateData); ?> คน
                                                         </td>
                                                     </tr>
+                                                    <?php if ($show_yoy): ?>
                                                     <tr style="border: 0;padding: 0px 0px;">
                                                         <td style="color:white;text-align:center;padding:0 10px 5px;font-size:12px;font-weight:bold;">
                                                             <?php echo yoyInline($SumDateData, $SumDateData_yoy, 12); ?>
                                                         </td>
                                                     </tr>
+                                                    <?php endif; ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -344,11 +360,13 @@ if (!function_exists('yoyInline')) {
                                                             <?php echo number_format($SumMonthData); ?> คน
                                                         </td>
                                                     </tr>
+                                                    <?php if ($show_yoy): ?>
                                                     <tr style="border: 0;padding: 0px 0px;">
                                                         <td class="colorText" style="text-align:center;padding:0 10px 5px;font-size:12px;font-weight:bold;">
                                                             <?php echo yoyInline($SumMonthData, $SumMonthData_yoy, 12); ?>
                                                         </td>
                                                     </tr>
+                                                    <?php endif; ?>
 
                                                 </tbody>
                                             </table>
@@ -799,8 +817,8 @@ if (!function_exists('yoyInline')) {
                     (สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
                     2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3
                     เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้
-                    Border Pass <br>
-                    3. ตัวเลขในวงเล็บหมายถึงอัตราการเปลี่ยนแปลง YOY
+                    Border Pass <?php if ($show_yoy): ?><br>
+                    3. ตัวเลขในวงเล็บหมายถึงอัตราการเปลี่ยนแปลง YOY<?php endif; ?>
                 </p>
             </div>
         </div>

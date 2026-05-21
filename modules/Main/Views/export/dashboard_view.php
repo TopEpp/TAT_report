@@ -309,9 +309,19 @@ foreach (['Short', 'Long'] as $t) {
 	}
 }
 
+if (!function_exists('yoyConfig')) {
+	function yoyConfig($enabled = null)
+	{
+		static $state = true;
+		if ($enabled !== null) $state = (bool)$enabled;
+		return $state;
+	}
+}
+
 if (!function_exists('yoyBadge')) {
 	function yoyBadge($curr, $past, $size = 11)
 	{
+		if (!yoyConfig()) return '';
 		if (empty($past) || $past == 0) {
 			return '<span style="color:#999;font-size:' . $size . 'px;font-weight:bold;">N/A</span>';
 		}
@@ -325,6 +335,7 @@ if (!function_exists('yoyBadge')) {
 if (!function_exists('yoyInline')) {
 	function yoyInline($curr, $past, $size = 11)
 	{
+		if (!yoyConfig()) return '';
 		if (empty($past) || $past == 0) {
 			return '<span style="color:#cccccc;font-size:' . $size . 'px;font-weight:bold;white-space:nowrap;">(N/A)</span>';
 		}
@@ -333,6 +344,9 @@ if (!function_exists('yoyInline')) {
 		return '<span style="color:' . $color . ';font-size:' . $size . 'px;font-weight:bold;white-space:nowrap;">(' . number_format($pct, 2) . '%)</span>';
 	}
 }
+
+$show_yoy = !isset($_GET['show_yoy']) || $_GET['show_yoy'] != '0';
+yoyConfig($show_yoy);
 ?>
 
 <body style="width:1150px; height: 680px;margin: auto;">
@@ -342,13 +356,22 @@ if (!function_exists('yoyInline')) {
 		</div>
 		<div class="col-lg-11 col-12  my-md-auto text-center text-md-right my-3">
 			<div>
+				<?php
+				$toggle_url = current_url() . '?' . http_build_query(array_merge($_GET, ['show_yoy' => $show_yoy ? '0' : '1']));
+				$toggle_label = $show_yoy ? 'YoY: ON' : 'YoY: OFF';
+				$toggle_color = $show_yoy ? '#257A00' : '#888888';
+				$toggle_title = $show_yoy ? 'คลิกเพื่อซ่อน %YoY (มีผลกับ PDF ด้วย)' : 'คลิกเพื่อแสดง %YoY (มีผลกับ PDF ด้วย)';
+				?>
+				<button type="button" onclick="window.location.href='<?php echo $toggle_url; ?>'" class="btn shadow-1" title="<?php echo $toggle_title; ?>" style="background-color: <?php echo $toggle_color; ?>; color:#fff; font-weight:bold;">
+					<i class="fa-solid fa-percent"></i> <?php echo $toggle_label; ?>
+				</button>
 				<button type="button" onclick="SaveImg2ExportImg('<?php echo base_url('main/saveImg2Report'); ?>','png')" class="btn btn-info">
 					<i class="fa-solid fa-file-image"></i> PNG
 				</button>
 				<button type="button" onclick="SaveImg2ExportImg('<?php echo base_url('main/saveImg2ReportJPG'); ?>','jpg')" class="btn btn-info">
 					<i class="fa-solid fa-file-image"></i> JPG
 				</button>
-				<button type="button" onclick="window.open('<?php echo base_url('main/export_dashboard_v2?start_date=' . $start_date . '&end_date=' . $end_date); ?>')" class="btn btn-danger SetWidthbtnExport shadow-1">
+				<button type="button" onclick="window.open('<?php echo base_url('main/export_dashboard_v2?start_date=' . $start_date . '&end_date=' . $end_date . '&show_yoy=' . ($show_yoy ? '1' : '0')); ?>')" class="btn btn-danger SetWidthbtnExport shadow-1">
 					<i class="fa-solid fa-file-pdf"></i> PDF
 				</button>
 			</div>
@@ -386,7 +409,9 @@ if (!function_exists('yoyInline')) {
 										<div class="col-lg-12" style="text-align:center;">
 											<div style="background-color: #73A0E0; border-radius: 30px; color: white;text-align: center;padding: 4px 8px; font-weight: bold;white-space:nowrap;line-height:1.2;">
 												<div style="font-size: 18px;"><?php echo number_format($SumDateData); ?> คน</div>
+												<?php if ($show_yoy): ?>
 												<div style="font-size: 13px;"><?php echo yoyInline($SumDateData, $SumDateData_yoy, 13); ?></div>
+												<?php endif; ?>
 											</div>
 										</div>
 									</div>
@@ -399,7 +424,9 @@ if (!function_exists('yoyInline')) {
 										<div class="col-lg-12" style="text-align:center;">
 											<div style="background-color: #DDC354; border-radius: 30px; color:#163868;text-align: center;padding: 4px 8px; font-weight: bold;white-space:nowrap;line-height:1.2;">
 												<div style="font-size: 18px;"><?php echo number_format($SumMonthData); ?> คน</div>
+												<?php if ($show_yoy): ?>
 												<div style="font-size: 13px;"><?php echo yoyInline($SumMonthData, $SumMonthData_yoy, 13); ?></div>
+												<?php endif; ?>
 											</div>
 										</div>
 									</div>
@@ -692,8 +719,8 @@ if (!function_exists('yoyInline')) {
 						<div class="col-lg-12 " style="font-weight: bold; color: #fff; font-size:10px; color: #163868; padding: 0;">
 							หมายเหตุ : <br>
 							1. ข้อมูลจำแนกรายสัญชาติ (Nationality) ที่มีการกำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศ <br>(สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
-							2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 <br>เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass <br>
-								3. ตัวเลขในวงเล็บหมายถึงอัตราการเปลี่ยนแปลง YOY
+							2. ข้อมูลรวมสะสมในระบบมีความแตกต่างจากข้อมูลรวมสะสมของกระทรวงการท่องเที่ยวและกีฬา ประมาณร้อยละ 1-3 <br>เนื่องจากมีการ Cleansing ข้อมูลรายเดือน และยังไม่นับรวมนักท่องเที่ยวที่เดินทางเข้าประเทศไทยโดยใช้ Border Pass <?php if ($show_yoy): ?><br>
+								3. ตัวเลขในวงเล็บหมายถึงอัตราการเปลี่ยนแปลง YOY<?php endif; ?>
 						</div>
 					</div>
 				</div>
