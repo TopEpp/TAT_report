@@ -319,7 +319,7 @@
                                 <?php 
                                     $flag = ROOTPATH.'public/img/logotat.png';
 
-                                    if (!file_exists(ROOTPATH.'public/img/flag/' . $country_id . '.png')) {
+                                    if (file_exists(ROOTPATH.'public/img/flag/' . $country_id . '.png')) {
                                         $flag = ROOTPATH.'public/img/flag/' . $country_id . '.png';
                                     }
                                  ?>
