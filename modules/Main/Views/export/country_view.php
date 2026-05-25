@@ -185,7 +185,7 @@ body {
         <div class="col-lg-1 col-12 text-center text-md-right">
             <img class="img-profile " src="<?php echo base_url('public/img/tat.png') ?>" width="100px">
         </div>
-        <div class="col-lg-11 col-12  my-md-auto text-right text-md-right my-3">
+        <div class="col-lg-11 col-12  my-md-auto text-right text-md-right my-1">
             <div>
                 <button type="button"
                     onclick="SaveImg2ExportImg('<?php echo base_url('main/saveImg2Report'); ?>','png')"
@@ -420,13 +420,16 @@ body {
                             
 
                             <div>
-                                <div id="chart_country" style="height:300px !important">
+                                <div id="chart_country" style="height:255px !important">
                                     <img src="<?php echo base_url('public/uploads/main/' . $to_date . 'chart_country' . $country_id . '.png') ?>"
                                         style="height: 250px; width: 750px; border-radius: 15px;">
                                 </div>
                             </div>
                         </div>
 
+                    </div>
+                    <div class="col-lg-12 text-center" style="color: #d32f2f; font-weight: bold; font-size: 16px; padding: 2px 0;">
+                        ใช้เฉพาะภายใน ททท. เท่านั้น ¦ Internal Use Only
                     </div>
                     <div class="col-lg-12 p-0 bg-footer">
                         <div class="p-3" style="font-size:11px">

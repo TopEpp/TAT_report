@@ -345,6 +345,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="col12" style="clear: both;">
+                    <div style="text-align: center; color: #d32f2f; font-weight: bold; font-size: 16px; padding: 8px 0; width: 100%;">
+                        ใช้เฉพาะภายใน ททท. เท่านั้น ¦ Internal Use Only
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col12">

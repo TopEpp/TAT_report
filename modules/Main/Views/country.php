@@ -348,6 +348,11 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-12 text-center" style="color: #d32f2f; font-weight: bold; font-size: 16px; padding: 8px 0; font-family: 'TATSana-Chon', sans-serif;">
+                        ใช้เฉพาะภายใน ททท. เท่านั้น ¦ Internal Use Only
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-12" style="background-color: #0a1b54;color: white; font-size: 11px; position: relative; z-index: 0;">
                         หมายเหตุ : <br>1. ข้อมูลจำแนกรายสัญชาติ (Nationality) ที่มีการกำหนดหลักเกณฑ์การคำนวณนักท่องเที่ยวระหว่างประเทศ
 (สามารถอ่านเพิ่มเติมได้ที่นิยามในระบบฯ) <br>
