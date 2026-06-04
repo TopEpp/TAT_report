@@ -52,7 +52,20 @@ class Import extends BaseController
 		if(date('d')>=2){
 			$data['check_ratio_port'] = $Model->checkRatioPort(date('Y'),date('m'));
 		}
-		
+
+		// ปฏิทินสถานะการนำเข้า: default = เดือนของวันที่ข้อมูลล่าสุด, เลื่อนเดือนผ่าน ?cm=YYYY-MM
+		list($cal_year, $cal_month) = explode('-', substr($data['date'], 0, 7));
+		if (!empty($_GET['cm']) && preg_match('/^\d{4}-\d{2}$/', $_GET['cm'])) {
+			list($cal_year, $cal_month) = explode('-', $_GET['cm']);
+		}
+		$cal_year = (int)$cal_year; $cal_month = (int)$cal_month;
+		$data['cal_year'] = $cal_year;
+		$data['cal_month'] = $cal_month;
+		$data['cal_data'] = $Model->getImportCalendar($cal_year, $cal_month);
+		$data['cal_prev'] = date('Y-m', mktime(0, 0, 0, $cal_month - 1, 1, $cal_year));
+		$data['cal_next'] = date('Y-m', mktime(0, 0, 0, $cal_month + 1, 1, $cal_year));
+		$data['cal_max_date'] = $Main_model->getMaxDate();
+
 		return view('Modules\Import\Views\index', $data);
 	}
 
@@ -66,6 +79,7 @@ class Import extends BaseController
 		$file = $this->request->getFiles();
 
 		if ($xlsx = SimpleXLSX::parse($file['import_file'])) {
+			$input['import_file_name'] = $file['import_file']->getClientName();
 			$data['text'] = $Model->import_file($input, $xlsx);
 		}
 

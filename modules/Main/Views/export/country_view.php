@@ -504,9 +504,11 @@ function saveImg(url2SaveImg, type) {
 
 
                 if (count_canvas == chart_array.length) {
-                    window.open(imgUrl);
+                    window.open(imgUrl + '?t=' + Date.now()); // cache-buster กันรูปเก่าจาก cache
                 }
 
+            }).fail(function() {
+                alert('บันทึกรูปไม่สำเร็จ กรุณาลองใหม่อีกครั้ง');
             });
         });
 

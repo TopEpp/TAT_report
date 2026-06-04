@@ -602,9 +602,10 @@ class Main extends BaseController
 		$imgName = $_POST['imgName'] ?? 'export';
 		$file = $uploadfile . $imgName . '.png';
 
+		$success = false;
 		// รองรับ file upload (FormData)
 		if (isset($_FILES['imgFile']) && $_FILES['imgFile']['error'] === UPLOAD_ERR_OK) {
-			move_uploaded_file($_FILES['imgFile']['tmp_name'], $file);
+			$success = move_uploaded_file($_FILES['imgFile']['tmp_name'], $file);
 		}
 		// รองรับ base64 (PNG หรือ JPEG)
 		elseif (isset($_POST['imgBase64'])) {
@@ -612,7 +613,13 @@ class Main extends BaseController
 			$img = preg_replace('/^data:image\/(png|jpeg);base64,/', '', $img);
 			$img = str_replace(' ', '+', $img);
 			$data = base64_decode($img);
-			@file_put_contents($file, $data);
+			$success = (file_put_contents($file, $data) !== false);
+		}
+
+		// เขียนไฟล์ไม่สำเร็จ = ไฟล์เก่าค้างอยู่ → ต้องแจ้ง client ไม่ใช่เปิดรูปเก่าเงียบ ๆ
+		if (!$success) {
+			log_message('error', 'saveImg2Report: write fail ' . $file);
+			return $this->setResponseFormat('json')->respond(['error' => 'write fail'], 500);
 		}
 
 		return $this->setResponseFormat('json')->respond($file);

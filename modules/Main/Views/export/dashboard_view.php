@@ -796,9 +796,12 @@ yoyConfig($show_yoy);
 
 
 					if (count_canvas == chart_array.length) {
-						window.open(imgUrl);
+						// cache-buster: กัน browser เปิดรูปเก่าจาก cache (ชื่อไฟล์ซ้ำเดิมทุกครั้งต่อวัน)
+						window.open(imgUrl + '?t=' + Date.now());
 					}
 
+				}).fail(function() {
+					alert('บันทึกรูปไม่สำเร็จ กรุณาลองใหม่อีกครั้ง');
 				});
 			});
 

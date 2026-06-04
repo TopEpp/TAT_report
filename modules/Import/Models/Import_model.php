@@ -13,6 +13,8 @@ class Import_model extends Model
   	protected $primaryKey = 'REC_ID';
   	protected $allowedFields = [];
 
+	const THAI_COUNTRY_ID = 147; // ใช้ตัดคนไทยขาเข้าออกจากยอดปฏิทินนำเข้า
+
 	function import_file($input,$xlsx){
 		$session = session();
 		$this->Mydate = new Mydate();
@@ -417,6 +419,8 @@ class Import_model extends Model
 
 		list($year, $month, $day) = explode('-', $REPORT_DATE);
 		$this->updateCalReportDaily($year,$month,$day);
+
+		$this->logImport($REPORT_DATE, $countData, @$input['import_file_name'], (string)session()->get('username'));
 
 		return $text;
 
@@ -1275,6 +1279,91 @@ class Import_model extends Model
 		}else{
 			return true;
 		}
+	}
+
+	/**
+	 * บันทึกประวัติการนำเข้าข้อมูล (LOG_IMPORT_DAILY)
+	 * try-catch ไม่ให้ import พังถ้า log insert fail (pattern เดียวกับ LOG_API)
+	 */
+	function logImport($reportDate, $rowCount, $fileName = '', $importedBy = '', $importType = 'DAILY'){
+		try {
+			$builder = $this->db->table('LOG_IMPORT_DAILY');
+			$builder->set('LOG_ID', 'LOG_IMPORT_DAILY_SEQ.NEXTVAL', false);
+			$builder->set('REPORT_DATE', "to_date('".$reportDate."','YYYY-MM-DD')", false);
+			$builder->set('IMPORT_TYPE', $importType);
+			// ใช้เวลา PHP app server (เวลาไทย) ไม่ใช้ SYSDATE — DB dev อยู่คนละ timezone
+			$builder->set('IMPORTED_AT', "to_date('".date('Y-m-d H:i:s')."','YYYY-MM-DD HH24:MI:SS')", false);
+			$builder->set('IMPORTED_BY', mb_substr((string)$importedBy, 0, 100));
+			$builder->set('ROW_COUNT', (int)$rowCount);
+			$builder->set('FILE_NAME', mb_substr((string)$fileName, 0, 255));
+			$builder->insert();
+		} catch (\Throwable $e) {
+			log_message('error', 'logImport fail: '.$e->getMessage());
+		}
+	}
+
+	/**
+	 * ข้อมูลปฏิทินนำเข้ารายเดือน
+	 * return: [day => ['sum' => ยอดรวมขาเข้า, 'imported_at' => 'DD/MM/YYYY HH24:MI', 'imported_by' =>, 'import_count' =>]]
+	 */
+	function getImportCalendar($year, $month){
+		$data = array();
+		$ym = sprintf('%04d-%02d', (int)$year, (int)$month);
+
+		// ยอดรวมนักท่องเที่ยวต่างชาติขาเข้า per วัน (ตัดคนไทย, null-safe สำหรับ row ที่ map ประเทศไม่ได้)
+		$builder = $this->db->table($this->table);
+		$builder->select("TO_CHAR(REPORT_DATE,'DD') AS DD, SUM(NUM) AS SUM_NUM");
+		$builder->where("TO_CHAR(REPORT_DATE,'YYYY-MM') = ", $ym);
+		$builder->where('DIRECTION', 'ขาเข้า');
+		$builder->where('(COUNTRY_ID IS NULL OR COUNTRY_ID <> '.self::THAI_COUNTRY_ID.')', null, false);
+		$builder->groupBy("TO_CHAR(REPORT_DATE,'DD')");
+		foreach ($builder->get()->getResultArray() as $row) {
+			$data[(int)$row['DD']] = array(
+				'sum' => (int)$row['SUM_NUM'],
+				'imported_at' => '', 'imported_by' => '', 'import_count' => 0,
+			);
+		}
+
+		// นำเข้าล่าสุด per วัน จาก LOG_IMPORT_DAILY (try-catch กันกรณีตารางยังไม่ถูกสร้างบน prod)
+		try {
+			$builder = $this->db->table('LOG_IMPORT_DAILY');
+			$builder->select("TO_CHAR(REPORT_DATE,'DD') AS DD, COUNT(*) AS CNT,
+				MAX(TO_CHAR(IMPORTED_AT,'YYYY-MM-DD HH24:MI')) AS LAST_AT");
+			$builder->where("TO_CHAR(REPORT_DATE,'YYYY-MM') = ", $ym);
+			$builder->where('IMPORT_TYPE', 'DAILY');
+			$builder->groupBy("TO_CHAR(REPORT_DATE,'DD')");
+			$logRows = $builder->get()->getResultArray();
+
+			// IMPORTED_BY ของครั้งล่าสุด per วัน
+			$byMap = array();
+			if (!empty($logRows)) {
+				$builder = $this->db->table('LOG_IMPORT_DAILY L1');
+				$builder->select("TO_CHAR(L1.REPORT_DATE,'DD') AS DD, L1.IMPORTED_BY");
+				$builder->where("TO_CHAR(L1.REPORT_DATE,'YYYY-MM') = ", $ym);
+				$builder->where('L1.IMPORT_TYPE', 'DAILY');
+				$builder->where("L1.IMPORTED_AT = (SELECT MAX(L2.IMPORTED_AT) FROM LOG_IMPORT_DAILY L2
+					WHERE L2.REPORT_DATE = L1.REPORT_DATE AND L2.IMPORT_TYPE = 'DAILY')", null, false);
+				foreach ($builder->get()->getResultArray() as $row) {
+					$byMap[(int)$row['DD']] = $row['IMPORTED_BY'];
+				}
+			}
+
+			foreach ($logRows as $row) {
+				$dd = (int)$row['DD'];
+				if (!isset($data[$dd])) {
+					$data[$dd] = array('sum' => 0, 'imported_at' => '', 'imported_by' => '', 'import_count' => 0);
+				}
+				list($d_date, $d_time) = explode(' ', $row['LAST_AT']);
+				list($y, $m, $d) = explode('-', $d_date);
+				$data[$dd]['imported_at'] = $d.'/'.$m.'/'.$y.' '.$d_time;
+				$data[$dd]['imported_by'] = $byMap[$dd] ?? '';
+				$data[$dd]['import_count'] = (int)$row['CNT'];
+			}
+		} catch (\Throwable $e) {
+			log_message('error', 'getImportCalendar LOG_IMPORT_DAILY fail: '.$e->getMessage());
+		}
+
+		return $data;
 	}
 
 }
