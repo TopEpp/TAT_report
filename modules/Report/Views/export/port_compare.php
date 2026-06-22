@@ -21,7 +21,9 @@
 				<?php if (!empty($port_colunm)) {
 					foreach ($port_colunm as $p) { ?>
 						<?php foreach ($period as $d) {
-							echo "<th style='background:#379FA6;border: 1px solid black ;'>{$Mydate->date_eng2thai($d, 543, 'S', 'S')}</th>";
+							// excel: ฝัง ISO yyyy-mm-dd ให้ controller แปลงเป็น Excel date จริง · อื่นๆ (pdf/หน้าจอ) แสดงไทย
+							$dateHead = (($export_type ?? '') == 'excel') ? $d : $Mydate->date_eng2thai($d, 543, 'S', 'S');
+							echo "<th style='background:#379FA6;border: 1px solid black ;'>{$dateHead}</th>";
 						} ?>
 						<th>รวม</th>
 				<?php }

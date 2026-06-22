@@ -12,7 +12,9 @@
 		<tr>
 			<th style="background-color:#369fa7;border: 1px solid black ;">สัญชาติ</th>
 			<?php foreach ($period as $d) {
-				echo "<th style='background-color:#369fa7;border: 1px solid black ;'>{$Mydate->date_eng2thai($d, 543, 'S', 'S')}</th>";
+				// excel: ฝัง ISO yyyy-mm-dd ให้ controller แปลงเป็น Excel date จริง · อื่นๆ (pdf/หน้าจอ) แสดงไทย
+				$dateHead = (($export_type ?? '') == 'excel') ? $d : $Mydate->date_eng2thai($d, 543, 'S', 'S');
+				echo "<th style='background-color:#369fa7;border: 1px solid black ;'>{$dateHead}</th>";
 			} ?>
 		</tr>
 	</thead>

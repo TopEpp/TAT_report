@@ -9,7 +9,6 @@ use Modules\Setting\Models\Setting_model;
 use Modules\Main\Models\Main_model;
 use Modules\Import\Models\Import_model;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class Report extends BaseController
 {
@@ -356,6 +355,9 @@ class Report extends BaseController
 		$data['date_start'] = $date_start;
 		$data['date_end'] = $date_end;
 		$data['data'] = $Model->getMarketData($date_start, $date_end);
+		// กันช่วงวันที่ที่ไม่มีข้อมูล: การันตี key Short/Long ให้ view ไม่ error (Undefined array key → 500)
+		$data['data']['Short'] = $data['data']['Short'] ?? [];
+		$data['data']['Long']  = $data['data']['Long']  ?? [];
 		$data['country'] = $Model->getCountryByMarket();
 		$this->_loadCountryGroup($data);
 		// filter $data['data'][MARKET_TYPE] โดย COUNTRY_ID ให้อยู่ใน group ที่เลือก
@@ -554,23 +556,99 @@ class Report extends BaseController
 	################################### Export ##########################################
 	function export_excel($file, $view, $data)
 	{
-
-		// Create new Spreadsheet object
-		$spreadsheet = new Spreadsheet();
-		// Redirect output to a client’s web browser (Xlsx)
-
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		header("Content-Disposition: attachment; filename=$file");
 		header('Cache-Control: max-age=0');
-		// If you're serving to IE 9, then the following may be needed
-		// header('Cache-Control: max-age=1');
+
 		$htmlString = view($view, $data);
+
+		// รายงานที่มีหัวคอลัมน์วันที่รายวัน (nation_daily / port_daily / port_compare)
+		// ฝัง ISO yyyy-mm-dd ในหัวคอลัมน์ → แปลงเป็น Excel date จริง (dd/mm/yyyy)
+		$dateFlag = (strpos($view, 'nation_daily') !== false
+			|| strpos($view, 'port_daily') !== false
+			|| strpos($view, 'port_compare') !== false);
+
+		// วิธีหลัก: gen xlsx ผ่าน CLI subprocess (php ที่ไม่มี OCI8) เพื่อหลบ segfault จาก
+		// libxml2 ที่ชนกันระหว่าง PHP กับ OCI8 ในโปรเซส Apache (heap corruption ตอน xmlFreeTextWriter)
+		$xlsx = $this->_renderXlsxViaCli($htmlString, $dateFlag);
+		if ($xlsx !== null) {
+			echo $xlsx;
+			exit;
+		}
+
+		// fallback (เช่น exec ปิด หรือ subprocess ล้มเหลว): เขียนในโปรเซสนี้โดยตรง
+		// — ใช้ได้บน environment ที่ไม่มีปัญหา libxml ชน (เช่น prod Linux บางตัว)
 		$reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
 		$spreadsheet = $reader->loadFromString($htmlString);
-
-		$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-		$writer->save('php://output');
+		if ($dateFlag) {
+			require_once ROOTPATH . 'scripts/xlsx_date_helper.php';
+			tat_apply_iso_date_cells($spreadsheet);
+		}
+		IOFactory::createWriter($spreadsheet, 'Xlsx')->save('php://output');
 		exit;
+	}
+
+	/**
+	 * gen ไฟล์ xlsx จาก HTML ผ่าน CLI subprocess (php แยกที่ไม่โหลด OCI8)
+	 * คืน binary ของ xlsx ถ้าสำเร็จ, คืน null ถ้าทำไม่ได้ (ให้ caller fallback)
+	 */
+	private function _renderXlsxViaCli($htmlString, $dateFlag)
+	{
+		if (!function_exists('exec')) {
+			return null;
+		}
+		$worker = ROOTPATH . 'scripts/html2xlsx.php';
+		$php = $this->_phpCliBinary();
+		if (!$php || !is_file($worker)) {
+			return null;
+		}
+
+		$tmpDir   = rtrim(sys_get_temp_dir(), '/');
+		$htmlTmp  = tempnam($tmpDir, 'rpthtml');
+		$xlsxTmp  = tempnam($tmpDir, 'rptxlsx');
+		if ($htmlTmp === false || $xlsxTmp === false) {
+			return null;
+		}
+		file_put_contents($htmlTmp, $htmlString);
+
+		$cmd = escapeshellarg($php) . ' ' . escapeshellarg($worker) . ' '
+			 . escapeshellarg($htmlTmp) . ' ' . escapeshellarg($xlsxTmp) . ' '
+			 . ($dateFlag ? '1' : '0') . ' 2>/dev/null';
+
+		$out = [];
+		$rc  = 1;
+		exec($cmd, $out, $rc);
+
+		$bin = null;
+		if ($rc === 0 && is_file($xlsxTmp) && filesize($xlsxTmp) > 100) {
+			$bin = file_get_contents($xlsxTmp);
+		}
+		@unlink($htmlTmp);
+		@unlink($xlsxTmp);
+		return $bin;
+	}
+
+	/**
+	 * หา path ของ php CLI binary แบบ portable (override ได้ด้วย env PHP_CLI_BIN)
+	 */
+	private function _phpCliBinary()
+	{
+		$candidates = [];
+		if ($e = getenv('PHP_CLI_BIN')) {
+			$candidates[] = $e;
+		}
+		if (defined('PHP_BINDIR')) {
+			$candidates[] = PHP_BINDIR . '/php';
+		}
+		$candidates[] = '/usr/bin/php';
+		$candidates[] = '/usr/local/bin/php';
+		foreach ($candidates as $c) {
+			if ($c && @is_executable($c)) {
+				return $c;
+			}
+		}
+		$w = @shell_exec('command -v php 2>/dev/null');
+		return $w ? trim($w) : null;
 	}
 
 	function export_pdf($view, $data, $orientation = 'P')
