@@ -530,6 +530,7 @@ yoyConfig($show_yoy);
 								</div>
 								<div class="col-lg-12">
 									<p class="m-0" style="opacity: 0.5;font-size:10px;color: #a1afc2;padding: 5px;"><?php echo date('d/m/Y H:i:s:') . $session->get('org_id');; ?></p>
+									<p class="m-0" style="font-size:10px;color: red;padding: 5px;">หมายเหตุ :  ยังไม่มีข้อมูลสำหรับช่วงวันที่ 22–25 มิถุนายน 2569</p>
 								</div>
 							</div>
 						</div>

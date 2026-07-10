@@ -3,6 +3,24 @@
 <!-- content -->
 <?php $this->section('content') ?>
 <?php $user_menu = $session->get('user_menu'); ?>
+<?php
+// ผู้ใช้ที่ได้รับสิทธิ์เห็นปุ่ม Export (บันทึกเป็นรายงาน PDF)
+// user นอกลิสต์จะเห็นปุ่ม "บันทึกภาพหน้าจอ" (capture เป็นไฟล์รูป) แทน
+$EXPORT_WHITELIST = [
+	'watcharakrit.yaem',
+	'kittipong.prap',
+	'narumol.kong',
+	'natthakan.tonb',
+	'chompunuch.saen',
+	'sriwan.choo',
+	'kom.sata',
+	'peerapol.ratt',
+	'iyakan.keam',
+	'natchapol.phro',
+];
+$currentUsername = strtolower(trim((string) $session->get('username')));
+$canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIST), true);
+?>
 <style type="text/css">
 	.gm-style .gm-style-iw-c {
 		padding: 0 !important;
@@ -116,44 +134,32 @@
 		}
 	}
 </style>
-<div class="py-2" style="">
-	<div class="row">
-		<div class="col-md-2 col-12 headerColumn my-auto">
-			<div class="my-auto" style="font-size: 15px;">
+<div class="py-2" style="" id="daily_filter_bar">
+	<div class="d-flex flex-wrap align-items-center" style="gap: 10px;">
+		<div style="font-size: 15px; white-space: nowrap;">เลือกช่วงเวลา</div>
+		<input type="text" name="start_date" id="start_date" class="form-control date_picker"
+			style="width: 130px; border-radius: 12px;" value="" placeholder="from">
+		<input type="text" name="end_date" id="end_date" class="form-control date_picker"
+			style="width: 130px; border-radius: 12px;" value="" placeholder="to" />
+		<div class="btn btn_Color" onclick="ChangeFilter()"
+			style="width: auto; padding-left: 24px; padding-right: 24px;">ตกลง</div>
+		<div class="btn btn_Color" onclick="ClearFilter()"
+			style="width: auto; padding-left: 24px; padding-right: 24px;">ล้างค่า</div>
 
-			</div>
-		</div>
-		<div class="col-md-2 col-12 my-auto text-center py-2">
-			เลือกช่วงเวลา
-		</div>
-		<div class="col-md-4 col-12 my-auto ">
-			<div class="row" style="margin-top: 0px;">
-				<div class="col-md-6 col-6 SetAlignInputleft1">
-					<input type="text" name="start_date" id="start_date" class="SetwidthInput1 form-control date_picker"
-						style="display: inline;" value="" placeholder="from">
-				</div>
-				<div class="col-md-6 col-6 SetAlignInputleft2">
-					<input type="text" name="end_date" id="end_date" class="SetwidthInput2 form-control date_picker"
-						style="display: inline;" value="" placeholder="to" />
-				</div>
-			</div>
-		</div>
-		<div class="col-md-4 my-auto SetSpaceBtn">
-			<div class="row" style="margin-top: 0px;">
-				<div class="col-md-4 col-4 SetAlingBtn1">
-					<div class="btn btn_Color" onclick="ChangeFilter()">ตกลง</div>
-				</div>
-				<div class="col-md-4 col-4 SetAlingBtn2">
-					<div class="btn btn_Color" onclick="ClearFilter()">ล้างค่า</div>
-				</div>
-				<div class="col-md-4 col-4 SetAlingBtn2">
-					<button type="button"
-						onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard_view?start_date=' . $start_date . '&end_date=' . $end_date); ?>')"
-						class="btn btn-danger SetWidthbtnExport" style="width: 100%; border-radius: 1em;">
-						<i class="fa-solid fa-download"></i> Export
-					</button>
-				</div>
-			</div>
+		<div class="d-flex ml-auto" style="gap: 8px;">
+			<?php if ($canExport) { ?>
+				<button type="button"
+					onclick="SaveImg2ExportPdf('<?php echo base_url('main/saveImg2Report'); ?>','<?php echo base_url('main/export_dashboard_view?start_date=' . $start_date . '&end_date=' . $end_date); ?>')"
+					class="btn btn-danger"
+					style="width: auto; border-radius: 1em; white-space: nowrap;">
+					<i class="fa-solid fa-download"></i> Export Info
+				</button>
+			<?php } ?>
+			<button type="button" id="btn_capture_screen" onclick="CaptureScreen()"
+				class="btn btn-danger"
+				style="width: auto; border-radius: 1em; white-space: nowrap;">
+				<i class="fa-solid fa-camera"></i> Export Dashboard
+			</button>
 		</div>
 	</div>
 </div>
@@ -1141,19 +1147,21 @@
 </div>
 
 
-<!-- <div class="modal fade" id="modal_noti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_noti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<div>
-					<span style="font-weight:bold; font-size:1.2em">เรียน ผู้ใช้ข้อมูลระบบสถิติรายวันทุกท่าน</span><br>
+					<span style="font-weight:bold; font-size:1.2em">เรียน ผู้ใช้ข้อมูลทุกท่าน</span><br>
 				</div>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				เนื่องจาก สตม. แจ้งว่าระบบขัดข้อง จึงไม่สามารถนำส่งข้อมูลให้หน่วยงานที่เกี่ยวข้องได้ หากทาง กวจ. ได้รับข้อมูลแล้วจะนำเข้าระบบสถิติรายวันต่อไป
+				บัดนี้ สตม ได้นำส่งข้อมูลของตั้งแต่วันที่ 26 มิถุนายน 2569 เป็นต้นมา ให้หน่วยงานต่างๆ เรียบร้อยแล้ว อย่างไรก็ตาม ยังขาดข้อมูลช่วงวันที่ 22–25 มิถุนายน 2569
+				<br><br>
+				ทั้งนี้ กวจ. ได้นำเข้าข้อมูลและ หากได้รับข้อมูลส่วนที่ขาดแล้ว กวจ. จะนำเข้าข้อมูลในระบบต่อไป
 				<br><br>
 				จึงเรียนมาเพื่อโปรดทราบ
 			</div>
@@ -1161,7 +1169,7 @@
 	</div>
 </div>
 
- -->
+
 
 <div class="text-center" id="htmltoimage_chart_daily_year"
 	style="height:220px; width: 1100px; padding:15px; display: none;">
@@ -1198,7 +1206,7 @@ for ($i = 1; $i <= 12; $i++) {
 	// console.log(dataRegionMap);
 	// import zoomPlugin from 'chartjs-plugin-zoom';
 	$(function () {
-		// $('#modal_noti').modal('show');
+		$('#modal_noti').modal('show');
 
 		initMap();
 		addMarker(dataRegionMap);
@@ -1509,6 +1517,59 @@ for ($i = 1; $i <= 12; $i++) {
 					container.style.left = originalLeft;
 				});
 			}, 100);
+		});
+	}
+
+	// capture หน้า dashboard ทั้งหน้าเป็นไฟล์รูป (สำหรับ user นอก whitelist)
+	function CaptureScreen() {
+		var target = document.querySelector('.container-fluid');
+		if (!target) {
+			console.error('CaptureScreen: ไม่พบพื้นที่ .container-fluid');
+			return;
+		}
+
+		var btn = document.getElementById('btn_capture_screen');
+		var originalLabel = btn ? btn.innerHTML : '';
+		if (btn) {
+			btn.disabled = true;
+			btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังบันทึก...';
+		}
+
+		function restoreBtn() {
+			if (btn) {
+				btn.disabled = false;
+				btn.innerHTML = originalLabel;
+			}
+		}
+
+		html2canvas(target, {
+			allowTaint: true,
+			useCORS: true,
+			scale: 1.5,
+			scrollX: 0,
+			scrollY: -window.scrollY,
+			windowWidth: document.documentElement.scrollWidth,
+			ignoreElements: function (el) {
+				// ไม่ต้อง capture แถบเลือกช่วงเวลา/from/to/ปุ่ม ด้านบน
+				return el.id === 'daily_filter_bar' || el.id === 'btn_capture_screen';
+			}
+		}).then(function (canvas) {
+			restoreBtn();
+			var link = document.createElement('a');
+			document.body.appendChild(link);
+			link.download = 'dashboard_daily_<?php echo $to_date; ?>.png';
+			link.href = canvas.toDataURL('image/png');
+			link.click();
+			document.body.removeChild(link);
+		}).catch(function (error) {
+			restoreBtn();
+			console.error('CaptureScreen error:', error);
+		});
+
+		$.ajax({
+			method: "POST",
+			url: base_url + "/main/saveLog",
+			data: { 'type': 'Daily_Capture' }
 		});
 	}
 

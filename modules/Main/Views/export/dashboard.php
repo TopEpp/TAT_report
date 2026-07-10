@@ -827,7 +827,7 @@ yoyConfig($show_yoy);
         ใช้เฉพาะภายใน ททท. เท่านั้น ¦ Internal Use Only
     </div>
     <div style="position: absolute;top: 97%; left: 5%;color: red; font-size: 20px;">
-        <p style="opacity: 0.3;font-size:10px;color: #a1afc2;">
-            <?php echo date('d/m/Y H:i:s:') . $session->get('org_id');; ?></p>
+        <p style="opacity: 0.3;font-size:10px;color: #a1afc2;"><?php echo date('d/m/Y H:i:s:') . $session->get('org_id');; ?></p>
+        <p style="font-size:10px;color: red;">หมายเหตุ :  ยังไม่มีข้อมูลสำหรับช่วงวันที่ 22–25 มิถุนายน 2569</p>
     </div>
 </body>
