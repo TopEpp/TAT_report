@@ -7,9 +7,20 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header">
-				<div class="row">
-					<div class="col-md-4 col-4">Log Login</div>
-
+				<div class="row align-items-end">
+					<div class="col-md-3 col-12 mb-2 mb-md-0" style="font-size:1.1em;">Log Login</div>
+					<div class="col-md-3 col-6">
+						<label class="mb-1">วันที่เริ่มต้น</label>
+						<input type="text" id="start_date" class="form-control date_picker" value="<?php echo $Mydate->date_thai2eng($start_date, 543, '/') ?>">
+					</div>
+					<div class="col-md-3 col-6">
+						<label class="mb-1">วันที่สิ้นสุด</label>
+						<input type="text" id="end_date" class="form-control date_picker" value="<?php echo $Mydate->date_thai2eng($end_date, 543, '/') ?>">
+					</div>
+					<div class="col-md-3 col-12 mt-2 mt-md-0">
+						<button class="btn btn-primary" onclick="ChangeFilter()"><i class="fas fa-search"></i> ค้นหา</button>
+						<button class="btn btn-success" onclick="ExportExcel()"><i class="fas fa-file-excel"></i> Excel</button>
+					</div>
 				</div>
 			</div>
 			<div class="card-body">
@@ -44,6 +55,25 @@
 
 <?= $this->section("scripts") ?>
 <script type="text/javascript">
+	// แปลงค่าจาก date_picker (dd/mm/พ.ศ.) → dd-mm-ค.ศ. สำหรับส่งเป็น query param
+	function toCeDmy(val) {
+		var p = val.split('/');
+		if (p.length !== 3) return '';
+		return p[0] + '-' + p[1] + '-' + (p[2] - 543);
+	}
+
+	function ChangeFilter() {
+		var start = toCeDmy($('#start_date').val());
+		var end = toCeDmy($('#end_date').val());
+		window.location.href = base_url + '/setting/log_login?start=' + start + '&end=' + end;
+	}
+
+	function ExportExcel() {
+		var start = toCeDmy($('#start_date').val());
+		var end = toCeDmy($('#end_date').val());
+		window.location.href = base_url + '/setting/log_login?start=' + start + '&end=' + end + '&export_type=excel';
+	}
+
 	$(document).ready(function() {
 		$('.date_picker').datepicker({
 			format: "dd/mm/yyyy",
@@ -52,6 +82,7 @@
 		});
 
 		$('#myTable').DataTable({
+			order: [],
 			language: {
 				"lengthMenu": "แสดง _MENU_ รายการ",
 				"search": "ค้นหา:",
@@ -66,17 +97,6 @@
 				},
 			}
 		});
-
-
-		// $('#data_date').change(function() {
-		// 	var date = this.value;
-		// 	date = date.split('/');
-		// 	report_date = (date[2] - 543) + '-' + date[1] + '-' + date[0];
-
-		// 	window.location.href = base_url + '/setting/log_info?d=' + report_date;
-		// });
-
-
 	});
 </script>
 <?= $this->endSection() ?>

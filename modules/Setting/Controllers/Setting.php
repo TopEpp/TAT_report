@@ -142,11 +142,44 @@ class Setting extends BaseController{
 		return view('Modules\Setting\Views\permission',$data);
 	}
 
+	/**
+	 * อ่านช่วงวันที่จาก GET (?start=&end= รูปแบบ dd-mm-yyyy ค.ศ.)
+	 * ถ้าไม่ส่งมา → default เดือนปัจจุบัน (วันที่ 1 → วันนี้)
+	 * คืน array: [start(dd-mm-yyyy), end(dd-mm-yyyy)]
+	 */
+	private function _logDateRange()
+	{
+		$start = $this->request->getGet('start');
+		$end   = $this->request->getGet('end');
+
+		$isValid = function ($d) {
+			return !empty($d) && preg_match('/^\d{2}-\d{2}-\d{4}$/', $d);
+		};
+
+		if ($isValid($start) && $isValid($end)) {
+			return [$start, $end];
+		}
+
+		// default: ตั้งแต่วันที่ 1 ของเดือนปัจจุบัน ถึงวันนี้
+		return [date('01-m-Y'), date('d-m-Y')];
+	}
+
 	public function log_info()
 	{
 		$Model = new Setting_model();
+		list($start, $end) = $this->_logDateRange();
+
 		$data['Mydate'] = $this->Mydate;
-		$data['data'] = $Model->getLogInfo();
+		$data['start_date'] = $start;
+		$data['end_date'] = $end;
+		$data['data'] = $Model->getLogInfo($start, $end);
+
+		if ($this->request->getGet('export_type') === 'excel') {
+			helper('excel_export');
+			$data['range_label'] = $start . ' - ' . $end;
+			$html = view('Modules\Setting\Views\export\log_info', $data);
+			return tat_stream_xlsx_from_html('log_info.xlsx', $html);
+		}
 
 		return view('Modules\Setting\Views\log_info',$data);
 	}
@@ -154,8 +187,19 @@ class Setting extends BaseController{
 	public function log_login()
 	{
 		$Model = new Setting_model();
+		list($start, $end) = $this->_logDateRange();
+
 		$data['Mydate'] = $this->Mydate;
-		$data['data'] = $Model->getLogLogin();
+		$data['start_date'] = $start;
+		$data['end_date'] = $end;
+		$data['data'] = $Model->getLogLogin($start, $end);
+
+		if ($this->request->getGet('export_type') === 'excel') {
+			helper('excel_export');
+			$data['range_label'] = $start . ' - ' . $end;
+			$html = view('Modules\Setting\Views\export\log_login', $data);
+			return tat_stream_xlsx_from_html('log_login.xlsx', $html);
+		}
 
 		return view('Modules\Setting\Views\log_login',$data);
 	}

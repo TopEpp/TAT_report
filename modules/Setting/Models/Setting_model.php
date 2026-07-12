@@ -305,21 +305,62 @@ class Setting_model extends Model
 		return $data;
 	}
 
-	function getLogInfo(){
+	// จำกัดจำนวนแถวสูงสุดเมื่อกรองด้วยช่วงวันที่ กันผลลัพธ์ใหญ่เกินไป
+	const LOG_MAX_ROWS = 5000;
+
+	/**
+	 * แปลง/ตรวจสอบวันที่รูปแบบ dd-mm-yyyy (ค.ศ.) ให้ปลอดภัยก่อนต่อลง SQL
+	 * คืน string ที่ผ่านการตรวจแล้ว หรือ null ถ้าไม่ถูกต้อง
+	 */
+	private function _sanitizeDmy($date){
+		if (empty($date)) {
+			return null;
+		}
+		if (!preg_match('/^(\d{2})-(\d{2})-(\d{4})$/', $date, $m)) {
+			return null;
+		}
+		if (!checkdate((int)$m[2], (int)$m[1], (int)$m[3])) {
+			return null;
+		}
+		return $date;
+	}
+
+	function getLogInfo($startDate = null, $endDate = null){
 		$builder = $this->db->table('LOG_EXPORT_INFO');
 	    $builder->select("LOG_EXPORT_INFO.*, TO_CHAR( DATE_EXPORT, 'DD/MM/YYYY hh24:mi:ss') as EXPORT_DATE ");
+
+	    $start = $this->_sanitizeDmy($startDate);
+	    $end   = $this->_sanitizeDmy($endDate);
+	    if ($start !== null && $end !== null) {
+	        // ครอบทั้งวันสิ้นสุด: >= start 00:00 และ < end+1 00:00
+	        $builder->where("DATE_EXPORT >= TO_DATE('{$start}','dd-mm-yyyy')");
+	        $builder->where("DATE_EXPORT < TO_DATE('{$end}','dd-mm-yyyy') + 1");
+	        $builder->limit(self::LOG_MAX_ROWS);
+	    } else {
+	        $builder->limit(100);
+	    }
+
 	    $builder->orderBy('REC_ID','DESC');
-	    $builder->limit(100);
 	    $data = $builder->get()->getResultArray();
 	    return $data;
 	}
 
-	function getLogLogin(){
+	function getLogLogin($startDate = null, $endDate = null){
 		$builder = $this->db->table('LOG_LOGIN');
 	    $builder->select("LOG_LOGIN.*, TO_CHAR( DATE_LOGIN, 'DD/MM/YYYY hh24:mi:ss') as LOGIN_DATE ");
 	    $builder->where('LOG_TYPE','REPORT');
+
+	    $start = $this->_sanitizeDmy($startDate);
+	    $end   = $this->_sanitizeDmy($endDate);
+	    if ($start !== null && $end !== null) {
+	        $builder->where("DATE_LOGIN >= TO_DATE('{$start}','dd-mm-yyyy')");
+	        $builder->where("DATE_LOGIN < TO_DATE('{$end}','dd-mm-yyyy') + 1");
+	        $builder->limit(self::LOG_MAX_ROWS);
+	    } else {
+	        $builder->limit(100);
+	    }
+
 	    $builder->orderBy('REC_ID','DESC');
-	    $builder->limit(100);
 	    $data = $builder->get()->getResultArray();
 	    return $data;
 	}
