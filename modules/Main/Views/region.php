@@ -149,8 +149,8 @@
 
 <div class="py-2">
     <div class="row">
-        <div class="col-md-2 col-12 my-auto text-center py-2">
-            เลือกช่วงวันที่
+        <div class="col-md-1 col-12 my-auto text-center py-2">
+            ช่วงวันที่
         </div>
         <div class="col-md-2 col-12 my-auto">
             <input type="text" name="start_date" id="start_date" class="form-control date_picker"
@@ -159,6 +159,14 @@
         <div class="col-md-2 col-12 my-auto">
             <input type="text" name="end_date" id="end_date" class="form-control date_picker"
                 value="" placeholder="To" />
+        </div>
+        <div class="col-md-2 col-12 my-auto">
+            <select id="region_filter" class="form-control" onchange="FilterRegion()">
+                <option value="">ทุกภูมิภาค</option>
+                <?php foreach ($regionMap as $r): ?>
+                    <option value="<?php echo htmlspecialchars($r['name'], ENT_QUOTES); ?>"><?php echo $r['name']; ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
         <div class="col-md-1 my-auto">
             <div class="btn btn_Color" onclick="ChangeFilter()">ตกลง</div>
@@ -229,7 +237,7 @@
                     $dateCurrentLine1 = $sd . ' ' . $shortmonth[(int)$sm] . ' ' . ($sy + 543);
                     $dateCurrentLine2 = $ed . ' ' . $shortmonth[(int)$em] . ' ' . ($ey + 543);
                 ?>
-                <div class="row mb-3 region-row" style="display: flex; align-items: stretch;">
+                <div class="row mb-3 region-row" data-region-name="<?php echo htmlspecialchars($region['name'], ENT_QUOTES); ?>" style="display: flex; align-items: stretch;">
                     <div class="col-md-3 d-flex">
                         <div class="region-card flex-fill">
                             <!-- Row 1: Badge + Change % -->
@@ -430,6 +438,10 @@ function ChangeFilter() {
         end_date = parts[0] + '-' + parts[1] + '-' + (parts[2] - 543);
 
         var url = '<?php echo base_url('main/region'); ?>?start_date=' + start_date + '&end_date=' + end_date;
+        var region = $('#region_filter').val();
+        if (region) {
+            url += '&region=' + encodeURIComponent(region);
+        }
         window.location.href = url;
     }
 }
@@ -437,6 +449,25 @@ function ChangeFilter() {
 function ClearFilter() {
     window.location.href = '<?php echo base_url('main/region'); ?>';
 }
+
+// กรองการแสดงผลรายภูมิภาค (client-side show/hide — ค่าว่าง = แสดงทุกภูมิภาค)
+function FilterRegion() {
+    var selected = $('#region_filter').val();
+    $('.region-row').each(function() {
+        var name = $(this).attr('data-region-name');
+        $(this).css('display', (!selected || name === selected) ? 'flex' : 'none');
+    });
+}
+
+// คงค่าที่เลือกไว้เมื่อโหลดหน้าใหม่ (จาก URL param ?region=)
+$(function() {
+    var params = new URLSearchParams(window.location.search);
+    var region = params.get('region');
+    if (region) {
+        $('#region_filter').val(region);
+        FilterRegion();
+    }
+});
 
 function showLoading() {
     $('#export-loading').css('display', 'flex');

@@ -107,6 +107,13 @@ class Main extends BaseController
 		$data['SumRegionMonthData'] = $Model->getSumRegionMonth($start_date, $end_date);
 		$data['SumCountryDateData'] = $Model->getSumCountryDate($end_date);
 		$data['SumCountryMonthData'] = $Model->getSumCountryMonth($start_date, $end_date);
+		// ปีก่อน (YoY) สำหรับคอลัมน์ %Change ในตารางภูมิภาค (spec หน้า 1)
+		$data['SumCountryMonthData_past'] = $Model->getSumCountryMonth($start_date_past, $end_date_past);
+		// ปีก่อน (YoY) สำหรับการ์ด ranking สัญชาติ/ด่าน (spec หน้า 2)
+		$data['SumNatDateData_past']   = $Model->getSumNatDate($end_date_past);
+		$data['SumNatMonthData_past']  = $Model->getSumNatMonth($start_date_past, $end_date_past);
+		$data['SumPortDateData_past']  = $Model->getSumPortDate($end_date_past);
+		$data['SumPortMonthData_past'] = $Model->getSumPortMonth($start_date_past, $end_date_past);
 
 		$data['region'] = $Report_model->getSTDRegion('standard');
 		$data['sub_region'] = $Model->getSubRegion();
@@ -1131,16 +1138,24 @@ class Main extends BaseController
 			$data['year'] = $year;
 		}
 
-		// Region mapping: name => [STD_REGION_IDs]
+		// Region mapping: name => [STD_REGION_IDs]  (แต่ละกลุ่มรวม id ของ "OTHERS IN xxx" แล้ว)
+		// ลำดับ + กล่อง Short Haul / Long Haul ตาม spec หน้า 3:
+		//   Grand Total = Short + Long
+		//   Short Haul  = North-East Asia + South-East Asia + South Asia + Oceania
+		//   Long Haul   = Europe + The Americas + Middle East + Africa
+		$shortHaulIds = [15, 38, 13, 23, 39, 5, 46];
+		$longHaulIds  = [2, 44, 36, 37, 7, 45, 20, 47, 6, 40];
 		$regionMap = [
 			['name' => 'GRAND TOTAL', 'ids' => [], 'color' => '#1a329a', 'titleColor' => '#0e1f6b'],
-			['name' => 'ASEAN', 'ids' => [13], 'color' => '#ebabc0', 'titleColor' => '#c44d75'],
+			['name' => 'SHORT HAUL', 'ids' => $shortHaulIds, 'color' => '#5b8fb0', 'titleColor' => '#356487'],
 			['name' => 'NORTH-EAST ASIA', 'ids' => [15, 38], 'color' => '#f9c9b2', 'titleColor' => '#d47830'],
+			['name' => 'SOUTH-EAST ASIA', 'ids' => [13], 'color' => '#ebabc0', 'titleColor' => '#c44d75'],
 			['name' => 'SOUTH ASIA', 'ids' => [23, 39], 'color' => '#b5a000', 'titleColor' => '#b5a000'],
+			['name' => 'OCEANIA', 'ids' => [5, 46], 'color' => '#b2dfe8', 'titleColor' => '#2a8a9e'],
+			['name' => 'LONG HAUL', 'ids' => $longHaulIds, 'color' => '#a97ba5', 'titleColor' => '#6e4a85'],
 			['name' => 'EUROPE', 'ids' => [2, 44, 36, 37], 'color' => '#c6a7cb', 'titleColor' => '#7b4a85'],
 			['name' => 'THE AMERICAS', 'ids' => [7, 45], 'color' => '#64b5da', 'titleColor' => '#1a6e99'],
 			['name' => 'MIDDLE EAST', 'ids' => [20, 47], 'color' => '#9bc1a7', 'titleColor' => '#3d7a52'],
-			['name' => 'OCEANIA', 'ids' => [5, 46], 'color' => '#b2dfe8', 'titleColor' => '#2a8a9e'],
 			['name' => 'AFRICA', 'ids' => [6, 40], 'color' => '#b6c8c7', 'titleColor' => '#4a7170'],
 		];
 

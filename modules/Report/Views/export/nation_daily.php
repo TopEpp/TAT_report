@@ -15,6 +15,7 @@
 				// excel: ฝัง ISO yyyy-mm-dd ให้ controller แปลงเป็น Excel date จริง · อื่นๆ (pdf/หน้าจอ) แสดงไทย
 				$dateHead = (($export_type ?? '') == 'excel') ? $d : $Mydate->date_eng2thai($d, 543, 'S', 'S');
 				echo "<th style='background-color:#369fa7;border: 1px solid black ;'>{$dateHead}</th>";
+				echo "<th style='background-color:#369fa7;border: 1px solid black ;'>YoY(%)</th>";
 			} ?>
 		</tr>
 	</thead>
@@ -22,13 +23,15 @@
 		<tr style="background-color: #61bec9">
 			<td style="font-weight: bolder;background-color: #61bec9">GRAND TOTAL</td>
 			<?php $dataSum = getSumData($data, $region, 0, $country, $period);
+			$dataSumPast = getSumData($data_past ?? [], $region, 0, $country, array_values($period_past ?? []));
 			foreach ($period as $d) {
 				echo "<td align='right' style='background-color: #61bec9'>" . (@$dataSum[$d]) . "</td>";
+					echo "<td align='right' style='background-color: #61bec9'>" . yoyDailyNum((int)@$dataSum[$d], (int)@$dataSumPast[($period_past[$d] ?? '')]) . "</td>";
 			}
 			?>
 
 		</tr>
-		<?php genTableData($data, $region, 0, $country, $period, 1, $country_group ?? '') ?>
+		<?php genTableData($data, $region, 0, $country, $period, 1, $country_group ?? '', $data_past ?? [], $period_past ?? []) ?>
 		<?php if ($export_type == 'excel') { ?>
 			<tr style="border:0px">
 				<td colspan="5">
@@ -42,14 +45,16 @@
 </table>
 <?php
 
-function genTableData($data, $region, $region_id, $country, $period, $level = 1, $country_group = '')
+function genTableData($data, $region, $region_id, $country, $period, $level = 1, $country_group = '', $data_past = [], $period_past = [])
 {
 	$level++;
 
 	if (!empty($region[$region_id])) {
 		foreach ($region[$region_id] as $re) {
 			$dataSum = getSumData($data, $region, $re['MD_STD_REG_ID'], $country, $period);
-			$hideChildren = ($re['IS_OTHERS'] === 'Y' && strpos($country_group, 'STD_') === 0);
+			$dataSumPast = getSumData($data_past ?? [], $region, $re['MD_STD_REG_ID'], $country, array_values($period_past ?? []));
+			// แสดงประเทศใต้ "OTHERS IN xxx" ให้ตรงกับ country list file (เดิมซ่อนเฉพาะกลุ่ม STD_)
+			$hideChildren = ($re['IS_OTHERS'] === 'Y' && $country_group === 'STD_GOV');
 
 			$padding_region = $level * 10;
 			$alink = '';
@@ -61,6 +66,7 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1,
 			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;background-color: #61bec9"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
 			foreach ($period as $d) {
 				echo "<td align='right' style='background-color: #61bec9'>" . (@$dataSum[$d]) . "</td>";
+					echo "<td align='right' style='background-color: #61bec9'>" . yoyDailyNum((int)@$dataSum[$d], (int)@$dataSumPast[($period_past[$d] ?? '')]) . "</td>";
 			}
 			echo '</tr>';
 
@@ -73,19 +79,29 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1,
 					echo '<tr class="TR-Parent-' . $re['MD_STD_REG_ID'] . '">';
 					echo '<td style="padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
 					foreach ($period as $d) {
-						echo "<td align='right'>" . (@$data[$co['COUNTRYID']][$d]) . "</td>";
+						$curC = (int)@$data[$co['COUNTRYID']][$d];
+						$pastC = (int)@$data_past[$co['COUNTRYID']][($period_past[$d] ?? '')];
+						echo "<td align='right'>" . $curC . "</td>";
+						echo "<td align='right'>" . yoyDailyNum($curC, $pastC) . "</td>";
 					}
 					echo '</tr>';
 				}
 			}
 
 			if (!$hideChildren) {
-				genTableData($data, $region, $re['MD_STD_REG_ID'], $country, $period, $level, $country_group);
+				genTableData($data, $region, $re['MD_STD_REG_ID'], $country, $period, $level, $country_group, $data_past, $period_past);
 			}
 		}
 	}
 
 	++$level;
+}
+
+// YoY(%) เทียบวันเดียวกันปีก่อน — คืนค่าตัวเลข (Excel เก็บเป็น number), '-' ถ้าไม่มีฐาน (spec หน้า 5)
+function yoyDailyNum($cur, $past)
+{
+	if ($past <= 0) return '-';
+	return number_format(($cur - $past) / $past * 100, 1) . '%';
 }
 
 function getSumData($data, $region, $region_id, $country, $period, &$sum = array())

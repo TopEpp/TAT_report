@@ -196,7 +196,7 @@ function genTableData($data, $region, $region_id, $country, $port_colunm, $perio
 
 	if (!empty($region[$region_id])) {
 		foreach ($region[$region_id] as $re) {
-			$hideChildren = ($re['IS_OTHERS'] === 'Y' && strpos($country_group, 'STD_') === 0);
+			$hideChildren = ($re['IS_OTHERS'] === 'Y' && $country_group === 'STD_GOV');
 
 			$padding_region = $level * 10;
 			$alink = '';

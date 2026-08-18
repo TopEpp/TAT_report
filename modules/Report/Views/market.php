@@ -129,6 +129,16 @@ foreach ($data['Long'] as $key=> $c) {
 	// @$data['Long']['SUM'] += $c['NUM'];
 	$Long_SUM +=$c['NUM'];
 }
+// YoY (%) เทียบช่วงเดียวกันปีก่อน ต่อสัญชาติ (spec หน้า 4)
+$marketPastMap = $marketPastMap ?? [];
+$yoyMarket = function ($cur, $countryId) use ($marketPastMap) {
+	$past = (int)(@$marketPastMap[(int)$countryId] ?? 0);
+	if ($past <= 0) return '<span style="color:#999;">-</span>';
+	$pct   = ($cur - $past) / $past * 100;
+	$color = $pct >= 0 ? '#1a7d33' : '#c0392b';
+	$sign  = $pct >= 0 ? '+' : '';
+	return '<span style="color:' . $color . ';font-weight:600;">' . $sign . number_format($pct, 2) . '%</span>';
+};
 ?>
 <div class="row m-0">
 	<div class="col-md-6 text-center text-md-left" >
@@ -185,9 +195,10 @@ foreach ($data['Long'] as $key=> $c) {
 				<thead>
 					<tr>
 						<th style="width: 10%; border-top-left-radius: 6px;">ลำดับ</th>
-						<th style="width: 40%;">สัญชาติ</th>
-						<th style="width: 30%;">จำนวนนักท่องเที่ยว (คน)</th>
-						<th style="width: 20%; border-top-right-radius: 6px ;">สัดส่วน (%)</th>
+						<th style="width: 35%;">สัญชาติ</th>
+						<th style="width: 25%;">จำนวนนักท่องเที่ยว (คน)</th>
+						<th style="width: 15%;">สัดส่วน (%)</th>
+						<th style="width: 15%; border-top-right-radius: 6px ;">YoY (%)</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -205,10 +216,11 @@ foreach ($data['Long'] as $key=> $c) {
 						<tr>
 							<td data-label="ลำดับ"><?php echo $i ?></td>
 							<td data-label="สัญชาติ" align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-							<td data-label="จำนวนนักท่องเที่ยว" align="right"><?php echo @number_format($c['NUM']) ?></td>
-							<td data-label="สัดส่วน" align="right"><?php echo number_format($ratio, 2); ?></td>
+							<td data-label="จำนวนนักท่องเที่ยว" align="center"><?php echo @number_format($c['NUM']) ?></td>
+							<td data-label="สัดส่วน" align="center"><?php echo number_format($ratio, 2); ?></td>
+							<td data-label="YoY" align="center"><?php echo $yoyMarket((int)@$c['NUM'], @$c['COUNTRY_ID']); ?></td>
 						</tr>
-					<?php } 
+					<?php }
 				?>
 				</tbody>
 			</table>
@@ -221,9 +233,10 @@ foreach ($data['Long'] as $key=> $c) {
 				<thead>
 					<tr>
 						<th style="width: 10%; border-top-left-radius: 6px;">ลำดับ</th>
-						<th style="width: 40%;">สัญชาติ</th>
-						<th style="width: 30%;">จำนวนนักท่องเที่ยว (คน)</th>
-						<th style="width: 20%; border-top-right-radius: 6px ;">สัดส่วน (%)</th>
+						<th style="width: 35%;">สัญชาติ</th>
+						<th style="width: 25%;">จำนวนนักท่องเที่ยว (คน)</th>
+						<th style="width: 15%;">สัดส่วน (%)</th>
+						<th style="width: 15%; border-top-right-radius: 6px ;">YoY (%)</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -239,8 +252,9 @@ foreach ($data['Long'] as $key=> $c) {
 						<tr>
 							<td data-label="ลำดับ"><?php echo $i ?></td>
 							<td data-label="สัญชาติ" align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
-							<td data-label="จำนวนนักท่องเที่ยว" align="right"><?php echo @number_format(@$c['NUM']) ?></td>
-							<td data-label="สัดส่วน" align="right"><?php echo number_format($ratio, 2); ?></td>
+							<td data-label="จำนวนนักท่องเที่ยว" align="center"><?php echo @number_format(@$c['NUM']) ?></td>
+							<td data-label="สัดส่วน" align="center"><?php echo number_format($ratio, 2); ?></td>
+							<td data-label="YoY" align="center"><?php echo $yoyMarket((int)@$c['NUM'], @$c['COUNTRY_ID']); ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>

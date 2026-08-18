@@ -229,7 +229,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1,
 				}
 			}
 
-			$hideChildren = ($re['IS_OTHERS'] === 'Y' && strpos($country_group, 'STD_') === 0);
+			$hideChildren = ($re['IS_OTHERS'] === 'Y' && $country_group === 'STD_GOV');
 
 			$padding_region = $level * 10;
 			$alink = '';

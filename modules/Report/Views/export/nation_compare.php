@@ -118,7 +118,7 @@ function genTableData($data1, $data2, $region, $region_id, $country, $level = 1,
 			$dataSum = getSumData($data1, $data2, $region, $re['MD_STD_REG_ID'], $country);
 			$sum1 = $dataSum['sum1'];
 			$sum2 = $dataSum['sum2'];
-			$hideChildren = ($re['IS_OTHERS'] === 'Y' && strpos($country_group, 'STD_') === 0);
+			$hideChildren = ($re['IS_OTHERS'] === 'Y' && $country_group === 'STD_GOV');
 
 			// if ($sum2 > 0) {
 			// 	$sum_diff = $sum2 - $sum1;

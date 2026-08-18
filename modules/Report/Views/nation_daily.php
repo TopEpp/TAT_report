@@ -75,6 +75,7 @@
 						<th>สัญชาติ</th>
 						<?php foreach ($period as $d) {
 							echo "<th>{$Mydate->date_eng2thai($d, 543, 'S', 'S')}</th>";
+							echo "<th style='font-size:0.85em;'>YoY(%)</th>";
 						} ?>
 					</tr>
 				</thead>
@@ -82,13 +83,17 @@
 					<tr style="background: rgba(97, 190, 201, 1);">
 						<td style="font-weight: bolder;">GRAND TOTAL</td>
 						<?php $dataSum = getSumData($data, $region, 0, $country, $period);
+						$dataSumPast = getSumData($data_past ?? [], $region, 0, $country, array_values($period_past ?? []));
 						foreach ($period as $d) {
-							echo "<td align='right'>" . number_format(@$dataSum[$d]) . "</td>";
+							$cur = (int)@$dataSum[$d];
+							$past = (int)@$dataSumPast[($period_past[$d] ?? '')];
+							echo "<td align='right'>" . number_format($cur) . "</td>";
+							echo yoyDailyCell($cur, $past);
 						}
 						?>
 
 					</tr>
-					<?php genTableData($data, $region, 0, $country, $period, 1, $country_group ?? '') ?>
+					<?php genTableData($data, $region, 0, $country, $period, 1, $country_group ?? '', $data_past ?? [], $period_past ?? []) ?>
 				</tbody>
 			</table>
 		</div>
@@ -96,14 +101,16 @@
 </div>
 <?php
 
-function genTableData($data, $region, $region_id, $country, $period, $level = 1, $country_group = '')
+function genTableData($data, $region, $region_id, $country, $period, $level = 1, $country_group = '', $data_past = [], $period_past = [])
 {
 	$level++;
 
 	if (!empty($region[$region_id])) {
 		foreach ($region[$region_id] as $re) {
 			$dataSum = getSumData($data, $region, $re['MD_STD_REG_ID'], $country, $period);
-			$hideChildren = ($re['IS_OTHERS'] === 'Y' && strpos($country_group, 'STD_') === 0);
+			$dataSumPast = getSumData($data_past, $region, $re['MD_STD_REG_ID'], $country, array_values($period_past));
+			// แสดงประเทศใต้ "OTHERS IN xxx" ให้ตรงกับ country list file (เดิมซ่อนเฉพาะกลุ่ม STD_)
+			$hideChildren = ($re['IS_OTHERS'] === 'Y' && $country_group === 'STD_GOV');
 
 			$padding_region = $level * 10;
 			$alink = '';
@@ -119,7 +126,10 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1,
 
 			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
 			foreach ($period as $d) {
-				echo "<td align='right'>" . number_format(@$dataSum[$d]) . "</td>";
+				$cur = (int)@$dataSum[$d];
+				$past = (int)@$dataSumPast[($period_past[$d] ?? '')];
+				echo "<td align='right'>" . number_format($cur) . "</td>";
+				echo yoyDailyCell($cur, $past);
 			}
 			echo '</tr>';
 
@@ -132,19 +142,34 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1,
 					echo '<tr class="TR-Parent-' . $re['MD_STD_REG_ID'] . '">';
 					echo '<td style="padding-left:' . $padding_country . 'px;">' . $co['COUNTRY_NAME_EN'] . '</td>';
 					foreach ($period as $d) {
-						echo "<td align='right'>" . number_format(@$data[$co['COUNTRYID']][$d]) . "</td>";
+						$cur = (int)@$data[$co['COUNTRYID']][$d];
+						$past = (int)@$data_past[$co['COUNTRYID']][($period_past[$d] ?? '')];
+						echo "<td align='right'>" . number_format($cur) . "</td>";
+						echo yoyDailyCell($cur, $past);
 					}
 					echo '</tr>';
 				}
 			}
 
 			if (!$hideChildren) {
-				genTableData($data, $region, $re['MD_STD_REG_ID'], $country, $period, $level, $country_group);
+				genTableData($data, $region, $re['MD_STD_REG_ID'], $country, $period, $level, $country_group, $data_past, $period_past);
 			}
 		}
 	}
 
 	++$level;
+}
+
+// YoY(%) cell: เทียบวันเดียวกันปีก่อน (spec หน้า 5)
+function yoyDailyCell($cur, $past)
+{
+	if ($past <= 0) {
+		return "<td align='center' style='color:#999;'>-</td>";
+	}
+	$pct = ($cur - $past) / $past * 100;
+	$color = $pct >= 0 ? '#1a7d33' : '#c0392b';
+	$sign = $pct >= 0 ? '+' : '';
+	return "<td align='center' style='color:{$color};font-weight:600;'>{$sign}" . number_format($pct, 1) . "%</td>";
 }
 
 function getSumData($data, $region, $region_id, $country, $period, &$sum = array())

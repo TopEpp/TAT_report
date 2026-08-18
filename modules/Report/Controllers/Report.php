@@ -358,6 +358,17 @@ class Report extends BaseController
 		// กันช่วงวันที่ที่ไม่มีข้อมูล: การันตี key Short/Long ให้ view ไม่ error (Undefined array key → 500)
 		$data['data']['Short'] = $data['data']['Short'] ?? [];
 		$data['data']['Long']  = $data['data']['Long']  ?? [];
+		// YoY: ข้อมูลช่วงเดียวกันปีก่อน (spec หน้า 4) → map [COUNTRY_ID => NUM]
+		list($ds_d, $ds_m, $ds_y) = explode('/', $date_start);
+		list($de_d, $de_m, $de_y) = explode('/', $date_end);
+		$marketPast = $Model->getMarketData($ds_d . '/' . $ds_m . '/' . ($ds_y - 1), $de_d . '/' . $de_m . '/' . ($de_y - 1));
+		$marketPastMap = [];
+		foreach (['Short', 'Long'] as $mt) {
+			foreach (($marketPast[$mt] ?? []) as $r) {
+				$marketPastMap[(int)$r['COUNTRY_ID']] = (int)$r['NUM'];
+			}
+		}
+		$data['marketPastMap'] = $marketPastMap;
 		$data['country'] = $Model->getCountryByMarket();
 		$this->_loadCountryGroup($data);
 		// filter $data['data'][MARKET_TYPE] โดย COUNTRY_ID ให้อยู่ใน group ที่เลือก
@@ -414,6 +425,16 @@ class Report extends BaseController
 		$data['period'] = $data['Mydate']->date_range(date('Y-m-d', strtotime($start_period)), date('Y-m-d', strtotime($end_period)));
 		$data['data'] = $Model->getNatDaily($date_start, $date_end);
 		// $data['country'] = $Model->getCountryForNatDaily($date_start,$date_end);
+		// YoY: ข้อมูลรายวันปีก่อน + map วันปัจจุบัน -> วันเดียวกันปีก่อน (spec หน้า 5)
+		list($sd_d, $sd_m, $sd_y) = explode('/', $date_start);
+		list($ed_d, $ed_m, $ed_y) = explode('/', $date_end);
+		$data['data_past'] = $Model->getNatDaily($sd_d . '/' . $sd_m . '/' . ($sd_y - 1), $ed_d . '/' . $ed_m . '/' . ($ed_y - 1));
+		$periodPast = [];
+		foreach ($data['period'] as $d) {
+			list($yy, $mm, $dd) = explode('-', $d);
+			$periodPast[$d] = ($yy - 1) . '-' . $mm . '-' . $dd;
+		}
+		$data['period_past'] = $periodPast;
 
 		$this->_loadCountryGroup($data);
 

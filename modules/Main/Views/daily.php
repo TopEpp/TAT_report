@@ -306,6 +306,27 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 	</div>
 </div>
 
+<?php
+// YoY สำหรับการ์ด ranking (spec หน้า 2): map ปีก่อน keyed by id + badge %
+$buildPastMap = function ($rows, $key) {
+	$m = [];
+	foreach (($rows ?? []) as $r) $m[(int)$r[$key]] = (int)$r['NUM'];
+	return $m;
+};
+$natDatePastMap   = $buildPastMap($SumNatDateData_past ?? [], 'COUNTRY_ID');
+$natMonthPastMap  = $buildPastMap($SumNatMonthData_past ?? [], 'COUNTRY_ID');
+$portDatePastMap  = $buildPastMap($SumPortDateData_past ?? [], 'OFFICE_ID');
+$portMonthPastMap = $buildPastMap($SumPortMonthData_past ?? [], 'OFFICE_ID');
+$yoyBadge = function ($cur, $past) {
+	if ($past > 0) {
+		$pct   = ($cur - $past) / $past * 100;
+		$color = $pct >= 0 ? '#1a7d33' : '#c0392b';
+		$sign  = $pct >= 0 ? '+' : '';
+		return '<span style="float:right;font-size:0.85em;color:' . $color . ';font-weight:600;">(' . $sign . number_format($pct, 1) . '%)</span>';
+	}
+	return '<span style="float:right;font-size:0.85em;color:#999;">(-)</span>';
+};
+?>
 <div class="row py-1">
 	<div class="col-md-3 py-2 col-12">
 		<div class="card" style="border-radius: 20px; overflow: hidden;">
@@ -316,7 +337,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 			<div class="card-body px-4" style="background: white; padding: 0; border-radius: 0.35rem;">
 				<div style="padding:7px;">
 					<?php $c = 0;
-					foreach ($SumNatDateData as $v) {
+					$__pmap = $natDatePastMap; $__ik = 'COUNTRY_ID'; foreach ($SumNatDateData as $v) {
 						$c++;
 						$flag = base_url('public/img/logotat.png');
 
@@ -331,7 +352,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 							<div class="col-md-9 col-9" style="padding-top: 15px;font-weight:bold;">
 								<span style="font-weight:bold; font-size: 0.9em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 								<p>
-									<?php echo number_format($v['NUM']); ?>
+									<?php echo number_format($v['NUM']); echo $yoyBadge((int)$v['NUM'], (int)(@$__pmap[(int)$v[$__ik]] ?? 0)); ?>
 								</p>
 								<div style="border-bottom: 2px solid gray;">
 
@@ -361,7 +382,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 			<div class="card-body px-4" style="background: white; padding: 0; border-radius: 0.35rem;">
 				<div style="padding:7px;">
 					<?php $c = 0;
-					foreach ($SumNatMonthData as $v) {
+					$__pmap = $natMonthPastMap; $__ik = 'COUNTRY_ID'; foreach ($SumNatMonthData as $v) {
 						$c++;
 						$flag = base_url('public/img/logotat.png');
 
@@ -377,7 +398,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 							<div class="col-md-9 col-9" style="padding-top: 15px;font-weight:bold;">
 								<span style="font-weight:bold; font-size: 0.9em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 								<p>
-									<?php echo number_format($v['NUM']); ?>
+									<?php echo number_format($v['NUM']); echo $yoyBadge((int)$v['NUM'], (int)(@$__pmap[(int)$v[$__ik]] ?? 0)); ?>
 								</p>
 								<div style="border-bottom: 2px solid gray;">
 
@@ -409,7 +430,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 			<div class="card-body px-4" style="background: white; padding: 0;">
 				<div style="padding:7px;">
 					<?php $c = 0;
-					foreach ($SumPortDateData as $v) {
+					$__pmap = $portDatePastMap; $__ik = 'OFFICE_ID'; foreach ($SumPortDateData as $v) {
 						$c++; ?>
 						<div class="row" style="margin-bottom:4px;">
 							<div class="col-md-3 col-3 my-auto" style="padding:0px">
@@ -431,7 +452,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 									<?php echo $v['PORT_NAME'] ?>
 								</span>
 								<p>
-									<?php echo number_format($v['NUM']); ?>
+									<?php echo number_format($v['NUM']); echo $yoyBadge((int)$v['NUM'], (int)(@$__pmap[(int)$v[$__ik]] ?? 0)); ?>
 								</p>
 								<div style="border-bottom: 2px solid gray;">
 								</div>
@@ -460,7 +481,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 			<div class="card-body px-4" style="background: white; padding: 0; border-radius: 0.35rem;">
 				<div style="padding:7px;">
 					<?php $c = 0;
-					foreach ($SumPortMonthData as $v) {
+					$__pmap = $portMonthPastMap; $__ik = 'OFFICE_ID'; foreach ($SumPortMonthData as $v) {
 						$c++; ?>
 						<div class="row" style="margin-bottom:4px;">
 							<div class="col-md-3 col-3 my-auto" style="padding:0px">
@@ -482,7 +503,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 									<?php echo $v['PORT_NAME'] ?>
 								</span>
 								<p>
-									<?php echo number_format($v['NUM']); ?>
+									<?php echo number_format($v['NUM']); echo $yoyBadge((int)$v['NUM'], (int)(@$__pmap[(int)$v[$__ik]] ?? 0)); ?>
 								</p>
 								<div style="border-bottom: 2px solid gray;">
 								</div>
@@ -504,10 +525,10 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 <div class="row">
 	<div class="col-md-12">
 		<div class="row">
-			<div class="col-md-8 col-12 py-2">
+			<div class="col-md-12 col-12 py-2">
 				<div id="canvas_map" style="height: 470px; width:100%"></div>
 			</div>
-			<div class="col-md-4 col-12 py-2 ">
+			<div class="col-md-12 col-12 py-2 ">
 				<?php
 				$dataRegionMap[1]['id'] = 13;
 				$dataRegionMap[1]['name'] = 'ASEAN';
@@ -591,28 +612,31 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 								<th class="py-4" style="background-color: #488a9a;color:white;border-bottom: 0px;">
 									Region</th>
 								<th class="py-4" style="background-color: #488a9a;color:white;border-bottom: 0px;">
-									<?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
-								</th>
-								<th class="py-4" style="background-color: #488a9a;color:white;border-bottom: 0px;">
 									<?php echo $Mydate->date_eng2thai($start_date_label, 543, 'S', 'S') ?> -
 									<?php echo $Mydate->date_eng2thai($to_date, 543, 'S', 'S') ?>
 								</th>
+								<th class="py-4" style="background-color: #488a9a;color:white;border-bottom: 0px;">%Change</th>
+								<th class="py-4" style="background-color: #488a9a;color:white;border-bottom: 0px;">%Share</th>
 							</tr>
 						</thead>
 						<tbody>
 							<?php
 							// Render Region table using Standard (ททท) hierarchy
 							$stdTatColors = [
-								'ASIA AND SOUTH PACIFIC'                              => '#BD98A1',
+								'ASIA AND OCEANIA'                                    => '#BD98A1',
 								'EAST ASIA'                                           => '#F9C9B2',
 								'OTHERS IN EAST ASIA'                                 => '#FBE0C7',
-								'ASEAN, SOUTH ASIA, SOUTH PACIFIC'                    => '#EBABC0',
-								'OTHERS IN ASEAN, SOUTH ASIA, SOUTH PACIFIC'          => '#FFFFAE',
-								'EUROPE AMERICA MIDDLE EAST AND AFRICA'               => '#9E88B5',
+								'SOUTH EAST ASIA'                                     => '#EBABC0',
+								'OTHERS IN SOUTH EAST ASIA'                           => '#F6D3DE',
+								'SOUTH ASIA'                                          => '#E6D77A',
+								'OTHERS IN SOUTH ASIA'                                => '#FFFFAE',
+								'OCEANIA'                                             => '#9BC1A7',
+								'OTHERS IN OCEANIA'                                   => '#CFE3D6',
+								'EUROPE, THE AMERICAS, MIDDLE EAST AND AFRICA'        => '#9E88B5',
 								'EUROPE'                                              => '#C6A7CB',
 								'OTHERS IN EUROPE'                                    => '#E9D4E2',
-								'THE AMERICAS, THE MIDDLE EAST AND AFRICA'            => '#65B5DA',
-								'OTHERS IN THE AMERICAS, THE MIDDLE EAST AND AFRICA'  => '#B2DFE8',
+								'THE AMERICAS, MIDDLE EAST AND AFRICA'                => '#65B5DA',
+								'OTHERS IN THE AMERICAS, MIDDLE EAST AND AFRICA'      => '#B2DFE8',
 							];
 
 							$lightenHex = function($hex, $amount = 0.45) {
@@ -636,33 +660,59 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 								return $total;
 							};
 
-							$renderNode = function($node, $level, $bg) use (&$renderNode, &$walkSum, $lightenHex, $SumCountryDateData, $SumCountryMonthData, $stdTatColors) {
-								// skip OTHERS rows (OTHERS IN EAST ASIA, OTHERS IN EUROPE, ฯลฯ)
-								if (($node['IS_OTHERS'] ?? 'N') === 'Y') return;
+							// ยอดรวมทั้งหมด (ฐานของ %Share) คำนวณจาก tree เดียวกับแถว เพื่อให้ Total = 100%
+							$grandTotalM = 0;
+							$grandTotalM_past = 0;
+							foreach (($dashboard_tree ?? []) as $top) {
+								$grandTotalM      += $walkSum($top, $SumCountryMonthData);
+								$grandTotalM_past += $walkSum($top, $SumCountryMonthData_past);
+							}
+
+							// สร้าง 2 <td>: %Change (YoY เทียบช่วงเดียวกันปีก่อน) + %Share (สัดส่วนต่อยอดรวม)
+							$yoyShareCells = function($cur, $past, $total) {
+								if ($past > 0) {
+									$pct = ($cur - $past) / $past * 100;
+									$color = $pct >= 0 ? '#1a7d33' : '#c0392b';
+									$sign  = $pct >= 0 ? '+' : '';
+									$change = '<span style="color:' . $color . ';font-weight:600;">' . $sign . number_format($pct, 1) . '%</span>';
+								} else {
+									$change = '<span style="color:#999;">-</span>';
+								}
+								$share = $total > 0 ? number_format($cur / $total * 100, 1) . '%' : '-';
+								return '<td align="right">' . $change . '</td><td align="right">' . $share . '</td>';
+							};
+
+							$renderNode = function($node, $level, $bg) use (&$renderNode, &$walkSum, $lightenHex, $SumCountryDateData, $SumCountryMonthData, $SumCountryMonthData_past, $stdTatColors, $yoyShareCells, $grandTotalM) {
+								// แสดงแถว "OTHERS IN xxx" ด้วย เพื่อให้ผลรวม parent = sub-region + others (spec หน้า 1)
 								$id  = (int)$node['NODE_ID'];
 								$pid = (int)($node['PARENT_NODE_ID'] ?? 0);
-								$sumD = $walkSum($node, $SumCountryDateData);
+								$isOthers = ($node['IS_OTHERS'] ?? 'N') === 'Y';
 								$sumM = $walkSum($node, $SumCountryMonthData);
+								$sumM_past = $walkSum($node, $SumCountryMonthData_past);
+								$extraCells = $yoyShareCells($sumM, $sumM_past, $grandTotalM);
 								$padding = 15 + $level * 25;
-								$hideStyle = $level >= 2 ? 'display:none;' : '';
+								// โชว์แถว "OTHERS IN xxx" เสมอ (ไม่ยุบ) เพื่อให้ region = sub + others เห็นชัด · TAT office/ประเทศ ยังยุบคลิกขยาย
+								$hideStyle = ($level >= 2 && !$isOthers) ? 'display:none;' : '';
+								// OTHERS ไม่ผูก class parent_<subId> จะได้ไม่ถูกยุบตอน collapse sub-region
+								$rowClass = 'tr_row ' . ($isOthers ? 'others_shown' : 'parent_' . $pid);
 								// level 3 (ประเทศใต้ TAT office) ใช้สีจางกว่า level 2
 								$rowBg = $level >= 3 ? $lightenHex($bg, 0.45) : $bg;
 
 								if ($node['NODE_TYPE'] === 'COUNTRY') {
-									echo '<tr class="tr_row parent_' . $pid . '" data-node-id="' . $id . '" style="' . $hideStyle . 'background:' . $rowBg . ';">';
+									echo '<tr class="' . $rowClass . '" data-node-id="' . $id . '" style="' . $hideStyle . 'background:' . $rowBg . ';">';
 									echo '<td style="padding-left:' . $padding . 'px;">' . htmlspecialchars($node['NAME_EN']) . '</td>';
-									echo '<td align="right">' . number_format($sumD) . '</td>';
 									echo '<td align="right">' . number_format($sumM) . '</td>';
+									echo $extraCells;
 									echo '</tr>';
 								} else {
 									$hasChildren = !empty($node['children']);
 									$weight = $level === 0 ? 'bold' : ($node['NODE_TYPE'] === 'TAT_OFFICE' ? 'normal' : '600');
 									$onclick = $hasChildren ? ' onclick="toggleChildren(' . $id . ')"' : '';
 									$cursor  = $hasChildren ? 'cursor:pointer;' : '';
-									echo '<tr class="tr_row parent_' . $pid . '" data-node-id="' . $id . '"' . $onclick . ' style="' . $hideStyle . 'background:' . $rowBg . ';' . $cursor . '">';
+									echo '<tr class="' . $rowClass . '" data-node-id="' . $id . '"' . $onclick . ' style="' . $hideStyle . 'background:' . $rowBg . ';' . $cursor . '">';
 									echo '<td style="padding-left:' . $padding . 'px;font-weight:' . $weight . ';">' . htmlspecialchars($node['NAME_EN']) . '</td>';
-									echo '<td align="right">' . number_format($sumD) . '</td>';
 									echo '<td align="right">' . number_format($sumM) . '</td>';
+									echo $extraCells;
 									echo '</tr>';
 									foreach ($node['children'] ?? [] as $c) {
 										$childBg = $stdTatColors[$c['NAME_EN']] ?? $bg;
@@ -927,19 +977,24 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 							<tr style="background: #488a9a;font-weight: bolder;">
 								<td style="padding-left: 15px;">Total</td>
 								<td align="right">
-									<?php $sumDate = 0;
-									foreach ($SumRegionDateData as $v) {
-										$sumDate += $v;
-									}
-									echo number_format($sumDate) ?>
-								</td>
-								<td align="right">
 									<?php $sumMonth = 0;
 									foreach ($SumRegionMonthData as $v) {
 										$sumMonth += $v;
 									}
 									echo number_format($sumMonth) ?>
 								</td>
+								<?php
+								// %Change (YoY) ของยอดรวม + %Share = 100%
+								if ($grandTotalM_past > 0) {
+									$pctTotal = ($grandTotalM - $grandTotalM_past) / $grandTotalM_past * 100;
+									$colorTotal = $pctTotal >= 0 ? '#8ef0a5' : '#ffb3ab';
+									$signTotal  = $pctTotal >= 0 ? '+' : '';
+									echo '<td align="right" style="color:' . $colorTotal . ';">' . $signTotal . number_format($pctTotal, 1) . '%</td>';
+								} else {
+									echo '<td align="right">-</td>';
+								}
+								echo '<td align="right">100.0%</td>';
+								?>
 							</tr>
 						</tfoot>
 					</table>
@@ -972,7 +1027,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 				<div style="padding:10px;">
 					<?php $json_nat = array();
 					$c = 0;
-					foreach ($SumNatDateData as $v) {
+					$__pmap = $natDatePastMap; $__ik = 'COUNTRY_ID'; foreach ($SumNatDateData as $v) {
 						if ($v['NUM'] > 0) {
 							$c++;
 							$flag = base_url('public/img/logotat.png');
@@ -990,7 +1045,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 										style="font-weight:bold; font-size: 0.85em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 								</div>
 								<div class="col-md-5 col-5 my-auto" style="padding-left:0;font-weight:bold;">
-									<?php echo number_format($v['NUM']); ?>
+									<?php echo number_format($v['NUM']); echo $yoyBadge((int)$v['NUM'], (int)(@$__pmap[(int)$v[$__ik]] ?? 0)); ?>
 								</div>
 							</div>
 						<?php }
@@ -1020,7 +1075,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 				<div style="padding:10px;">
 					<?php $json_nat_month = array();
 					$c = 0;
-					foreach ($SumNatMonthData as $v) {
+					$__pmap = $natMonthPastMap; $__ik = 'COUNTRY_ID'; foreach ($SumNatMonthData as $v) {
 						if ($v['NUM'] > 0) {
 							$c++;
 							$flag = base_url('public/img/logotat.png');
@@ -1038,7 +1093,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 										style="font-weight:bold; font-size: 0.85em;"><?php echo $v['COUNTRY_NAME_EN'] ?></span>
 								</div>
 								<div class="col-md-5 col-5 my-auto" style="padding-left:0;font-weight:bold;">
-									<?php echo number_format($v['NUM']); ?>
+									<?php echo number_format($v['NUM']); echo $yoyBadge((int)$v['NUM'], (int)(@$__pmap[(int)$v[$__ik]] ?? 0)); ?>
 								</div>
 							</div>
 						<?php }
@@ -1066,7 +1121,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 			<div class="modal-body">
 				<div style="padding:10px;">
 					<?php $c = 0;
-					foreach ($SumPortDateData as $v) {
+					$__pmap = $portDatePastMap; $__ik = 'OFFICE_ID'; foreach ($SumPortDateData as $v) {
 						$c++; ?>
 						<div class="row" style="margin-bottom:10px;">
 							<div class="col-md-2 col-2 text-center" style="font-size: 2.4em; padding:0px">
@@ -1087,7 +1142,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 								<span style="font-weight:bold; font-size: 0.9em;"><?php echo $v['PORT_NAME'] ?></span>
 							</div>
 							<div class="col-md-5 col-5 my-auto" style="font-weight:bold;">
-								<?php echo number_format($v['NUM']); ?>
+								<?php echo number_format($v['NUM']); echo $yoyBadge((int)$v['NUM'], (int)(@$__pmap[(int)$v[$__ik]] ?? 0)); ?>
 							</div>
 						</div>
 					<?php } ?>
@@ -1115,7 +1170,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 			<div class="modal-body">
 				<div style="padding:10px;">
 					<?php $c = 0;
-					foreach ($SumPortMonthData as $v) {
+					$__pmap = $portMonthPastMap; $__ik = 'OFFICE_ID'; foreach ($SumPortMonthData as $v) {
 						$c++; ?>
 						<div class="row" style="margin-bottom:10px;">
 							<div class="col-md-2 col-2" style="text-align:center; font-size: 2.4em; padding:0px">
@@ -1136,7 +1191,7 @@ $canExport = in_array($currentUsername, array_map('strtolower', $EXPORT_WHITELIS
 								<span style="font-weight:bold; font-size: 0.9em;"><?php echo $v['PORT_NAME'] ?></span>
 							</div>
 							<div class="col-md-5 col-5 my-auto" style="font-weight:bold;">
-								<?php echo number_format($v['NUM']); ?>
+								<?php echo number_format($v['NUM']); echo $yoyBadge((int)$v['NUM'], (int)(@$__pmap[(int)$v[$__ik]] ?? 0)); ?>
 							</div>
 						</div>
 					<?php } ?>

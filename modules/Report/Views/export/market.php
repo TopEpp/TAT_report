@@ -9,6 +9,14 @@ foreach ($data['Long'] as $key=> $c) {
 	// @$data['Long']['SUM'] += $c['NUM'];
 	$Long_SUM +=$c['NUM'];
 }
+// YoY (%) เทียบช่วงเดียวกันปีก่อน (spec หน้า 4)
+$marketPastMap = $marketPastMap ?? [];
+$yoyMarket = function ($cur, $countryId) use ($marketPastMap) {
+	$past = (int)(@$marketPastMap[(int)$countryId] ?? 0);
+	if ($past <= 0) return '-';
+	$pct = ($cur - $past) / $past * 100;
+	return ($pct >= 0 ? '+' : '') . number_format($pct, 2) . '%';
+};
 ?>
 <table style="width:100%">
 	<tr>
@@ -22,13 +30,14 @@ foreach ($data['Long'] as $key=> $c) {
 <table border="1" class="table table-bordered table-striped tbl_market1" style="width:100%">
 	<thead>
 		<tr>
-			<th colspan="4" style="background-color: white; border: 0px;">ตลาดระยะใกล้ (Short Haul)</th>
+			<th colspan="5" style="background-color: white; border: 0px;">ตลาดระยะใกล้ (Short Haul)</th>
 		</tr>
 		<tr>
 			<th style="background:#fda3a9;border: 1px solid black ;">ลำดับ</th>
 			<th style="background:#fda3a9;border: 1px solid black ;">สัญชาติ</th>
 			<th style="background:#fda3a9;border: 1px solid black ;">จำนวนนักท่องเที่ยว (คน)</th>
 			<th style="background:#fda3a9;border: 1px solid black ;">สัดส่วน (%)</th>
+				<th style="background:#fda3a9;border: 1px solid black ;">YoY (%)</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -47,6 +56,7 @@ foreach ($data['Long'] as $key=> $c) {
 				<td align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
 				<td align="right"><?php echo (@$c['NUM']) ?></td>
 				<td align="right"><?php echo number_format($ratio, 2); ?></td>
+					<td align="right"><?php echo $yoyMarket((int)@$c['NUM'], @$c['COUNTRY_ID']); ?></td>
 			</tr>
 		<?php } ?>
 		<?php if ($export_type == 'excel') { ?>
@@ -72,13 +82,14 @@ foreach ($data['Long'] as $key=> $c) {
 	<table border="1" class="table table-bordered table-striped tbl_market2" style="width:100%">
 		<thead>
 			<tr>
-				<th colspan="4" style="background-color: white; border: 0px;">ตลาดระยะไกล (Long Haul)</th>
+				<th colspan="5" style="background-color: white; border: 0px;">ตลาดระยะไกล (Long Haul)</th>
 			</tr>
 			<tr>
 				<th style="background:#937DFF;border: 1px solid black ;">ลำดับ</th>
 				<th style="background:#937DFF;border: 1px solid black ;">สัญชาติ</th>
 				<th style="background:#937DFF;border: 1px solid black ;">จำนวนนักท่องเที่ยว (คน)</th>
 				<th style="background:#937DFF;border: 1px solid black ;">สัดส่วน (%)</th>
+				<th style="background:#937DFF;border: 1px solid black ;">YoY (%)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -97,6 +108,7 @@ foreach ($data['Long'] as $key=> $c) {
 					<td align="left"><?php echo $c['COUNTRY_NAME_EN'] ?></td>
 					<td align="right"><?php echo (@$c['NUM']) ?></td>
 					<td align="right"><?php echo number_format($ratio, 2); ?></td>
+					<td align="right"><?php echo $yoyMarket((int)@$c['NUM'], @$c['COUNTRY_ID']); ?></td>
 				</tr>
 			<?php } ?>
 			<?php if ($export_type == 'excel') { ?>
