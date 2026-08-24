@@ -31,7 +31,8 @@ class BaseController extends Controller
 	 * @var array
 	 */
 	protected $helpers = [];
-	protected $Api_Code = 'AIzaSyDou8McmYTeSRhLyioyyfIuLvQX-sdK82o'; 
+	/** คีย์ Google Maps — กำหนดค่าใน initController จาก .env (google.mapsApiKey) */
+	protected $Api_Code = '';
 	protected $month_th = array( 1=>"มกราคม", 2=>"กุมภาพันธ์", 3=>"มีนาคม", 4=>"เมษายน", 5=>"พฤษภาคม", 6=>"มิถุนายน", 7=>"กรกฎาคม", 8=>"สิงหาคม", 9=>"กันยายน", 10=>"ตุลาคม", 11=>"พฤศจิกายน", 12=>"ธันวาคม");
 	protected $month_th_short = array( 1=>"ม.ค.", 2=>"ก.พ.", 3=>"มี.ค.", 4=>"เม.ย.", 5=>"พ.ค.", 6=>"มิ.ย.", 7=>"ก.ค.", 8=>"ส.ค.", 9=>"ก.ย.", 10=>"ต.ค.", 11=>"พ.ย.", 12=>"ธ.ค.");
 	protected $month_en = array( 1=>'January', 2=>'February', 3=>'March', 4=>'April', 5=>'May', 6=>'June', 7=>'July', 8=>'August', 9=>'September', 10=>'October', 11=>'November', 12=>'December');
@@ -52,6 +53,7 @@ class BaseController extends Controller
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
 		// E.g.: $this->session = \Config\Services::session();
+		$this->Api_Code = config('Secrets')->getGoogleMapsApiKey();
 		$this->Date_thai = new Date_thai();
 		$this->Mydate = new Mydate();
 		$session = session();

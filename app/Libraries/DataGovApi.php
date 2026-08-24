@@ -12,7 +12,7 @@ namespace App\Libraries;
  */
 class DataGovApi
 {
-    private $apiKey = '0UE4fssokAk0Uv3o3WyFBBh7nQdv2eWs';
+    private $apiKey;
     private $baseUrl = 'https://data.go.th/api/3/action/datastore_search';
 
     // Resource IDs
@@ -24,6 +24,12 @@ class DataGovApi
         'May' => 5, 'June' => 6, 'July' => 7, 'August' => 8,
         'September' => 9, 'October' => 10, 'November' => 11, 'December' => 12
     ];
+
+    public function __construct()
+    {
+        // อ่านคีย์จาก .env (datagov.apiKey) — ห้าม hardcode ในซอร์ส
+        $this->apiKey = config('Secrets')->getDataGovApiKey();
+    }
 
     /**
      * เรียก data.go.th API

@@ -1,6 +1,11 @@
+ # ---- Block sensitive files (defense in depth) ----
+RedirectMatch 404 (?i)/\.(env|git|svn|hg|idea|vscode|DS_Store)
+RedirectMatch 404 (?i)^/+(composer\.(json|lock)|package(-lock)?\.json|spark|phpunit\.xml.*|users\.xlsx)$
+RedirectMatch 404 ^/+(app|system|modules|writable|sql|dataset_sql|vendor)/
+	
 # Disable directory browsing
 Options All -Indexes
-SetEnv CI_ENVIRONMENT development 
+SetEnv CI_ENVIRONMENT production 
 # ----------------------------------------------------------------------
 # Rewrite engine
 # ----------------------------------------------------------------------
@@ -10,6 +15,11 @@ SetEnv CI_ENVIRONMENT development
 <IfModule mod_rewrite.c>
 	Options +FollowSymlinks
 	RewriteEngine On
+
+	php_value upload_max_filesize 32M
+	php_value post_max_size 40M
+	php_value memory_limit 128M
+	php_value max_execution_time 300
 
 	# If you installed CodeIgniter in a subfolder, you will need to
 	# change the following line to match the subfolder you need.
@@ -36,6 +46,12 @@ SetEnv CI_ENVIRONMENT development
 	# Ensure Authorization header is passed along
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # อนุญาตให้เข้าถึงไฟล์ static โดยตรง (รูปภาพ, CSS, JS)
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule \.(png|jpg|jpeg|gif|css|js|ico|svg|woff|woff2|ttf|eot)$ - [L]
+
+   
 </IfModule>
 
 <IfModule !mod_rewrite.c>
@@ -43,6 +59,15 @@ SetEnv CI_ENVIRONMENT development
     # can be sent to index.php, and everything works as normal.
     ErrorDocument 404 index.php
 </IfModule>
+
+<IfModule mod_mime.c>
+    AddType image/png .png
+    AddType image/jpeg .jpg .jpeg
+    AddType image/gif .gif
+    AddType image/svg+xml .svg
+</IfModule>
+
+
 
 # Disable server signature start
     ServerSignature Off

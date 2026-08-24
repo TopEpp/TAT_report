@@ -1,5 +1,8 @@
-# Disable directory browsing
-Options All -Indexes
+# Disable directory browsing · เปิด FollowSymLinks ระดับบนสุด (จำเป็นสำหรับ symlink public/public -> .)
+Options All -Indexes +FollowSymLinks
+
+# ---- Block sensitive dotfiles (defense in depth; .git/.env จริงอยู่นอก docroot อยู่แล้ว) ----
+RedirectMatch 404 (?i)/\.(env|git|svn|hg|idea|vscode|DS_Store)
 
 # ----------------------------------------------------------------------
 # Rewrite engine

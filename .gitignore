@@ -40,3 +40,6 @@ md_country_group_deploy_v3.sql
 public/.DS_Store
 public/vendor/.DS_Store
 vendor/.DS_Store
+app/Config/Database.php
+users.xlsx
+public/public
