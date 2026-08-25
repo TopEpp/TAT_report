@@ -423,6 +423,21 @@ class Report extends BaseController
 				$data['data'][$mt] = array_values(array_filter($rows, fn($r) => isset($allowed[(int)$r['COUNTRY_ID']])));
 			}
 		}
+
+		// ชื่อประเทศต้องใช้ของกลุ่มที่เลือก (SURINAME/SURINAM ฯลฯ)
+		// เดิมหน้านี้ดึงชื่อจาก MD_COUNTRY ซึ่งเป็น master ใช้ร่วมทุกกลุ่ม
+		$groupNames = $CG->getCountryNames($data['country_group']);
+		if (!empty($groupNames) && is_array($data['data'])) {
+			foreach ($data['data'] as $mt => $rows) {
+				$data['data'][$mt] = array_map(function ($r) use ($groupNames) {
+					$cid = (int)@$r['COUNTRY_ID'];
+					if (isset($groupNames[$cid])) {
+						$r['COUNTRY_NAME_EN'] = $groupNames[$cid];
+					}
+					return $r;
+				}, $rows);
+			}
+		}
 		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
 			$this->export_excel('market.xlsx', 'Modules\Report\Views\export\market', $data);

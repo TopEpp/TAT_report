@@ -220,6 +220,23 @@ class CountryGroup_model extends Model
         return $map;
     }
 
+    /**
+     * ชื่อประเทศที่ต้องแสดงของกลุ่มนี้
+     * ชื่อเดียวกันสะกดต่างกันได้ระหว่างรูปแบบ ททท. กับ กระทรวง
+     * (เช่น SURINAME vs SURINAM) จึงต้องอ่านจาก node ไม่ใช่จาก MD_COUNTRY
+     *
+     * @return array [countryId => NAME_EN]
+     */
+    public function getCountryNames($code)
+    {
+        $names = [];
+        foreach ($this->getNodes($code) as $n) {
+            if ($n['NODE_TYPE'] !== 'COUNTRY' || empty($n['COUNTRY_ID'])) continue;
+            $names[(int)$n['COUNTRY_ID']] = $n['NAME_EN'];
+        }
+        return $names;
+    }
+
     public function getCountryIds($code)
     {
         $g = $this->getGroupByCode($code);
