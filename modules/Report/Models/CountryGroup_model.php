@@ -14,6 +14,9 @@ class CountryGroup_model extends Model
     const DEFAULT_CODE = 'STD_GOV';
     const VALID_CODES = ['STD_GOV', 'STD_TAT', 'ALL_GOV', 'ALL_TAT'];
 
+    /** cache กฎยุบรวมต่อ request (1 query ต่อ group ไม่ว่าจะเรียกกี่ครั้ง) */
+    private static $mergeMapCache = [];
+
     /** list 4 groups สำหรับ dropdown */
     public function getGroups()
     {
@@ -179,6 +182,44 @@ class CountryGroup_model extends Model
     /**
      * return list COUNTRY_ID เฉพาะที่อยู่ใน group (ใช้กรอง query ตัวเลขรายงาน)
      */
+    /**
+     * กฎยุบรวมประเทศของกลุ่มนี้ (ITALY = ITALY + VATICAN CITY STATE ฯลฯ)
+     * เก็บใน MD_COUNTRY_MERGE คีย์ด้วย GROUP_CODE + COUNTRY_ID
+     * (ไม่ใช้ NODE_ID เพราะ NODE_ID เปลี่ยนทุกครั้งที่ rebuild country list)
+     *
+     * @return array [sourceCountryId => targetCountryId] ว่างถ้ากลุ่มนี้ไม่มีกฎ
+     */
+    public function getMergeMap($code)
+    {
+        if (!in_array($code, self::VALID_CODES, true)) return [];
+        if (isset(self::$mergeMapCache[$code])) return self::$mergeMapCache[$code];
+
+        $map = [];
+        try {
+            // ตารางอาจยังไม่ถูกสร้างบนเครื่องที่ยังไม่ได้รัน SQL patch -> ถือว่าไม่มีกฎ
+            if ($this->db->tableExists('MD_COUNTRY_MERGE')) {
+                $rows = $this->db->table('MD_COUNTRY_MERGE')
+                    ->select('SOURCE_COUNTRY_ID, TARGET_COUNTRY_ID')
+                    ->where('GROUP_CODE', $code)
+                    ->get()->getResultArray();
+
+                foreach ($rows as $r) {
+                    $source = (int)$r['SOURCE_COUNTRY_ID'];
+                    $target = (int)$r['TARGET_COUNTRY_ID'];
+                    if ($source > 0 && $target > 0 && $source !== $target) {
+                        $map[$source] = $target;
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'getMergeMap(' . $code . ') failed: ' . $e->getMessage());
+            $map = [];
+        }
+
+        self::$mergeMapCache[$code] = $map;
+        return $map;
+    }
+
     public function getCountryIds($code)
     {
         $g = $this->getGroupByCode($code);

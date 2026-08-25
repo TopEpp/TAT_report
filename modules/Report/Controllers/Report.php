@@ -8,6 +8,7 @@ use Modules\Report\Models\CountryGroup_model;
 use Modules\Setting\Models\Setting_model;
 use Modules\Main\Models\Main_model;
 use Modules\Import\Models\Import_model;
+use App\Libraries\CountryMerge;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class Report extends BaseController
@@ -43,6 +44,35 @@ class Report extends BaseController
 		$data['country_groups'] = $CG->getGroups();
 		$data['region']         = $legacyFmt['region'];
 		$data['country']        = $legacyFmt['country'];
+	}
+
+	/**
+	 * ยุบยอดประเทศตามกฎของกลุ่มที่เลือก (เช่น ITALY = ITALY + VATICAN CITY STATE)
+	 * ต้องเรียก "หลัง" _loadCountryGroup() และ "หลัง" โหลดข้อมูลจาก model แล้ว
+	 * ถ้ากลุ่มนั้นไม่มีกฎ (รูปแบบกระทรวง) จะไม่ทำอะไรเลย
+	 *
+	 * @param array $mapKeys คีย์ใน $data ที่เป็น array แบบ [country_id => ...]
+	 * @param array $rowKeys คีย์ใน $data ที่เป็น list ของ row (มีคอลัมน์ COUNTRY_ID)
+	 */
+	protected function _mergeCountryData(&$data, array $mapKeys = [], array $rowKeys = [])
+	{
+		$CG    = new CountryGroup_model();
+		$merge = $CG->getMergeMap($data['country_group'] ?? '');
+		if (empty($merge)) {
+			return;
+		}
+
+		foreach ($mapKeys as $key) {
+			if (!empty($data[$key]) && is_array($data[$key])) {
+				$data[$key] = CountryMerge::foldMap($data[$key], $merge);
+			}
+		}
+
+		foreach ($rowKeys as $key) {
+			if (!empty($data[$key]) && is_array($data[$key])) {
+				$data[$key] = CountryMerge::foldRows($data[$key], $merge);
+			}
+		}
 	}
 
 	public function nation()
@@ -190,6 +220,7 @@ class Report extends BaseController
 		$this->_loadCountryGroup($data);
 		$data['data1'] = $Model->getNatBetweenDateData($data['start_date1'], $data['end_date1'], $data['country_type'],$data['country_id']);
 		$data['data2'] = $Model->getNatBetweenDateData($data['start_date2'], $data['end_date2'], $data['country_type'],$data['country_id']);
+		$this->_mergeCountryData($data, ['data1', 'data2']);
 		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
 			$this->export_excel('nation_compare.xlsx', 'Modules\Report\Views\export\nation_compare', $data);
@@ -250,6 +281,7 @@ class Report extends BaseController
 
 		$data['country_select'] = $Model->getCountryAllRow();
 		$this->_loadCountryGroup($data);
+		$this->_mergeCountryData($data, ['data']);
 
 		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
@@ -318,6 +350,7 @@ class Report extends BaseController
 
 		$data['country_select'] = $Model->getCountryAllRow();
 		$this->_loadCountryGroup($data);
+		$this->_mergeCountryData($data, ['data']);
 		$data['select_year'] = $Model->getSelectYear();
 
 
@@ -371,8 +404,19 @@ class Report extends BaseController
 		$data['marketPastMap'] = $marketPastMap;
 		$data['country'] = $Model->getCountryByMarket();
 		$this->_loadCountryGroup($data);
+
+		// ยุบยอดตามกฎ ททท. "ก่อน" filter เพราะประเทศต้นทาง (เช่น VATICAN) ไม่อยู่ใน group
+		// ถ้า filter ก่อน ยอดจะถูกตัดทิ้งไปก่อนที่จะได้บวกเข้าประเทศปลายทาง
+		$CG    = new CountryGroup_model();
+		$merge = $CG->getMergeMap($data['country_group']);
+		if (!empty($merge)) {
+			$data['marketPastMap'] = CountryMerge::foldMap($data['marketPastMap'], $merge);
+			foreach (['Short', 'Long'] as $marketType) {
+				$data['data'][$marketType] = CountryMerge::foldRows($data['data'][$marketType], $merge);
+			}
+		}
+
 		// filter $data['data'][MARKET_TYPE] โดย COUNTRY_ID ให้อยู่ใน group ที่เลือก
-		$CG = new CountryGroup_model();
 		$allowed = array_flip($CG->getCountryIds($data['country_group']));
 		if (is_array($data['data'])) {
 			foreach ($data['data'] as $mt => $rows) {
@@ -437,6 +481,7 @@ class Report extends BaseController
 		$data['period_past'] = $periodPast;
 
 		$this->_loadCountryGroup($data);
+		$this->_mergeCountryData($data, ['data', 'data_past']);
 
 		$data['export_type'] = @$_GET['export_type'];
 		if (@$_GET['export_type'] == 'excel') {
@@ -563,6 +608,7 @@ class Report extends BaseController
 		$data['point'] = $Model_import->getPointMonthly($data['point_type']);
 		$data['data'] = $Model_import->getRawDataMonthly($data['year'],$data['month'],$data['year2'],$data['month2']);
 		$this->_loadCountryGroup($data);
+		$this->_mergeCountryData($data, ['data']);
 
 		if (@$_GET['export_type'] == 'excel') {
 			$this->export_excel('monthly.xlsx', 'Modules\Report\Views\export\monthly', $data);

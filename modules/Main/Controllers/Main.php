@@ -8,6 +8,7 @@ use Modules\Main\Models\Activity_model;
 use Modules\Report\Models\Report_model;
 use Modules\Report\Models\CountryGroup_model;
 use Modules\Setting\Models\Setting_model;
+use App\Libraries\CountryMerge;
 use CodeIgniter\API\ResponseTrait;
 // use App\Libraries\DataGovApi; // ยังไม่ได้ใช้ — ข้อมูลมาจาก hardcode ชั่วคราว
 
@@ -15,6 +16,20 @@ class Main extends BaseController
 {
 
 	use ResponseTrait;
+
+	/** country group ที่หน้า dashboard รายวันใช้เป็นโครงตาราง Region */
+	const DASHBOARD_GROUP_CODE = 'STD_TAT';
+
+	/**
+	 * เรียง list ของ row ตามยอด NUM มากไปน้อย (ใช้หลังยุบยอดประเทศ)
+	 * คืน array ชุดใหม่ ไม่แก้ของเดิม
+	 */
+	private function _sortByNumDesc(array $rows)
+	{
+		$sorted = $rows;
+		usort($sorted, fn($a, $b) => (int)@$b['NUM'] <=> (int)@$a['NUM']);
+		return $sorted;
+	}
 
 	public function index()
 	{
@@ -121,7 +136,20 @@ class Main extends BaseController
 
 		// Standard (ททท) hierarchy สำหรับ table "Region"
 		$CG = new CountryGroup_model();
-		$data['dashboard_tree'] = $CG->getHierarchy('STD_TAT');
+		$data['dashboard_tree'] = $CG->getHierarchy(self::DASHBOARD_GROUP_CODE);
+
+		// ยุบยอดประเทศตามกฎ ททท. (เช่น ITALY = ITALY + VATICAN CITY STATE)
+		// ทำก่อนส่งเข้า view เพื่อให้ทั้งตาราง Region และการ์ด ranking ได้ยอดชุดเดียวกัน
+		$merge = $CG->getMergeMap(self::DASHBOARD_GROUP_CODE);
+		if (!empty($merge)) {
+			foreach (['SumCountryDateData', 'SumCountryMonthData', 'SumCountryMonthData_past'] as $key) {
+				$data[$key] = CountryMerge::foldMap($data[$key], $merge);
+			}
+			// การ์ด ranking เรียงตามยอด -> ต้องเรียงใหม่หลังยุบ ลำดับถึงจะถูก
+			foreach (['SumNatDateData', 'SumNatMonthData', 'SumNatDateData_past', 'SumNatMonthData_past'] as $key) {
+				$data[$key] = $this->_sortByNumDesc(CountryMerge::foldRows($data[$key], $merge));
+			}
+		}
 
 		$data['SumChartData'] = $Model->getSumChart($end_date);
 		$data['SumChartDataYear'] = $Model->getSumChartYear($data['year']);
