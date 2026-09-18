@@ -1265,6 +1265,7 @@ for ($i = 1; $i <= 12; $i++) {
 
 		initMap();
 		addMarker(dataRegionMap);
+		openTopRegionInfo(dataRegionMap);
 
 		$('.date_picker').datepicker({
 			format: "dd/mm/yyyy",
@@ -1389,11 +1390,12 @@ for ($i = 1; $i <= 12; $i++) {
 	var directionsService = new google.maps.DirectionsService();
 	var directionsRenderer = new google.maps.DirectionsRenderer(rendererOptions);
 	var infowindow = [];
+	var MAP_DEFAULT_ZOOM = 3; // เดิม 1 — ซูมเข้าอีก 2 step
 
 	function initMap() {
 		var center = new google.maps.LatLng(14.1446356, 2.0148033);
 		var mapOptions = {
-			zoom: 1,
+			zoom: MAP_DEFAULT_ZOOM,
 			center: center,
 			disableDefaultUI: false,
 			mapTypeControl: false,
@@ -1460,6 +1462,38 @@ for ($i = 1; $i <= 12; $i++) {
 		});
 
 
+	}
+
+	// ค่าที่ส่งมาจาก PHP ผ่าน number_format() แล้ว ("1,234") ต้องถอด , ก่อนเทียบ
+	function parseRegionValue(value) {
+		var number = parseFloat(String(value == null ? '' : value).replace(/[^0-9.-]/g, ''));
+		return isNaN(number) ? 0 : number;
+	}
+
+	// เปิด popup ของภูมิภาคที่มีจำนวนมากที่สุดไว้เป็นค่าเริ่มต้น
+	function openTopRegionInfo(data) {
+		var topIndex = null;
+		var topValue = -1;
+
+		$.each(data, function (key, value) {
+			var index = parseInt(value.id);
+			if (!infowindow[index]) {
+				return true; // marker ถูกข้ามเพราะพิกัดซ้ำ
+			}
+			var current = parseRegionValue(value.valueMonth);
+			if (current > topValue) {
+				topValue = current;
+				topIndex = index;
+			}
+		});
+
+		if (topIndex === null || topValue <= 0) {
+			return;
+		}
+
+		showCountry(topIndex);
+		infowindow[topIndex].open({ map });
+		map.panTo(infowindow[topIndex].getPosition());
 	}
 
 	function close_info(index) {
