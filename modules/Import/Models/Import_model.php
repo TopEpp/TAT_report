@@ -75,6 +75,9 @@ class Import_model extends Model
 						case 'ไม่มีสัญชาติ':
 							$country['COUNTRY_ID'] = 275;
 							break;
+						case 'ปาเลสไตน์': // ไฟล์ ตม. เปลี่ยนจาก 'ปาเลสไตน์เนียน' (= COUNTRY_NAME_TH2) เป็นชื่อนี้ ก.ย. 69
+							$country['COUNTRY_ID'] = 34;
+							break;
 						case 'บริติช (OVERSEAS)':
 							$country['COUNTRY_ID'] = 274;
 							break;
@@ -407,7 +410,7 @@ class Import_model extends Model
 						$text .= ' VISA :: '.$row[3];
 					}
 
-					if(empty($country['COUNTRY_ID']) || @$country['COUNTRY_ID'] != 0){
+					if(empty($country['COUNTRY_ID'])){
 						$text .= ' NATION :: '.$row[2];
 					}
 					$text .= '<br>';
