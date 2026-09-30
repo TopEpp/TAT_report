@@ -1,4 +1,5 @@
 <?php include_once("export_css.php"); ?>
+<?php $show_yoy = $show_yoy ?? true; ?>
 
 <table style="width:100%">
 	<tr>
@@ -15,7 +16,9 @@
 				// excel: ฝัง ISO yyyy-mm-dd ให้ controller แปลงเป็น Excel date จริง · อื่นๆ (pdf/หน้าจอ) แสดงไทย
 				$dateHead = (($export_type ?? '') == 'excel') ? $d : $Mydate->date_eng2thai($d, 543, 'S', 'S');
 				echo "<th style='background-color:#369fa7;border: 1px solid black ;'>{$dateHead}</th>";
-				echo "<th style='background-color:#369fa7;border: 1px solid black ;'>YoY(%)</th>";
+				if ($show_yoy) {
+					echo "<th style='background-color:#369fa7;border: 1px solid black ;'>YoY(%)</th>";
+				}
 			} ?>
 		</tr>
 	</thead>
@@ -26,12 +29,14 @@
 			$dataSumPast = getSumData($data_past ?? [], $region, 0, $country, array_values($period_past ?? []));
 			foreach ($period as $d) {
 				echo "<td align='right' style='background-color: #61bec9'>" . (@$dataSum[$d]) . "</td>";
+				if ($show_yoy) {
 					echo "<td align='right' style='background-color: #61bec9'>" . yoyDailyNum((int)@$dataSum[$d], (int)@$dataSumPast[($period_past[$d] ?? '')]) . "</td>";
+				}
 			}
 			?>
 
 		</tr>
-		<?php genTableData($data, $region, 0, $country, $period, 1, $country_group ?? '', $data_past ?? [], $period_past ?? []) ?>
+		<?php genTableData($data, $region, 0, $country, $period, 1, $country_group ?? '', $data_past ?? [], $period_past ?? [], $show_yoy) ?>
 		<?php if ($export_type == 'excel') { ?>
 			<tr style="border:0px">
 				<td colspan="5">
@@ -45,7 +50,7 @@
 </table>
 <?php
 
-function genTableData($data, $region, $region_id, $country, $period, $level = 1, $country_group = '', $data_past = [], $period_past = [])
+function genTableData($data, $region, $region_id, $country, $period, $level = 1, $country_group = '', $data_past = [], $period_past = [], $show_yoy = true)
 {
 	$level++;
 
@@ -66,7 +71,9 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1,
 			echo '<td style="padding-left: ' . $padding_region . 'px; font-weight: bolder;background-color: #61bec9"> ' . $alink . ' ' . $re['MD_STD_REG_NAMEEN'] . '</td>';
 			foreach ($period as $d) {
 				echo "<td align='right' style='background-color: #61bec9'>" . (@$dataSum[$d]) . "</td>";
+				if ($show_yoy) {
 					echo "<td align='right' style='background-color: #61bec9'>" . yoyDailyNum((int)@$dataSum[$d], (int)@$dataSumPast[($period_past[$d] ?? '')]) . "</td>";
+				}
 			}
 			echo '</tr>';
 
@@ -82,14 +89,16 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1,
 						$curC = (int)@$data[$co['COUNTRYID']][$d];
 						$pastC = (int)@$data_past[$co['COUNTRYID']][($period_past[$d] ?? '')];
 						echo "<td align='right'>" . $curC . "</td>";
-						echo "<td align='right'>" . yoyDailyNum($curC, $pastC) . "</td>";
+						if ($show_yoy) {
+							echo "<td align='right'>" . yoyDailyNum($curC, $pastC) . "</td>";
+						}
 					}
 					echo '</tr>';
 				}
 			}
 
 			if (!$hideChildren) {
-				genTableData($data, $region, $re['MD_STD_REG_ID'], $country, $period, $level, $country_group, $data_past, $period_past);
+				genTableData($data, $region, $re['MD_STD_REG_ID'], $country, $period, $level, $country_group, $data_past, $period_past, $show_yoy);
 			}
 		}
 	}

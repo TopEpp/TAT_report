@@ -27,12 +27,19 @@
 	.table-responsive {
 		overflow-x: visible
 	}
+
+	.hide-yoy .col-yoy {
+		display: none;
+	}
 </style>
 <div class="row">
 	<div class="col-md-6 text-center text-md-left" >
 		
 	</div>
 	<div class="col-md-6 col-12 py-2 py-md-0" style="text-align: right;">
+		<button type="button" id="btn-toggle-yoy" class="btn btn-info" onclick="ToggleYoy()">
+			<i class="fa-solid fa-eye-slash"></i> <span>ซ่อน YoY</span>
+		</button>
 		<a target="_blank" onclick="export_report('excel')" class="btn btn-success" style="width : 70px">
 			<i class="fa-solid fa-file-excel"></i> Excel
 		</a>
@@ -69,13 +76,13 @@
 <div class="row">
 	<div class="col-md-12 col-12">
 		<div class="table-responsive">
-			<table class="table table-striped table-tableborder radiusTableNation shadow-lg">
+			<table id="table-nation-daily" class="table table-striped table-tableborder radiusTableNation shadow-lg">
 				<thead>
 					<tr>
 						<th>สัญชาติ</th>
 						<?php foreach ($period as $d) {
 							echo "<th>{$Mydate->date_eng2thai($d, 543, 'S', 'S')}</th>";
-							echo "<th style='font-size:0.85em;'>YoY(%)</th>";
+							echo "<th class='col-yoy' style='font-size:0.85em;'>YoY(%)</th>";
 						} ?>
 					</tr>
 				</thead>
@@ -164,12 +171,12 @@ function genTableData($data, $region, $region_id, $country, $period, $level = 1,
 function yoyDailyCell($cur, $past)
 {
 	if ($past <= 0) {
-		return "<td align='center' style='color:#999;'>-</td>";
+		return "<td class='col-yoy' align='center' style='color:#999;'>-</td>";
 	}
 	$pct = ($cur - $past) / $past * 100;
 	$color = $pct >= 0 ? '#1a7d33' : '#c0392b';
 	$sign = $pct >= 0 ? '+' : '';
-	return "<td align='center' style='color:{$color};font-weight:600;'>{$sign}" . number_format($pct, 1) . "%</td>";
+	return "<td class='col-yoy' align='center' style='color:{$color};font-weight:600;'>{$sign}" . number_format($pct, 1) . "%</td>";
 }
 
 function getSumData($data, $region, $region_id, $country, $period, &$sum = array())
@@ -230,9 +237,36 @@ function getSumData($data, $region, $region_id, $country, $period, &$sum = array
 		report_date2 = (date[2] - 543) + '-' + date[1] + '-' + date[0];
 
 		var country_group = $('#country_group').val();
+		var hide_yoy = $('#table-nation-daily').hasClass('hide-yoy') ? '1' : '0';
 
-		window.open(base_url + '/report/nation_daily/?export_type=' + type + '&d1=' + report_date1 + '&d2=' + report_date2+'&country_group='+country_group);
+		window.open(base_url + '/report/nation_daily/?export_type=' + type + '&d1=' + report_date1 + '&d2=' + report_date2+'&country_group='+country_group+'&hide_yoy='+hide_yoy);
 	}
+
+	var YOY_STORAGE_KEY = 'nation_daily_hide_yoy';
+
+	function ApplyYoy(isHidden) {
+		$('#table-nation-daily').toggleClass('hide-yoy', isHidden);
+		$('#btn-toggle-yoy i').attr('class', isHidden ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash');
+		$('#btn-toggle-yoy span').text(isHidden ? 'แสดง YoY' : 'ซ่อน YoY');
+	}
+
+	function ToggleYoy() {
+		var isHidden = !$('#table-nation-daily').hasClass('hide-yoy');
+		ApplyYoy(isHidden);
+		try {
+			localStorage.setItem(YOY_STORAGE_KEY, isHidden ? '1' : '0');
+		} catch (e) {
+			console.warn('Cannot save YoY toggle state', e);
+		}
+	}
+
+	$(function() {
+		try {
+			ApplyYoy(localStorage.getItem(YOY_STORAGE_KEY) === '1');
+		} catch (e) {
+			console.warn('Cannot read YoY toggle state', e);
+		}
+	});
 
 	function ShowHide(reg_id) {
 		$('.TR-Parent-' + reg_id).toggle();

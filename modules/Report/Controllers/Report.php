@@ -499,6 +499,8 @@ class Report extends BaseController
 		$this->_mergeCountryData($data, ['data', 'data_past']);
 
 		$data['export_type'] = @$_GET['export_type'];
+		// ปุ่มซ่อน YoY บนหน้าเว็บ → export ไม่มีคอลัมน์ YoY
+		$data['show_yoy'] = (@$_GET['hide_yoy'] !== '1');
 		if (@$_GET['export_type'] == 'excel') {
 			$this->export_excel('nation_daily.xlsx', 'Modules\Report\Views\export\nation_daily', $data);
 		} else if (@$_GET['export_type'] == 'pdf') {

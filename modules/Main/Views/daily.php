@@ -1261,7 +1261,7 @@ for ($i = 1; $i <= 12; $i++) {
 	// console.log(dataRegionMap);
 	// import zoomPlugin from 'chartjs-plugin-zoom';
 	$(function () {
-		$('#modal_noti').modal('show');
+		// $('#modal_noti').modal('show');
 
 		initMap();
 		addMarker(dataRegionMap);
