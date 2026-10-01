@@ -138,8 +138,120 @@ class Setting extends BaseController{
 		$Model = new Setting_model();
 		$data['group'] = $Model->getPermissionGroup();
 		$data['user'] = $Model->getPermissionUser();
+		$data['flags'] = Setting_model::PERMISSION_FLAGS;
+		$data['canManage'] = $this->_canManagePermission();
 
 		return view('Modules\Setting\Views\permission',$data);
+	}
+
+	// กลุ่ม route /setting ไม่มี filter auth → endpoint ที่เขียนข้อมูลสิทธิ์ต้องเช็คเอง
+	private function _canManagePermission()
+	{
+		$session = session();
+		$menu = $session->get('user_menu');
+		return $session->get('logged_in') && !empty($menu['SETTING']);
+	}
+
+	private function _permissionResponse($status, $data, $message, $code = 200)
+	{
+		return $this->setResponseFormat('json')->respond([
+			'status'  => $status,
+			'data'    => $data,
+			'message' => $message,
+		], $code);
+	}
+
+	/**
+	 * ตรวจ type + key ของสิทธิ์ · คืน error message หรือ null ถ้าผ่าน
+	 * group = รหัสหน่วยงาน (ตัวเลข ตรงกับ title ใน AD) · user = username AD
+	 */
+	private function _validatePermissionKey($type, $key)
+	{
+		if (!isset(Setting_model::PERMISSION_TABLES[$type])) {
+			return 'ประเภทสิทธิ์ไม่ถูกต้อง';
+		}
+		if ($type === 'group' && !preg_match('/^\d{1,10}$/', $key)) {
+			return 'รหัสหน่วยงานต้องเป็นตัวเลข 1-10 หลัก';
+		}
+		if ($type === 'user' && !preg_match('/^[A-Za-z0-9._-]{1,200}$/', $key)) {
+			return 'Username ใช้ได้เฉพาะ a-z 0-9 . _ - (ไม่เกิน 200 ตัวอักษร)';
+		}
+		return null;
+	}
+
+	// รับเฉพาะ AJAX จากผู้มีสิทธิ์ Setting (custom header ปลอมข้ามโดเมนไม่ได้ = กัน CSRF แบบเบา)
+	private function _guardPermissionWrite()
+	{
+		if (!$this->request->isAJAX()) {
+			return $this->_permissionResponse('error', null, 'Invalid request', 400);
+		}
+		if (!$this->_canManagePermission()) {
+			return $this->_permissionResponse('error', null, 'ไม่มีสิทธิ์จัดการข้อมูลสิทธิ์', 403);
+		}
+		return null;
+	}
+
+	public function savePermission()
+	{
+		$denied = $this->_guardPermissionWrite();
+		if ($denied) {
+			return $denied;
+		}
+
+		$type        = (string) $this->request->getPost('type');
+		$key         = trim((string) $this->request->getPost('key'));
+		$originalKey = trim((string) $this->request->getPost('original_key'));
+		$flags       = (array) $this->request->getPost('flags');
+
+		$error = $this->_validatePermissionKey($type, $key);
+		if (!$error && $originalKey !== '') {
+			$error = $this->_validatePermissionKey($type, $originalKey);
+		}
+		if ($error) {
+			return $this->_permissionResponse('error', null, $error, 422);
+		}
+
+		$Model = new Setting_model();
+		if ($originalKey !== '' && !$Model->permissionExists($type, $originalKey)) {
+			return $this->_permissionResponse('error', null, 'ไม่พบข้อมูลเดิม อาจถูกลบไปแล้ว', 404);
+		}
+		if ($key !== $originalKey && $Model->permissionExists($type, $key)) {
+			return $this->_permissionResponse('error', null, 'มี "' . $key . '" อยู่แล้ว ให้กดแก้ไขแถวเดิมแทน', 409);
+		}
+
+		try {
+			$Model->savePermission($type, $key, $flags, $originalKey);
+		} catch (\Throwable $e) {
+			log_message('error', 'savePermission failed [' . $type . ':' . $key . ']: ' . $e->getMessage());
+			return $this->_permissionResponse('error', null, 'บันทึกไม่สำเร็จ กรุณาลองใหม่', 500);
+		}
+
+		return $this->_permissionResponse('success', ['type' => $type, 'key' => $key], 'บันทึกข้อมูลสำเร็จ');
+	}
+
+	public function deletePermission()
+	{
+		$denied = $this->_guardPermissionWrite();
+		if ($denied) {
+			return $denied;
+		}
+
+		$type = (string) $this->request->getPost('type');
+		$key  = trim((string) $this->request->getPost('key'));
+
+		$error = $this->_validatePermissionKey($type, $key);
+		if ($error) {
+			return $this->_permissionResponse('error', null, $error, 422);
+		}
+
+		try {
+			(new Setting_model())->deletePermission($type, $key);
+		} catch (\Throwable $e) {
+			log_message('error', 'deletePermission failed [' . $type . ':' . $key . ']: ' . $e->getMessage());
+			return $this->_permissionResponse('error', null, 'ลบไม่สำเร็จ กรุณาลองใหม่', 500);
+		}
+
+		return $this->_permissionResponse('success', ['type' => $type, 'key' => $key], 'ลบข้อมูลสำเร็จ');
 	}
 
 	/**

@@ -289,9 +289,19 @@ class Setting_model extends Model
 		// echo ' :: '.$c;
 	}
 
+	// สิทธิ์เมนูที่เก็บในตาราง REPORT_PERMISSION_GROUP / REPORT_PERMISSION_USER
+	const PERMISSION_FLAGS = ['DASHBOARD', 'REPORT', 'IMPORT', 'SETTING', 'DEPARTURE'];
+
+	// type => [ตาราง, คอลัมน์ key]
+	const PERMISSION_TABLES = [
+		'group' => ['REPORT_PERMISSION_GROUP', 'GROUP_ID'],
+		'user'  => ['REPORT_PERMISSION_USER', 'USERNAME'],
+	];
+
 	function getPermissionGroup(){
 		$builder = $this->db->table('REPORT_PERMISSION_GROUP');
 		$builder->select('*');
+		$builder->orderBy('GROUP_ID');
 		$data = $builder->get()->getResultArray();
 
 		return $data;
@@ -300,9 +310,44 @@ class Setting_model extends Model
 	function getPermissionUser(){
 		$builder = $this->db->table('REPORT_PERMISSION_USER');
 		$builder->select('*');
+		$builder->orderBy('USERNAME');
 		$data = $builder->get()->getResultArray();
 
 		return $data;
+	}
+
+	function permissionExists($type, $key){
+		list($table, $keyCol) = self::PERMISSION_TABLES[$type];
+		$builder = $this->db->table($table);
+		$builder->where($keyCol, $key);
+		return $builder->countAllResults() > 0;
+	}
+
+	/**
+	 * เพิ่ม/แก้สิทธิ์ 1 แถว
+	 * $originalKey ว่าง = เพิ่มใหม่ · ไม่ว่าง = แก้แถวเดิม (เปลี่ยน key ได้)
+	 * $flags = ['DASHBOARD'=>true, ...] → เก็บ 1 หรือ NULL ตามข้อมูลเดิม
+	 */
+	function savePermission($type, $key, array $flags, $originalKey = ''){
+		list($table, $keyCol) = self::PERMISSION_TABLES[$type];
+		$builder = $this->db->table($table);
+		$builder->set($keyCol, $key);
+		foreach (self::PERMISSION_FLAGS as $flag) {
+			$builder->set($flag, empty($flags[$flag]) ? null : 1);
+		}
+
+		if ($originalKey !== '') {
+			$builder->where($keyCol, $originalKey);
+			return $builder->update();
+		}
+		return $builder->insert();
+	}
+
+	function deletePermission($type, $key){
+		list($table, $keyCol) = self::PERMISSION_TABLES[$type];
+		$builder = $this->db->table($table);
+		$builder->where($keyCol, $key);
+		return $builder->delete();
 	}
 
 	// จำกัดจำนวนแถวสูงสุดเมื่อกรองด้วยช่วงวันที่ กันผลลัพธ์ใหญ่เกินไป

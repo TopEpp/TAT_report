@@ -9,11 +9,6 @@ use App\Libraries\Hash;
 class Login extends BaseController{
 
   public function index(){
-    // if(session()->get('logged_in')){
-    //   return redirect()->to('/main');
-    // }
-    // return view('Modules\Login\Views\index.php');
-
     $AuthorizationHeader = $this->getAuthorizationHeader();
 
     if(isset($AuthorizationHeader)){
@@ -26,12 +21,10 @@ class Login extends BaseController{
         return $this->authHeader($username,$AuthorizationHeader);
 
       }else{
-        // return redirect()->to('https://login.microsoftonline.com/8d7435c8-c945-4942-80bf-c883fc3e4187/oauth2/v2.0/authorize?approval_prompt=force&client_id=5fd4e63a-e461-4491-88a0-924581b5c70e&redirect_uri=https%3A%2F%2Fsmarttatic.tat.or.th%2Freporttatic%2Fmain%2Fdaily&response_type=code&scope=openid+email+profile+User.Read+Group.Read.All&state=9aeYo9oqaJ2p7A2Stb9LayOhUFZcGHpL_gsrI7dCgwM%3Ahttps%3A%2F%2Ftestmarketing.tat.or.th%2F&sso_reload=true');
         return view('Modules\Login\Views\index.php');
       }
       
     }else{
-      // return redirect()->to('https://login.microsoftonline.com/8d7435c8-c945-4942-80bf-c883fc3e4187/oauth2/v2.0/authorize?approval_prompt=force&client_id=5fd4e63a-e461-4491-88a0-924581b5c70e&redirect_uri=https%3A%2F%2Fsmarttatic.tat.or.th%2Freporttatic%2Fmain%2Fdaily&response_type=code&scope=openid+email+profile+User.Read+Group.Read.All&state=9aeYo9oqaJ2p7A2Stb9LayOhUFZcGHpL_gsrI7dCgwM%3Ahttps%3A%2F%2Ftestmarketing.tat.or.th%2F&sso_reload=true');
       return view('Modules\Login\Views\index.php');
     }
   }

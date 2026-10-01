@@ -109,7 +109,14 @@ $routes->group('import', ['namespace' => '\Modules\Import\Controllers'], functio
     $routes->get('updateCalReportDaily/(:num)/(:num)/(:num)','Import::updateCalReportDaily/$1/$2/$3');
 });
 
+// endpoint คำนวณซ้ำแบบ GET ไม่มีหน้าจอเรียก → อาจถูก cron เรียก จึงไม่ใส่ auth
 $routes->group('setting', ['namespace' => '\Modules\Setting\Controllers'], function ($routes) {
+    $routes->get('updateVisaRatio/(:num)','Setting::updateVisaRatio/$1');
+    $routes->get('updateCalReportDaily','Setting::updateCalReportDaily');
+    $routes->get('genRaio','Setting::genRaio');
+});
+
+$routes->group('setting', ['namespace' => '\Modules\Setting\Controllers', 'filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Setting::index');
 
     $routes->get('country','Setting::country');
@@ -126,14 +133,11 @@ $routes->group('setting', ['namespace' => '\Modules\Setting\Controllers'], funct
     $routes->get('getVisaRatio/(:num)','Setting::getVisaRatio/$1');
     $routes->post('deleteVisa', 'Setting::deleteVisa');
 
-    $routes->get('updateVisaRatio/(:num)','Setting::updateVisaRatio/$1');
-    $routes->get('updateCalReportDaily','Setting::updateCalReportDaily');
-
     $routes->get('permission','Setting::permission');
+    $routes->post('savePermission','Setting::savePermission');
+    $routes->post('deletePermission','Setting::deletePermission');
     $routes->get('log_info','Setting::log_info');
     $routes->get('log_login','Setting::log_login');
-
-    $routes->get('genRaio','Setting::genRaio');
 });
 
 
